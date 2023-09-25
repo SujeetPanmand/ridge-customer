@@ -62,14 +62,14 @@ export class ApiService {
         localStorage.removeItem('username');
         this.router.navigate(['account/login']);
       } else if (error.status === 422) {
-        return throwError(error.error);
+        return throwError(() => error.error);
       } else if (error.error instanceof ErrorEvent) {
         // A client-side or network error occurred. Handle it accordingly.
         console.error('An error occurred:', error.error.message);
       }
 
       // return Observable.throw(error);
-      return throwError(error.error);
+      return throwError(() => error.error);
     };
   }
 

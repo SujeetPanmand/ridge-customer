@@ -42,7 +42,7 @@ export class HTTPListener implements HttpInterceptor {
       }),
       catchError((error) => {
         // return Observable.throw(error);
-        return throwError(error.error);
+        return throwError(() => error.error);
       }),
       finalize(() => {
         this.status.setHttpStatus(false);
