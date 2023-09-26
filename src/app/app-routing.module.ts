@@ -8,6 +8,13 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
+        path: 'account',
+        loadChildren: () =>
+          import('./features/account/account.module').then(
+            (a) => a.AccountModule
+          ),
+      },
+      {
         path: '*',
         redirectTo: '/',
         pathMatch: 'full',
