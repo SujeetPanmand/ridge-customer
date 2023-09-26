@@ -1,0 +1,149 @@
+.bg-light-gray {
+  background-color: #f8f5f4;
+}
+
+.bgImag {
+  background-image: url(/src/assets/cow1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  height: 400px;
+  border-radius: 20px;
+}
+
+.detail {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font: normal normal bold 36px/46px Georgia;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+}
+
+.bg-order {
+  background-image: url(/src/assets/M15.jpg);
+  border-radius: 5px;
+  color: #fff;
+  width: 100%;
+  height: auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Slider css start */
+
+.wrapper {
+  padding: 33px 0;
+  overflow-x: hidden;
+}
+
+.my-slider {
+  padding: 0 70px;
+}
+
+.slick-initialized .slick-slide {
+  height: 65%;
+  margin: 0 15px 0 0;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+.slick-next,
+.slick-prev {
+  z-index: 5;
+}
+
+.slick-next {
+  right: 15px;
+}
+
+.slick-prev {
+  left: 15px;
+}
+
+.slick-next:before,
+.slick-prev:before {
+  color: #000;
+  font-size: 26px;
+}
+
+.card-recipes {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.card-recipes .content-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  -webkit-transition: all 0.4s ease-in-out 0s;
+  -moz-transition: all 0.4s ease-in-out 0s;
+  transition: all 0.4s ease-in-out 0s;
+}
+
+.card-recipes:hover .content-overlay {
+  opacity: 1;
+}
+
+/* .content-image {
+  width: 100%;
+  height: 100%;
+} */
+
+.content-details {
+  position: absolute;
+  /* text-align: center; */
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 100%;
+  bottom: 100%;
+  left: 0%;
+  right: 0;
+  opacity: 0;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.card-recipes:hover .content-details {
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+}
+
+.content-details h5 {
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5em;
+  text-transform: uppercase;
+}
+
+.content-details p {
+  color: #fff;
+  font-size: 0.6em;
+}
+
+.fadeIn-top {
+  top: 10%;
+}
+
+/* Slider css end */

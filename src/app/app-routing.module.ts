@@ -15,6 +15,11 @@ const routes: Routes = [
           ),
       },
       {
+        path: '',
+        loadChildren: () =>
+          import('./features/home/home.module').then((a) => a.HomeModule),
+      },
+      {
         path: '*',
         redirectTo: '/',
         pathMatch: 'full',

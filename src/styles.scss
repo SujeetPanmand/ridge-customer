@@ -7,3 +7,35 @@ label {
   letter-spacing: 0px;
   opacity: 1;
 }
+
+h4 {
+  font: normal normal bold 24px Georgia;
+}
+
+h5 {
+  font: normal normal bold 18px Georgia;
+  letter-spacing: 0px;
+  color: #180800;
+  opacity: 1;
+}
+
+.main-title {
+  font: normal normal bold 57px/67px Georgia;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+}
+
+.sub-title {
+  font: normal normal bold 36px/46px Georgia;
+  letter-spacing: 0px;
+  color: #180800;
+  opacity: 1;
+}
+.button-orange {
+  box-shadow: 0px 15px 29px #f98169ad;
+  background-color: #ef4c00;
+  color: #fff;
+  font-family: "Muli";
+  padding: 15px 32px;
+}
