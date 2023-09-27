@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router) {}
   ngOnInit(): void {}
 
-  navigateToLogin() {
-    this.router.navigate(['account/login']);
-  }
+  // navigateToLogin() {
+  //   this.router.navigate(['']);
+  // }
 }
