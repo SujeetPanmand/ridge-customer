@@ -7,6 +7,7 @@ import { SharedModule } from './shared/shared.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoadingInterceptorService } from './shared/services/loading-interceptor.service';
 import { CoreModule } from './core/core.module';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +17,7 @@ import { CoreModule } from './core/core.module';
     SharedModule,
     CoreModule,
     HttpClientModule,
+    SlickCarouselModule
   ],
   exports: [SharedModule],
   providers: [

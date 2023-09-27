@@ -8,6 +8,20 @@ label {
   opacity: 1;
 }
 
+.main-title {
+  font: normal normal bold 57px/67px Georgia;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.sub-title {
+  font: normal normal bold 36px/46px Georgia;
+  letter-spacing: 0px;
+  color: #180800;
+  opacity: 1;
+}
+
 h4 {
   font: normal normal bold 24px Georgia;
 }
@@ -19,23 +33,18 @@ h5 {
   opacity: 1;
 }
 
-.main-title {
-  font: normal normal bold 57px/67px Georgia;
-  letter-spacing: 0px;
-  color: #ffffff;
-  opacity: 1;
+.button-orange {
+  box-shadow: 0px 15px 29px #F98169AD;
+  background-color: #EF4C00;
+  color: #fff;
+  font-family: 'Muli';
+  padding: 15px 32px;
 }
 
-.sub-title {
-  font: normal normal bold 36px/46px Georgia;
-  letter-spacing: 0px;
-  color: #180800;
-  opacity: 1;
+.bg-light-gray {
+  background-color: #F8F5F4;
 }
-.button-orange {
-  box-shadow: 0px 15px 29px #f98169ad;
-  background-color: #ef4c00;
-  color: #fff;
-  font-family: "Muli";
-  padding: 15px 32px;
+
+.slick-prev, .slick-next,.slick-prev:before, .slick-next:before {
+  color: #000 !important;
 }
