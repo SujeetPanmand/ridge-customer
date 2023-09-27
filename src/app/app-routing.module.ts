@@ -14,7 +14,7 @@ const routes: Routes = [
           import('./features/home/home.module').then((a) => a.HomeModule),
       },
       {
-        path: 'login',
+        path: '',
         loadChildren: () =>
           import('./features/account/account.module').then(
             (a) => a.AccountModule
