@@ -13,9 +13,14 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: '',
+        path: 'home',
         loadChildren: () =>
           import('./features/home/home.module').then((a) => a.HomeModule),
+      },
+      {
+        path: 'about',
+        loadChildren: () =>
+          import('./features/about/about.module').then((a) => a.AboutModule),
       },
       {
         path: '*',

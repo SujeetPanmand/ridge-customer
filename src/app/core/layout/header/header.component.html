@@ -18,10 +18,15 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav">
             <li class="nav-item mx-3">
-              <a class="nav-link" aria-current="page">Home</a>
+              <a
+                (click)="navigateToHome()"
+                class="nav-link active"
+                aria-current="page"
+                >Home</a
+              >
             </li>
             <li class="nav-item mx-3">
-              <a class="nav-link" href="#">ABOUT</a>
+              <a (click)="navigateToAbout()" class="nav-link">ABOUT</a>
             </li>
             <li class="nav-item mx-3">
               <a class="nav-link" href="#">SHOP</a>
