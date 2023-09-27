@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private router: Router) {}
+  userName: string = '';
+  password: string = '';
+  constructor(private router: Router, private apiService: ApiService) {}
   ngOnInit(): void {}
   navigateToHome() {
-    this.router.navigate(['app/home']);
+    const apiRequest = {
+      data: {
+        email: this.userName,
+        password: this.password,
+      },
+    };
   }
 }

@@ -3,7 +3,7 @@ const authEndPoint = [
   {
     name: 'USER_LOGIN',
     method: 'POST',
-    url: environment.baseUrl + '/api/auth/login',
+    url: environment.baseUrl + '/api/auth/sign-in',
   },
 ];
 export const ApiConfig = {

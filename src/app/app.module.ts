@@ -17,7 +17,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
     SharedModule,
     CoreModule,
     HttpClientModule,
-    SlickCarouselModule
+    SlickCarouselModule,
   ],
   exports: [SharedModule],
   providers: [

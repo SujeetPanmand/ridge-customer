@@ -6,16 +6,19 @@ import { LoginComponent } from './features/account/login/login.component';
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent,
-  },
-  {
-    path: 'app',
     component: LayoutComponent,
     children: [
       {
-        path: 'home',
+        path: '',
         loadChildren: () =>
           import('./features/home/home.module').then((a) => a.HomeModule),
+      },
+      {
+        path: 'login',
+        loadChildren: () =>
+          import('./features/account/account.module').then(
+            (a) => a.AccountModule
+          ),
       },
       {
         path: 'about',
