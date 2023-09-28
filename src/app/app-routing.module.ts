@@ -26,6 +26,16 @@ const routes: Routes = [
           import('./features/about/about.module').then((a) => a.AboutModule),
       },
       {
+        path: 'shop',
+        loadChildren: () =>
+          import('./features/shop/shop.module').then((a) => a.ShopModule),
+      },
+      {
+        path: 'product-details',
+        loadChildren: () =>
+          import('./features/product-details/product-details.module').then((a) => a.ProductDetailsModule),
+      },
+      {
         path: '*',
         redirectTo: '/',
         pathMatch: 'full',
