@@ -1,0 +1,356 @@
+<section class="mt-5 pt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <!-- Tabs nav -->
+        <div
+          class="nav flex-column nav-pills nav-pills-custom"
+          id="v-pills-tab"
+          role="tablist"
+          aria-orientation="vertical"
+        >
+          <a
+            class="nav-link mb-3 p-3 shadow active"
+            id="v-pills-home-tab"
+            data-bs-toggle="pill"
+            href="#v-pills-home"
+            role="tab"
+            aria-controls="v-pills-home"
+            aria-selected="true"
+          >
+            <span class="font-weight-bold small text-uppercase"
+              >My Account</span
+            ></a
+          >
+
+          <a
+            class="nav-link mb-3 p-3 shadow"
+            id="v-pills-profile-tab"
+            data-bs-toggle="pill"
+            href="#v-pills-profile"
+            role="tab"
+            aria-controls="v-pills-profile"
+            aria-selected="false"
+          >
+            <span class="font-weight-bold small text-uppercase"
+              >Edit Address</span
+            ></a
+          >
+
+          <a
+            class="nav-link mb-3 p-3 shadow"
+            id="v-pills-messages-tab"
+            data-bs-toggle="pill"
+            href="#v-pills-messages"
+            role="tab"
+            aria-controls="v-pills-messages"
+            aria-selected="false"
+          >
+            <span class="font-weight-bold small text-uppercase"
+              >My Orders</span
+            ></a
+          >
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <!-- Tabs content -->
+        <div class="tab-content" id="v-pills-tabContent">
+          <div
+            class="tab-pane fade active rounded bg-white show p-5"
+            id="v-pills-home"
+            role="tabpanel"
+            aria-labelledby="v-pills-home-tab"
+          >
+            <div class="row justify-content-center">
+              <div class="col-md-11">
+                <div class="d-flex">
+                  <span class="text-secondary"> Home /&nbsp; </span>
+                  <span class="text-secondary">Profile /&nbsp; </span>
+                  <span class="">My Account</span>
+                </div>
+
+                <h2 class="fw-bold sub-title pt-2">My Account</h2>
+                <div class="pt-4">
+                  <form>
+                    <div class="mb-4">
+                      <label for="firstName" class="form-label"
+                        >First Name</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="firstName"
+                        name="firstName"
+                        placeholder="Gregorgy"
+                      />
+                    </div>
+                    <div class="mb-4">
+                      <label for="lastName" class="form-label">Last Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="lastName"
+                        name="lastName"
+                        placeholder="Kuphal"
+                      />
+                    </div>
+                    <div class="mb-4">
+                      <label for="emailAddress" class="form-label"
+                        >Email address</label
+                      >
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="emailAddress"
+                        name="emailAddress"
+                        placeholder="gregory.kuphal@nomail.com"
+                      />
+                    </div>
+                    <div class="mb-4">
+                      <label for="phone" class="form-label">Phone</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="phone"
+                        name="phone"
+                        placeholder="662-549-9880"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      class="btn rounded-0 text-light button-orange mt-4"
+                    >
+                      Save Changes
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade rounded bg-white show p-5"
+            id="v-pills-profile"
+            role="tabpanel"
+            aria-labelledby="v-pills-profile-tab"
+          >
+            <div class="row justify-content-center">
+              <div class="col-md-11">
+                <div class="d-flex">
+                  <span class="text-secondary"> Home /&nbsp; </span>
+                  <span class="text-secondary">Profile /&nbsp; </span>
+                  <span class="">Edit Address</span>
+                </div>
+
+                <h2 class="fw-bold sub-title pt-2">Edit Address</h2>
+                <div class="pt-4">
+                  <form>
+                    <div class="mb-4">
+                      <label for="country" class="form-label"
+                        >Country / Region</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="country"
+                        name="country"
+                        placeholder="Georgia"
+                      />
+                    </div>
+                    <div class="mb-4">
+                      <label for="address" class="form-label">Address</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="address"
+                        name="address"
+                        placeholder="Will Branch mouth East"
+                      />
+                      <input
+                        type="text"
+                        class="form-control mt-4"
+                        id="address1"
+                        name="address1"
+                        placeholder="Apt. 015"
+                      />
+                    </div>
+                    <div class="mb-4">
+                      <label for="city" class="form-label">Town / City</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="city"
+                        name="city"
+                        placeholder="Lake Makenziefurt"
+                      />
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 mb-4">
+                        <label for="state" class="form-label">State</label>
+                        <select class="form-select" name="state" id="state">
+                          <option>Idaho</option>
+                          <option>Pune</option>
+                          <option>Nashik</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6 mb-4">
+                        <label for="zipCode" class="form-label">ZIP Code</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="zipCode"
+                          name="zipCode"
+                          placeholder="10504"
+                        />
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      class="btn rounded-0 text-light button-orange mt-4"
+                    >
+                      Save Changes
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="tab-pane fade rounded bg-white show p-5"
+            id="v-pills-messages"
+            role="tabpanel"
+            aria-labelledby="v-pills-messages-tab"
+          >
+            <div class="row justify-content-center">
+              <div class="col-md-11">
+                <div class="d-flex flex-md-row flex-column">
+                  <span class="text-secondary"> Home /&nbsp; </span>
+                  <span class="text-secondary">Shop /&nbsp; </span>
+                  <span class="">My Orders</span>
+                </div>
+
+                <h2 class="fw-bold sub-title py-2">My Orders</h2>
+
+                <div class="accordion" id="accordionMyOrders">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne"
+                        aria-expanded="true"
+                        aria-controls="collapseOne"
+                      >
+                        <!-- <div class="table-responsive"> -->
+                        <table class="table table-borderless">
+                          <thead>
+                            <tr>
+                              <th scope="col">ORDER ID</th>
+                              <th scope="col">ORDER DATE</th>
+                              <th scope="col">PRICE</th>
+                              <th scope="col">STATUS</th>
+                            </tr>
+                          </thead>
+                          <tbody class="">
+                            <tr class="pt-4">
+                              <td>#NG4595F57952</td>
+                              <td>9/12/2023</td>
+                              <td><b>$998</b></td>
+                              <td>
+                                <button
+                                  type="button"
+                                  class="btn btn-success rounded-5 py-0"
+                                >
+                                  <i class="fs-5 bi bi-check"></i>
+                                  Delivered
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <!-- </div> -->
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseOne"
+                      class="accordion-collapse collapse show"
+                      data-bs-parent="#accordionMyOrders"
+                    >
+                      <div class="accordion-body">
+                        <b>Delivered to</b>
+                        <div>
+                          15071-8112 New Tedshire Heathcote Land 39345 Reece
+                          Drive
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                          <div>
+                            <b>Ordered Items</b>
+                            <div class="py-2">
+                              Native grass-fed artisan beef x 2
+                            </div>
+                            <div class="mb-4">Organic and Grass-Fed x 2</div>
+                            <div>Subtotal</div>
+                            <div class="py-2">Shipping</div>
+                            <div>Tax</div>
+                          </div>
+                          <hr class="border" />
+
+                          <div>
+                            <div><b>Price</b></div>
+                            <div class="py-2"><b>$998</b></div>
+                            <div class="mb-4"><b>$998</b></div>
+                            <div><b>$1,996</b></div>
+                            <div class="py-2"><b>$40</b></div>
+                            <div><b>$70</b></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo"
+                        aria-expanded="false"
+                        aria-controls="collapseTwo"
+                      >
+                        Accordion Item #2
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseTwo"
+                      class="accordion-collapse collapse"
+                      data-bs-parent="#accordionMyOrders"
+                    >
+                      <div class="accordion-body">
+                        <strong
+                          >This is the second item's accordion body.</strong
+                        >
+                        It is hidden by default, until the collapse plugin adds
+                        the appropriate classes that we use to style each
+                        element. These classes control the overall appearance,
+                        as well as the showing and hiding via CSS transitions.
+                        You can modify any of this with custom CSS or overriding
+                        our default variables. It's also worth noting that just
+                        about any HTML can go within the
+                        <code>.accordion-body</code>, though the transition does
+                        limit overflow.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

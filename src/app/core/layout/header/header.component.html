@@ -54,7 +54,22 @@
             <a routerLink="/shop/cart" class="text-white"
               ><i class="bi bi-cart icon mx-3"></i
             ></a>
-            <span> <i class="bi bi-person-fill icon"></i></span>
+            <div class="dropdown">
+              <button
+                class="btn border-0 p-0"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="bi bi-person-fill icon mx-3"></i>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a routerLink="/profile" class="dropdown-item">Profile</a>
+                </li>
+                <li><a class="dropdown-item" href="#">Account</a></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,46 @@
+.nav-pills-custom .nav-link {
+  font: normal normal bold 14px/17px Muli;
+  letter-spacing: 0.35px;
+  color: #262626;
+  opacity: 1;
+  background: #fff;
+  position: relative;
+}
+
+.nav-pills-custom .nav-link.active {
+  font: normal normal bold 14px/17px Muli;
+  letter-spacing: 0.35px;
+  color: #ef4c00;
+  opacity: 1;
+  background: #fff;
+}
+
+@media (min-width: 992px) {
+  .nav-pills-custom .nav-link::before {
+    content: "";
+    display: block;
+    border-top: 8px solid transparent;
+    border-left: 10px solid #fff;
+    border-bottom: 8px solid transparent;
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+}
+
+.nav-pills-custom .nav-link.active::before {
+  opacity: 1;
+}
+
+.form-label {
+  font: normal normal bold 16px/20px Muli;
+  letter-spacing: 0px;
+  color: #414141;
+  text-transform: capitalize;
+  opacity: 1;
+}
+#accordionMyOrders .accordion-button:not(.collapsed) {
+  background-color: transparent !important;
+}
