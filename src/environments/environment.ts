@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  baseUrl: 'http://192.168.0.42:9049',
-  baseUrlS: 'http://192.168.0.42:9049',
+  baseUrl: 'http://103.134.163.197:9049',
+  baseUrlS: 'http://103.134.163.197:9049',
 };
