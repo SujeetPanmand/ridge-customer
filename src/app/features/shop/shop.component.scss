@@ -1,0 +1,92 @@
+.preorder-title {
+  font: normal normal bold 20px/25px Muli;
+  letter-spacing: 0px;
+  color: #ef4c00;
+  text-transform: capitalize;
+  opacity: 1;
+}
+
+.bgImag {
+  background-image: url("/assets/shop/shop-banner-image.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  height: 400px;
+  border-radius: 5px;
+}
+
+.detail {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font: normal normal 100 14px/22px Muli;
+  letter-spacing: 1px;
+  color: d;
+  opacity: 1;
+}
+
+.fontInformation {
+  text-align: center;
+  font: normal normal bold 32px/28px Georgia;
+  letter-spacing: 1px;
+  color: #ffffff;
+  opacity: 1;
+  text-transform: capitalize;
+}
+.card-recipes {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.card-recipes .content-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 1;
+  -webkit-transition: all 0.4s ease-in-out 0s;
+  -moz-transition: all 0.4s ease-in-out 0s;
+  transition: all 0.4s ease-in-out 0s;
+}
+
+.content-details {
+  position: absolute;
+  text-align: center;
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.card-recipes:hover .content-details {
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+}
+
+.preorder-subtitle {
+  text-align: left;
+  font: normal normal 600 16px/28px Muli;
+  letter-spacing: 0px;
+  color: #1f1f31;
+  opacity: 1;
+}
