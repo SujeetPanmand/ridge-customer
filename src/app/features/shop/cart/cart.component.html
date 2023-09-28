@@ -1,98 +1,120 @@
-
-<section class=" mt-5">
+<section class="mt-5">
   <div class="container">
-     <div class=" bg-white p-5 mt-4">
-        <div class="d-flex">
-           <span class="text-secondary"> Home /&nbsp; </span>
-           <span class="text-secondary">Shop /&nbsp; </span>
-           <span>Cart</span>
-        </div>
-        <h1 class=" pt-3   sub-title">Cart</h1>
-        <div class="table-responsive py-3  ">
-           <table class="table align-middle  table-borderless ">
-              <thead class="border-bottom ">
-                 <tr class="">
-                    <th colspan="1"></th>
-                    <th>PRODUCT</th>
-                    <th> UNIT PRICE</th>
-                    <th>QTY</th>
-                    <th>TOTAL PRICE</th>
-                 </tr>
-              </thead>
-              <tbody>
-                 <tr class="border-bottom my-5">
-                    <td><i class="bi bi-x text-danger pe-1"></i> <img src="assets/cart/about-banner.png"
-                          class="img-fluid table-img">
-                    </td>
-                    <td class="text-orange">Native grass-fed artisan beef</td>
-                    <td>$499</td>
-                    <td>
-                       <div class=" d-flex align-items-center">
-                          <a href="#" class="quantity__minus"><span>-</span></a>
-                          <input name="quantity" type="text" class="quantity__input" value="1">
-                          <a href="#" class="quantity__plus"><span>+</span></a>
-                       </div>
-                    </td>
-                    <td>$998</td>
-                 </tr>
-                 <tr class="border-bottom">
-                    <td> <i class="bi bi-x text-danger pe-1"></i><img src="assets/cart/article1.png"
-                          class="img-fluid  table-img">
-                    </td>
-                    <td class="text-orange"> Organic and Grass-Fed</td>
-                    <td>$499</td>
-                    <td>
-                       <div class=" d-flex align-items-center">
-                          <a href="#" class="quantity__minus"><span>-</span></a>
-                          <input name="quantity" type="text" class="quantity__input" value="1">
-                          <a href="#" class="quantity__plus"><span>+</span></a>
-                       </div>
-                    </td>
-                    <td>$998</td>
-                 </tr>
-                 <tr class="">
-                    <td colspan="3"></td>
-                    <td class="py-4  border-bottom fw-semibold">Subtotal</td>
-                    <td class="py-4 border-bottom fw-semibold">$1,996</td>
-                 </tr>
-                 <tr>
-                    <td colspan="3"></td>
-                    <td class="py-3 fs-2 fw-semibold">TOTAL</td>
-                    <td class="py-3 fs-2 fw-semibold">$2,106</td>
-                 </tr>
-                 <tr>
-                    <td colspan="3"></td>
-                    <td colspan="2"><button class="btn text-light w-100  rounded-1 button-orange"
-                          type="button">Proceed To
-                          Checkout</button>
-                    </td>
-                 </tr>
-              </tbody>
-           </table>
-        </div>
-     </div>
+    <div class="bg-white p-5 mt-4">
+      <div class="d-flex">
+        <span class="text-secondary"> Home /&nbsp; </span>
+        <span class="text-secondary">Shop /&nbsp; </span>
+        <span>Cart</span>
+      </div>
+      <h1 class="pt-3 sub-title">Cart</h1>
+      <div class="table-responsive py-3">
+        <table class="table align-middle table-borderless">
+          <thead class="border-bottom">
+            <tr class="">
+              <th colspan="1"></th>
+              <th>PRODUCT</th>
+              <th>UNIT PRICE</th>
+              <th>QTY</th>
+              <th>TOTAL PRICE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-bottom my-5">
+              <td>
+                <i class="bi bi-x text-danger pe-1"></i>
+                <img
+                  src="assets/cart/about-banner.png"
+                  class="img-fluid table-img"
+                />
+              </td>
+              <td class="text-orange">Native grass-fed artisan beef</td>
+              <td>$499</td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <a href="#" class="quantity__minus"><span>-</span></a>
+                  <input
+                    name="quantity"
+                    type="text"
+                    class="quantity__input"
+                    value="1"
+                  />
+                  <a href="#" class="quantity__plus"><span>+</span></a>
+                </div>
+              </td>
+              <td>$998</td>
+            </tr>
+            <tr class="border-bottom">
+              <td>
+                <i class="bi bi-x text-danger pe-1"></i
+                ><img
+                  src="assets/cart/article1.png"
+                  class="img-fluid table-img"
+                />
+              </td>
+              <td class="text-orange">Organic and Grass-Fed</td>
+              <td>$499</td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <a href="#" class="quantity__minus"><span>-</span></a>
+                  <input
+                    name="quantity"
+                    type="text"
+                    class="quantity__input"
+                    value="1"
+                  />
+                  <a href="#" class="quantity__plus"><span>+</span></a>
+                </div>
+              </td>
+              <td>$998</td>
+            </tr>
+            <tr class="">
+              <td colspan="3"></td>
+              <td class="py-4 border-bottom fw-semibold">Subtotal</td>
+              <td class="py-4 border-bottom fw-semibold">$1,996</td>
+            </tr>
+            <tr>
+              <td colspan="3"></td>
+              <td class="py-3 fs-2 fw-semibold">TOTAL</td>
+              <td class="py-3 fs-2 fw-semibold">$2,106</td>
+            </tr>
+            <tr>
+              <td colspan="3"></td>
+              <td colspan="2">
+                <button
+                  (click)="makePayment()"
+                  class="btn text-light w-100 rounded-1 button-orange"
+                  type="button"
+                >
+                  Proceed To Checkout
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </section>
 
-    <script>
-      $(document).ready(function () {
-         const minus = $('.quantity__minus');
-         const plus = $('.quantity__plus');
-         const input = $('.quantity__input');
-         minus.click(function (e) {
-            e.preventDefault();
-            var value = input.val();
-            if (value > 1) {
-               value--;
-            }
-            input.val(value);
-         });
+<script>
+  $(document).ready(function () {
+    const minus = $(".quantity__minus");
+    const plus = $(".quantity__plus");
+    const input = $(".quantity__input");
+    minus.click(function (e) {
+      e.preventDefault();
+      var value = input.val();
+      if (value > 1) {
+        value--;
+      }
+      input.val(value);
+    });
 
-         plus.click(function (e) {
-            e.preventDefault();
-            var value = input.val();
-            value++;
-            input.val(value);
-         })
-      });
-   </script>
+    plus.click(function (e) {
+      e.preventDefault();
+      var value = input.val();
+      value++;
+      input.val(value);
+    });
+  });
+</script>

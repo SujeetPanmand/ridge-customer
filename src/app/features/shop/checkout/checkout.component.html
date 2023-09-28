@@ -1,1 +1,199 @@
-<p>checkout works!</p>
+<section class="pt-5 mt-5">
+  <div class="container">
+    <div class="py-5 bg-white px-4">
+      <div class="d-flex">
+        <span class="text-secondary"> Home /&nbsp; </span>
+        <span class="text-secondary">Shop /&nbsp; </span>
+        <span>Checkout</span>
+      </div>
+      <h1 class="sub-title pt-3">Checkout</h1>
+      <div class="row pt-4">
+        <div class="col-md-6">
+          <div class="d-flex">
+            <h2 class="text-title">Shipping Address</h2>
+            <div class="text-orange ps-4">Edit</div>
+          </div>
+          <hr class="border" />
+          <span class="pt-3">
+            15071-8112 New Tedshire Heathcote Land 39345 Reece Drive
+          </span>
+          <h3 class="pt-5 text-title">Payment Method</h3>
+          <hr class="border" />
+          <form>
+            <div class="d-flex">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault1"
+                />
+                <i class="bi bi-credit-card"></i>
+                <span class="px-1"> Credit Card </span>
+              </div>
+              <div class="form-check ms-4">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault1"
+                />
+                <i class="fa fa-paypal" aria-hidden="true"></i>
+                <span class="px-1"> Paypal </span>
+              </div>
+            </div>
+            <div class="bg-light-gray mt-4 p-4">
+              <div class="mb-3">
+                <label for="cardNumber" class="form-label"> Card Number</label>
+                <div class="input-col">
+                  <input
+                    type="text"
+                    value=""
+                    class="form-control"
+                    placeholder="XXX XXX XXXX 9817"
+                  />
+                  <a>
+                    <i class="fa fa-cc-visa times-icon" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="mb-3 col-md-6">
+                  <label for="exp" class="form-label">Expiry Date</label>
+                  <input
+                    type="date"
+                    id="exp"
+                    name="exp "
+                    class="form-control"
+                  />
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label for="cvv" class="form-label">CVV</label>
+                  <input
+                    type="text"
+                    id="cvv"
+                    name="cvv"
+                    class="form-control"
+                    placeholder="---"
+                  />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="cardHoldNumber" class="form-label"
+                  >Cardholder Name</label
+                >
+                <input
+                  type="text"
+                  id="cardHolderName"
+                  name="cardHolderName"
+                  class="form-control"
+                  placeholder="Enter cardholder's full name"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-md-6 px-3">
+          <div class="shadow-sm border p-4 mb-5">
+            <span class="text-title"> Your Order </span>
+            <div class="table-responsive mt-3">
+              <table class="table align-middle table-borderless">
+                <tbody>
+                  <tr>
+                    <td>
+                      <button type="button" class="btn position-relative p-0">
+                        <img
+                          src="assets/checkout/about-banner.png"
+                          class="img-fluid img"
+                        />
+                        <span
+                          class="position-absolute top-0 translate-middle badge rounded-circle bg-danger"
+                        >
+                          2
+                          <span class="visually-hidden">unread messages</span>
+                        </span>
+                      </button>
+                    </td>
+
+                    <td>Native grass-fed artisian beef</td>
+                    <td>$998</td>
+                  </tr>
+
+                  <tr class="border-bottom">
+                    <td>
+                      <button type="button" class="btn position-relative p-0">
+                        <img
+                          src="assets/checkout/article1.png"
+                          class="img-fluid img"
+                        />
+                        <span
+                          class="position-absolute top-0 translate-middle badge rounded-circle bg-danger"
+                        >
+                          2
+                          <span class="visually-hidden">unread messages</span>
+                        </span>
+                      </button>
+                    </td>
+                    <td>Organic and Grass-Fed</td>
+                    <td>$998</td>
+                  </tr>
+
+                  <tr class="pt-3">
+                    <td>Subtotal</td>
+                    <td></td>
+                    <td>$1,996</td>
+                  </tr>
+                  <tr>
+                    <td>Shipping</td>
+                    <td></td>
+                    <td>$40</td>
+                  </tr>
+                  <tr>
+                    <td>Tax</td>
+                    <td></td>
+                    <td>$70</td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold">Total</td>
+                    <td></td>
+                    <td class="fw-bold">$2,106</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="mb-3 shadow-sm border p-4">
+            <div class="text-title pb-2">Delivary Date &Time</div>
+            <div class="mb-3 fw-semibold">
+              Please select the delivary date for this order
+            </div>
+            <div class="mb-3">
+              <input
+                type="date"
+                id="birthday"
+                name="birthday "
+                class="form-control mb-3"
+              />
+            </div>
+            <div class="mb-3">
+              <select
+                class="form-select form-select"
+                aria-label=".form-select-sm example"
+              >
+                <option selected>9AM to 12PM</option>
+              </select>
+            </div>
+          </div>
+          <button
+            class="btn button-orange btn-lg text-light w-100"
+            type="button"
+          >
+            Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
