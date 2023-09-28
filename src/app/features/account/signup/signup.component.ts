@@ -14,7 +14,8 @@ export class SignupComponent implements OnInit {
   formSubmitAttempt: boolean = false;
   userName: string = '';
   password: string = '';
-  fullName: string = '';
+  firstName: string = '';
+  lastName: string = '';
   address: string = '';
   zipCode: string = '';
   phoneNumber: string = '';
@@ -31,7 +32,8 @@ export class SignupComponent implements OnInit {
 
   generateSignUpForm() {
     this.signUpForm = this.formBuilder.group({
-      fullName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      firstName: ['', Validators.required],
       password: ['', Validators.required],
       email: ['', Validators.required],
       address: ['', Validators.required],
@@ -49,7 +51,7 @@ export class SignupComponent implements OnInit {
       data: {
         email: this.userName,
         password: this.password,
-        fullName: this.fullName,
+        fullName: this.firstName + ' ' + this.lastName,
         address: this.address,
         zipCode: this.zipCode,
         phoneNumber: this.phoneNumber,
@@ -58,9 +60,9 @@ export class SignupComponent implements OnInit {
 
     this.apiService.request('USER_SIGN_UP', apiRequest).subscribe((res) => {
       this.formSubmitAttempt = false;
-      if (res && res.statusCode == 200) {
+      if (res && res.statusCode == 201) {
         this.toastrService.success('User Created Successfully.');
-        this.router.navigate(['']);
+        this.router.navigate(['login']);
       } else {
         this.toastrService.error(res.message);
       }
