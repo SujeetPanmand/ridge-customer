@@ -1,0 +1,41 @@
+.table-img {
+    height: 100px;
+    width: 120px;
+ }      
+      
+      /* css  start to Increment/decrement counter */
+
+      .quantity__minus,
+      .quantity__plus {
+         display: block;
+         width: 29px;
+         height: 28px;
+         background: #F6F7F8;
+         text-decoration: none;
+         text-align: center;
+         color: #EF4C00;
+         font-weight: 600;
+         font-size: 18px;
+      }
+
+      .quantity__minus:hover,
+      .quantity__plus:hover {
+         background: #F6F7F8;
+         color: #EF4C00;
+      }
+
+      .quantity__input {
+         width: 32px;
+         height: 28px;
+         margin: 0;
+         padding: 0;
+         text-align: center;
+         border: none;
+         background: #F6F7F8;
+         color: black;
+      }
+
+      .quantity__minus:visited,
+      .quantity__plus:visited {
+         color: #EF4C00;
+      }

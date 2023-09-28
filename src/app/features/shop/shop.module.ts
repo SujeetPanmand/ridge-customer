@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ShopComponent } from './shop.component';
 import { ShopRoutingModule } from './shop-routing.module';
+import { CartComponent } from './cart/cart.component';
 @NgModule({
-  declarations: [ShopComponent],
+  declarations: [ShopComponent,CartComponent],
   imports: [CommonModule, ShopRoutingModule, SharedModule],
 })
 export class ShopModule {}
