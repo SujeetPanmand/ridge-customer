@@ -1,0 +1,20 @@
+.bgblog {
+  background-image: url("/assets/blog/blogbannerimage.png");
+  height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.about-text {
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 576px) {
+  .about-text {
+    left: 50%;
+  }
+}

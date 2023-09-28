@@ -42,8 +42,8 @@ h5 {
   padding: 15px 32px;
 }
 
-.btn:hover {
-  color: var(--bs-btn-hover-color);
+.button-orange:hover {
+  color: #fff;
   background-color: #ef4c00;
   border-color: var(--bs-btn-hover-border-color);
 }
@@ -59,24 +59,24 @@ h5 {
   color: #000 !important;
 }
 
-.text-orange, .checked {
+.text-orange,
+.checked {
   color: #ef4c00;
 }
 
-
 p {
   font: normal normal 600 16px/26px Muli;
-letter-spacing: 0px;
-color: #180800;
-opacity: 0.8;
+  letter-spacing: 0px;
+  color: #180800;
+  opacity: 0.8;
 }
 .bg-pink {
   /* background-color: #FEEDE5; */
-  background: #FEEDE5 0% 0% no-repeat padding-box;
+  background: #feede5 0% 0% no-repeat padding-box;
   border-radius: 4px;
   opacity: 0.1;
   font: normal normal bold 16px/44px Muli;
   letter-spacing: 0px;
-  color: #EF4C00;
+  color: #ef4c00;
   opacity: 1;
 }
