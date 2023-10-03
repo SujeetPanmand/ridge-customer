@@ -13,6 +13,15 @@
   transform: translate(-50%, -50%);
 }
 
+.more {
+  display: none;
+}
+
+.btn:hover {
+  background: transparent;
+  color: #ef4c00;
+}
+
 @media (max-width: 576px) {
   .about-text {
     left: 50%;

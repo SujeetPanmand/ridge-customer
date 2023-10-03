@@ -10,9 +10,9 @@
 .nav-pills-custom .nav-link.active {
   font: normal normal bold 14px/17px Muli;
   letter-spacing: 0.35px;
-  color: #ef4c00;
+  color: #fff;
   opacity: 1;
-  background: #fff;
+  background: #ef4c00;
 }
 
 @media (min-width: 992px) {
@@ -20,7 +20,7 @@
     content: "";
     display: block;
     border-top: 8px solid transparent;
-    border-left: 10px solid #fff;
+    border-left: 10px solid #ef4c00;
     border-bottom: 8px solid transparent;
     position: absolute;
     top: 50%;
@@ -43,4 +43,8 @@
 }
 #accordionMyOrders .accordion-button:not(.collapsed) {
   background-color: transparent !important;
+}
+
+.accordion-collapse {
+  border-bottom-style: dotted;
 }
