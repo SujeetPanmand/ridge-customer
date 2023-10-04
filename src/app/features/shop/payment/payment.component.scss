@@ -1,0 +1,36 @@
+.text-title {
+    font: normal normal bold 22px/26px Georgia;
+  }
+  
+  .button-orange,
+  .color-icon {
+    background-color: #ef4c00;
+  }
+  
+  .form-check-input:checked {
+    background-color: #ff0000;
+    border-color: #ff0000;
+  }
+  
+  /* css  form start*/
+  
+  .input-col {
+    width: 100%;
+    position: relative;
+    min-height: 1px;
+  }
+  .fa {
+    display: inline-block;
+  }
+  .times-icon {
+    right: 15px;
+    position: absolute;
+    top: 8px;
+    font-size: 20px;
+  }
+  label {
+    font: normal normal 600 16px/28px Muli;
+    letter-spacing: 0px;
+    opacity: 1;
+  }
+  

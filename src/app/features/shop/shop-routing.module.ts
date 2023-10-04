@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ShopComponent } from './shop.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { PaymentComponent } from './payment/payment.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'cart/checkout',
     component: CheckoutComponent,
+  },
+  {
+    path: 'cart/payment',
+    component: PaymentComponent,
   },
 ];
 

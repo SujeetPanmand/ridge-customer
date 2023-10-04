@@ -331,9 +331,9 @@
                 <h1 class="modal-title fs-5 text-orange" id="addReviewModalLabel">Add a Review</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body px-5 py-4">
                 <div class="mb-3">
-                    <label class="pb-2">Your Rating *</label>
+                    <label class="pb-2">Your Rating <span class="text-danger">*</span></label>
                     <div>
                         <span class="fa fa-star checked"></span>
                         <span class="fa fa-star checked"></span>
@@ -343,16 +343,15 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label class="pb-2">Your Review *</label>
+                    <label class="pb-2">Your Review <span class="text-danger">*</span></label>
                     <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="reviewMessage"
-                            style="height: 100px"></textarea>
-                        <!-- <label for="reviewMessage">Write your review</label> -->
+                        <textarea  placeholder="Write your review" id="reviewMessage" class="w-100 p-2 border"
+                        rows="4" cols="50"></textarea>
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label for="title" class="pb-2">Title Your Review *</label>
-                    <input type="text" class="form-control" id="title">
+                    <label for="title" class="pb-2">Title Your Review <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control py-2" id="title">
                 </div>
             </div>
             <div class="modal-footer justify-content-center">

@@ -1,45 +1,17 @@
-.text-title {
-  font: normal normal bold 22px/26px Georgia;
-}
-
-.nav-img {
-  height: 50px;
-  width: 50px;
-}
-
-.button-orange,
-.color-icon {
-  background-color: #ef4c00;
-}
-
 .img {
   height: 60px;
   width: 60px;
 }
 
+.text-title {
+  font: normal normal bold 22px/26px Georgia;
+}
+
 .form-check-input:checked {
-  background-color: #ff0000;
-  border-color: #ff0000;
+  background-color: #FF0000;
+  border-color: #FF0000;
 }
 
-/* css  form start*/
-
-.input-col {
-  width: 100%;
-  position: relative;
-  min-height: 1px;
-}
-.fa {
-  display: inline-block;
-}
-.times-icon {
-  right: 15px;
-  position: absolute;
-  top: 8px;
-  font-size: 20px;
-}
-label {
-  font: normal normal 600 16px/28px Muli;
-  letter-spacing: 0px;
-  opacity: 1;
+#deliveryOptions {
+  display: none;
 }
