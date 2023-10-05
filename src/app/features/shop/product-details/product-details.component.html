@@ -5,10 +5,10 @@
         <div class="d-flex flex-md-row flex-column">
           <span class="text-secondary"> Home /&nbsp; </span>
           <span class="text-secondary">Shop /&nbsp; </span>
-          <span>Whole Beef</span>
+          <span>{{ selctedProduct?.name }}</span>
         </div>
 
-        <h2 class="fw-bold sub-title pt-2">Whole Beef</h2>
+        <h2 class="fw-bold sub-title pt-2">{{ selctedProduct?.name }}</h2>
 
         <div class="row pt-4">
           <div class="col-md-6">
@@ -19,7 +19,7 @@
             />
           </div>
           <div class="col-md-6">
-            <h4>Whole Beef</h4>
+            <h4>{{ selctedProduct?.name }}</h4>
             <div class="d-flex">
               <div>
                 <span class="fa fa-star checked"></span>
@@ -31,7 +31,7 @@
               <div class="text-muted ps-3">98 reviews</div>
             </div>
             <div class="pt-2">
-              <span class="text-orange fs-3">$499</span>
+              <span class="text-orange fs-3">{{ selctedProduct?.price }}</span>
               <span
                 class="fs-3 ps-2 text-decoration-line-through text-secondary"
                 >$599</span
