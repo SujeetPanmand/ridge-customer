@@ -55,9 +55,9 @@
                         <h5 class="card-title fw-bold">{{ product.name }}</h5>
                         <p>{{ product.quantity }}</p>
                         <div class="d-flex justify-content-around">
-                          <span class="card-text fw-bold">{{
-                            product.price
-                          }}</span>
+                          <span class="card-text fw-bold"
+                            >${{ product.price }}</span
+                          >
                           <div class="vr"></div>
                           <div
                             (click)="addProductToCart($event, product)"
