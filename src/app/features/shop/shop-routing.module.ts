@@ -29,7 +29,7 @@ const routes: Routes = [
     component: OrderConfirmationComponent,
   },
   {
-    path: 'product-details',
+    path: 'product-details/:productId',
     component: ProductDetailsComponent,
   },
 ];

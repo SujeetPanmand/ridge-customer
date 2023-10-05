@@ -37,8 +37,14 @@
                 </div>
               </div>
               <div class="row gy-4 py-5">
-                <div class="col-md-3">
-                  <a routerLink="product-details" class="text-decoration-none">
+                <div
+                  *ngFor="let product of productList"
+                  class="col-md-3 cursor"
+                >
+                  <a
+                    (click)="navigateToProductDetail(product)"
+                    class="text-decoration-none"
+                  >
                     <div class="card rounded-4">
                       <img
                         src="/assets/shop/products.png"
@@ -46,12 +52,17 @@
                         alt=""
                       />
                       <div class="card-body text-center">
-                        <h5 class="card-title fw-bold">Whole Beef</h5>
-                        <p>400lbs of Quality Beef Cuts</p>
+                        <h5 class="card-title fw-bold">{{ product.name }}</h5>
+                        <p>{{ product.quantity }}</p>
                         <div class="d-flex justify-content-around">
-                          <span class="card-text fw-bold">$3,800.00</span>
+                          <span class="card-text fw-bold">{{
+                            product.price
+                          }}</span>
                           <div class="vr"></div>
-                          <div class="d-flex text-orange">
+                          <div
+                            (click)="addProductToCart($event, product)"
+                            class="d-flex text-orange"
+                          >
                             <i class="bi bi-cart-plus-fill"></i>
                             <span class="mx-3">Add</span>
                           </div>
@@ -59,27 +70,6 @@
                       </div>
                     </div>
                   </a>
-                </div>
-                <div class="col-md-3">
-                  <div class="card rounded-4">
-                    <img
-                      src="/assets/shop/products.png"
-                      class="img-fluid"
-                      alt=""
-                    />
-                    <div class="card-body text-center">
-                      <h5 class="card-title fw-bold">Whole Beef</h5>
-                      <p>200lbs of Quality Beef Cuts</p>
-                      <div class="d-flex justify-content-around">
-                        <span class="card-text fw-bold">$3,800.00</span>
-                        <div class="vr"></div>
-                        <div class="d-flex text-orange">
-                          <i class="bi bi-cart-plus-fill"></i>
-                          <span class="mx-3">Add</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
                 <div class="col-md-3">
                   <div class="card card-recipes rounded-4">
@@ -114,127 +104,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="card rounded-4">
-                    <img
-                      src="/assets/shop/products.png"
-                      class="img-fluid"
-                      alt=""
-                    />
-
-                    <div class="card-body text-center">
-                      <h5 class="card-title fw-bold">Whole Beef</h5>
-                      <p>100lbs of Quality Beef Cuts</p>
-                      <div class="d-flex justify-content-around">
-                        <span class="card-text fw-bold">$3,800.00</span>
-                        <div class="vr"></div>
-                        <div class="d-flex text-orange">
-                          <i class="bi bi-cart-plus-fill"></i>
-                          <span class="mx-3">Add</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="card rounded-4">
-                    <img
-                      src="/assets/shop/products.png"
-                      class="img-fluid"
-                      alt=""
-                    />
-
-                    <div class="card-body text-center">
-                      <h5 class="card-title fw-bold">Whole Beef</h5>
-                      <p>50lbs of Quality Beef Cuts</p>
-                      <div class="d-flex justify-content-around">
-                        <span class="card-text fw-bold">$3,800.00</span>
-                        <div class="vr"></div>
-                        <div class="d-flex text-orange">
-                          <i class="bi bi-cart-plus-fill"></i>
-                          <span class="mx-3">Add</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="card rounded-4">
-                    <img
-                      src="/assets/shop/products.png"
-                      class="img-fluid"
-                      alt=""
-                    />
-
-                    <div class="card-body text-center">
-                      <h5 class="card-title fw-bold">Whole Beef</h5>
-                      <p>16lbs of Quality Beef Cuts</p>
-                      <div class="d-flex justify-content-around">
-                        <span class="card-text fw-bold">$3,800.00</span>
-                        <div class="vr"></div>
-                        <div class="d-flex text-orange">
-                          <i class="bi bi-cart-plus-fill"></i>
-                          <span class="mx-3">Add</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="card rounded-4">
-                    <img
-                      src="/assets/shop/products.png"
-                      class="img-fluid"
-                      alt=""
-                    />
-
-                    <div class="card-body text-center">
-                      <h5 class="card-title fw-bold">Whole Beef</h5>
-                      <p>400lbs of Quality Beef Cuts</p>
-                      <div class="d-flex justify-content-around">
-                        <span class="card-text fw-bold">$3,800.00</span>
-                        <div class="vr"></div>
-                        <div class="d-flex text-orange">
-                          <i class="bi bi-cart-plus-fill"></i>
-                          <span class="mx-3">Add</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="card rounded-4">
-                    <img
-                      src="/assets/shop/products.png"
-                      class="img-fluid"
-                      alt=""
-                    />
-
-                    <div class="card-body text-center">
-                      <h5 class="card-title fw-bold">Whole Beef</h5>
-                      <p>15lbs of Quality Beef Cuts</p>
-                      <div class="d-flex justify-content-around">
-                        <span class="card-text fw-bold">$3,800.00</span>
-                        <div class="vr"></div>
-                        <div class="d-flex text-orange">
-                          <i class="bi bi-cart-plus-fill"></i>
-                          <span class="mx-3">Add</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
-
-              <!-- <nav aria-label="Page navigation " class="mt-5">
-                         <ul class="pagination pagination-lg justify-content-center">
-                            <li class="page-item active" aria-current="page">
-                               <span class="page-link border-0 rounded-0 button-orange">1</span>
-                            </li>
-                            <li class="page-item"><a class="page-link border-0" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link border-0" href="#">3</a></li>
-                         </ul>
-                       </nav> -->
             </div>
           </div>
         </div>
