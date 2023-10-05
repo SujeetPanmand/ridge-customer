@@ -1,0 +1,39 @@
+.bgblog {
+   background-image: url("/assets/blogdetails/blogbanner.png");
+   height: 500px;
+   background-repeat: no-repeat;
+   background-size: cover;
+   position: relative;
+}
+
+.about-text {
+   position: absolute;
+   top: 50%;
+   left: 35%;
+   transform: translate(-50%, -50%);
+}
+
+.comment {
+   font: normal normal 600 30px/36px Muli;
+   letter-spacing: 0.75px;
+   color: #666666;
+   opacity: 1;
+}
+
+.btn:hover {
+   background: transparent;
+   color: #ef4c00;
+}
+.img-lisa{
+   height: 40px;
+   width: 40px;
+}
+
+.border {
+   border-color: #EF4C00 !important;
+}
+@media (max-width: 576px) {
+   .about-text {
+      left: 50%;
+   }
+}
