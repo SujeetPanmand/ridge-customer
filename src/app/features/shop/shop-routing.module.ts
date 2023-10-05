@@ -5,6 +5,7 @@ import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 const routes: Routes = [
   {
@@ -16,16 +17,20 @@ const routes: Routes = [
     component: CartComponent,
   },
   {
-    path: 'cart/checkout',
+    path: 'checkout',
     component: CheckoutComponent,
   },
   {
-    path: 'cart/payment',
+    path: 'payment',
     component: PaymentComponent,
   },
   {
-    path: 'cart/order-confirmation',
+    path: 'order-confirmation',
     component: OrderConfirmationComponent,
+  },
+  {
+    path: 'product-details',
+    component: ProductDetailsComponent,
   },
 ];
 
