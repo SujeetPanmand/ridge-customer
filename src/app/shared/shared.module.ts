@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { CommonService } from './services/common.service';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [],
@@ -10,9 +11,16 @@ import { CommonService } from './services/common.service';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
+    NgbModule,
     ToastrModule.forRoot(),
   ],
-  exports: [FormsModule, ReactiveFormsModule, CommonModule, ToastrModule],
-  providers: [ToastrService, CommonService],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    ToastrModule,
+    NgbModule,
+  ],
+  providers: [ToastrService, CommonService, NgbActiveModal],
 })
 export class SharedModule {}
