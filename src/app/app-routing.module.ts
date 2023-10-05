@@ -43,6 +43,11 @@ const routes: Routes = [
           import('./features/blog/blog.module').then((a) => a.BlogModule),
       },
       {
+        path: 'contact',
+        loadChildren: () =>
+          import('./features/contact/contact.module').then((a) => a.ContactModule),
+      },
+      {
         path: '*',
         redirectTo: '/',
         pathMatch: 'full',

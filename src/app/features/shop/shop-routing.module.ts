@@ -4,6 +4,7 @@ import { ShopComponent } from './shop.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
+import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'cart/payment',
     component: PaymentComponent,
+  },
+  {
+    path: 'cart/order-confirmation',
+    component: OrderConfirmationComponent,
   },
 ];
 
