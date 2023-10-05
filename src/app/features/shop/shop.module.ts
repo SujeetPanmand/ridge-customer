@@ -7,8 +7,9 @@ import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 @NgModule({
-  declarations: [ShopComponent,CartComponent, CheckoutComponent,PaymentComponent,OrderConfirmationComponent],
+  declarations: [ShopComponent,CartComponent, CheckoutComponent,PaymentComponent,OrderConfirmationComponent, ProductDetailsComponent],
   imports: [CommonModule, ShopRoutingModule, SharedModule],
 })
 export class ShopModule {}

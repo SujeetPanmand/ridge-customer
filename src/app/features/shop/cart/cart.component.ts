@@ -12,6 +12,6 @@ export class CartComponent implements OnInit {
   ngOnInit() {}
 
   makePayment() {
-    this.router.navigate(['shop/cart/checkout']);
+    this.router.navigate(['shop/checkout']);
   }
 }

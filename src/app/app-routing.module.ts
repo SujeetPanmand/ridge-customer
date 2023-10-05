@@ -30,13 +30,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('./features/shop/shop.module').then((a) => a.ShopModule),
       },
-      {
-        path: 'product-details',
-        loadChildren: () =>
-          import('./features/product-details/product-details.module').then(
-            (a) => a.ProductDetailsModule
-          ),
-      },
+
       {
         path: 'blog',
         loadChildren: () =>
@@ -45,7 +39,9 @@ const routes: Routes = [
       {
         path: 'contact',
         loadChildren: () =>
-          import('./features/contact/contact.module').then((a) => a.ContactModule),
+          import('./features/contact/contact.module').then(
+            (a) => a.ContactModule
+          ),
       },
       {
         path: '*',
