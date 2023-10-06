@@ -19,34 +19,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="border-bottom my-5">
-              <td>
-                <i class="bi bi-x text-danger pe-1"></i>
-                <img
-                  src="assets/cart/about-banner.png"
-                  class="img-fluid table-img"
-                />
-              </td>
-              <td>
-                <h5>Whole Beef</h5>
-                <p class="text-truncate col-7">180 Lbs – Ground Beef</p>
-              </td>
-              <td>$499</td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <a href="#" class="quantity__minus"><span>-</span></a>
-                  <input
-                    name="quantity"
-                    type="text"
-                    class="quantity__input"
-                    value="1"
-                  />
-                  <a href="#" class="quantity__plus"><span>+</span></a>
-                </div>
-              </td>
-              <td>$998</td>
-            </tr>
-            <tr class="border-bottom">
+            <tr *ngFor="let product of orderProducts" class="border-bottom">
               <td>
                 <i class="bi bi-x text-danger pe-1"></i
                 ><img
@@ -55,10 +28,10 @@
                 />
               </td>
               <td>
-                <h5>Whole Beef</h5>
-                <p class="text-truncate col-7">180 Lbs – Ground Beef</p>
+                <h5>{{ product.name }}</h5>
+                <p class="text-truncate col-7">{{ product.quantity }}</p>
               </td>
-              <td>$499</td>
+              <td>{{ product.price }}</td>
               <td>
                 <div class="d-flex align-items-center">
                   <a href="#" class="quantity__minus"><span>-</span></a>
@@ -71,12 +44,7 @@
                   <a href="#" class="quantity__plus"><span>+</span></a>
                 </div>
               </td>
-              <td>$998</td>
-            </tr>
-            <tr class="">
-              <td colspan="3"></td>
-              <td class="py-4 border-bottom fw-semibold">Subtotal</td>
-              <td class="py-4 border-bottom fw-semibold">$1,996</td>
+              <td>{{ product.totalPrice }}</td>
             </tr>
             <tr>
               <td colspan="3"></td>
