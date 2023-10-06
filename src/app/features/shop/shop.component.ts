@@ -14,6 +14,7 @@ export class ShopComponent implements OnInit {
   constructor(private apiService: ApiService, private router: Router) {}
   ngOnInit() {
     // this.getAllProducts();
+    this.addedProducts = JSON.parse(localStorage.getItem('cart'));
   }
 
   getAllProducts() {
