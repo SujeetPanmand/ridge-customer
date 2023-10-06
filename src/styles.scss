@@ -87,3 +87,15 @@ p {
 .cursor {
   cursor: pointer !important;
 }
+.rounded-circle {
+  border-radius: 50% !important;
+}
+.badge-danger {
+  color: #fff;
+  background-color: #e63757;
+}
+.notification {
+  width: 17px;
+  font-size: 12px;
+  height: 17px;
+}

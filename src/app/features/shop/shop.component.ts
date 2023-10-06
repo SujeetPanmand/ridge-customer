@@ -10,10 +10,13 @@ import { Router } from '@angular/router';
 })
 export class ShopComponent implements OnInit {
   productList = productList;
-  addedProducts = [];
+  addedProducts: any[] = [];
   constructor(private apiService: ApiService, private router: Router) {}
   ngOnInit() {
     // this.getAllProducts();
+    this.addedProducts = JSON.parse(localStorage.getItem('cart'))
+      ? JSON.parse(localStorage.getItem('cart'))
+      : [];
   }
 
   getAllProducts() {
