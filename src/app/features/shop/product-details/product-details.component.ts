@@ -23,7 +23,7 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit() {
     this.defaultSetting();
     //this.getProductDetails();
-    this.getAllReletedProducts();
+    // this.getAllReletedProducts();
   }
   defaultSetting() {
     this.addedProducts = JSON.parse(localStorage.getItem('cart'))
@@ -51,17 +51,13 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getAllReletedProducts() {
-    // this.apiService
-    //   .request('GET_ALL_PRODUCTS', { params: { id: '' } })
-    //   .subscribe((res) => {
-    //     if (res) {
-    //       console.log(res);
-    //     }
-    //   });
-
-    this.reletedProductsList = this.productList.filter(
-      (element) => !this.addedProducts.includes((x) => x.id == element.id)
-    );
+    this.apiService
+      .request('GET_ALL_PRODUCTS', { params: { id: '' } })
+      .subscribe((res) => {
+        if (res) {
+          console.log(res);
+        }
+      });
   }
 
   addMoreToCart(flag) {
