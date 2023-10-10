@@ -21,12 +21,29 @@
   background: transparent;
   color: #ef4c00;
 }
+
 .border {
   border-color: #EF4C00 !important;
+  border: 2px solid #fcded0 !important
 }
 
 @media (max-width: 576px) {
   .about-text {
     left: 50%;
   }
+}
+
+
+
+.date {
+  font: normal normal bold 14px/17px muli;
+  letter-spacing: 0.35px;
+  color: #262626;
+  text-transform: capitalize;
+  opacity: 1;
+}
+
+.comment {
+  font: normal normal bold 14px/17px muli ;
+  letter-spacing: 0.35px;
 }
