@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +15,11 @@ export class CartComponent implements OnInit {
   removeFromCartItem;
   @ViewChild('removeItemFromCartTemplate', { static: false })
   private removeItemFromCartTemplate: ElementRef;
-  constructor(private router: Router, private modalService: NgbModal) {}
+  constructor(
+    private router: Router,
+    private modalService: NgbModal,
+    private commonService: CommonService
+  ) {}
 
   ngOnInit() {
     this.defaultSetting();
@@ -26,6 +31,11 @@ export class CartComponent implements OnInit {
     this.addedProducts = JSON.parse(localStorage.getItem('cart'))
       ? JSON.parse(localStorage.getItem('cart'))
       : [];
+    //to set header count
+    this.commonService.cartProducts = this.addedProducts
+      ? this.addedProducts.length
+      : 0;
+    console.log('service data', this.commonService.cartProducts);
     this.addedProducts.forEach((x) => {
       let index = this.orderProducts.findIndex((y) => y.id == x.id);
       if (index < 0) {

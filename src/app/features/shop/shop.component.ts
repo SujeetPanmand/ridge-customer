@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { productList } from './shop.config';
 import { Router } from '@angular/router';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-shop',
@@ -11,7 +12,11 @@ import { Router } from '@angular/router';
 export class ShopComponent implements OnInit {
   productList = productList;
   addedProducts: any[] = [];
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private commonService: CommonService
+  ) {}
   ngOnInit() {
     // this.getAllProducts();
     this.addedProducts = JSON.parse(localStorage.getItem('cart'))
@@ -36,5 +41,8 @@ export class ShopComponent implements OnInit {
     this.addedProducts.push(product);
     console.log(this.addedProducts);
     localStorage.setItem('cart', JSON.stringify(this.addedProducts));
+    this.commonService.cartProducts = this.addedProducts
+      ? this.addedProducts.length
+      : 0;
   }
 }
