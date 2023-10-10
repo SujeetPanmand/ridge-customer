@@ -21,7 +21,10 @@
           <tbody>
             <tr *ngFor="let product of orderProducts" class="border-bottom">
               <td>
-                <i class="bi bi-x text-danger pe-1"></i
+                <i
+                  (click)="confirmBeforeRemoval(product)"
+                  class="bi bi-x text-danger pe-1"
+                ></i
                 ><img
                   src="assets/cart/article1.png"
                   class="img-fluid table-img"
@@ -34,24 +37,35 @@
               <td>{{ product.price }}</td>
               <td>
                 <div class="d-flex align-items-center">
-                  <a href="#" class="quantity__minus"><span>-</span></a>
+                  <a class="quantity__minus"
+                    ><span
+                      class="cursor"
+                      (click)="addMoreItem(product, 'minus')"
+                      >-</span
+                    ></a
+                  >
                   <input
                     name="quantity"
                     type="text"
+                    [(ngModel)]="product.count"
                     class="quantity__input"
-                    value="1"
+                    disabled
                   />
-                  <a href="#" class="quantity__plus"><span>+</span></a>
+                  <a class="quantity__plus"
+                    ><span class="cursor" (click)="addMoreItem(product, 'plus')"
+                      >+</span
+                    ></a
+                  >
                 </div>
               </td>
               <td>{{ product.totalPrice }}</td>
             </tr>
-            <tr>
+            <tr *ngIf="orderProducts.length > 0">
               <td colspan="3"></td>
               <td class="py-3 fs-2 fw-semibold">TOTAL</td>
               <td class="py-3 fs-2 fw-semibold">$2,106</td>
             </tr>
-            <tr>
+            <tr *ngIf="orderProducts.length > 0">
               <td colspan="3"></td>
               <td colspan="2">
                 <button
@@ -63,6 +77,12 @@
                 </button>
               </td>
             </tr>
+            <tr *ngIf="orderProducts.length == 0">
+              <td colspan="2"></td>
+              <td class="fw-semibold text-center" colspan="2">
+                No products added.
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -70,25 +90,24 @@
   </div>
 </section>
 
-<script>
-  $(document).ready(function () {
-    const minus = $(".quantity__minus");
-    const plus = $(".quantity__plus");
-    const input = $(".quantity__input");
-    minus.click(function (e) {
-      e.preventDefault();
-      var value = input.val();
-      if (value > 1) {
-        value--;
-      }
-      input.val(value);
-    });
-
-    plus.click(function (e) {
-      e.preventDefault();
-      var value = input.val();
-      value++;
-      input.val(value);
-    });
-  });
-</script>
+<ng-template #removeItemFromCartTemplate let-modal>
+  <div class="modal-header border-bottom py-2">
+    <h5 class="modal-title">Confirmation</h5>
+    <i class="fas fa-times close-icon mt-2" (click)="modal.close()"></i>
+  </div>
+  <div class="modal-body">
+    <div class="pb-2 px-2">
+      <div class="py-2 text-black">
+        <span>Would you Like To Remove Item From Cart?</span>
+      </div>
+      <div class="mt-2 d-flex justify-content-end">
+        <button type="button" class="btn rounded-1 button-warning me-2">
+          Yes
+        </button>
+        <button class="btn btn-light-primary" (click)="modal.close()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

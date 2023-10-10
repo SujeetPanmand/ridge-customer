@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-cart',
@@ -9,13 +10,17 @@ import { Router } from '@angular/router';
 export class CartComponent implements OnInit {
   addedProducts = [];
   orderProducts = [];
-  constructor(private router: Router) {}
+  removeFromCartItem;
+  @ViewChild('removeItemFromCartTemplate', { static: false })
+  private removeItemFromCartTemplate: ElementRef;
+  constructor(private router: Router, private modalService: NgbModal) {}
 
   ngOnInit() {
     this.defaultSetting();
   }
 
   defaultSetting() {
+    this.orderProducts = [];
     this.addedProducts = JSON.parse(localStorage.getItem('cart'))
       ? JSON.parse(localStorage.getItem('cart'))
       : [];
@@ -46,5 +51,28 @@ export class CartComponent implements OnInit {
 
   makePayment() {
     this.router.navigate(['shop/checkout']);
+  }
+  addMoreItem(item, str) {
+    if (str == 'minus') {
+      const index = this.addedProducts.findIndex((x) => x.id == item.id);
+      this.addedProducts.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(this.addedProducts));
+      this.defaultSetting();
+    } else {
+      const index = this.addedProducts.findIndex((x) => x.id == item.id);
+      console.log('added part', this.addedProducts[index]);
+      this.addedProducts.push(this.addedProducts[index]);
+      console.log('list', this.addedProducts);
+      localStorage.setItem('cart', JSON.stringify(this.addedProducts));
+      this.defaultSetting();
+    }
+  }
+
+  confirmBeforeRemoval(item) {
+    this.removeFromCartItem = item;
+    this.modalService.open(this.removeItemFromCartTemplate, {
+      centered: true,
+      size: 'md',
+    });
   }
 }

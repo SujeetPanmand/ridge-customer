@@ -1,41 +1,56 @@
 .table-img {
-    height: 100px;
-    width: 120px;
- }      
-      
-      /* css  start to Increment/decrement counter */
+  height: 100px;
+  width: 120px;
+}
 
-      .quantity__minus,
-      .quantity__plus {
-         display: block;
-         width: 29px;
-         height: 28px;
-         background: #F6F7F8;
-         text-decoration: none;
-         text-align: center;
-         color: #EF4C00;
-         font-weight: 600;
-         font-size: 18px;
-      }
+/* css  start to Increment/decrement counter */
 
-      .quantity__minus:hover,
-      .quantity__plus:hover {
-         background: #F6F7F8;
-         color: #EF4C00;
-      }
+.quantity__minus,
+.quantity__plus {
+  display: block;
+  width: 29px;
+  height: 28px;
+  background: #f6f7f8;
+  text-decoration: none;
+  text-align: center;
+  color: #ef4c00;
+  font-weight: 600;
+  font-size: 18px;
+}
 
-      .quantity__input {
-         width: 32px;
-         height: 28px;
-         margin: 0;
-         padding: 0;
-         text-align: center;
-         border: none;
-         background: #F6F7F8;
-         color: black;
-      }
+.quantity__minus:hover,
+.quantity__plus:hover {
+  background: #f6f7f8;
+  color: #ef4c00;
+}
 
-      .quantity__minus:visited,
-      .quantity__plus:visited {
-         color: #EF4C00;
-      }
+.quantity__input {
+  width: 32px;
+  height: 28px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  border: none;
+  background: #f6f7f8;
+  color: black;
+}
+
+.quantity__minus:visited,
+.quantity__plus:visited {
+  color: #ef4c00;
+}
+
+.grid-empty-block {
+  position: absolute;
+  display: inline-block;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
+
+.button-warning {
+  background-color: #ef4c00;
+  color: #fff;
+  font-family: "Muli";
+  padding: 11px 32px;
+}
