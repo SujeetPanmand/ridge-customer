@@ -62,43 +62,40 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr *ngFor="let product of finalOrderProducts">
                   <td>#NG4595F57952</td>
                   <td>9/12/2023</td>
-                  <td>Native Grass-Fed Artisan Beef X 2</td>
-                  <td>$998</td>
+                  <td>
+                    {{ product.name }} X <span>{{ product.count }}</span>
+                  </td>
+                  <td>{{ product.totalPrice }}</td>
                 </tr>
-                <tr>
-                  <td colspan="2"></td>
-                  <td>Organic And Grass-Fed X 2</td>
-                  <td>$998</td>
-                </tr>
+
                 <tr>
                   <td colspan="2"></td>
                   <td>Subtotal</td>
-                  <td>$1,996</td>
+                  <td>{{ orderSubTotal }}</td>
                 </tr>
                 <tr>
                   <td colspan="2"></td>
                   <td>Shipping</td>
-                  <td>$40</td>
+                  <td>{{ SHIPPING_AMOUNT }}</td>
                 </tr>
                 <tr>
                   <td colspan="2"></td>
                   <td class="pb-4">Tax</td>
-                  <td class="pb-4">$70</td>
+                  <td class="pb-4">{{ TAX_AMOUNT }}</td>
                 </tr>
 
                 <tr>
                   <td colspan="2"></td>
                   <td class="line-top fw-semibold">Total</td>
-                  <td class="line-top fw-semibold">$2,106</td>
+                  <td class="line-top fw-semibold">{{ orderTotal }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -117,7 +114,10 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5 text-orange fw-semibold" id="staticBackdropLabel">
+        <h1
+          class="modal-title fs-5 text-orange fw-semibold"
+          id="staticBackdropLabel"
+        >
           Custom Cut Selection Reminder
         </h1>
         <button
