@@ -16,7 +16,7 @@
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                (change)="onChangeType($any($event.target).checked)"
                 id="selfPickup"
               />
               <label class="form-check-label" for="selfPickup">
@@ -24,12 +24,12 @@
               </label>
             </div>
 
-            <div class="mb-3" id="deliveryOptions">
+            <div *ngIf="isSelfPickUp" class="mb-3" id="deliveryOptions">
               <h2 class="text-title">Ranch Address</h2>
               <hr class="border" />
               <p>San Gabriel River In Liberty Hill, Austin, Texas -73301</p>
             </div>
-            <div id="shippingAddress">
+            <div *ngIf="!isSelfPickUp" id="shippingAddress">
               <h2 class="text-title">Shipping Address</h2>
               <hr class="border" />
 
@@ -270,7 +270,9 @@
             </div>
 
             <div class="mb-3 shadow-sm border p-4">
-              <div class="text-title pb-2">Delivary Date &Time</div>
+              <div class="text-title pb-2">
+                {{ isSelfPickUp ? "Pickup" : "Delivery" }} Date &Time
+              </div>
               <div class="mb-3 fw-semibold">
                 Please select the delivary date for this order
               </div>

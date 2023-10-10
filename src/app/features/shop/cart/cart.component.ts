@@ -65,6 +65,10 @@ export class CartComponent implements OnInit {
   }
 
   makePayment() {
+    localStorage.setItem(
+      'finalOrderProducts',
+      JSON.stringify(this.orderProducts)
+    );
     this.router.navigate(['shop/checkout']);
   }
   addMoreItem(item, str) {
