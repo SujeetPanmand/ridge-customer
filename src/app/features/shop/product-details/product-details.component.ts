@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { productList } from '../shop.config';
 import { findIndex } from 'rxjs';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-product-details',
@@ -18,7 +19,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
+    private commonService: CommonService
   ) {}
   ngOnInit() {
     this.defaultSetting();
@@ -37,6 +39,9 @@ export class ProductDetailsComponent implements OnInit {
         this.addMultipe = this.addMultipe + 1;
       }
     });
+    this.commonService.cartProducts = this.addedProducts
+      ? this.addedProducts.length
+      : 0;
   }
   getProductDetails() {
     this.apiService
@@ -72,5 +77,8 @@ export class ProductDetailsComponent implements OnInit {
     }
     console.log(this.addedProducts);
     localStorage.setItem('cart', JSON.stringify(this.addedProducts));
+    this.commonService.cartProducts = this.addedProducts
+      ? this.addedProducts.length
+      : 0;
   }
 }

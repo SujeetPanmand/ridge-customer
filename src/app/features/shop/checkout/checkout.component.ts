@@ -6,25 +6,29 @@ import { Component } from '@angular/core';
   styleUrls: ['./checkout.component.scss'],
 })
 export class CheckoutComponent {
-  selfPickupCheckbox: HTMLInputElement; // Declare the variable here
-
+  TAX_AMOUNT = 70;
+  SHIPPING_AMOUNT = 40;
+  isSelfPickUp = false;
+  finalOrderProducts = [];
+  orderTotal = 0;
+  orderSubTotal = 0;
   ngOnInit() {
-    // Add an event listener to the "Self Pickup" checkbox
-    this.selfPickupCheckbox = document.getElementById(
-      'selfPickup'
-    ) as HTMLInputElement;
-    const deliveryOptions = document.getElementById('deliveryOptions');
-    const shippingAddress = document.getElementById('shippingAddress');
-    this.selfPickupCheckbox.addEventListener('change', () => {
-      if (this.selfPickupCheckbox.checked) {
-        // If the checkbox is checked (self pickup selected), hide the delivery options
-        deliveryOptions.style.display = 'block';
-        shippingAddress.style.display = 'none';
-      } else {
-        // If the checkbox is unchecked (delivery selected), show the delivery options
-        deliveryOptions.style.display = 'none';
-        shippingAddress.style.display = 'block';
-      }
+    this.defaultSetting();
+  }
+
+  defaultSetting() {
+    this.finalOrderProducts = JSON.parse(
+      localStorage.getItem('finalOrderProducts')
+    )
+      ? JSON.parse(localStorage.getItem('finalOrderProducts'))
+      : [];
+    this.finalOrderProducts.forEach((x) => {
+      this.orderSubTotal = this.orderSubTotal + x.totalPrice;
     });
+    this.orderTotal =
+      this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+  }
+  onChangeType(flag) {
+    this.isSelfPickUp = flag;
   }
 }

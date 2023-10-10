@@ -70,9 +70,13 @@
             class="ms-auto d-flex flex-column flex-md-row justify-content-end text-light"
           >
             <span> <i class="bi bi-search icon mx-3"></i></span>
-            <a routerLink="/shop/cart" class="text-white"
-              ><i class="bi bi-cart icon mx-3"></i
-            ></a>
+            <a routerLink="/shop/cart" class="text-white no-decoration"
+              ><i class="bi bi-cart icon"></i>
+              <div class="cart-count badge-danger rounded-circle text-center">
+                <span> {{ commonService.cartProducts }}</span>
+              </div>
+            </a>
+
             <div class="dropdown">
               <button
                 class="btn border-0 p-0"
