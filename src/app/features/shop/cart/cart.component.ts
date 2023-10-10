@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class CartComponent implements OnInit {
   addedProducts = [];
   orderProducts = [];
+  orderTotal = 0;
   removeFromCartItem;
   @ViewChild('removeItemFromCartTemplate', { static: false })
   private removeItemFromCartTemplate: ElementRef;
@@ -21,6 +22,7 @@ export class CartComponent implements OnInit {
 
   defaultSetting() {
     this.orderProducts = [];
+    this.orderTotal = 0;
     this.addedProducts = JSON.parse(localStorage.getItem('cart'))
       ? JSON.parse(localStorage.getItem('cart'))
       : [];
@@ -47,6 +49,9 @@ export class CartComponent implements OnInit {
       }
     });
     console.log(this.orderProducts);
+    this.orderProducts.forEach((x) => {
+      this.orderTotal = this.orderTotal + x.totalPrice;
+    });
   }
 
   makePayment() {
@@ -74,5 +79,14 @@ export class CartComponent implements OnInit {
       centered: true,
       size: 'md',
     });
+  }
+
+  removeItemFromCart() {
+    this.addedProducts = this.addedProducts.filter(
+      (x) => x.id !== this.removeFromCartItem.id
+    );
+    localStorage.setItem('cart', JSON.stringify(this.addedProducts));
+    this.defaultSetting();
+    this.modalService.dismissAll();
   }
 }

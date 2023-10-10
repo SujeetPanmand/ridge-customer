@@ -63,7 +63,7 @@
             <tr *ngIf="orderProducts.length > 0">
               <td colspan="3"></td>
               <td class="py-3 fs-2 fw-semibold">TOTAL</td>
-              <td class="py-3 fs-2 fw-semibold">$2,106</td>
+              <td class="py-3 fs-2 fw-semibold">{{ orderTotal }}</td>
             </tr>
             <tr *ngIf="orderProducts.length > 0">
               <td colspan="3"></td>
@@ -101,7 +101,11 @@
         <span>Would you Like To Remove Item From Cart?</span>
       </div>
       <div class="mt-2 d-flex justify-content-end">
-        <button type="button" class="btn rounded-1 button-warning me-2">
+        <button
+          (click)="removeItemFromCart()"
+          type="button"
+          class="btn rounded-1 button-warning me-2"
+        >
           Yes
         </button>
         <button class="btn btn-light-primary" (click)="modal.close()">
