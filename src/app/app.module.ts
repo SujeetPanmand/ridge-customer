@@ -8,6 +8,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoadingInterceptorService } from './shared/services/loading-interceptor.service';
 import { CoreModule } from './core/core.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { CommonService } from './shared/services/common.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
       useClass: LoadingInterceptorService,
       multi: true,
     },
+    CommonService,
   ],
   bootstrap: [AppComponent],
 })

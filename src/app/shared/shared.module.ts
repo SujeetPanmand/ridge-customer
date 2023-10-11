@@ -21,6 +21,6 @@ import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ToastrModule,
     NgbModule,
   ],
-  providers: [ToastrService, CommonService, NgbActiveModal],
+  providers: [ToastrService, NgbActiveModal],
 })
 export class SharedModule {}

@@ -9,7 +9,12 @@ import { CommonService } from 'src/app/shared/services/common.service';
 })
 export class HeaderComponent implements OnInit {
   addedProducts = [];
-  constructor(private router: Router, public commonService: CommonService) {}
+  cartValue = 0;
+  constructor(private router: Router, private commonService: CommonService) {
+    this.commonService.cartProductValue.subscribe((val) => {
+      this.cartValue = val;
+    });
+  }
   ngOnInit(): void {}
 
   navigateToAbout() {

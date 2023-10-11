@@ -41,8 +41,6 @@ export class ShopComponent implements OnInit {
     this.addedProducts.push(product);
     console.log(this.addedProducts);
     localStorage.setItem('cart', JSON.stringify(this.addedProducts));
-    this.commonService.cartProducts = this.addedProducts
-      ? this.addedProducts.length
-      : 0;
+    this.commonService.addProducts(this.addedProducts.length);
   }
 }
