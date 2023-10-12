@@ -12,7 +12,15 @@ const authEndPoint = [
   },
 ];
 
+const shopEndPoints = [
+  {
+    name: 'GET_ALL_PRODUCTS',
+    method: 'GET',
+    url: environment.baseUrl + '/api/product',
+  },
+];
+
 export const ApiConfig = {
   baseUrl: '',
-  endpoints: [...authEndPoint],
+  endpoints: [...authEndPoint, ...shopEndPoints],
 };
