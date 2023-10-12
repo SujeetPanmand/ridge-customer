@@ -11,6 +11,7 @@ const authEndPoint = [
     url: environment.baseUrl + '/api/auth/sign-up',
   },
 ];
+
 export const ApiConfig = {
   baseUrl: '',
   endpoints: [...authEndPoint],
