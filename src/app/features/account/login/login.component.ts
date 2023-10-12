@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
     field: string,
     errorName: string
   ): boolean =>
-    formGroup.get(field).errors
+    formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
 }

@@ -59,13 +59,12 @@ export class ContactComponent implements OnInit {
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>
     formGroup.get(field).invalid &&
     (this.formSubmitAttempt || formGroup.get(field).touched);
-
   hasError = (
     formGroup: FormGroup,
     field: string,
     errorName: string
   ): boolean =>
-    formGroup.get(field).errors
+    formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
 }
