@@ -25,7 +25,15 @@ const shopEndPoints = [
   },
 ];
 
+const contactEndPoints = [
+  {
+    name: 'CONTACT_US',
+    method: 'POST',
+    url: environment.baseUrl + '/api/contactUs/add-contactUs',
+  },
+];
+
 export const ApiConfig = {
   baseUrl: '',
-  endpoints: [...authEndPoint, ...shopEndPoints],
+  endpoints: [...authEndPoint, ...shopEndPoints, ...contactEndPoints],
 };
