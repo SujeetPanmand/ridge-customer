@@ -129,7 +129,9 @@
                           >
                           <div class="vr"></div>
                           <div
-                            (click)="addProductToCart($event, product)"
+                            (click)="
+                              selectCut($event, selectCutTemplate, product)
+                            "
                             class="d-flex text-orange"
                           >
                             <i class="bi bi-cart-plus-fill"></i>
@@ -187,156 +189,62 @@
   </div>
 </section>
 
-<!-- ------preorder Modal start------- -->
-
-<div
-  class="modal fade"
-  id="preorderModal"
-  data-bs-backdrop="static"
-  tabindex="-1"
-  aria-labelledby="preorderModal"
-  aria-hidden="false"
->
-  <div
-    class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
-  >
-    <div class="modal-content">
-      <div class="modal-body bg-white">
-        <div class="row justify-content-center">
-          <div class="d-flex justify-content-between mb-3">
-            <span class="preorder-title"> Preorder Information </span>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <hr class="border" />
-          <div class="px-4 pb-3">
-            <h6 class="preorder-subtitle">Product Name</h6>
-            <h6>Native grass-fed artisan beef</h6>
-            <h6 class="pt-2 preorder-subtitle">Expected Availability Date</h6>
-            <h6>9/20/2023</h6>
-          </div>
-          <div class="col-11 p-4 bg-light-gray">
-            <h6 class="text-center fw-bold pt-2">Delivery Note</h6>
-            <ul>
-              <li class="pt-2">
-                Preorder items will be shipped as soon as they become available
-                on the expected availability date.
-              </li>
-              <li class="pt-2">
-                The remaining balance will be due at the time of delivery or
-                pickup.
-              </li>
-              <li class="pt-2">
-                Partial payment for preorder items will be processed
-                immediately.
-              </li>
-              <li class="pt-2">
-                We will send you a notification with the payment due date and
-                instructions for settling the remaining balance.
-              </li>
-              <li class="pt-2">
-                After customers place a preorder, order confirmation and regular
-                updates about the status of preordered items will be provided,
-                especially if there are delays or changes.
-              </li>
-            </ul>
-          </div>
-          <hr class="border" />
-          <div class="d-flex justify-content-center align-items-center">
-            <button type="button" class="btn mx-3" data-bs-dismiss="modal">
-              Cancle
-            </button>
-            <button
-              type="button"
-              class="btn rounded-0 button-orange"
-              data-bs-toggle="modal"
-              data-bs-target="#selectCutModal"
-            >
-              Confirm Preorder
-            </button>
-          </div>
+<ng-template #selectCutTemplate let-modal>
+  <div class="modal-header border-bottom py-2">
+    <h5 class="modal-title preorder-title text-orange">Select Cut</h5>
+    <i class="fas fa-times close-icon mt-2" (click)="modal.close()"></i>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="cutForm">
+      <div class="d-flex">
+        <div class="form-check ml-0 form-check-inline">
+          <input
+            formControlName="searchCheckOption"
+            name="searchCheckOption"
+            class="form-check-input"
+            type="radio"
+            id="standard"
+            value="standard"
+          />
+          <label class="form-check-label" for="standard">Standard Cut</label>
+        </div>
+        <div class="form-check ml-0 form-check-inline">
+          <input
+            formControlName="searchCheckOption"
+            name="searchCheckOption"
+            class="form-check-input"
+            type="radio"
+            id="custom"
+            value="custom"
+          />
+          <label class="form-check-label" for="custom">Custom Cut</label>
         </div>
       </div>
+    </form>
+
+    <div class="border mt-2 mx-4">
+      <ul class="list-unstyled p-3">
+        <li>180 lbs – Ground Beef 2</li>
+        <li>
+          120 lbs – Assorted Roasts (Chuck, Brisket (2), Short Ribs, Rump, Arm,
+          Round)
+        </li>
+        <li>
+          72 lbs - Premium Steaks (Filet, Bone-In Ribeye, Boneless Ribeye, NY
+          Strip)
+        </li>
+        <li>8 lbs - Family Steaks (Sirloin, Bavette, Flat Iron, Tri Tip)</li>
+      </ul>
     </div>
   </div>
-</div>
-<!-- --------preorder Modal end---------- -->
-
-<!-- ------select cut Modal start------- -->
-<div
-  class="modal"
-  id="selectCutModal"
-  data-bs-backdrop="static"
-  tabindex="-1"
-  aria-labelledby="selectCutModal"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title preorder-title text-orange">Select Cut</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <div class="d-flex">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="standardCut"
-              checked
-            />
-            <label class="form-check-label" for="standardCut">
-              Standard Cut
-            </label>
-          </div>
-          <div class="form-check ms-3">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="customCut"
-            />
-            <label class="form-check-label" for="customCut"> Custom Cut </label>
-          </div>
-        </div>
-        <div class="border mt-2 mx-4">
-          <ul class="list-unstyled p-3">
-            <li>180 lbs – Ground Beef 2</li>
-            <li>
-              120 lbs – Assorted Roasts (Chuck, Brisket (2), Short Ribs, Rump,
-              Arm, Round)
-            </li>
-            <li>
-              72 lbs - Premium Steaks (Filet, Bone-In Ribeye, Boneless Ribeye,
-              NY Strip)
-            </li>
-            <li>
-              8 lbs - Family Steaks (Sirloin, Bavette, Flat Iron, Tri Tip)
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn" data-bs-dismiss="modal">
-          Cancel
-        </button>
-        <button onclick="" type="button" class="btn rounded-0 button-orange">
-          Add to Cart
-        </button>
-      </div>
-    </div>
+  <div class="modal-footer justify-content-end">
+    <button type="button" class="btn" (click)="modal.close()">Cancel</button>
+    <button
+      (click)="addProductToCart()"
+      type="button"
+      class="btn rounded-0 button-orange"
+    >
+      Add to Cart
+    </button>
   </div>
-</div>
-
-<!-- --------select cut Modal end---------- -->
+</ng-template>

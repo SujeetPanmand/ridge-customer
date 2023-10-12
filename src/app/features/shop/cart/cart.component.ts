@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/shared/services/common.service';
 
@@ -19,13 +19,19 @@ export class CartComponent implements OnInit {
   orderProducts = [];
   orderTotal = 0;
   removeFromCartItem;
+  isStandardCut = false;
   @ViewChild('removeItemFromCartTemplate', { static: false })
   private removeItemFromCartTemplate: ElementRef;
   constructor(
     private router: Router,
     private modalService: NgbModal,
-    private commonService: CommonService
-  ) {}
+    private commonService: CommonService,
+    private route: ActivatedRoute
+  ) {
+    this.isStandardCut =
+      this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
+    console.log('dd', this.route.snapshot.queryParams['isStandardCut']);
+  }
 
   ngOnInit() {
     this.defaultSetting();
@@ -48,7 +54,9 @@ export class CartComponent implements OnInit {
   }
 
   makePayment() {
-    this.router.navigate(['shop/checkout']);
+    this.router.navigateByUrl(
+      `shop/checkout?${this.isStandardCut ? 'true' : 'false'}`
+    );
   }
   addMoreItem(item, str) {
     let index = this.addedProducts.findIndex((x) => x.id === item.id);
