@@ -11,7 +11,6 @@ import { CommonService } from 'src/app/shared/services/common.service';
 })
 export class ShopComponent implements OnInit {
   productList = productList;
-  addedProducts: any[] = [];
   constructor(
     private apiService: ApiService,
     private router: Router,
@@ -19,9 +18,17 @@ export class ShopComponent implements OnInit {
   ) {}
   ngOnInit() {
     // this.getAllProducts();
-    this.addedProducts = JSON.parse(localStorage.getItem('cart'))
+    this.defaultSetting();
+  }
+
+  defaultSetting() {
+    let list = JSON.parse(localStorage.getItem('cart'))
       ? JSON.parse(localStorage.getItem('cart'))
       : [];
+    list.forEach((x) => {
+      this.productList.find((item) => item.id == x.id).count = x.count;
+    });
+    this.setGlobalCartCount(list);
   }
 
   getAllProducts() {
@@ -30,17 +37,47 @@ export class ShopComponent implements OnInit {
       .subscribe((res) => {
         if (res) {
           console.log(res);
+          this.productList = this.formatRecords(res.allProducts);
         }
       });
   }
+
+  formatRecords(data) {
+    return data.map((x) => {
+      return {
+        ...x,
+        count: 0,
+      };
+    });
+  }
+
   navigateToProductDetail(product) {
     this.router.navigate([`shop/product-details/${product.id}`]);
   }
+
   addProductToCart(event, product) {
     event.stopPropagation();
-    this.addedProducts.push(product);
-    console.log(this.addedProducts);
-    localStorage.setItem('cart', JSON.stringify(this.addedProducts));
-    this.commonService.addProducts(this.addedProducts.length);
+    if (this.productList.length == 0) {
+      this.productList.push(product);
+    } else {
+      const index = this.productList.findIndex((x) => x.id == product.id);
+      if (index >= 0) {
+        this.productList[index].count = this.productList[index].count + 1;
+      } else {
+        this.productList.push(product);
+      }
+    }
+
+    console.log(this.productList);
+    localStorage.setItem('cart', JSON.stringify(this.productList));
+    this.setGlobalCartCount(this.productList);
+  }
+
+  setGlobalCartCount(data) {
+    let count = 0;
+    data.forEach((x) => {
+      count = count + x.count;
+    });
+    this.commonService.addProducts(count);
   }
 }

@@ -19,11 +19,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let product of orderProducts" class="border-bottom">
+            <tr *ngFor="let product of addedProducts" class="border-bottom">
               <td>
                 <i
-                  (click)="confirmBeforeRemoval(product)"
-                  class="bi bi-x text-danger pe-1"
+                  (click)="removeItemFromCart(product)"
+                  class="cursor bi bi-x text-danger pe-1"
                 ></i
                 ><img
                   src="assets/cart/article1.png"
@@ -58,14 +58,14 @@
                   >
                 </div>
               </td>
-              <td>{{ product.totalPrice }}</td>
+              <td>{{ product.price * product.count }}</td>
             </tr>
-            <tr *ngIf="orderProducts.length > 0">
+            <tr *ngIf="addedProducts.length > 0">
               <td colspan="3"></td>
               <td class="py-3 fs-2 fw-semibold">TOTAL</td>
               <td class="py-3 fs-2 fw-semibold">{{ orderTotal }}</td>
             </tr>
-            <tr *ngIf="orderProducts.length > 0">
+            <tr *ngIf="addedProducts.length > 0">
               <td colspan="3"></td>
               <td colspan="2">
                 <button
@@ -77,7 +77,7 @@
                 </button>
               </td>
             </tr>
-            <tr *ngIf="orderProducts.length == 0">
+            <tr *ngIf="addedProducts.length == 0">
               <td colspan="2"></td>
               <td class="fw-semibold text-center" colspan="2">
                 No products added.
@@ -101,11 +101,7 @@
         <span>Would you Like To Remove Item From Cart?</span>
       </div>
       <div class="mt-2 d-flex justify-content-end">
-        <button
-          (click)="removeItemFromCart()"
-          type="button"
-          class="btn rounded-1 button-warning me-2"
-        >
+        <button type="button" class="btn rounded-1 button-warning me-2">
           Yes
         </button>
         <button class="btn btn-light-primary" (click)="modal.close()">
