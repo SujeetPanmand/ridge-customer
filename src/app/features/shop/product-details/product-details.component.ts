@@ -22,8 +22,8 @@ export class ProductDetailsComponent implements OnInit {
     private commonService: CommonService
   ) {}
   ngOnInit() {
+    this.getProductDetails();
     this.defaultSetting();
-    //this.getProductDetails();
   }
   defaultSetting() {
     this.addedProducts = JSON.parse(localStorage.getItem('cart'))
@@ -31,9 +31,9 @@ export class ProductDetailsComponent implements OnInit {
       : [];
 
     this.reletedProductsList = this.addedProducts.filter((x) => x.count == 0);
-    this.selctedProduct = this.addedProducts.find(
-      (x) => x.id == this.route.snapshot.params['productId']
-    );
+    // this.selctedProduct = this.addedProducts.find(
+    //   (x) => x.id == this.route.snapshot.params['productId']
+    // );
     let index = this.addedProducts.findIndex(
       (x) => x.id == this.route.snapshot.params['productId']
     );
@@ -46,7 +46,7 @@ export class ProductDetailsComponent implements OnInit {
       })
       .subscribe((res) => {
         if (res) {
-          console.log(res);
+          this.selctedProduct = res.productDetails;
         }
       });
   }

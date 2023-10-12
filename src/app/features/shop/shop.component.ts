@@ -10,15 +10,14 @@ import { CommonService } from 'src/app/shared/services/common.service';
   styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent implements OnInit {
-  productList = productList;
+  productList = [];
   constructor(
     private apiService: ApiService,
     private router: Router,
     private commonService: CommonService
   ) {}
   ngOnInit() {
-    // this.getAllProducts();
-    this.defaultSetting();
+    this.getAllProducts();
   }
 
   defaultSetting() {
@@ -31,13 +30,15 @@ export class ShopComponent implements OnInit {
     this.setGlobalCartCount(list);
   }
 
-  getAllProducts() {
+  async getAllProducts() {
     this.apiService
-      .request('GET_ALL_PRODUCTS', { params: { id: '' } })
-      .subscribe((res) => {
+      .request('GET_ALL_PRODUCTS', { params: {} })
+      .subscribe(async (res) => {
         if (res) {
           console.log(res);
-          this.productList = this.formatRecords(res.allProducts);
+          this.productList = await this.formatRecords(res.allProductDetails);
+          console.log(this.productList);
+          this.defaultSetting();
         }
       });
   }
