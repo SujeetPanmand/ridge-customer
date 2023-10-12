@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/shared/services/common.service';
@@ -26,65 +32,39 @@ export class CartComponent implements OnInit {
   }
 
   defaultSetting() {
-    this.orderProducts = [];
-    this.orderTotal = 0;
     this.addedProducts = JSON.parse(localStorage.getItem('cart'))
       ? JSON.parse(localStorage.getItem('cart'))
       : [];
-    //to set header count
-    this.commonService.cartProducts = this.addedProducts
-      ? this.addedProducts.length
-      : 0;
-    console.log('service data', this.commonService.cartProducts);
+    this.addedProducts = this.addedProducts.filter((x) => x.count !== 0);
+    this.calculateOrderTotal();
+    this.setGlobalCartCount();
+  }
+
+  calculateOrderTotal() {
+    this.orderTotal = 0;
     this.addedProducts.forEach((x) => {
-      let index = this.orderProducts.findIndex((y) => y.id == x.id);
-      if (index < 0) {
-        this.orderProducts.push({
-          id: x.id,
-          price: x.price,
-          name: x.name,
-          totalPrice: x.price,
-          count: 1,
-          quantity: x.quantity,
-        });
-      } else {
-        this.orderProducts[index] = {
-          id: x.id,
-          price: x.price,
-          name: x.name,
-          totalPrice: this.orderProducts[index].totalPrice + x.price,
-          count: this.orderProducts[index].count + 1,
-          quantity: x.quantity,
-        };
-      }
-    });
-    console.log(this.orderProducts);
-    this.orderProducts.forEach((x) => {
-      this.orderTotal = this.orderTotal + x.totalPrice;
+      this.orderTotal = this.orderTotal + x.count * x.price;
     });
   }
 
   makePayment() {
-    localStorage.setItem(
-      'finalOrderProducts',
-      JSON.stringify(this.orderProducts)
-    );
     this.router.navigate(['shop/checkout']);
   }
   addMoreItem(item, str) {
+    let index = this.addedProducts.findIndex((x) => x.id === item.id);
     if (str == 'minus') {
-      const index = this.addedProducts.findIndex((x) => x.id == item.id);
-      this.addedProducts.splice(index, 1);
-      localStorage.setItem('cart', JSON.stringify(this.addedProducts));
-      this.defaultSetting();
+      this.addedProducts[index].count = this.addedProducts[index].count - 1;
+      this.setItemsToLocalStorage();
+      if (this.addedProducts[index].count == 0) {
+        this.addedProducts.splice(index, 1);
+        this.commonSection(item);
+      }
     } else {
-      const index = this.addedProducts.findIndex((x) => x.id == item.id);
-      console.log('added part', this.addedProducts[index]);
-      this.addedProducts.push(this.addedProducts[index]);
-      console.log('list', this.addedProducts);
-      localStorage.setItem('cart', JSON.stringify(this.addedProducts));
-      this.defaultSetting();
+      this.addedProducts[index].count = this.addedProducts[index].count + 1;
+      this.setItemsToLocalStorage();
     }
+    this.calculateOrderTotal();
+    this.setGlobalCartCount();
   }
 
   confirmBeforeRemoval(item) {
@@ -95,12 +75,38 @@ export class CartComponent implements OnInit {
     });
   }
 
-  removeItemFromCart() {
-    this.addedProducts = this.addedProducts.filter(
-      (x) => x.id !== this.removeFromCartItem.id
-    );
-    localStorage.setItem('cart', JSON.stringify(this.addedProducts));
-    this.defaultSetting();
-    this.modalService.dismissAll();
+  removeItemFromCart(item) {
+    let index = this.addedProducts.findIndex((x) => x.id === item.id);
+    this.addedProducts.splice(index, 1);
+    this.commonSection(item);
+    this.calculateOrderTotal();
+    this.setGlobalCartCount();
+  }
+
+  commonSection(item) {
+    let list = JSON.parse(localStorage.getItem('cart'))
+      ? JSON.parse(localStorage.getItem('cart'))
+      : [];
+    let pointer = list.findIndex((x) => x.id === item.id);
+    list.splice(pointer, 1);
+    localStorage.setItem('cart', JSON.stringify(list));
+  }
+
+  setGlobalCartCount() {
+    let count = 0;
+    this.addedProducts.forEach((x) => {
+      count = count + x.count;
+    });
+    this.commonService.addProducts(count);
+  }
+
+  setItemsToLocalStorage() {
+    let list = JSON.parse(localStorage.getItem('cart'))
+      ? JSON.parse(localStorage.getItem('cart'))
+      : [];
+    this.addedProducts.forEach((x) => {
+      list.find((item) => item.id == x.id).count = x.count;
+    });
+    localStorage.setItem('cart', JSON.stringify(list));
   }
 }
