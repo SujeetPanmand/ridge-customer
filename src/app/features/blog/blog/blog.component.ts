@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
   selector: 'app-blog',
@@ -6,8 +7,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./blog.component.scss'],
 })
 export class BlogComponent implements OnInit {
-  constructor() {}
-  ngOnInit(): void {}
+  allBlogList = [];
+  constructor(
+    private apiService: ApiService
+  ) {}
+  ngOnInit(): void {
+    this.getAllBlogs();
+  }
+  
+  getAllBlogs() {
+    this.apiService
+      .request('GET_ALL_BLOGS', { params: { id: '' } })
+      .subscribe((res) => {
+        if (res) {
+          console.log(res);
+          this.allBlogList = res.allBlogsDetailsList;
+        }
+      });
+  }
   myFunction(event) {
     var dots = event.target.previousElementSibling.querySelector('.dots');
     var moreText = event.target.previousElementSibling.querySelector('.more');
