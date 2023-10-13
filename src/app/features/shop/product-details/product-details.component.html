@@ -68,7 +68,7 @@
               </div>
               <button
                 class="btn btn ms-3 bg-pink px-4"
-                (click)="OnNavigateToCart()"
+                (click)="onNavigateToCart()"
               >
                 Add To Cart
               </button>
@@ -206,7 +206,7 @@
           </div>
         </div>
 
-        <div class="row gy-4 py-5">
+        <!-- <div class="row gy-4 py-5">
           <h2 class="fw-bold sub-title text-center">Related Products</h2>
           <div *ngFor="let product of reletedProductsList" class="col-md-3">
             <div class="card rounded-4 shadow-sm">
@@ -229,7 +229,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="row py-3">
           <div class="col-md-4 mb-3">
@@ -350,56 +350,79 @@
                     class="form-select w-75 ms-2"
                     id="rating"
                     name="rating"
+                    [(ngModel)]="rating"
+                    (change)="sortByRating()"
                     aria-label="Default select example"
                   >
-                    <option selected>All</option>
+                    <option value="">All</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
+                    <option value="4">Four</option>
+                    <option value="5">Five</option>
                   </select>
                 </div>
               </div>
             </div>
             <hr class="border" />
-
-            <div class="d-flex align-items-start pt-3">
-              <img
-                src="/assets/shop/people.jpg"
-                class="mr-3 img-fluid rounded-circle"
-                style="width: 12%"
-                alt="..."
-              />
-              <div class="ps-3">
-                <h5 class="mt-0">Monahan Astrid</h5>
-                <div>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
-                </div>
-                <div class="reviewFont">Reviewed on September 14 2023</div>
-                <h6 class="fw-bolder pt-3">Delicious Organic Ground Beef</h6>
-                <p>
-                  I ordered the organic ground beef for some home-cooked burgers
-                  and was absolutely delighted with the results. The beef had a
-                  deep, beefy flavor that made the burgers taste fantastic. It's
-                  clear that this is high-quality meat. The burgers held their
-                  shape on the grill, and the juiciness was just perfect. I'll
-                  be making this a regular purchase for sure!
-                </p>
-                <div class="gy-2">
-                  <span>Was this review helpful?</span>
-                  <span
-                    ><i class="bi bi-hand-thumbs-up-fill text-orange"></i
-                  ></span>
-                  <span>4</span>
-                  <span
-                    ><i class="bi bi-hand-thumbs-down-fill text-orange"></i
-                  ></span>
-                  <span>0</span>
+            <div *ngIf="allProductReviews.length" class="review-box">
+              <div *ngFor="let item of allProductReviews">
+                <div class="d-flex align-items-start pt-3">
+                  <img
+                    src="/assets/shop/people.jpg"
+                    class="mr-3 img-fluid rounded-circle"
+                    style="width: 12%"
+                    alt="..."
+                  />
+                  <div class="ps-3">
+                    <h5 class="mt-0">{{ item.userDetails.fullName }}</h5>
+                    <div>
+                      <span
+                        [ngClass]="getStarClass(1, item.rating)"
+                        class="fa fa-star"
+                      ></span>
+                      <span
+                        [ngClass]="getStarClass(2, item.rating)"
+                        class="fa fa-star"
+                      ></span>
+                      <span
+                        [ngClass]="getStarClass(3, item.rating)"
+                        class="fa fa-star"
+                      ></span>
+                      <span
+                        [ngClass]="getStarClass(4, item.rating)"
+                        class="fa fa-star"
+                      ></span>
+                      <span
+                        [ngClass]="getStarClass(5, item.rating)"
+                        class="fa fa-star"
+                      ></span>
+                    </div>
+                    <div class="reviewFont">Reviewed on September 14 2023</div>
+                    <h6 class="fw-bolder pt-3">{{ item.title }}</h6>
+                    <p>
+                      {{ item.review }}
+                    </p>
+                    <div class="gy-2">
+                      <span>Was this review helpful?</span>
+                      <span
+                        ><i class="bi bi-hand-thumbs-up-fill text-orange"></i
+                      ></span>
+                      <span>4</span>
+                      <span
+                        ><i class="bi bi-hand-thumbs-down-fill text-orange"></i
+                      ></span>
+                      <span>0</span>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </div>
+            <div
+              class="d-flex justify-content-center"
+              *ngIf="!allProductReviews.length"
+            >
+              <h4>Product don't has this rating</h4>
             </div>
           </div>
         </div>

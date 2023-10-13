@@ -4,6 +4,8 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { productList } from '../shop.config';
 import { findIndex } from 'rxjs';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { ToastrService } from 'ngx-toastr';
+import { Rating } from 'src/app/shared/interfaces/product';
 
 @Component({
   selector: 'app-product-details',
@@ -14,12 +16,16 @@ export class ProductDetailsComponent implements OnInit {
   selctedProduct;
   addMultipe: number = 0;
   reletedProductsList = [];
+  allProductReviews: Rating[] = [];
+  unFilterdallProductReviews: Rating[] = [];
   addedProducts = [];
+  rating = '';
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
     private router: Router,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private toastrService: ToastrService
   ) {}
   ngOnInit() {
     this.getProductDetails();
@@ -70,7 +76,7 @@ export class ProductDetailsComponent implements OnInit {
     });
     this.commonService.addProducts(count);
   }
-  OnNavigateToCart() {
+  onNavigateToCart() {
     this.router.navigateByUrl('shop/cart?isStandardCut=true');
   }
   getReviewInfo() {
@@ -79,9 +85,33 @@ export class ProductDetailsComponent implements OnInit {
         params: { productId: this.route.snapshot.params['productId'] },
       })
       .subscribe((res) => {
-        if (res) {
-          console.log('product review info', res);
+        if (res && res.statusCode == 200) {
+          this.allProductReviews = res.allProductReviews;
+          this.unFilterdallProductReviews = res.allProductReviews;
+          console.log('product review info', this.allProductReviews);
+        } else {
+          this.toastrService.error(res.message);
         }
       });
+  }
+
+  sortByRating() {
+    console.log(this.rating);
+    if (!this.rating) {
+      this.allProductReviews = this.unFilterdallProductReviews;
+    } else {
+      this.allProductReviews = this.unFilterdallProductReviews.filter(
+        (x) => x.rating == Number(this.rating)
+      );
+    }
+  }
+
+  getStarClass(number, rating) {
+    let count = Number(rating);
+    if (number <= count) {
+      return 'checked';
+    } else {
+      return '';
+    }
   }
 }
