@@ -54,7 +54,7 @@ export class EditAddressComponent implements OnInit {
       },
     };
     this.apiService
-      .request('UPDATE_ACCOUNT_INFO', apiRequest)
+      .request('UPDATE_ADDRESS', apiRequest)
       .subscribe((res) => {
         this.editAddressFormSubmitAttempt = false;
         if (res && res.statusCode == 200) {
