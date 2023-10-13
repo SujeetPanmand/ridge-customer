@@ -38,7 +38,15 @@ const contactEndPoints = [
   },
 ];
 
+const accountEndPoints = [
+  {
+    name: 'UPDATE_ACCOUNT_INFO',
+    method: 'POST',
+    url: environment.baseUrl + '/api/user',
+  },
+];
+
 export const ApiConfig = {
   baseUrl: '',
-  endpoints: [...authEndPoint, ...shopEndPoints, ...contactEndPoints],
+  endpoints: [...authEndPoint, ...shopEndPoints, ...contactEndPoints, ...accountEndPoints],
 };

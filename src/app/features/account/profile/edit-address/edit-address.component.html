@@ -1,0 +1,71 @@
+<div class="tab-pane fade rounded bg-white show p-5" id="edit-address" role="tabpanel" aria-labelledby="editAddress">
+  <div class="row justify-content-center">
+    <div class="col-md-11">
+      <div class="d-flex">
+        <span class="text-secondary"> Home /&nbsp; </span>
+        <span class="text-secondary">Profile /&nbsp; </span>
+        <span class="">Edit Address</span>
+      </div>
+
+      <h2 class="fw-bold sub-title pt-2">Edit Address</h2>
+      <div class="pt-4">
+        <form [formGroup]="editAddressForm">
+          <div class="mb-4">
+            <label for="country" class="form-label">Country / Region <span class="text-orange">*</span></label>
+            <input type="text" formControlName="countryRegion" class="form-control" id="country" name="country"
+              [(ngModel)]="countryRegion" [class.is-invalid]="isFieldValid(editAddressForm, 'countryRegion')" />
+            <span class="text-orange" *ngIf="hasError(editAddressForm, 'countryRegion', 'required')">Please
+              enter
+              Country / Region
+            </span>
+          </div>
+          <div class="mb-4">
+            <label for="address" class="form-label">Address <span class="text-orange">*</span></label>
+            <input type="text" formControlName="addressLine1" class="form-control" id="address" name="address"
+              [(ngModel)]="addressLine1" [class.is-invalid]="isFieldValid(editAddressForm, 'addressLine1')" />
+            <span class="text-orange" *ngIf="hasError(editAddressForm, 'addressLine1', 'required')">Please
+              enter
+              address Line 1
+            </span>
+            <input type="text" formControlName="addressLine2" class="form-control mt-4" id="address1" name="address1"
+              [(ngModel)]="addressLine2" [class.is-invalid]="isFieldValid(editAddressForm, 'addressLine2')" />
+            <span class="text-orange" *ngIf="hasError(editAddressForm, 'addressLine2', 'required')">Please
+              enter
+              address Line 2
+            </span>
+          </div>
+          <div class="mb-4">
+            <label for="city" class="form-label">Town / City <span class="text-orange">*</span></label>
+            <input type="text" formControlName="townCity" class="form-control" id="city" name="city"
+              [(ngModel)]="townCity" [class.is-invalid]="isFieldValid(editAddressForm, 'townCity')" />
+            <span class="text-orange" *ngIf="hasError(editAddressForm, 'townCity', 'required')">Please enter
+              Town / City
+            </span>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <label for="state" class="form-label">State</label>
+              <select class="form-select" name="state" id="state">
+                <option>Mumbai</option>
+                <option>Pune</option>
+                <option>Nashik</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-4">
+              <label for="zipCode" class="form-label">ZIP Code <span class="text-orange">*</span></label>
+              <input type="text" formControlName="zipCode" class="form-control" id="zipCode" name="zipCode"
+                [(ngModel)]="zipCode" [class.is-invalid]="isFieldValid(editAddressForm, 'zipCode')" />
+              <span class="text-orange" *ngIf="hasError(editAddressForm, 'zipCode', 'required')">Please enter
+                ZIP Code
+              </span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn rounded-0 text-light button-orange mt-4" (click)="updateEditAddress()">
+            Save Changes
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
