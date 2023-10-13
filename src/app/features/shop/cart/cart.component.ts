@@ -30,7 +30,6 @@ export class CartComponent implements OnInit {
   ) {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
-    console.log('dd', this.route.snapshot.queryParams['isStandardCut']);
   }
 
   ngOnInit() {
