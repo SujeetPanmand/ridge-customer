@@ -122,19 +122,30 @@
                       <div class="accordion" id="accordionProduct">
                         <div class="accordion-item border-0">
                           <h2 class="accordion-header">
-                            <button class="accordion-button collapsed pb-0 pt-3" type="button" data-bs-toggle="collapse" data-bs-target="#productInfo" aria-expanded="false" aria-controls="productInfo">
+                            <button
+                              class="accordion-button collapsed pb-0 pt-3"
+                              type="button"
+                              data-bs-toggle="collapse"
+                              data-bs-target="#productInfo"
+                              aria-expanded="false"
+                              aria-controls="productInfo"
+                            >
                               <h5>{{ products?.name }}</h5>
                             </button>
                           </h2>
-                          <div id="productInfo" class="accordion-collapse collapse" data-bs-parent="#accordionProduct">
+                          <div
+                            id="productInfo"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#accordionProduct"
+                          >
                             <div class="accordion-body">
-                              <p>{{products?.cutInfo}}</p>
+                              <p>{{ products?.cutInfo }}</p>
                             </div>
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td>${{ products.totalPrice }}</td>
+                    <td>${{ products.price * products.count }}</td>
                   </tr>
                   <tr class="pt-3">
                     <td>Subtotal</td>
