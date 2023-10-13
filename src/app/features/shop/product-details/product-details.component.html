@@ -66,7 +66,10 @@
                 />
                 <span (click)="addMoreToCart(true)" class="plus cursor">+</span>
               </div>
-              <button class="btn btn ms-3 bg-pink px-4" routerLink="/shop/cart">
+              <button
+                class="btn btn ms-3 bg-pink px-4"
+                (click)="OnNavigateToCart()"
+              >
                 Add To Cart
               </button>
             </div>

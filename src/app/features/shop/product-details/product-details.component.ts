@@ -69,4 +69,7 @@ export class ProductDetailsComponent implements OnInit {
     });
     this.commonService.addProducts(count);
   }
+  OnNavigateToCart() {
+    this.router.navigateByUrl('shop/cart?isStandardCut=true');
+  }
 }

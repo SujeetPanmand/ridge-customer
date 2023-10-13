@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
@@ -12,23 +13,40 @@ export class OrderConfirmationComponent implements OnInit {
   finalOrderProducts = [];
   orderTotal = 0;
   orderSubTotal = 0;
-  constructor(private commonService: CommonService) {}
+  isStandardCut = false;
+  constructor(
+    private commonService: CommonService,
+    private route: ActivatedRoute
+  ) {
+    this.isStandardCut =
+      this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
+  }
 
   ngOnInit() {
     this.defaultSetting();
   }
 
   defaultSetting() {
-    let list = JSON.parse(localStorage.getItem('cart'))
-      ? JSON.parse(localStorage.getItem('cart'))
-      : [];
+    let list = [];
+    if (this.isStandardCut) {
+      list = JSON.parse(localStorage.getItem('cart'))
+        ? JSON.parse(localStorage.getItem('cart'))
+        : [];
+    } else {
+      list = JSON.parse(localStorage.getItem('directOrderProduct'))
+        ? JSON.parse(localStorage.getItem('directOrderProduct'))
+        : [];
+    }
+
     this.finalOrderProducts = list.filter((x) => x.count !== 0);
     this.finalOrderProducts.forEach((x) => {
       this.orderSubTotal = this.orderSubTotal + x.price * x.count;
     });
     this.orderTotal =
       this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-    this.setGlobalCartCount(list);
+    if (this.isStandardCut) {
+      this.setGlobalCartCount(list);
+    }
   }
   setGlobalCartCount(addedProducts) {
     let count = 0;

@@ -3,6 +3,8 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { productList } from './shop.config';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-shop',
@@ -11,13 +13,24 @@ import { CommonService } from 'src/app/shared/services/common.service';
 })
 export class ShopComponent implements OnInit {
   productList = [];
+  selectedProduct;
+  isPreOrder = false;
+  cutForm: FormGroup;
   constructor(
     private apiService: ApiService,
     private router: Router,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private modalService: NgbModal,
+    private formBuilder: FormBuilder
   ) {}
   ngOnInit() {
+    this.generateCutForm();
     this.getAllProducts();
+  }
+  generateCutForm() {
+    this.cutForm = this.formBuilder.group({
+      searchCheckOption: ['standard'],
+    });
   }
 
   defaultSetting() {
@@ -56,22 +69,48 @@ export class ShopComponent implements OnInit {
     this.router.navigate([`shop/product-details/${product.id}`]);
   }
 
-  addProductToCart(event, product) {
-    event.stopPropagation();
-    if (this.productList.length == 0) {
-      this.productList.push(product);
-    } else {
-      const index = this.productList.findIndex((x) => x.id == product.id);
-      if (index >= 0) {
-        this.productList[index].count = this.productList[index].count + 1;
+  addProductToCart() {
+    if (this.cutForm.controls['searchCheckOption'].value === 'standard') {
+      if (!this.selectedProduct.outOfStock) {
+        if (this.productList.length == 0) {
+          this.productList.push(this.selectedProduct);
+        } else {
+          const index = this.productList.findIndex(
+            (x) => x.id == this.selectedProduct.id
+          );
+          if (index >= 0) {
+            this.productList[index].count = this.productList[index].count + 1;
+          } else {
+            this.productList.push(this.selectedProduct);
+          }
+        }
+        localStorage.setItem('cart', JSON.stringify(this.productList));
+        this.setGlobalCartCount(this.productList);
       } else {
-        this.productList.push(product);
+        let arr = [];
+        arr.push(this.selectedProduct);
+        arr = arr.map((x) => {
+          return {
+            ...x,
+            count: 1,
+          };
+        });
+        localStorage.setItem('directOrderProduct', JSON.stringify(arr));
+        this.router.navigateByUrl('shop/checkout?isStandardCut=false');
       }
+    } else {
+      let arr = [];
+      arr.push(this.selectedProduct);
+      arr = arr.map((x) => {
+        return {
+          ...x,
+          count: 1,
+        };
+      });
+      localStorage.setItem('directOrderProduct', JSON.stringify(arr));
+      this.router.navigateByUrl('shop/checkout?isStandardCut=false');
     }
-
-    console.log(this.productList);
-    localStorage.setItem('cart', JSON.stringify(this.productList));
-    this.setGlobalCartCount(this.productList);
+    this.modalService.dismissAll();
   }
 
   setGlobalCartCount(data) {
@@ -80,5 +119,11 @@ export class ShopComponent implements OnInit {
       count = count + x.count;
     });
     this.commonService.addProducts(count);
+  }
+
+  selectCut(event, content, product) {
+    event.stopPropagation();
+    this.selectedProduct = product;
+    this.modalService.open(content, { size: 'lg', centered: true });
   }
 }
