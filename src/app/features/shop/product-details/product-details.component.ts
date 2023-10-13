@@ -24,6 +24,7 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit() {
     this.getProductDetails();
     this.defaultSetting();
+    this.getReviewInfo();
   }
   defaultSetting() {
     this.addedProducts = JSON.parse(localStorage.getItem('cart'))
@@ -71,5 +72,16 @@ export class ProductDetailsComponent implements OnInit {
   }
   OnNavigateToCart() {
     this.router.navigateByUrl('shop/cart?isStandardCut=true');
+  }
+  getReviewInfo() {
+    this.apiService
+      .request('REVIEW_INFO', {
+        params: { productId: this.route.snapshot.params['productId'] },
+      })
+      .subscribe((res) => {
+        if (res) {
+          console.log('product review info', res);
+        }
+      });
   }
 }
