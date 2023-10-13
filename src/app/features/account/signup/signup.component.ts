@@ -51,7 +51,8 @@ export class SignupComponent implements OnInit {
       data: {
         email: this.userName,
         password: this.password,
-        fullName: this.firstName + ' ' + this.lastName,
+        firstName: this.firstName,
+        lastName: this.lastName,
         address: this.address,
         zipCode: this.zipCode,
         phoneNumber: this.phoneNumber,

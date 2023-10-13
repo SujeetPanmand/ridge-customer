@@ -86,3 +86,7 @@
 .pointer {
   pointer-events: none;
 }
+.review-box {
+  height: 300px;
+  overflow-y: auto !important;
+}

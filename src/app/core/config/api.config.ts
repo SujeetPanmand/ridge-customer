@@ -23,6 +23,11 @@ const shopEndPoints = [
     method: 'GET',
     url: environment.baseUrl + '/api/product/[id]',
   },
+  {
+    name: 'REVIEW_INFO',
+    method: 'GET',
+    url: environment.baseUrl + '/api/productReview/[productId]',
+  },
 ];
 
 const contactEndPoints = [

@@ -4,6 +4,8 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { productList } from '../shop.config';
 import { findIndex } from 'rxjs';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { ToastrService } from 'ngx-toastr';
+import { Rating } from 'src/app/shared/interfaces/product';
 
 @Component({
   selector: 'app-product-details',
@@ -14,16 +16,22 @@ export class ProductDetailsComponent implements OnInit {
   selctedProduct;
   addMultipe: number = 0;
   reletedProductsList = [];
+  allProductReviews: Rating[] = [];
+  unFilterdallProductReviews: Rating[] = [];
   addedProducts = [];
+  rating = '';
+  avg = 0;
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
     private router: Router,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private toastrService: ToastrService
   ) {}
   ngOnInit() {
     this.getProductDetails();
     this.defaultSetting();
+    this.getReviewInfo();
   }
   defaultSetting() {
     this.addedProducts = JSON.parse(localStorage.getItem('cart'))
@@ -69,7 +77,55 @@ export class ProductDetailsComponent implements OnInit {
     });
     this.commonService.addProducts(count);
   }
-  OnNavigateToCart() {
+  onNavigateToCart() {
     this.router.navigateByUrl('shop/cart?isStandardCut=true');
+  }
+  getReviewInfo() {
+    this.apiService
+      .request('REVIEW_INFO', {
+        params: { productId: this.route.snapshot.params['productId'] },
+      })
+      .subscribe((res) => {
+        if (res && res.statusCode == 200) {
+          this.allProductReviews = res.allProductReviews;
+          this.unFilterdallProductReviews = res.allProductReviews;
+          this.calculateAvgRating();
+          this.calculateRatingWisePercentage();
+        } else {
+          this.toastrService.error(res.message);
+        }
+      });
+  }
+
+  calculateAvgRating() {
+    let sum = 0;
+    let count = 1;
+    this.unFilterdallProductReviews.forEach((x) => {
+      sum = sum + Number(x.rating);
+      count++;
+    });
+    this.avg = sum / count;
+  }
+
+  calculateRatingWisePercentage() {}
+
+  sortByRating() {
+    console.log(this.rating);
+    if (!this.rating) {
+      this.allProductReviews = this.unFilterdallProductReviews;
+    } else {
+      this.allProductReviews = this.unFilterdallProductReviews.filter(
+        (x) => x.rating == Number(this.rating)
+      );
+    }
+  }
+
+  getStarClass(number, rating) {
+    let count = Number(rating);
+    if (number <= count) {
+      return 'checked';
+    } else {
+      return '';
+    }
   }
 }
