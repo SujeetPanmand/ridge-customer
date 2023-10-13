@@ -54,7 +54,7 @@ export class CartComponent implements OnInit {
 
   makePayment() {
     this.router.navigateByUrl(
-      `shop/checkout?${this.isStandardCut ? 'true' : 'false'}`
+      `shop/checkout?isStandardCut=${this.isStandardCut ? 'true' : 'false'}`
     );
   }
   addMoreItem(item, str) {
