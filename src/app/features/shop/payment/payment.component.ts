@@ -58,7 +58,9 @@ export class PaymentComponent implements OnInit {
   }
   onRedirectToOrderConfirm() {
     this.router.navigateByUrl(
-      `shop/order-confirmation?${this.isStandardCut ? 'true' : 'false'}`
+      `shop/order-confirmation?isStandardCut=${
+        this.isStandardCut ? 'true' : 'false'
+      }`
     );
   }
 }

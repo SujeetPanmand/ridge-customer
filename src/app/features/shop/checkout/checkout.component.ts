@@ -63,7 +63,7 @@ export class CheckoutComponent {
   }
   onRedirectToPayment() {
     this.router.navigateByUrl(
-      `shop/payment?${this.isStandardCut ? 'true' : 'false'}`
+      `shop/payment?isStandardCut=${this.isStandardCut ? 'true' : 'false'}`
     );
   }
 }

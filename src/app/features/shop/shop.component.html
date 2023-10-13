@@ -244,7 +244,11 @@
       type="button"
       class="btn rounded-0 button-orange"
     >
-      Add to Cart
+      {{
+        cutForm.controls["searchCheckOption"].value === "standard"
+          ? "Add to Cart"
+          : "Checkout"
+      }}
     </button>
   </div>
 </ng-template>

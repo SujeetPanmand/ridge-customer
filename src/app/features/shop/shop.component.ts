@@ -87,6 +87,15 @@ export class ShopComponent implements OnInit {
       localStorage.setItem('cart', JSON.stringify(this.productList));
       this.setGlobalCartCount(this.productList);
     } else {
+      let arr = [];
+      arr.push(this.selectedProduct);
+      arr = arr.map((x) => {
+        return {
+          ...x,
+          count: 1,
+        };
+      });
+      localStorage.setItem('directOrderProduct', JSON.stringify(arr));
       this.router.navigateByUrl('shop/checkout?isStandardCut=false');
     }
     this.modalService.dismissAll();
