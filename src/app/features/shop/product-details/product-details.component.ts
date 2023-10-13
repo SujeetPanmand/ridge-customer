@@ -20,6 +20,7 @@ export class ProductDetailsComponent implements OnInit {
   unFilterdallProductReviews: Rating[] = [];
   addedProducts = [];
   rating = '';
+  avg = 0;
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
@@ -88,12 +89,25 @@ export class ProductDetailsComponent implements OnInit {
         if (res && res.statusCode == 200) {
           this.allProductReviews = res.allProductReviews;
           this.unFilterdallProductReviews = res.allProductReviews;
-          console.log('product review info', this.allProductReviews);
+          this.calculateAvgRating();
+          this.calculateRatingWisePercentage();
         } else {
           this.toastrService.error(res.message);
         }
       });
   }
+
+  calculateAvgRating() {
+    let sum = 0;
+    let count = 1;
+    this.unFilterdallProductReviews.forEach((x) => {
+      sum = sum + Number(x.rating);
+      count++;
+    });
+    this.avg = sum / count;
+  }
+
+  calculateRatingWisePercentage() {}
 
   sortByRating() {
     console.log(this.rating);

@@ -236,15 +236,37 @@
             <h4>Customer Reviews</h4>
             <div class="d-flex">
               <div>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
+                <span
+                  [ngClass]="getStarClass(1, avg)"
+                  class="fa fa-star"
+                ></span>
+                <span
+                  [ngClass]="getStarClass(2, avg)"
+                  class="fa fa-star"
+                ></span>
+                <span
+                  [ngClass]="getStarClass(3, avg)"
+                  class="fa fa-star"
+                ></span>
+                <span
+                  [ngClass]="getStarClass(4, avg)"
+                  class="fa fa-star"
+                ></span>
+                <span
+                  [ngClass]="getStarClass(5, avg)"
+                  class="fa fa-star"
+                ></span>
               </div>
-              <div class="text-muted ps-3">4 out 0f 5</div>
+              <div class="text-muted ps-3">AVG Rating</div>
             </div>
-            <h6 class="text-muted pt-2">98 reviews</h6>
+            <h6 class="text-muted pt-2">
+              {{
+                unFilterdallProductReviews
+                  ? unFilterdallProductReviews.length
+                  : 0
+              }}
+              reviews
+            </h6>
             <div class="d-flex align-items-center pb-2">
               <span class="pe-2">5 Starts</span>
               <div class="progress w-50">
