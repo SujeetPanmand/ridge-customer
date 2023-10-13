@@ -21,6 +21,14 @@ export class ProductDetailsComponent implements OnInit {
   addedProducts = [];
   rating = '';
   avg = 0;
+  allRating = [];
+  segrigatedRating = {
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+  };
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
@@ -107,7 +115,20 @@ export class ProductDetailsComponent implements OnInit {
     this.avg = sum / count;
   }
 
-  calculateRatingWisePercentage() {}
+  calculateRatingWisePercentage() {
+    this.unFilterdallProductReviews.forEach((x) => {
+      this.allRating.push(Number(x.rating));
+    });
+    for (let i = 0; i < this.allRating.length; i++) {
+      if (!Object.keys(this.segrigatedRating).length) {
+        this.segrigatedRating[this.allRating[i]] = 1;
+      } else {
+        this.segrigatedRating[this.allRating[i]] =
+          this.segrigatedRating[this.allRating[i]] + 1;
+      }
+    }
+    console.log('segragetaed', this.segrigatedRating);
+  }
 
   sortByRating() {
     console.log(this.rating);
@@ -126,6 +147,15 @@ export class ProductDetailsComponent implements OnInit {
       return 'checked';
     } else {
       return '';
+    }
+  }
+  getPercentage(i) {
+    if (this.allRating.length == 0) {
+      return 0;
+    } else {
+      return Math.floor(
+        (this.segrigatedRating[i] / this.allRating.length) * 100
+      );
     }
   }
 }
