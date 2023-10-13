@@ -12,11 +12,7 @@
 
         <div class="row pt-4">
           <div class="col-md-6">
-            <img
-              src="/assets/shop/culinary-inspiration.png"
-              class="img-fluid h-100"
-              alt="culinary-inspiration"
-            />
+            <img src="/assets/shop/culinary-inspiration.png" class="img-fluid h-100" alt="culinary-inspiration" />
           </div>
           <div class="col-md-6">
             <h4>{{ selctedProduct?.name }}</h4>
@@ -32,10 +28,7 @@
             </div>
             <div class="pt-2">
               <span class="text-orange fs-3">{{ selctedProduct?.price }}</span>
-              <span
-                class="fs-3 ps-2 text-decoration-line-through text-secondary"
-                >$599</span
-              >
+              <span class="fs-3 ps-2 text-decoration-line-through text-secondary">$599</span>
             </div>
             <hr class="border" />
             <p>
@@ -49,21 +42,10 @@
               tenderness and taste.
             </p> -->
             <div class="d-flex">
-              <div
-                class="number d-flex justify-content-evenly align-items-center col-4 bg-pink"
-              >
-                <span
-                  [ngClass]="{ pointer: addMultipe == 0 }"
-                  class="minus cursor"
-                  (click)="addMoreToCart(false)"
-                  >-</span
-                >
-                <input
-                  [(ngModel)]="addMultipe"
-                  type="text"
-                  class="count w-25"
-                  disabled
-                />
+              <div class="number d-flex justify-content-evenly align-items-center col-4 bg-pink">
+                <span [ngClass]="{ pointer: addMultipe == 0 }" class="minus cursor"
+                  (click)="addMoreToCart(false)">-</span>
+                <input [(ngModel)]="addMultipe" type="text" class="count w-25" disabled />
                 <span (click)="addMoreToCart(true)" class="plus cursor">+</span>
               </div>
               <button class="btn btn ms-3 bg-pink px-4" routerLink="/shop/cart">
@@ -74,145 +56,32 @@
         </div>
 
         <div class="bg-light-gray mt-5 p-4">
-          <ul
-            class="nav nav-pills px-4 border-bottom tab"
-            id="pills-tab"
-            role="tablist"
-          >
-            <li>
-              <a
-                class="nav-link active border-bottom-0 fs-4"
-                id="pills-home-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-home"
-                type=""
-                aria-controls="pills-home"
-              >
-                <span class="tabs">Product infomation</span></a
-              >
-            </li>
-            <!-- <li>
-              <a
-                class="nav-link"
-                id="pills-profile-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-profile"
-                type=""
-                role="tab"
-                aria-controls="pills-profile"
-                aria-selected="false"
-                ><span class="tabs">How to pick your cuts?</span></a
-              >
-            </li> -->
-            <!-- <li>
-              <a
-                class="nav-link"
-                id="pills-contact-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-contact"
-                type=""
-                role="tab"
-                aria-controls="pills-contact"
-                aria-selected="false"
-                ><span class="tabs">How is it packaged?</span></a
-              >
-            </li> -->
-          </ul>
-          <div class="tab-content" id="pills-tabContent">
-            <div
-              class="tab-pane fade show active p-4"
-              id="pills-home"
-              role="tabpanel"
-              aria-labelledby="pills-home-tab"
-              tabindex="0"
-            >
-              <p>
-                For steak enthusiasts, our premium selection features 72 lbs of
-                expertly aged cuts, including Filet, Bone-In Ribeye, Boneless
-                Ribeye, and NY Strip. These steaks are known for their marbling
-                and gourmet quality, ready to be expertly grilled or pan-seared
-                to perfection. And for family gatherings or cozy dinners, our 28
-                lbs of family-friendly steaks,ncluding Sirloin, Bavette, Flat
-                Iron, and Tri Tip, offer a balance of flavor and juicinessthat's
-                perfect for sharing.
-              </p>
-              <p>
-                For the exceptional value of $3,600.00, you can elevate your
-                culinary creations with the exquisite taste of grass-fed beef.
-                This impressive assortment provides you with a versatile
-                selection of cuts, ensuring that you're well-equipped to explore
-                the endless possibilities of beef-based cuisine . Whether you're
-                a seasoned chef or a home cook with a passion for quality, this
-                package is your gateway to extraordinary culinary adventures.
-              </p>
-            </div>
-            <!-- <div
-              class="tab-pane fade p-4"
-              id="pills-profile"
-              role="tabpanel"
-              aria-labelledby="pills-profile-tab"
-              tabindex="0"
-            >
-              <div class="row">
-                <div class="col-md-6">
-                  <img
-                    src="/assets/shop/beefChart.png"
-                    class="img-fluid"
-                    alt=""
-                  />
-                </div>
-                <div class="col-md-6">
-                  <p>
-                    Loafers Glory has the option to customize your cuts for ½
-                    and whole beef orders. This is where you can choose whether
-                    you want your Ribeye’s to have the bone in or out, how thick
-                    your steaks should be, whether your brisket is kept whole
-                    for your smoker or cut to fit your crockpot, etc. If you’re
-                    unsure, just ask! We have a standard cut sheet you can start
-                    withor are at least happy to help guide you. Be sure to ask
-                    about organ meat if you don’t want it. Many producers will
-                    require you to buy all the cuts that the animal
-                    produces,including organ meat. At Loafers Glory, we offer
-                    the organ meat separately.
-                  </p>
-                </div>
-              </div>
-            </div> -->
-            <!-- <div
-              class="tab-pane fade p-4"
-              id="pills-contact"
-              role="tabpanel"
-              aria-labelledby="pills-contact-tab"
-              tabindex="0"
-            >
-              <div class="row">
-                <div class="col-md-6">
-                  <img src="/assets/shop/bg2.jpg" class="img-fluid" />
-                </div>
-                <div class="col-md-6">
-                  <p>
-                    At Loafers Glory you get individual cuts of beef
-                    vacuum-sealed in properly USDA labeled, airtight packages.
-                    That way you can easily inspect the meat before you thaw
-                    it.If it is airtight, it will last for 2 or more years in
-                    your freezer.
-                  </p>
-                </div>
-              </div>
-            </div> -->
-          </div>
+          <h4 class="text-orange">Product Infomation</h4>
+          <hr class="border" />
+          <p>
+            Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et
+            mattis vulputate, tristique ut lectus. Sed et lorem nunc. Vestibulum
+            ante ipsum primis in faucibus orci luctus et ultrices posuere
+            cubilia Curae; Aenean eleifend laoreet congue. Vivamus adipiscing
+            nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt.
+            Class aptent taciti sociosqu ad litora torquent per conubia nostra,
+            per inceptos himenaeos. Integer enim purus, posuere at ultricies eu,
+            placerat a felis. Suspendisse aliquet urna pretium eros convallis
+            interdum. Quisque in arcu id dui vulputate mollis eget non arcu.
+            Aenean et nulla purus. Mauris vel tellus non nunc mattis lobortis.
+            <br />
+            Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et
+            mattis vulputate, tristique ut lectus. Sed et lorem nunc. Vestibulum
+            ante ipsum primis in faucibus orci luctus et ultrices posuere
+            cubilia Curae.
+          </p>
         </div>
 
         <div class="row gy-4 py-5">
           <h2 class="fw-bold sub-title text-center">Related Products</h2>
           <div *ngFor="let product of reletedProductsList" class="col-md-3">
             <div class="card rounded-4 shadow-sm">
-              <img
-                class="content-image"
-                src="/assets/shop/products.png"
-                class="img-fluid"
-                alt=""
-              />
+              <img class="content-image" src="/assets/shop/products.png" class="img-fluid" alt="" />
               <div class="card-body text-center">
                 <h5 class="card-title fw-bold pb-2">{{ product.name }}</h5>
                 <div class="d-flex justify-content-around">
@@ -231,7 +100,7 @@
         <div class="row py-3">
           <div class="col-md-4 mb-3">
             <h4>Customer Reviews</h4>
-            <div class="d-flex">
+            <div class="d-flex py-2">
               <div>
                 <span class="fa fa-star checked"></span>
                 <span class="fa fa-star checked"></span>
@@ -245,79 +114,45 @@
             <div class="d-flex align-items-center pb-2">
               <span class="pe-2">5 Starts</span>
               <div class="progress w-50">
-                <div
-                  class="progress-bar"
-                  role="progressbar"
-                  style="width: 57%"
-                  aria-valuenow="25"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
+                <div class="progress-bar" role="progressbar" style="width: 57%" aria-valuenow="25" aria-valuemin="0"
+                  aria-valuemax="100"></div>
               </div>
               <span class="ps-2">57%</span>
             </div>
             <div class="d-flex align-items-center pb-2">
               <span class="pe-2">4 Starts</span>
               <div class="progress w-50">
-                <div
-                  class="progress-bar"
-                  role="progressbar"
-                  style="width: 26%"
-                  aria-valuenow="25"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
+                <div class="progress-bar" role="progressbar" style="width: 26%" aria-valuenow="25" aria-valuemin="0"
+                  aria-valuemax="100"></div>
               </div>
               <span class="ps-2">26%</span>
             </div>
             <div class="d-flex align-items-center pb-2">
               <span class="pe-2">3 Starts</span>
               <div class="progress w-50">
-                <div
-                  class="progress-bar"
-                  role="progressbar"
-                  style="width: 7%"
-                  aria-valuenow="25"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
+                <div class="progress-bar" role="progressbar" style="width: 7%" aria-valuenow="25" aria-valuemin="0"
+                  aria-valuemax="100"></div>
               </div>
               <span class="ps-2">7%</span>
             </div>
             <div class="d-flex align-items-center pb-2">
               <span class="pe-2">2 Starts</span>
               <div class="progress w-50">
-                <div
-                  class="progress-bar"
-                  role="progressbar"
-                  style="width: 3%"
-                  aria-valuenow="25"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
+                <div class="progress-bar" role="progressbar" style="width: 3%" aria-valuenow="25" aria-valuemin="0"
+                  aria-valuemax="100"></div>
               </div>
               <span class="ps-2">3%</span>
             </div>
             <div class="d-flex align-items-center pb-2">
               <span class="pe-2">1 Starts</span>
               <div class="progress w-50">
-                <div
-                  class="progress-bar"
-                  role="progressbar"
-                  style="width: 1%"
-                  aria-valuenow="25"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
+                <div class="progress-bar" role="progressbar" style="width: 1%" aria-valuenow="25" aria-valuemin="0"
+                  aria-valuemax="100"></div>
               </div>
               <span class="ps-2">1%</span>
             </div>
-            <h4 class="pt-2">Review this product</h4>
-            <button
-              class="btn button-orange"
-              data-bs-toggle="modal"
-              data-bs-target="#addReviewModal"
-            >
+            <h4 class="py-2">Review this product</h4>
+            <button class="btn button-orange" data-bs-toggle="modal" data-bs-target="#addReviewModal">
               Write A Product Review
             </button>
           </div>
@@ -327,12 +162,7 @@
               <div class="col-md-6">
                 <div class="d-flex align-items-center mb-2">
                   <label for="sortBy">Sort By</label>
-                  <select
-                    class="form-select w-75 ms-2"
-                    id="sortBy"
-                    name="sortBy"
-                    aria-label="Default select example"
-                  >
+                  <select class="form-select w-75 ms-2" id="sortBy" name="sortBy" aria-label="Default select example">
                     <option selected>Most recent</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
@@ -343,12 +173,7 @@
               <div class="col-md-6">
                 <div class="d-flex align-items-center mb-2">
                   <label for="sortBy">Rating</label>
-                  <select
-                    class="form-select w-75 ms-2"
-                    id="rating"
-                    name="rating"
-                    aria-label="Default select example"
-                  >
+                  <select class="form-select w-75 ms-2" id="rating" name="rating" aria-label="Default select example">
                     <option selected>All</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
@@ -360,12 +185,7 @@
             <hr class="border" />
 
             <div class="d-flex align-items-start pt-3">
-              <img
-                src="/assets/shop/people.jpg"
-                class="mr-3 img-fluid rounded-circle"
-                style="width: 12%"
-                alt="..."
-              />
+              <img src="/assets/shop/people.jpg" class="mr-3 img-fluid rounded-circle" style="width: 12%" alt="..." />
               <div class="ps-3">
                 <h5 class="mt-0">Monahan Astrid</h5>
                 <div>
@@ -387,13 +207,9 @@
                 </p>
                 <div class="gy-2">
                   <span>Was this review helpful?</span>
-                  <span
-                    ><i class="bi bi-hand-thumbs-up-fill text-orange"></i
-                  ></span>
+                  <span><i class="bi bi-hand-thumbs-up-fill text-orange"></i></span>
                   <span>4</span>
-                  <span
-                    ><i class="bi bi-hand-thumbs-down-fill text-orange"></i
-                  ></span>
+                  <span><i class="bi bi-hand-thumbs-down-fill text-orange"></i></span>
                   <span>0</span>
                 </div>
               </div>
@@ -406,31 +222,18 @@
 </section>
 
 <!--Add Review Modal -->
-<div
-  class="modal fade"
-  id="addReviewModal"
-  tabindex="-1"
-  aria-labelledby="addReviewModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="addReviewModal" tabindex="-1" aria-labelledby="addReviewModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5 text-orange" id="addReviewModalLabel">
           Add a Review
         </h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body px-5 py-4">
         <div class="mb-3">
-          <label class="pb-2"
-            >Your Rating <span class="text-danger">*</span></label
-          >
+          <label class="pb-2">Your Rating <span class="text-danger">*</span></label>
           <div>
             <span class="fa fa-star checked"></span>
             <span class="fa fa-star checked"></span>
@@ -440,23 +243,14 @@
           </div>
         </div>
         <div class="mb-3">
-          <label class="pb-2"
-            >Your Review <span class="text-danger">*</span></label
-          >
+          <label class="pb-2">Your Review <span class="text-danger">*</span></label>
           <div class="form-floating">
-            <textarea
-              placeholder="Write your review"
-              id="reviewMessage"
-              class="w-100 p-2 border"
-              rows="4"
-              cols="50"
-            ></textarea>
+            <textarea placeholder="Write your review" id="reviewMessage" class="w-100 p-2 border" rows="4"
+              cols="50"></textarea>
           </div>
         </div>
         <div class="mb-4">
-          <label for="title" class="pb-2"
-            >Title Your Review <span class="text-danger">*</span></label
-          >
+          <label for="title" class="pb-2">Title Your Review <span class="text-danger">*</span></label>
           <input type="text" class="form-control py-2" id="title" />
         </div>
       </div>

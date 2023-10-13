@@ -99,3 +99,13 @@ p {
   font-size: 12px;
   height: 17px;
 }
+
+.accordion-button:not(.collapsed) {
+   background-color: transparent; 
+   box-shadow: none; 
+}
+.accordion-button:focus {
+   border-color: transparent; 
+  outline: 0;
+   box-shadow: none;
+}

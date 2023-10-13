@@ -30,8 +30,21 @@
                   class="img-fluid table-img"
                 />
               </td>
-              <td>
-                <h5>{{ product.name }}</h5>
+              <td style="width: 30%;">
+                <div class="accordion" id="accordionProduct">
+                  <div class="accordion-item border-0">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed pb-0 pt-3" type="button" data-bs-toggle="collapse" data-bs-target="#productInfo" aria-expanded="false" aria-controls="productInfo">
+                        <h5>{{ product.name }}</h5>
+                      </button>
+                    </h2>
+                    <div id="productInfo" class="accordion-collapse collapse" data-bs-parent="#accordionProduct">
+                      <div class="accordion-body">
+                        <p>{{product?.cutInfo}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </td>
               <td>{{ product.price }}</td>
               <td>

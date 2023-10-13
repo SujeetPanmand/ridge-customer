@@ -4,14 +4,16 @@
   background-image: url('/assets/home/homepagebanner.png');
   background-repeat: no-repeat;
   background-size: cover;
+  position: center,center;
 }
 
 .bgImag {
   background-image: url('/assets/home/ourfamily.png');
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   position: relative;
-  height: 400px;
+  height: 500px;
   border-radius: 20px;
 }
 
