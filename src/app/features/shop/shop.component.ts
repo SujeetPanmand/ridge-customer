@@ -71,21 +71,33 @@ export class ShopComponent implements OnInit {
 
   addProductToCart() {
     if (this.cutForm.controls['searchCheckOption'].value === 'standard') {
-      if (this.productList.length == 0) {
-        this.productList.push(this.selectedProduct);
-      } else {
-        const index = this.productList.findIndex(
-          (x) => x.id == this.selectedProduct.id
-        );
-        if (index >= 0) {
-          this.productList[index].count = this.productList[index].count + 1;
-        } else {
+      if (!this.selectedProduct.outOfStock) {
+        if (this.productList.length == 0) {
           this.productList.push(this.selectedProduct);
+        } else {
+          const index = this.productList.findIndex(
+            (x) => x.id == this.selectedProduct.id
+          );
+          if (index >= 0) {
+            this.productList[index].count = this.productList[index].count + 1;
+          } else {
+            this.productList.push(this.selectedProduct);
+          }
         }
+        localStorage.setItem('cart', JSON.stringify(this.productList));
+        this.setGlobalCartCount(this.productList);
+      } else {
+        let arr = [];
+        arr.push(this.selectedProduct);
+        arr = arr.map((x) => {
+          return {
+            ...x,
+            count: 1,
+          };
+        });
+        localStorage.setItem('directOrderProduct', JSON.stringify(arr));
+        this.router.navigateByUrl('shop/checkout?isStandardCut=false');
       }
-      console.log(this.productList);
-      localStorage.setItem('cart', JSON.stringify(this.productList));
-      this.setGlobalCartCount(this.productList);
     } else {
       let arr = [];
       arr.push(this.selectedProduct);
