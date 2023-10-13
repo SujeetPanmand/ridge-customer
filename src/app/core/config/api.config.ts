@@ -37,8 +37,20 @@ const contactEndPoints = [
     url: environment.baseUrl + '/api/contactUs/add-contactUs',
   },
 ];
+const blogEndPoint = [
+  {
+    name: 'GET_ALL_BLOGS',
+    method: 'GET',
+    url: environment.baseUrl + '/api/blog',
+  },
+];
 
 export const ApiConfig = {
   baseUrl: '',
-  endpoints: [...authEndPoint, ...shopEndPoints, ...contactEndPoints],
+  endpoints: [
+    ...authEndPoint,
+    ...shopEndPoints,
+    ...contactEndPoints,
+    ...blogEndPoint,
+  ],
 };
