@@ -101,9 +101,7 @@
         <div class="bg-light-gray mt-5 p-4">
           <h4 class="text-orange">Product Infomation</h4>
           <hr class="border" />
-          <p>
-            {{ selctedProduct?.cutInfo }}
-          </p>
+          <p [innerHTML]="selctedProduct?.cutInfo"></p>
         </div>
 
         <!-- <div class="row gy-4 py-5">
