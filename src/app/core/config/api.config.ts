@@ -44,6 +44,13 @@ const blogEndPoint = [
     url: environment.baseUrl + '/api/blog',
   },
 ];
+const subscribeEndPoint = [
+  {
+    name: 'EMAIL_SUBSCRIBE',
+    method: 'POST',
+    url: environment.baseUrl + '/api/email-subscribe',
+  },
+];
 
 export const ApiConfig = {
   baseUrl: '',
@@ -52,5 +59,6 @@ export const ApiConfig = {
     ...shopEndPoints,
     ...contactEndPoints,
     ...blogEndPoint,
+    ...subscribeEndPoint,
   ],
 };
