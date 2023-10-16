@@ -46,6 +46,11 @@ export class PaymentComponent implements OnInit {
       this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
     if (this.isStandardCut) {
       this.setGlobalCartCount(list);
+    } else {
+      let standardList = JSON.parse(localStorage.getItem('cart'))
+        ? JSON.parse(localStorage.getItem('cart'))
+        : [];
+      this.setGlobalCartCount(standardList);
     }
   }
 
