@@ -53,9 +53,7 @@ export class CartComponent implements OnInit {
   }
 
   makePayment() {
-    this.router.navigateByUrl(
-      `shop/checkout?isStandardCut=${this.isStandardCut ? 'true' : 'false'}`
-    );
+    this.router.navigateByUrl('shop/checkout?isStandardCut=true');
   }
   addMoreItem(item, str) {
     let index = this.addedProducts.findIndex((x) => x.id === item.id);
