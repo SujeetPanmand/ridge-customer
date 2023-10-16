@@ -3,24 +3,61 @@
     <div class="row">
       <div class="col-md-3">
         <!-- Tabs nav -->
-        <div class="nav flex-column nav-pills nav-pills-custom" id="v-pills-tab" role="tablist"
-          aria-orientation="vertical">
-          <a class="nav-link mb-3 p-3 shadow-sm active" id="myAccount" data-bs-toggle="pill" routerLinkActive="active" routerLink="/profile/my-account"
-            role="tab" aria-controls="my-account" aria-selected="true">
-            <span class="font-weight-bold small text-uppercase" >My Account</span></a>
+        <div
+          class="nav flex-column nav-pills nav-pills-custom"
+          id="v-pills-tab"
+          role="tablist"
+          aria-orientation="vertical"
+        >
+          <a
+            class="nav-link mb-3 p-3 shadow-sm active"
+            id="myAccount"
+            data-bs-toggle="pill"
+            routerLinkActive="active"
+            routerLink="/profile/my-account"
+            role="tab"
+            aria-controls="my-account"
+            aria-selected="true"
+          >
+            <span class="font-weight-bold small text-uppercase"
+              >My Account</span
+            ></a
+          >
 
-          <a class="nav-link mb-3 p-3 shadow-sm" id="editAddress" data-bs-toggle="pill" routerLinkActive="active" routerLink="/profile/edit-address" role="tab"
-            aria-controls="edit-address" aria-selected="false" >
-            <span class="font-weight-bold small text-uppercase">Edit Address</span></a>
+          <a
+            class="nav-link mb-3 p-3 shadow-sm"
+            id="editAddress"
+            data-bs-toggle="pill"
+            routerLinkActive="active"
+            routerLink="/profile/edit-address"
+            role="tab"
+            aria-controls="edit-address"
+            aria-selected="false"
+          >
+            <span class="font-weight-bold small text-uppercase"
+              >Edit Address</span
+            ></a
+          >
 
-          <a class="nav-link mb-3 p-3 shadow-sm" id="myOrders" data-bs-toggle="pill" routerLinkActive="active" routerLink="/profile/my-orders" role="tab"
-            aria-controls="my-orders" aria-selected="false">
-            <span class="font-weight-bold small text-uppercase">My Orders</span></a>
+          <a
+            class="nav-link mb-3 p-3 shadow-sm"
+            id="myOrders"
+            data-bs-toggle="pill"
+            routerLinkActive="active"
+            routerLink="/profile/my-orders"
+            role="tab"
+            aria-controls="my-orders"
+            aria-selected="false"
+          >
+            <span class="font-weight-bold small text-uppercase"
+              >My Orders</span
+            ></a
+          >
         </div>
       </div>
 
       <div class="col-md-9">
-         <router-outlet></router-outlet>
+        <router-outlet></router-outlet>
       </div>
     </div>
   </div>
