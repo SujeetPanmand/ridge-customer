@@ -44,16 +44,19 @@ export class ShopComponent implements OnInit {
   }
 
   async getAllProducts() {
-    this.apiService
-      .request('GET_ALL_PRODUCTS', { params: {} })
-      .subscribe(async (res) => {
+    this.apiService.request('GET_ALL_PRODUCTS', { params: {} }).subscribe(
+      async (res) => {
         if (res) {
           console.log(res);
           this.productList = await this.formatRecords(res.allProductDetails);
           console.log(this.productList);
           this.defaultSetting();
         }
-      });
+      },
+      (error) => {
+        this.commonService.isLogginShow = true;
+      }
+    );
   }
 
   formatRecords(data) {
