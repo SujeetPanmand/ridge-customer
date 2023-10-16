@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/services/api.service';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-blog',
@@ -9,12 +10,14 @@ import { ApiService } from 'src/app/shared/services/api.service';
 export class BlogComponent implements OnInit {
   allBlogList = [];
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private commonService: CommonService
   ) {}
   ngOnInit(): void {
     this.getAllBlogs();
+    this.commonService.gotoTop();
   }
-  
+
   getAllBlogs() {
     this.apiService
       .request('GET_ALL_BLOGS', { params: { id: '' } })

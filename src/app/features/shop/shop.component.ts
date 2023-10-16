@@ -26,6 +26,7 @@ export class ShopComponent implements OnInit {
   ngOnInit() {
     this.generateCutForm();
     this.getAllProducts();
+    this.commonService.gotoTop();
   }
   generateCutForm() {
     this.cutForm = this.formBuilder.group({

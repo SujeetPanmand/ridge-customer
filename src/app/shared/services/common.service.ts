@@ -12,4 +12,12 @@ export class CommonService {
     this.cartProducts = value;
     this.cartProductValue.emit(this.cartProducts);
   }
+
+  gotoTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/shared/services/api.service';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-contact',
@@ -19,10 +20,12 @@ export class ContactComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private apiService: ApiService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private commonService: CommonService
   ) {}
   ngOnInit(): void {
     this.generateContactForm();
+    this.commonService.gotoTop();
   }
   generateContactForm() {
     this.contactForm = this.formBuilder.group({

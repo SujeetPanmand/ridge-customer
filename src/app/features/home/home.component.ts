@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
       : [];
     this.setGlobalCartCount(list);
     this.getUserDetails();
+    this.commonService.gotoTop();
   }
 
   title = 'ng-carousel-demo';
