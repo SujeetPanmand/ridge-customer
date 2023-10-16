@@ -55,11 +55,25 @@
                   meat.
                 </p>
                 <ul class="list-unstyled mb-3">
-                  <li><p class="mb-1">1/8 Beef (50 lbs.) = 1.7 cubic feet of freezer space.</p></li>
-                  <li><p class="mb-1">¼ Beef (100 lbs.) = 3.4 cubic feet of freezer space.</p></li>
-                  <li><p class="mb-1">½ Beef (200 lbs.) = 6.8 cubic feet of freezer space.</p></li>
                   <li>
-                    <p class="mb-1">Whole Beef (400 lbs.) = 14 cubic feet of freezer space.</p>
+                    <p class="mb-1">
+                      1/8 Beef (50 lbs.) = 1.7 cubic feet of freezer space.
+                    </p>
+                  </li>
+                  <li>
+                    <p class="mb-1">
+                      ¼ Beef (100 lbs.) = 3.4 cubic feet of freezer space.
+                    </p>
+                  </li>
+                  <li>
+                    <p class="mb-1">
+                      ½ Beef (200 lbs.) = 6.8 cubic feet of freezer space.
+                    </p>
+                  </li>
+                  <li>
+                    <p class="mb-1">
+                      Whole Beef (400 lbs.) = 14 cubic feet of freezer space.
+                    </p>
                   </li>
                 </ul>
 
@@ -106,12 +120,11 @@
                 </div>
               </div>
 
-           
-              <div class="row py-3 mx-0 align-items-center justify-content-betweend shadow-none text-light  button-orange rounded-2">
-                <div class="col-2">
-                   <span> 13 items</span>
+              <div class="row py-3 text-light button-orange rounded-2">
+                <div class="col-2 px-0">
+                  <span> {{ productList.length }}&nbsp; items</span>
                 </div>
-             </div>
+              </div>
               <div class="row gy-4 py-5">
                 <div
                   *ngFor="let product of productList"
