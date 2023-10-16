@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Observable, catchError, throwError } from 'rxjs';
+import { ApiService } from 'src/app/shared/services/api.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
@@ -8,12 +11,18 @@ import { CommonService } from 'src/app/shared/services/common.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router, private commonService: CommonService) {}
+  constructor(
+    private router: Router,
+    private commonService: CommonService,
+    private apiService: ApiService,
+    private toastrService: ToastrService
+  ) {}
   ngOnInit(): void {
     let list = JSON.parse(localStorage.getItem('cart'))
       ? JSON.parse(localStorage.getItem('cart'))
       : [];
     this.setGlobalCartCount(list);
+    this.getUserDetails();
   }
 
   title = 'ng-carousel-demo';
@@ -73,5 +82,19 @@ export class HomeComponent implements OnInit {
       count = count + x.count;
     });
     this.commonService.addProducts(count);
+  }
+  getUserDetails() {
+    this.apiService.request('GET_USER_DETAILS', { params: {} }).subscribe(
+      (res) => {
+        if (res && res.statusCode == 200) {
+          this.commonService.isLogginShow = false;
+        } else {
+          this.toastrService.error(' To avail extra facilities please log in ');
+        }
+      },
+      (error) => {
+        this.commonService.isLogginShow = true;
+      }
+    );
   }
 }

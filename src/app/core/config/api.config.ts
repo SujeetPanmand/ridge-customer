@@ -10,6 +10,11 @@ const authEndPoint = [
     method: 'POST',
     url: environment.baseUrl + '/api/auth/sign-up',
   },
+  {
+    name: 'GET_USER_DETAILS',
+    method: 'GET',
+    url: environment.baseUrl + '/api/user/me',
+  },
 ];
 
 const shopEndPoints = [

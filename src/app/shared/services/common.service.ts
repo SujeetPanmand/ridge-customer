@@ -5,6 +5,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 })
 export class CommonService {
   cartProducts = 0;
+  isLogginShow = false;
   @Output() cartProductValue = new EventEmitter<number>();
   constructor() {}
   addProducts(value) {

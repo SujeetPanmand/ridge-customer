@@ -9,6 +9,7 @@ import { LoadingInterceptorService } from './shared/services/loading-interceptor
 import { CoreModule } from './core/core.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { CommonService } from './shared/services/common.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { CommonService } from './shared/services/common.service';
     CoreModule,
     HttpClientModule,
     SlickCarouselModule,
+    BrowserAnimationsModule,
   ],
   exports: [SharedModule],
   providers: [

@@ -51,7 +51,7 @@
                 >CONTACT</a
               >
             </li>
-            <li class="nav-item mx-3">
+            <li *ngIf="commonService.isLogginShow" class="nav-item mx-3">
               <button
                 type="button px-3"
                 class="button-login text-light mt-1 nav-link px-4 py-1 rounded-5 button-orange"
@@ -60,7 +60,7 @@
                 LOGIN
               </button>
             </li>
-            <li class="nav-item mx-3">
+            <li *ngIf="commonService.isLogginShow" class="nav-item mx-3">
               <a routerLink="/signup" class="nav-link" routerLinkActive="active"
                 >Register</a
               >
@@ -88,7 +88,9 @@
               </button>
               <ul class="dropdown-menu">
                 <li>
-                  <a routerLink="/profile/my-account" class="dropdown-item">Account</a>
+                  <a routerLink="/profile/my-account" class="dropdown-item"
+                    >Account</a
+                  >
                 </li>
                 <li>
                   <a routerLink="/login" class="dropdown-item">Log Out</a>
