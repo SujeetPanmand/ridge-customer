@@ -45,6 +45,19 @@ const blogEndPoint = [
   },
 ];
 
+const accountEndPoints = [
+  {
+    name: 'UPDATE_ACCOUNT_INFO',
+    method: 'PUT',
+    url: environment.baseUrl + '/api/user',
+  },
+  {
+    name: 'UPDATE_ADDRESS',
+    method: 'PUT',
+    url: environment.baseUrl + '/api/user/update-address',
+  },
+];
+
 export const ApiConfig = {
   baseUrl: '',
   endpoints: [
@@ -52,5 +65,6 @@ export const ApiConfig = {
     ...shopEndPoints,
     ...contactEndPoints,
     ...blogEndPoint,
+    ...accountEndPoints,
   ],
 };
