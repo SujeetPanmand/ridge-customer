@@ -6,6 +6,8 @@ import { findIndex } from 'rxjs';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { Rating } from 'src/app/shared/interfaces/product';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product-details',
@@ -29,17 +31,28 @@ export class ProductDetailsComponent implements OnInit {
     4: 0,
     5: 0,
   };
+  reviewForm: FormGroup;
+  formSubmitAttempt = false;
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
     private router: Router,
     private commonService: CommonService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private modalService: NgbModal,
+    private formBuilder: FormBuilder
   ) {}
   ngOnInit() {
     this.getProductDetails();
     this.defaultSetting();
     this.getReviewInfo();
+    this.generateReviewForm();
+  }
+  generateReviewForm() {
+    this.reviewForm = this.formBuilder.group({
+      review: ['', Validators.required],
+      title: ['', Validators.required],
+    });
   }
   defaultSetting() {
     this.addedProducts = JSON.parse(localStorage.getItem('cart'))
@@ -52,6 +65,7 @@ export class ProductDetailsComponent implements OnInit {
     this.addMultipe = index >= 0 ? this.addedProducts[index].count : 0;
     this.setGlobalCartCount(this.addedProducts);
   }
+
   getProductDetails() {
     this.apiService
       .request('GET_PRODUCT_DETAILS', {
@@ -155,4 +169,21 @@ export class ProductDetailsComponent implements OnInit {
       );
     }
   }
+
+  onOpenRatePopUp(content) {
+    this.modalService.open(content, { size: 'lg', centered: true });
+  }
+
+  isFieldValid = (formGroup: FormGroup, field: string): boolean =>
+    formGroup.get(field).invalid &&
+    (this.formSubmitAttempt || formGroup.get(field).touched);
+
+  hasError = (
+    formGroup: FormGroup,
+    field: string,
+    errorName: string
+  ): boolean =>
+    formGroup.get(field).errors && formGroup.get(field).touched
+      ? formGroup.get(field).errors[errorName]
+      : false;
 }
