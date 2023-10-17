@@ -39,6 +39,7 @@ export class ProductDetailsComponent implements OnInit {
     { value: false, index: 5 },
   ];
   isShowWriteReviewbtn = false;
+  sortkey = 'recent';
 
   reviewForm: FormGroup;
   formSubmitAttempt = false;
@@ -51,6 +52,7 @@ export class ProductDetailsComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder
   ) {}
+
   ngOnInit() {
     this.getProductDetails();
     this.defaultSetting();
@@ -59,12 +61,14 @@ export class ProductDetailsComponent implements OnInit {
     this.gotoTop();
     this.hideReviewButton();
   }
+
   generateReviewForm() {
     this.reviewForm = this.formBuilder.group({
       review: ['', Validators.required],
       title: ['', Validators.required],
     });
   }
+
   defaultSetting() {
     this.addedProducts = JSON.parse(localStorage.getItem('cart'))
       ? JSON.parse(localStorage.getItem('cart'))
@@ -107,9 +111,11 @@ export class ProductDetailsComponent implements OnInit {
     });
     this.commonService.addProducts(count);
   }
+
   onNavigateToCart() {
     this.router.navigateByUrl('shop/cart?isStandardCut=true');
   }
+
   getReviewInfo() {
     this.apiService
       .request('REVIEW_INFO', {
@@ -175,6 +181,7 @@ export class ProductDetailsComponent implements OnInit {
       return '';
     }
   }
+
   getPercentage(i) {
     if (this.allRating.length == 0) {
       return 0;
@@ -217,6 +224,7 @@ export class ProductDetailsComponent implements OnInit {
       this.unCheckStar(star);
     }
   }
+
   checkStar(star) {
     for (let index = 0; index <= star.index - 1; index++) {
       this.starBox[index].value = true;
@@ -229,6 +237,7 @@ export class ProductDetailsComponent implements OnInit {
       this.starBox[index].value = false;
     }
   }
+
   submitReview() {
     this.formSubmitAttempt = true;
     if (this.reviewForm.invalid) {
@@ -251,6 +260,7 @@ export class ProductDetailsComponent implements OnInit {
       }
     });
   }
+
   getRatingCount() {
     let count = 0;
     this.starBox.forEach((x) => {
@@ -260,6 +270,7 @@ export class ProductDetailsComponent implements OnInit {
     });
     return count;
   }
+
   hideReviewButton() {
     let name = localStorage.getItem('userFullName')
       ? localStorage.getItem('userFullName')
@@ -271,6 +282,7 @@ export class ProductDetailsComponent implements OnInit {
       this.isShowWriteReviewbtn = true;
     }
   }
+
   onAddReview(item, str) {
     const apiRequest = {
       data: {
@@ -285,6 +297,7 @@ export class ProductDetailsComponent implements OnInit {
       }
     });
   }
+
   mapLikeDislikeCount(data) {
     let review = data;
     review.forEach((x) => {
@@ -293,10 +306,24 @@ export class ProductDetailsComponent implements OnInit {
       x.productReviewFeedbackInfo.forEach((y) => {
         y.isLike ? like++ : disLike++;
       });
+      x.createdAt = new Date(x.createdAt).toLocaleDateString('en-US');
       x['likeCount'] = like;
       x['disLikeCount'] = disLike;
     });
 
+    console.log(review);
+
     return review;
+  }
+  sortReviewArray() {
+    if (this.sortkey == 'recent') {
+      this.allProductReviews = this.allProductReviews.sort((a, b) => {
+        return <any>new Date(a.createdAt) - <any>new Date(b.createdAt);
+      });
+    } else {
+      this.allProductReviews = this.allProductReviews.sort((a, b) => {
+        return <any>new Date(b.createdAt) - <any>new Date(a.createdAt);
+      });
+    }
   }
 }

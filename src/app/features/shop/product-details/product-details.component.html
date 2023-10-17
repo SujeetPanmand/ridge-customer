@@ -249,15 +249,15 @@
                 <div class="d-flex align-items-center mb-2">
                   <label for="sortBy">Sort By</label>
                   <select
+                    (change)="sortReviewArray()"
                     class="form-select w-75 ms-2"
                     id="sortBy"
                     name="sortBy"
+                    [(ngModel)]="sortkey"
                     aria-label="Default select example"
                   >
-                    <option selected>Most recent</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="recent">Most recent</option>
+                    <option value="oldest">Oldest First</option>
                   </select>
                 </div>
               </div>
@@ -316,7 +316,9 @@
                         class="fa fa-star"
                       ></span>
                     </div>
-                    <div class="reviewFont">Reviewed on September 14 2023</div>
+                    <div class="reviewFont">
+                      Reviewed On {{ item.createdAt }}
+                    </div>
                     <h6 class="fw-bolder pt-3">{{ item.title }}</h6>
                     <p>
                       {{ item.review }}
