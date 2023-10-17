@@ -108,3 +108,9 @@ h5 {
   outline: 0;
   box-shadow: none;
 }
+.hide-name {
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
