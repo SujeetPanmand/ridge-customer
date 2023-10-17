@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { User } from 'src/app/shared/interfaces/user/user-details';
 import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
@@ -15,19 +17,25 @@ export class CheckoutComponent {
   orderTotal = 0;
   orderSubTotal = 0;
   isStandardCut = false;
+  userDetailsForm: FormGroup;
+  userDetails: User;
   constructor(
-    private commonService: CommonService,
+    public commonService: CommonService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder
   ) {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
   }
   ngOnInit() {
     this.defaultSetting();
+    this.generateUserDetailsForm();
+    this.patchUserDetailsForm();
   }
 
   defaultSetting() {
+    localStorage.setItem('selfPickUp', '0');
     let list = [];
     if (this.isStandardCut) {
       list = JSON.parse(localStorage.getItem('cart'))
@@ -65,10 +73,58 @@ export class CheckoutComponent {
 
   onChangeType(flag) {
     this.isSelfPickUp = flag;
+    this.isSelfPickUp
+      ? localStorage.setItem('selfPickUp', '1')
+      : localStorage.setItem('selfPickUp', '0');
   }
-  onRedirectToPayment() {
+
+  async onRedirectToPayment() {
+    let str = [];
+    await Object.keys(this.userDetailsForm.controls).forEach((key) => {
+      console.log();
+      if (this.userDetailsForm.controls[key].value) {
+        console.log(this.userDetailsForm.controls[key].value);
+        str.push(this.userDetailsForm.controls[key].value);
+      }
+    });
+    localStorage.setItem('orderAddress', JSON.stringify(str));
     this.router.navigateByUrl(
       `shop/payment?isStandardCut=${this.isStandardCut ? 'true' : 'false'}`
     );
+  }
+
+  generateUserDetailsForm() {
+    this.userDetailsForm = this.formBuilder.group({
+      country: [''],
+      zip: [''],
+      state: [''],
+      city: [''],
+      address: [''],
+      firstName: [''],
+      lastName: [''],
+      email: [''],
+      phone: [''],
+      company: [''],
+      address2: [''],
+      defaultFlag: [false],
+      billFlag: [false],
+    });
+  }
+  async patchUserDetailsForm() {
+    await this.commonService.getUserDetails().then((res) => {
+      this.userDetails = res;
+      console.log('___', this.userDetails);
+    });
+    this.userDetailsForm.patchValue({
+      firstName: this.userDetails.userDetails.fullName.split(' ')[0],
+      lastName: this.userDetails.userDetails.fullName.split(' ')[1],
+      email: this.userDetails.userDetails.email,
+      phone: this.userDetails.userDetails.phoneNumber,
+      address: this.userDetails.userDetails.addressList[0].addressLine,
+      city: this.userDetails.userDetails.addressList[0].city,
+      country: this.userDetails.userDetails.addressList[0].country,
+      zip: this.userDetails.userDetails.addressList[0].postalCode,
+      state: this.userDetails.userDetails.addressList[0].state,
+    });
   }
 }

@@ -1,6 +1,6 @@
 export interface User {
   message: string;
-  statusCode: string;
+  statusCode: number;
   userDetails: UserDetails;
 }
 
@@ -8,7 +8,7 @@ export interface UserDetails {
   email: string;
   fullName: string;
   phoneNumber: string;
-  address: Address[];
+  addressList: Address[];
 }
 
 export interface Address {

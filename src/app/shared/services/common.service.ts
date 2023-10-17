@@ -30,20 +30,22 @@ export class CommonService {
     });
   }
 
-  getUserDetails() {
-    this.apiService.request('GET_USER_DETAILS', { params: {} }).subscribe(
-      (res) => {
-        if (res && res.statusCode == 200) {
-          this.isLogginShow = false;
-          this.userDetails = res.userDetails;
-          console.log(this.userDetails);
-          localStorage.setItem('userFullName', res.userDetails.fullName);
+  getUserDetails(): Promise<User> {
+    return new Promise<User>((resolve, reject) => {
+      this.apiService.request('GET_USER_DETAILS', { params: {} }).subscribe(
+        (res) => {
+          if (res && res.statusCode == 200) {
+            this.isLogginShow = false;
+            this.userDetails = res.userDetails;
+            resolve(res);
+            localStorage.setItem('userFullName', res.userDetails.fullName);
+          }
+        },
+        (error) => {
+          this.isLogginShow = true;
+          this.toastrService.error(' To avail extra facilities please log in ');
         }
-      },
-      (error) => {
-        this.isLogginShow = true;
-        this.toastrService.error(' To avail extra facilities please log in ');
-      }
-    );
+      );
+    });
   }
 }

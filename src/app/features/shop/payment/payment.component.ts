@@ -14,6 +14,8 @@ export class PaymentComponent implements OnInit {
   orderTotal = 0;
   orderSubTotal = 0;
   isStandardCut = false;
+  isSelfPickUp = false;
+  orderAddress = [];
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute,
@@ -27,6 +29,11 @@ export class PaymentComponent implements OnInit {
     this.defaultSetting();
   }
   defaultSetting() {
+    this.isSelfPickUp =
+      localStorage.getItem('selfPickUp') == '0' || null ? false : true;
+    this.orderAddress = JSON.parse(localStorage.getItem('orderAddress'))
+      ? JSON.parse(localStorage.getItem('orderAddress'))
+      : [];
     let list = [];
     if (this.isStandardCut) {
       list = JSON.parse(localStorage.getItem('cart'))

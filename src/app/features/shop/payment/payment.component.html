@@ -14,8 +14,13 @@
             <div (click)="goBack()" class="text-orange cursor ps-4">Edit</div>
           </div>
           <hr class="border" />
-          <span class="pt-3">
-            15071-8112 New Tedshire Heathcote Land 39345 Reece Drive
+          <span *ngIf="isSelfPickUp" class="pt-3">
+            San Gabriel River In Liberty Hill, Austin, Texas -73301
+          </span>
+          <span class="d-flex" *ngIf="!isSelfPickUp" class="pt-3">
+            <span *ngFor="let str of orderAddress">
+              {{ str }}
+            </span>
           </span>
           <h3 class="pt-5 text-title">Payment Method</h3>
           <hr class="border" />

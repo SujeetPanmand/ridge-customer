@@ -25,172 +25,194 @@
             </div>
 
             <div *ngIf="!isSelfPickUp" id="shippingAddress">
-              <h2 class="text-title">Shipping Address</h2>
-              <hr class="border" />
+              <form [formGroup]="userDetailsForm">
+                <h2 class="text-title">Shipping Address</h2>
+                <hr class="border" />
 
-              <div class="row mb-3">
-                <div class="col-md-6">
-                  <label for="firstName" class="form-label"
-                    >First Name <span class="text-orange">*</span></label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="firstName"
-                    name="firstName"
-                  />
-                </div>
-                <div class="col-md-6">
-                  <label for="lastName" class="form-label"
-                    >Last Name
-                    <span class="text-orange">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="lastName"
-                    name="lastName"
-                  />
-                </div>
-              </div>
-              <div class="mb-3">
-                <label for="email" class="form-label"
-                  >Email Address
-                  <span class="text-orange">*</span>
-                </label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  name="email"
-                />
-              </div>
-
-              <div class="mb-3">
-                <label for="phone" class="form-label"
-                  >Phone Number
-                  <span class="text-orange">*</span>
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="phone"
-                  name="phone"
-                  placeholder=""
-                />
-              </div>
-
-              <div class="mb-3">
-                <label for="company" class="form-label"
-                  >Company(Optional)</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="company"
-                  name="company"
-                  placeholder=""
-                />
-              </div>
-
-              <div class="mb-3">
-                <label for="country" class="form-label"
-                  >Country/ Region
-                  <span class="text-orange">*</span>
-                </label>
-
-                <select
-                  class="form-select form-select mb-3"
-                  id="country"
-                  name="country"
-                  aria-label=".form-select-lg example"
-                >
-                  <option selected></option>
-                </select>
-              </div>
-
-              <div class="mb-3">
-                <label for="address" class="form-label"
-                  >Address <span class="text-orange">*</span></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="address"
-                  name="address"
-                  placeholder="House name and street name"
-                />
-                <label for="address2" class="form-label"></label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="address2"
-                  name="address2"
-                  placeholder="Appartment,suit ,unit,etc.(Optional)"
-                />
-              </div>
-
-              <div class="mb-3">
-                <label for="city" class="form-label"
-                  >Town / City
-                  <span class="text-orange">*</span>
-                </label>
-                <input type="text" class="form-control" id="city" name="city" />
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="mb-3">
-                    <label for="state" class="form-label"
-                      >State
-                      <span class="text-orange">*</span>
-                    </label>
-                    <select id="state" name="state" class="form-select">
-                      <option selected></option>
-                      <option>...</option>
-                    </select>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="firstName" class="form-label"
+                      >First Name <span class="text-orange">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="firstName"
+                      name="firstName"
+                      formControlName="firstName"
+                    />
                   </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="mb-3">
-                    <label for="zip" class="form-label"
-                      >Zip Code
+                  <div class="col-md-6">
+                    <label for="lastName" class="form-label"
+                      >Last Name
                       <span class="text-orange">*</span>
                     </label>
                     <input
                       type="text"
                       class="form-control"
-                      id="zip"
-                      name="zip"
+                      id="lastName"
+                      name="lastName"
+                      formControlName="lastName"
                     />
                   </div>
                 </div>
-              </div>
-              <div class="form-check mb-3">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="saveAddress"
-                />
-                <label class="form-check-label" for="saveAddress">
-                  Save this address as my default
-                </label>
-              </div>
-              <div class="pt-4">
-                <h1 class="text-title">Billing Address</h1>
-              </div>
-              <hr class="border" />
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="myBilling"
-                />
-                <label class="form-check-label" for="myBilling">
-                  My billing address is same as shipping address
-                </label>
-              </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label"
+                    >Email Address
+                    <span class="text-orange">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    formControlName="email"
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label for="phone" class="form-label"
+                    >Phone Number
+                    <span class="text-orange">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="phone"
+                    name="phone"
+                    placeholder=""
+                    formControlName="phone"
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label for="company" class="form-label"
+                    >Company(Optional)</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="company"
+                    name="company"
+                    placeholder=""
+                    formControlName="company"
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label for="country" class="form-label"
+                    >Country/ Region
+                    <span class="text-orange">*</span>
+                  </label>
+
+                  <select
+                    class="form-select form-select mb-3"
+                    id="country"
+                    name="country"
+                    formControlName="country"
+                    aria-label=".form-select-lg example"
+                  >
+                    <option value="US">USA</option>
+                    <option value="India">India</option>
+                    <option value="UK">UK</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="address" class="form-label"
+                    >Address <span class="text-orange">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="address"
+                    name="address"
+                    formControlName="address"
+                    placeholder="House name and street name"
+                  />
+                  <label for="address2" class="form-label"></label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="address2"
+                    name="address2"
+                    formControlName="address2"
+                    placeholder="Appartment,suit ,unit,etc.(Optional)"
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label for="city" class="form-label"
+                    >Town / City
+                    <span class="text-orange">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="city"
+                    name="city"
+                    formControlName="city"
+                  />
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="state" class="form-label"
+                        >State
+                        <span class="text-orange">*</span>
+                      </label>
+                      <select id="state" name="state" class="form-select">
+                        <option value="california">California</option>
+                        <option value="alaska">Alaska</option>
+                        <option value="colorado">Colorado</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="zip" class="form-label"
+                        >Zip Code
+                        <span class="text-orange">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="zip"
+                        name="zip"
+                        formControlName="zip"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-check mb-3">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="saveAddress"
+                    formControlName="defaultFlag"
+                  />
+                  <label class="form-check-label" for="saveAddress">
+                    Save this address as my default
+                  </label>
+                </div>
+                <div class="pt-4">
+                  <h1 class="text-title">Billing Address</h1>
+                </div>
+                <hr class="border" />
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="myBilling"
+                    formControlName="billFlag"
+                  />
+                  <label class="form-check-label" for="myBilling">
+                    My billing address is same as shipping address
+                  </label>
+                </div>
+              </form>
             </div>
             <div *ngIf="isSelfPickUp" class="mb-3">
               <h2 class="text-title">Ranch Address</h2>
@@ -227,13 +249,24 @@
                         <div class="accordion" id="accordionProduct">
                           <div class="accordion-item border-0">
                             <h2 class="accordion-header">
-                              <button class="accordion-button collapsed pb-0 pt-3" type="button" data-bs-toggle="collapse" data-bs-target="#productInfo" aria-expanded="false" aria-controls="productInfo">
+                              <button
+                                class="accordion-button collapsed pb-0 pt-3"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#productInfo"
+                                aria-expanded="false"
+                                aria-controls="productInfo"
+                              >
                                 <h5>{{ product.name }}</h5>
                               </button>
                             </h2>
-                            <div id="productInfo" class="accordion-collapse collapse" data-bs-parent="#accordionProduct">
+                            <div
+                              id="productInfo"
+                              class="accordion-collapse collapse"
+                              data-bs-parent="#accordionProduct"
+                            >
                               <div class="accordion-body">
-                                <p>{{product?.cutInfo}}</p>
+                                <p>{{ product?.cutInfo }}</p>
                               </div>
                             </div>
                           </div>
