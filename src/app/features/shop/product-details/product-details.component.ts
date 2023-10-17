@@ -24,13 +24,7 @@ export class ProductDetailsComponent implements OnInit {
   rating = '';
   avg = 0;
   allRating = [];
-  segrigatedRating = {
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0,
-    5: 0,
-  };
+  segrigatedRating = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
   starBox = [
     { value: false, index: 1 },
     { value: false, index: 2 },
@@ -117,6 +111,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getReviewInfo() {
+    this.segrigatedRating = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
     this.apiService
       .request('REVIEW_INFO', {
         params: { productId: this.route.snapshot.params['productId'] },
