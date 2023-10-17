@@ -67,8 +67,7 @@ h5 {
 .checked {
   color: #ef4c00;
 }
-
-p {
+.far p {
   font: normal normal 600 16px/26px Muli;
   letter-spacing: 0px;
   color: #180800;
@@ -101,11 +100,11 @@ p {
 }
 
 .accordion-button:not(.collapsed) {
-   background-color: transparent; 
-   box-shadow: none; 
+  background-color: transparent;
+  box-shadow: none;
 }
 .accordion-button:focus {
-   border-color: transparent; 
+  border-color: transparent;
   outline: 0;
-   box-shadow: none;
+  box-shadow: none;
 }

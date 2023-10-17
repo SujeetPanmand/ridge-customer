@@ -89,12 +89,12 @@ export class HomeComponent implements OnInit {
       (res) => {
         if (res && res.statusCode == 200) {
           this.commonService.isLogginShow = false;
-        } else {
-          this.toastrService.error(' To avail extra facilities please log in ');
+          localStorage.setItem('userFullName', res.userDetails.fullName);
         }
       },
       (error) => {
         this.commonService.isLogginShow = true;
+        this.toastrService.error(' To avail extra facilities please log in ');
       }
     );
   }

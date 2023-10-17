@@ -33,6 +33,11 @@ const shopEndPoints = [
     method: 'GET',
     url: environment.baseUrl + '/api/productReview/[productId]',
   },
+  {
+    name: 'POST_USER_REVIEW',
+    method: 'POST',
+    url: environment.baseUrl + '/api/productReview/add-productReview',
+  },
 ];
 
 const contactEndPoints = [

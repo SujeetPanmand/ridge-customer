@@ -31,6 +31,15 @@ export class ProductDetailsComponent implements OnInit {
     4: 0,
     5: 0,
   };
+  starBox = [
+    { value: false, index: 1 },
+    { value: false, index: 2 },
+    { value: false, index: 3 },
+    { value: false, index: 4 },
+    { value: false, index: 5 },
+  ];
+  isShowWriteReviewbtn = false;
+
   reviewForm: FormGroup;
   formSubmitAttempt = false;
   constructor(
@@ -48,6 +57,7 @@ export class ProductDetailsComponent implements OnInit {
     this.getReviewInfo();
     this.generateReviewForm();
     this.gotoTop();
+    this.hideReviewButton();
   }
   generateReviewForm() {
     this.reviewForm = this.formBuilder.group({
@@ -109,6 +119,9 @@ export class ProductDetailsComponent implements OnInit {
         if (res && res.statusCode == 200) {
           this.allProductReviews = res.allProductReviews;
           this.unFilterdallProductReviews = res.allProductReviews;
+
+          console.log('all review info', this.unFilterdallProductReviews);
+
           this.calculateAvgRating();
           this.calculateRatingWisePercentage();
         } else {
@@ -194,5 +207,67 @@ export class ProductDetailsComponent implements OnInit {
       left: 0,
       behavior: 'smooth',
     });
+  }
+
+  toggleStar(star) {
+    if (!star.value) {
+      this.checkStar(star);
+    } else {
+      this.unCheckStar(star);
+    }
+  }
+  checkStar(star) {
+    for (let index = 0; index <= star.index - 1; index++) {
+      this.starBox[index].value = true;
+    }
+    console.log(this.starBox);
+  }
+
+  unCheckStar(star) {
+    for (let index = star.index; index <= 4; index++) {
+      this.starBox[index].value = false;
+    }
+  }
+  submitReview() {
+    this.formSubmitAttempt = true;
+    if (this.reviewForm.invalid) {
+      return;
+    }
+    const apiRequest = {
+      data: {
+        productId: this.route.snapshot.params['productId'],
+        rating: this.getRatingCount(),
+        title: this.reviewForm.controls['title'].value,
+        review: this.reviewForm.controls['review'].value,
+      },
+    };
+    this.apiService.request('POST_USER_REVIEW', apiRequest).subscribe((res) => {
+      this.formSubmitAttempt = false;
+      this.modalService.dismissAll();
+      if (res && res.statusCode == 200) {
+        console.log('___', res);
+        this.getReviewInfo();
+      }
+    });
+  }
+  getRatingCount() {
+    let count = 0;
+    this.starBox.forEach((x) => {
+      if (x.value) {
+        count++;
+      }
+    });
+    return count;
+  }
+  hideReviewButton() {
+    let name = localStorage.getItem('userFullName')
+      ? localStorage.getItem('userFullName')
+      : '';
+    let x = this.unFilterdallProductReviews.map(
+      (x) => x.userDetails.fullName == name
+    );
+    if (x) {
+      this.isShowWriteReviewbtn = true;
+    }
   }
 }
