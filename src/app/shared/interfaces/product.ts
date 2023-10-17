@@ -5,10 +5,10 @@ export interface Rating {
   rating?: number;
   review?: string;
   title?: string;
-  userDetails?: User;
+  userDetails?: UserBasics;
   likeCount?: number;
   disLikeCount?: number;
 }
-export interface User {
+export interface UserBasics {
   fullName: string;
 }

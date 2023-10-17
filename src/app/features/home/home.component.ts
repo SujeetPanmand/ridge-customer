@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
       ? JSON.parse(localStorage.getItem('cart'))
       : [];
     this.setGlobalCartCount(list);
-    this.getUserDetails();
+
     this.commonService.gotoTop();
     this.getAllProducts();
   }
@@ -78,20 +78,7 @@ export class HomeComponent implements OnInit {
     });
     this.commonService.addProducts(count);
   }
-  getUserDetails() {
-    this.apiService.request('GET_USER_DETAILS', { params: {} }).subscribe(
-      (res) => {
-        if (res && res.statusCode == 200) {
-          this.commonService.isLogginShow = false;
-          localStorage.setItem('userFullName', res.userDetails.fullName);
-        }
-      },
-      (error) => {
-        this.commonService.isLogginShow = true;
-        this.toastrService.error(' To avail extra facilities please log in ');
-      }
-    );
-  }
+
   getAllProducts() {
     this.apiService
       .request('GET_ALL_PRODUCTS', { params: {} })

@@ -1,4 +1,7 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { ApiService } from './api.service';
+import { ToastrService } from 'ngx-toastr';
+import { User } from '../interfaces/user/user-details';
 
 @Injectable({
   providedIn: 'root',
@@ -6,8 +9,14 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 export class CommonService {
   cartProducts = 0;
   isLogginShow = false;
+  userDetails: User;
   @Output() cartProductValue = new EventEmitter<number>();
-  constructor() {}
+  constructor(
+    private apiService: ApiService,
+    private toastrService: ToastrService
+  ) {
+    this.getUserDetails();
+  }
   addProducts(value) {
     this.cartProducts = value;
     this.cartProductValue.emit(this.cartProducts);
@@ -19,5 +28,22 @@ export class CommonService {
       left: 0,
       behavior: 'smooth',
     });
+  }
+
+  getUserDetails() {
+    this.apiService.request('GET_USER_DETAILS', { params: {} }).subscribe(
+      (res) => {
+        if (res && res.statusCode == 200) {
+          this.isLogginShow = false;
+          this.userDetails = res.userDetails;
+          console.log(this.userDetails);
+          localStorage.setItem('userFullName', res.userDetails.fullName);
+        }
+      },
+      (error) => {
+        this.isLogginShow = true;
+        this.toastrService.error(' To avail extra facilities please log in ');
+      }
+    );
   }
 }
