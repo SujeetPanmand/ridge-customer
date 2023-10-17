@@ -324,13 +324,19 @@
                     <div class="gy-2">
                       <span>Was this review helpful?</span>
                       <span
-                        ><i class="bi bi-hand-thumbs-up-fill text-orange"></i
+                        ><i
+                          (click)="onAddReview(item, 'up')"
+                          class="bi bi-hand-thumbs-up-fill text-orange cursor"
+                        ></i
                       ></span>
-                      <span>4</span>
+                      <span>{{ item.likeCount }}</span>
                       <span
-                        ><i class="bi bi-hand-thumbs-down-fill text-orange"></i
+                        ><i
+                          (click)="onAddReview(item, 'down')"
+                          class="bi bi-hand-thumbs-down-fill cursor"
+                        ></i
                       ></span>
-                      <span>0</span>
+                      <span>{{ item.disLikeCount }}</span>
                     </div>
                   </div>
                 </div>

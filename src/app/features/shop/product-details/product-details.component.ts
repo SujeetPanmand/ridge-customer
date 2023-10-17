@@ -117,11 +117,12 @@ export class ProductDetailsComponent implements OnInit {
       })
       .subscribe((res) => {
         if (res && res.statusCode == 200) {
-          this.allProductReviews = res.allProductReviews;
-          this.unFilterdallProductReviews = res.allProductReviews;
-
-          console.log('all review info', this.unFilterdallProductReviews);
-
+          this.allProductReviews = this.mapLikeDislikeCount(
+            res.allProductReviews
+          );
+          this.unFilterdallProductReviews = this.mapLikeDislikeCount(
+            res.allProductReviews
+          );
           this.calculateAvgRating();
           this.calculateRatingWisePercentage();
         } else {
@@ -266,8 +267,36 @@ export class ProductDetailsComponent implements OnInit {
     let x = this.unFilterdallProductReviews.map(
       (x) => x.userDetails.fullName == name
     );
-    if (x) {
+    if (!x) {
       this.isShowWriteReviewbtn = true;
     }
+  }
+  onAddReview(item, str) {
+    const apiRequest = {
+      data: {
+        productReviewId: item.id,
+        status: str == 'up' ? 1 : 0,
+      },
+    };
+    this.apiService.request('LIKE_DISLIKE', apiRequest).subscribe((res) => {
+      if (res && res.statusCode == 200) {
+        this.toastrService.success(res.message);
+        this.getReviewInfo();
+      }
+    });
+  }
+  mapLikeDislikeCount(data) {
+    let review = data;
+    review.forEach((x) => {
+      let like = 0;
+      let disLike = 0;
+      x.productReviewFeedbackInfo.forEach((y) => {
+        y.isLike ? like++ : disLike++;
+      });
+      x['likeCount'] = like;
+      x['disLikeCount'] = disLike;
+    });
+
+    return review;
   }
 }

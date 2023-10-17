@@ -38,6 +38,11 @@ const shopEndPoints = [
     method: 'POST',
     url: environment.baseUrl + '/api/productReview/add-productReview',
   },
+  {
+    name: 'LIKE_DISLIKE',
+    method: 'POST',
+    url: environment.baseUrl + '/api/productReview/setlikeStatus',
+  },
 ];
 
 const contactEndPoints = [
