@@ -1,14 +1,13 @@
-
 .section {
   // background-image: url('/src/assets/home/homepagebanner.png');
-  background-image: url('/assets/home/homepagebanner.png');
+  background-image: url("/assets/home/homepagebanner.png");
   background-repeat: no-repeat;
   background-size: cover;
-  position: center,center;
+  position: center, center;
 }
 
 .bgImag {
-  background-image: url('/assets/home/ourfamily.png');
+  background-image: url("/assets/home/ourfamily.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -27,12 +26,12 @@
   text-align: center;
   font: normal normal bold 36px/46px Georgia;
   letter-spacing: 0px;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 1;
 }
 
 .bg-order {
-  background-image: url('/assets/home/ctaimage.png');
+  background-image: url("/assets/home/ctaimage.png");
   border-radius: 5px;
   color: #fff;
   width: 100%;
@@ -50,15 +49,15 @@
   color: #fff;
 }
 
-
-.text-orange,  .navbar-nav a:hover , .icon:hover {
-  color: #EF4C00;
+.text-orange,
+.navbar-nav a:hover,
+.icon:hover {
+  color: #ef4c00;
 }
 
 .bg-footer {
-  background-color: #300F00;
+  background-color: #300f00;
 }
-
 
 /* Slider css start */
 
@@ -78,7 +77,6 @@
 //   align-items: center;
 //   justify-content: center;
 // }
-
 
 // .slick-next {
 //   right: 15px;
@@ -167,17 +165,16 @@
 }
 
 .bg-img-section {
-  background-image: url('/assets/home/backgroundimage.png');
+  background-image: url("/assets/home/backgroundimage.png");
   background-repeat: no-repeat;
   background-size: cover;
   /* height: 600px; */
   background-position: right;
-
 }
 
 .slick-dots li button:before,
 .slick-dots li.slick-active button:before {
-  color: #EF4C00;
+  color: #ef4c00;
 }
 
 /* Slider css end */
@@ -187,11 +184,17 @@
 //   margin: auto;
 //   background: rgb(14, 13, 13);
 // }
-  
-// body .slick-prev, 
+
+// body .slick-prev,
 // body .slick-next {
 //   height: 45px;
 //   width: 40px;
 //   background: #575d59 !important;
 //   z-index: 100;
 // }
+.hide-name {
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

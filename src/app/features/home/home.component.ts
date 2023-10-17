@@ -11,6 +11,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  productList = [];
   constructor(
     private router: Router,
     private commonService: CommonService,
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
     this.setGlobalCartCount(list);
     this.getUserDetails();
     this.commonService.gotoTop();
+    this.getAllProducts();
   }
 
   title = 'ng-carousel-demo';
@@ -97,5 +99,15 @@ export class HomeComponent implements OnInit {
         this.toastrService.error(' To avail extra facilities please log in ');
       }
     );
+  }
+  getAllProducts() {
+    this.apiService
+      .request('GET_ALL_PRODUCTS', { params: {} })
+      .subscribe(async (res) => {
+        if (res) {
+          console.log(res);
+          this.productList = res.allProductDetails;
+        }
+      });
   }
 }

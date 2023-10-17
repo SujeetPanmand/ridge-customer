@@ -35,50 +35,43 @@
           </p>
         </div>
         <div class="row mt-3">
-          <div class="col-md-4 gy-3">
+          <!-- <div *ngFor="let product of productList" class="col-md-4 gy-3">
             <div class="card h-100 shadow rounded-4">
               <img src="assets/home/products.png " class="img-fluid" />
               <div class="card-body">
                 <div class="d-flex mb-0">
-                  <h5 class="fw-bold">Whole Beef</h5>
-                  <h5 class="ms-auto fw-bold text-orange">$3,800.00</h5>
+                  <h5 class="fw-bold">{{ product.name }}</h5>
+                  <h5 class="ms-auto fw-bold text-orange">
+                    ${{ product.price }}
+                  </h5>
                 </div>
-                <p class="card-text pt-2">
-                  Lorem ipsum dolor sit amet, consetetur<br />
-                  sadipscing elitr
-                </p>
               </div>
             </div>
-          </div>
-          <div class="col-md-4 gy-3">
-            <div class="card h-100 shadow rounded-4">
-              <img src="assets/home/meat.png " class="img-fluid" />
-              <div class="card-body">
-                <div class="card-title d-flex mb-0">
-                  <h5 class="fw-bold">Half Beef</h5>
-                  <h5 class="ms-auto fw-bold text-orange">$1,900.00</h5>
+          </div> -->
+          <ngx-slick-carousel
+            class="carousel"
+            #slickModal="slick-carousel"
+            [config]="slideConfig"
+            (init)="slickInit($event)"
+            (breakpoint)="breakpoint($event)"
+            (afterChange)="afterChange($event)"
+            (beforeChange)="beforeChange($event)"
+          >
+            <div ngxSlickItem *ngFor="let product of productList" class="slide">
+              <div class="px-2 my-slider">
+                <div class="card card-recipes rounded-4">
+                  <div class="content-overlay"></div>
+                  <img src="assets/home/products.png " class="img-fluid" />
+                  <div class="d-flex mb-0 p-2">
+                    <h5 class="fw-bold hide-name">{{ product.name }}</h5>
+                    <h5 class="ms-auto fw-bold text-orange">
+                      ${{ product.price }}
+                    </h5>
+                  </div>
                 </div>
-                <p class="card-text pt-2">
-                  Lorem ipsum dolor sit amet, consetetur <br />sadipscing elitr
-                </p>
               </div>
             </div>
-          </div>
-          <div class="col-md-4 gy-3 corner">
-            <div class="card h-100 shadow rounded-4">
-              <img src="assets/home/products.png " class="img-fluid" />
-              <div class="card-body">
-                <div class="card-title d-flex mb-0">
-                  <h5 class="fw-bold">Whole Beef</h5>
-                  <h5 class="ms-auto fw-bold text-orange">$3,800.00</h5>
-                </div>
-                <p class="card-text pt-2">
-                  Lorem ipsum dolor sit amet, consetetur<br />
-                  sadipscing elitr
-                </p>
-              </div>
-            </div>
-          </div>
+          </ngx-slick-carousel>
         </div>
         <div class="text-center pt-5">
           <a
