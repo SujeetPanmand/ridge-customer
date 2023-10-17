@@ -30,14 +30,6 @@ export class HomeComponent implements OnInit {
 
   title = 'ng-carousel-demo';
 
-  slides = [
-    { img: 'assets/home/natural-chef-carolyn-nicholas-560118-unsplash.png' },
-    { img: 'assets/home/group328.png' },
-    { img: 'assets/home/foodphotograph.png' },
-    { img: 'assets/home/giannatrewava.png' },
-    { img: 'assets/home/group328.png' },
-  ];
-  // slideConfig = {"slidesToShow": 4, "slidesToScroll": 4};
   slideConfig = {
     slidesToShow: 4,
     slidesToScroll: 1,
