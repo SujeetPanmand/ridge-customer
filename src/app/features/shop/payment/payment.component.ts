@@ -68,4 +68,9 @@ export class PaymentComponent implements OnInit {
       }`
     );
   }
+  goBack() {
+    this.router.navigateByUrl(
+      `shop/checkout?isStandardCut=${this.isStandardCut ? 'true' : 'false'}`
+    );
+  }
 }
