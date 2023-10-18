@@ -228,7 +228,7 @@
                 <table class="table align-middle table-borderless">
                   <tbody>
                     <tr
-                      *ngFor="let product of finalOrderProducts"
+                      *ngFor="let product of finalOrderProducts; index as i"
                       class="border-bottom"
                     >
                       <td>
@@ -253,7 +253,7 @@
                                 class="accordion-button collapsed pb-0 pt-3"
                                 type="button"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#productInfo"
+                                [attr.data-bs-target]="'#productInfo' + i"
                                 aria-expanded="false"
                                 aria-controls="productInfo"
                               >
@@ -261,12 +261,12 @@
                               </button>
                             </h2>
                             <div
-                              id="productInfo"
+                              [id]="'productInfo' + i"
                               class="accordion-collapse collapse"
                               data-bs-parent="#accordionProduct"
                             >
                               <div class="accordion-body">
-                                <p>{{ product?.cutInfo }}</p>
+                                <p [innerHTML]="product?.cutInfo"></p>
                               </div>
                             </div>
                           </div>

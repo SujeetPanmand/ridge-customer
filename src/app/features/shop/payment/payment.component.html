@@ -105,7 +105,7 @@
             <div class="table-responsive mt-3">
               <table class="table align-middle table-borderless">
                 <tbody>
-                  <tr *ngFor="let products of finalOrderProducts">
+                  <tr *ngFor="let products of finalOrderProducts; index as i">
                     <td>
                       <button type="button" class="btn position-relative p-0">
                         <img
@@ -129,7 +129,7 @@
                               class="accordion-button collapsed pb-0 pt-3"
                               type="button"
                               data-bs-toggle="collapse"
-                              data-bs-target="#productInfo"
+                              [attr.data-bs-target]="'#productInfo' + i"
                               aria-expanded="false"
                               aria-controls="productInfo"
                             >
@@ -137,12 +137,12 @@
                             </button>
                           </h2>
                           <div
-                            id="productInfo"
+                            [id]="'productInfo' + i"
                             class="accordion-collapse collapse"
                             data-bs-parent="#accordionProduct"
                           >
                             <div class="accordion-body">
-                              <p>{{ products?.cutInfo }}</p>
+                              <p [innerHTML]="products?.cutInfo"></p>
                             </div>
                           </div>
                         </div>
