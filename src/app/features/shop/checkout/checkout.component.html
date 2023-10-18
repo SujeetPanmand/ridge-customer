@@ -312,15 +312,18 @@
                   type="date"
                   id="birthday"
                   name="birthday "
+                  [min]="todayDate"
+                  (change)="getCurrentDay()"
+                  [(ngModel)]="selectedDate"
                   class="form-control mb-3"
                 />
               </div>
               <div class="mb-3">
-                <select
-                  class="form-select form-select"
-                  aria-label=".form-select-sm example"
-                >
-                  <option selected>9AM to 12PM</option>
+                <select class="form-control form-select">
+                  <option value="">Select Slot</option>
+                  <option *ngFor="let item of allSlots" [value]="item.id">
+                    {{ item.startTime }}&nbsp;To&nbsp;{{ item.endTime }}
+                  </option>
                 </select>
               </div>
             </div>

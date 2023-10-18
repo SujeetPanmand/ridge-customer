@@ -1,6 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { ApiService } from 'src/app/shared/services/api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-payment',
@@ -16,6 +19,7 @@ export class PaymentComponent implements OnInit {
   isStandardCut = false;
   isSelfPickUp = false;
   orderAddress = [];
+
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute,

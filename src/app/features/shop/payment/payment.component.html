@@ -176,25 +176,11 @@
           </div>
 
           <div class="mb-3 shadow-sm border p-4">
-            <div class="text-title pb-2">Delivery Date &Time</div>
+            <div class="text-title pb-2">
+              {{ isSelfPickUp ? "Pickup" : "Delivery" }} Date &Time
+            </div>
             <div class="mb-3 fw-semibold">
               Please select the delivery date for this order
-            </div>
-            <div class="mb-3">
-              <input
-                type="date"
-                id="birthday"
-                name="birthday "
-                class="form-control mb-3"
-              />
-            </div>
-            <div class="mb-3">
-              <select
-                class="form-select form-select"
-                aria-label=".form-select-sm example"
-              >
-                <option selected>9AM to 12PM</option>
-              </select>
             </div>
           </div>
           <button

@@ -3,6 +3,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/shared/interfaces/user/user-details';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { dayList } from '../shop.config';
+import { DatePipe } from '@angular/common';
+import { ApiService } from 'src/app/shared/services/api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-checkout',
@@ -19,14 +23,23 @@ export class CheckoutComponent {
   isStandardCut = false;
   userDetailsForm: FormGroup;
   userDetails: User;
+  todayDate = '';
+  selectedDate = '';
+  selectedDay = '';
+  dayList = dayList;
+  allSlots = [];
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private datePipe: DatePipe,
+    private apiService: ApiService,
+    private toastrService: ToastrService
   ) {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
+    this.todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   }
 
   ngOnInit() {
@@ -127,6 +140,27 @@ export class CheckoutComponent {
       country: this.userDetails.userDetails.addressList[0].country,
       zip: this.userDetails.userDetails.addressList[0].postalCode,
       state: this.userDetails.userDetails.addressList[0].state,
+    });
+  }
+
+  getCurrentDay() {
+    var today = new Date(this.selectedDate).getDay();
+    this.dayList.forEach((x) => {
+      if (x.key == today) this.selectedDay = x.day;
+    });
+    this.getAllSlot();
+  }
+  getAllSlot() {
+    this.apiService.request('GET_SLOTS', { params: {} }).subscribe((x) => {
+      if (x) {
+        console.log('res', x);
+        this.allSlots = x.allSlotDetails.filter(
+          (x) => x.day == this.selectedDay
+        );
+        if (!this.allSlots.length) {
+          this.toastrService.error('No slots available');
+        }
+      }
     });
   }
 }

@@ -72,6 +72,13 @@ const accountEndPoints = [
     url: environment.baseUrl + '/api/user/update-address',
   },
 ];
+const paymentEndPoints = [
+  {
+    name: 'GET_SLOTS',
+    method: 'GET',
+    url: environment.baseUrl + '/api/slot/get-slot',
+  },
+];
 
 export const ApiConfig = {
   baseUrl: '',
@@ -81,5 +88,6 @@ export const ApiConfig = {
     ...contactEndPoints,
     ...blogEndPoint,
     ...accountEndPoints,
+    ...paymentEndPoints,
   ],
 };

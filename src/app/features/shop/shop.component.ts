@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/services/api.service';
-import { productList } from './shop.config';
+
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

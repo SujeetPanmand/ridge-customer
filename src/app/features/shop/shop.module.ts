@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ShopComponent } from './shop.component';
 import { ShopRoutingModule } from './shop-routing.module';
@@ -18,5 +18,6 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     ProductDetailsComponent,
   ],
   imports: [CommonModule, ShopRoutingModule, SharedModule],
+  providers: [DatePipe],
 })
 export class ShopModule {}
