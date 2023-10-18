@@ -28,6 +28,9 @@ export class CheckoutComponent {
   selectedDay = '';
   dayList = dayList;
   allSlots = [];
+  singleSlotId = '';
+  singleSlot = '';
+
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
@@ -49,6 +52,8 @@ export class CheckoutComponent {
   }
 
   defaultSetting() {
+    localStorage.setItem('orderDate', '');
+    localStorage.setItem('orderSlot', '');
     localStorage.setItem('selfPickUp', '0');
     let list = [];
     if (this.isStandardCut) {
@@ -148,6 +153,7 @@ export class CheckoutComponent {
     this.dayList.forEach((x) => {
       if (x.key == today) this.selectedDay = x.day;
     });
+
     this.getAllSlot();
   }
   getAllSlot() {
@@ -157,10 +163,17 @@ export class CheckoutComponent {
         this.allSlots = x.allSlotDetails.filter(
           (x) => x.day == this.selectedDay
         );
-        if (!this.allSlots.length) {
-          this.toastrService.error('No slots available');
-        }
+        this.allSlots.length
+          ? localStorage.setItem('orderDate', JSON.stringify(this.selectedDate))
+          : this.toastrService.error('No slots available');
       }
     });
+  }
+  onChangeSlot() {
+    let element = [];
+    element = this.allSlots.filter((x) => x.id == this.singleSlotId);
+    this.singleSlot =
+      element[0].startTime + ' ' + 'To' + ' ' + element[0].endTime;
+    localStorage.setItem('orderSlot', JSON.stringify(this.singleSlot));
   }
 }

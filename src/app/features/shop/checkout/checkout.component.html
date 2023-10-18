@@ -319,7 +319,12 @@
                 />
               </div>
               <div class="mb-3">
-                <select class="form-control form-select">
+                <select
+                  (change)="onChangeSlot()"
+                  [(ngModel)]="singleSlotId"
+                  class="form-control form-select"
+                  name="slot"
+                >
                   <option value="">Select Slot</option>
                   <option *ngFor="let item of allSlots" [value]="item.id">
                     {{ item.startTime }}&nbsp;To&nbsp;{{ item.endTime }}
