@@ -138,9 +138,10 @@ export class ProductDetailsComponent implements OnInit {
           this.unFilterdallProductReviews = this.mapLikeDislikeCount(
             res.allProductReviews
           );
-          this.hideReviewButton();
+
           this.calculateAvgRating();
           this.calculateRatingWisePercentage();
+          this.hideReviewButton();
         } else {
           this.toastrService.error(res.message);
         }
@@ -155,6 +156,7 @@ export class ProductDetailsComponent implements OnInit {
       count++;
     });
     this.avg = sum / count;
+    this.avg = Math.floor(this.avg);
   }
 
   calculateRatingWisePercentage() {
@@ -302,7 +304,6 @@ export class ProductDetailsComponent implements OnInit {
     };
     this.apiService.request('LIKE_DISLIKE', apiRequest).subscribe((res) => {
       if (res && res.statusCode == 200) {
-        this.toastrService.success(res.message);
         this.getReviewInfo();
       }
     });
