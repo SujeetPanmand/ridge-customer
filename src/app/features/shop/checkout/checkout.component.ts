@@ -28,6 +28,7 @@ export class CheckoutComponent {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
   }
+
   ngOnInit() {
     this.defaultSetting();
     this.generateUserDetailsForm();
@@ -110,6 +111,7 @@ export class CheckoutComponent {
       billFlag: [false],
     });
   }
+
   async patchUserDetailsForm() {
     await this.commonService.getUserDetails().then((res) => {
       this.userDetails = res;

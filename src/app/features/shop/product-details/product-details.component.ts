@@ -53,7 +53,6 @@ export class ProductDetailsComponent implements OnInit {
     this.getReviewInfo();
     this.generateReviewForm();
     this.gotoTop();
-    this.hideReviewButton();
   }
 
   generateReviewForm() {
@@ -124,6 +123,7 @@ export class ProductDetailsComponent implements OnInit {
           this.unFilterdallProductReviews = this.mapLikeDislikeCount(
             res.allProductReviews
           );
+          this.hideReviewButton();
           this.calculateAvgRating();
           this.calculateRatingWisePercentage();
         } else {
@@ -270,10 +270,10 @@ export class ProductDetailsComponent implements OnInit {
     let name = localStorage.getItem('userFullName')
       ? localStorage.getItem('userFullName')
       : '';
-    let x = this.unFilterdallProductReviews.map(
+    let x = this.unFilterdallProductReviews.findIndex(
       (x) => x.userDetails.fullName == name
     );
-    if (!x) {
+    if (x < 0) {
       this.isShowWriteReviewbtn = true;
     }
   }
