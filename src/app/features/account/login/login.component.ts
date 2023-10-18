@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/shared/services/api.service';
+import { CommonService } from 'src/app/shared/services/common.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private toastrService: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private commonService: CommonService
   ) {}
   ngOnInit(): void {
     this.generateLoginForm();
@@ -48,6 +50,7 @@ export class LoginComponent implements OnInit {
         this.setUserBasics(res.userDetails);
         this.toastrService.success('User Logged In Successfully!');
         this.router.navigate(['']);
+        this.commonService.getUserDetails();
       } else {
         this.toastrService.error(res.message);
       }

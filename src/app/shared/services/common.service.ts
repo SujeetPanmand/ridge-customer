@@ -11,6 +11,7 @@ export class CommonService {
   isLogginShow = false;
   userDetails: User;
   @Output() cartProductValue = new EventEmitter<number>();
+  @Output() islogginButtonShow = new EventEmitter<boolean>();
   constructor(
     private apiService: ApiService,
     private toastrService: ToastrService
@@ -36,6 +37,7 @@ export class CommonService {
         (res) => {
           if (res && res.statusCode == 200) {
             this.isLogginShow = false;
+            this.islogginButtonShow.emit(this.isLogginShow);
             this.userDetails = res.userDetails;
             resolve(res);
             localStorage.setItem('userFullName', res.userDetails.fullName);
@@ -43,7 +45,7 @@ export class CommonService {
         },
         (error) => {
           this.isLogginShow = true;
-          this.toastrService.error(' To avail extra facilities please log in ');
+          this.islogginButtonShow.emit(this.isLogginShow);
         }
       );
     });

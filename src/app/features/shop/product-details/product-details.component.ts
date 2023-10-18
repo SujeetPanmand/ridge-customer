@@ -66,6 +66,7 @@ export class ProductDetailsComponent implements OnInit {
     this.addedProducts = JSON.parse(localStorage.getItem('cart'))
       ? JSON.parse(localStorage.getItem('cart'))
       : [];
+
     this.reletedProductsList = this.addedProducts.filter((x) => x.count == 0);
     let index = this.addedProducts.findIndex(
       (x) => x.id == this.route.snapshot.params['productId']
@@ -82,8 +83,22 @@ export class ProductDetailsComponent implements OnInit {
       .subscribe((res) => {
         if (res) {
           this.selctedProduct = res.productDetails;
+          if (!this.addedProducts.length) {
+            this.mapFirstProduct();
+          }
         }
       });
+  }
+
+  mapFirstProduct() {
+    this.addedProducts = JSON.parse(localStorage.getItem('cart'))
+      ? JSON.parse(localStorage.getItem('cart'))
+      : [];
+
+    this.addedProducts.push(this.selctedProduct);
+    this.addedProducts.forEach((x) => {
+      x['count'] = 0;
+    });
   }
 
   addMoreToCart(flag) {

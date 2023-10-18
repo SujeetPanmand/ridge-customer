@@ -10,9 +10,13 @@ import { CommonService } from 'src/app/shared/services/common.service';
 export class HeaderComponent implements OnInit {
   addedProducts = [];
   cartValue = 0;
+  isLogginShow = true;
   constructor(private router: Router, public commonService: CommonService) {
     this.commonService.cartProductValue.subscribe((val) => {
       this.cartValue = val;
+    });
+    this.commonService.islogginButtonShow.subscribe((val) => {
+      this.isLogginShow = val;
     });
   }
   ngOnInit(): void {}
@@ -29,5 +33,6 @@ export class HeaderComponent implements OnInit {
   onLogout() {
     localStorage.clear();
     this.router.navigate(['login']);
+    this.commonService.getUserDetails();
   }
 }
