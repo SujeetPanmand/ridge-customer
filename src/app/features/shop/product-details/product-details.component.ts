@@ -267,6 +267,7 @@ export class ProductDetailsComponent implements OnInit {
       this.modalService.dismissAll();
       if (res && res.statusCode == 200) {
         console.log('___', res);
+        this.isShowWriteReviewbtn = false;
         this.getReviewInfo();
       }
     });
