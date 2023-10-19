@@ -1,4 +1,9 @@
-<div class="tab-pane fade active rounded bg-white show p-5" id="my-account" role="tabpanel" aria-labelledby="myAccount">
+<div
+  class="tab-pane fade active rounded bg-white show p-5"
+  id="my-account"
+  role="tabpanel"
+  aria-labelledby="myAccount"
+>
   <div class="row justify-content-center">
     <div class="col-md-11">
       <div class="d-flex">
@@ -11,44 +16,87 @@
       <div class="pt-4">
         <form [formGroup]="myAccountForm">
           <div class="mb-4">
-            <label for="firstName" class="form-label">First Name <span class="text-orange">*</span>
+            <label for="firstName" class="form-label"
+              >First Name <span class="text-orange">*</span>
             </label>
-            <input type="text" formControlName="firstName" class="form-control" id="firstName" name="firstName"
-              [(ngModel)]="firstName" [class.is-invalid]="isFieldValid(myAccountForm, 'firstName')" />
-            <span class="text-orange" *ngIf="hasError(myAccountForm, 'firstName', 'required')">Please enter a
-              first
-              name.
+            <input
+              type="text"
+              formControlName="firstName"
+              class="form-control"
+              id="firstName"
+              name="firstName"
+              [(ngModel)]="firstName"
+              [class.is-invalid]="isFieldValid(myAccountForm, 'firstName')"
+            />
+            <span
+              class="text-orange"
+              *ngIf="hasError(myAccountForm, 'firstName', 'required')"
+              >Please enter a first name.
             </span>
           </div>
           <div class="mb-4">
-            <label for="lastName" class="form-label">Last Name <span class="text-orange">*</span></label>
-            <input type="text" formControlName="lastName" class="form-control" id="lastName" name="lastName"
-              [(ngModel)]="lastName" [class.is-invalid]="isFieldValid(myAccountForm, 'lastName')" />
-            <span class="text-orange" *ngIf="hasError(myAccountForm, 'lastName', 'required')">Please enter a
-              last name.
+            <label for="lastName" class="form-label"
+              >Last Name <span class="text-orange">*</span></label
+            >
+            <input
+              type="text"
+              formControlName="lastName"
+              class="form-control"
+              id="lastName"
+              name="lastName"
+              [(ngModel)]="lastName"
+              [class.is-invalid]="isFieldValid(myAccountForm, 'lastName')"
+            />
+            <span
+              class="text-orange"
+              *ngIf="hasError(myAccountForm, 'lastName', 'required')"
+              >Please enter a last name.
             </span>
           </div>
           <div class="mb-4">
-            <label for="emailAddress" class="form-label">Email address <span class="text-orange">*</span></label>
-            <input type="email" formControlName="emailAddress" class="form-control" id="emailAddress"
-              name="emailAddress" [(ngModel)]="emailAddress"
-              [class.is-invalid]="isFieldValid(myAccountForm, 'emailAddress')" />
-            <span class="text-orange" *ngIf="hasError(myAccountForm, 'emailAddress', 'required')">Please enter
-              a email.
+            <label for="emailAddress" class="form-label"
+              >Email address <span class="text-orange">*</span></label
+            >
+            <input
+              type="email"
+              formControlName="emailAddress"
+              class="form-control"
+              id="emailAddress"
+              name="emailAddress"
+              [(ngModel)]="emailAddress"
+              [class.is-invalid]="isFieldValid(myAccountForm, 'emailAddress')"
+            />
+            <span
+              class="text-orange"
+              *ngIf="hasError(myAccountForm, 'emailAddress', 'required')"
+              >Please enter a email.
             </span>
+          </div>
+          <div class="mb-4">
+            <label for="phone" class="form-label"
+              >Phone <span class="text-orange">*</span></label
+            >
+            <input
+              type="number"
+              formControlName="phone"
+              class="form-control"
+              id="phone"
+              name="phone"
+              [(ngModel)]="phone"
+              [class.is-invalid]="isFieldValid(myAccountForm, 'phone')"
+            />
+            <span
+              class="text-orange"
+              *ngIf="hasError(myAccountForm, 'phone', 'required')"
+              >Please enter a phone number.
+            </span>
+          </div>
 
-          </div>
-          <div class="mb-4">
-            <label for="phone" class="form-label">Phone <span class="text-orange">*</span></label>
-            <input type="number" formControlName="phone" class="form-control" id="phone" name="phone"
-              [(ngModel)]="phone" [class.is-invalid]="isFieldValid(myAccountForm, 'phone')" />
-            <span class="text-orange" *ngIf="hasError(myAccountForm, 'phone', 'required')">Please enter a
-              phone
-              number.
-            </span>
-          </div>
-
-          <button type="submit" class="btn rounded-0 text-light button-orange mt-4" (click)="updateMyAccountInfo()">
+          <button
+            type="submit"
+            class="btn rounded-0 text-light button-orange mt-4"
+            (click)="updateMyAccountInfo()"
+          >
             Save Changes
           </button>
         </form>

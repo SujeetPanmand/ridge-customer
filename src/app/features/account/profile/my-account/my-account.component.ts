@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { User } from 'src/app/shared/interfaces/user/user-details';
 import { ApiService } from 'src/app/shared/services/api.service';
-import { LoaderService } from 'src/app/shared/services/loader.service';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-my-account',
@@ -17,15 +18,18 @@ export class MyAccountComponent implements OnInit {
   emailAddress: string = '';
   phone: string = '';
   myAccountFormSubmitAttempt: boolean = false;
+  userDetails: User;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private toastrService: ToastrService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private commonService: CommonService
   ) {}
 
   ngOnInit() {
     this.saveMyAccountForm();
+    this.defaultSetting();
   }
 
   saveMyAccountForm() {
@@ -34,6 +38,14 @@ export class MyAccountComponent implements OnInit {
       lastName: ['', Validators.required],
       emailAddress: ['', Validators.required],
       phone: ['', Validators.required],
+    });
+  }
+
+  defaultSetting() {
+    this.commonService.getUserDetails().then((res) => {
+      this.userDetails = res;
+      console.log('___', this.userDetails);
+      this.patchUserDetails();
     });
   }
 
@@ -46,8 +58,8 @@ export class MyAccountComponent implements OnInit {
       data: {
         firstName: this.firstName,
         lastName: this.lastName,
-        emailAddress: this.emailAddress,
-        phone: this.phone,
+        email: this.emailAddress,
+        phoneNumber: this.phone,
       },
     };
     this.apiService
@@ -55,12 +67,7 @@ export class MyAccountComponent implements OnInit {
       .subscribe((res) => {
         this.myAccountFormSubmitAttempt = false;
         if (res && res.statusCode == 200) {
-          // this.setUserBasics(res.userDetails);
           this.toastrService.success('Updated Successfully!');
-        } else if (res.statusCode == 501) {
-          this.toastrService.error('Token Expire');
-        } else {
-          this.toastrService.error(res.message);
         }
       });
   }
@@ -77,4 +84,13 @@ export class MyAccountComponent implements OnInit {
     formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
+
+  patchUserDetails() {
+    this.myAccountForm.patchValue({
+      firstName: this.userDetails.userDetails.fullName.split(' ')[0],
+      lastName: this.userDetails.userDetails.fullName.split(' ')[1],
+      emailAddress: this.userDetails.userDetails.email,
+      phone: this.userDetails.userDetails.phoneNumber,
+    });
+  }
 }
