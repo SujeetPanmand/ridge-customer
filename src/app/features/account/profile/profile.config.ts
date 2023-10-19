@@ -1,6 +1,6 @@
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 
-export const links: BreadCrumbLinks[] = [
+export const myAccountlinks: BreadCrumbLinks[] = [
   {
     name: 'Home',
     link: '/home',
@@ -8,5 +8,16 @@ export const links: BreadCrumbLinks[] = [
   {
     name: 'My Account',
     link: '/profile/my-account',
+  },
+];
+
+export const myAddressLinks: BreadCrumbLinks[] = [
+  {
+    name: 'Home',
+    link: '/home',
+  },
+  {
+    name: 'Edit Address',
+    link: '/profile/edit-address',
   },
 ];

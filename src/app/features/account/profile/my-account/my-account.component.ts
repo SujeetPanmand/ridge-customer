@@ -5,8 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/shared/interfaces/user/user-details';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { CommonService } from 'src/app/shared/services/common.service';
-import { links } from '../profile.config';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
+import { myAccountlinks } from '../profile.config';
 
 @Component({
   selector: 'app-my-account',
@@ -21,7 +21,7 @@ export class MyAccountComponent implements OnInit {
   phone: string = '';
   myAccountFormSubmitAttempt: boolean = false;
   userDetails: User;
-  links: BreadCrumbLinks[] = links;
+  links: BreadCrumbLinks[] = myAccountlinks;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,

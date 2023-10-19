@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { User } from 'src/app/shared/interfaces/user/user-details';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { myAddressLinks } from '../profile.config';
 
 @Component({
   selector: 'app-edit-address',
@@ -21,6 +23,7 @@ export class EditAddressComponent implements OnInit {
   zipCode: string = '';
   userDetails: User;
   state: string = '';
+  links: BreadCrumbLinks[] = myAddressLinks;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
