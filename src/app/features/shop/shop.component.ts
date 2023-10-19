@@ -16,6 +16,7 @@ export class ShopComponent implements OnInit {
   selectedProduct;
   isPreOrder = false;
   cutForm: FormGroup;
+  url = '';
   constructor(
     private apiService: ApiService,
     private router: Router,
@@ -128,6 +129,11 @@ export class ShopComponent implements OnInit {
   selectCut(event, content, product) {
     event.stopPropagation();
     this.selectedProduct = product;
+    this.modalService.open(content, { size: 'lg', centered: true });
+  }
+
+  imgShow(content, url) {
+    this.url = url;
     this.modalService.open(content, { size: 'lg', centered: true });
   }
 }
