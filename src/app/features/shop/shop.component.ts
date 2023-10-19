@@ -134,6 +134,6 @@ export class ShopComponent implements OnInit {
 
   imgShow(content, url) {
     this.url = url;
-    this.modalService.open(content, { size: 'lg', centered: true });
+    this.modalService.open(content, { size: 'xl', centered: true });
   }
 }
