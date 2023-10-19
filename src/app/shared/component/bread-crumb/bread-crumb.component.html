@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-xl-6 mb-3 mb-xl-0">
+    <span *ngFor="let li of links; let i = index">
+      <a
+        [ngClass]="{ 'text-muted': i == links.length - 1 }"
+        (click)="goToPage(li)"
+        class="cursor text-decoration-none"
+        >{{ li.name }}</a
+      ><span *ngIf="i != links.length - 1"> / </span>
+    </span>
+  </div>
+</div>

@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { CommonService } from './services/common.service';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BreadCrumbComponent } from './component/bread-crumb/bread-crumb.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [BreadCrumbComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -20,6 +20,7 @@ import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     ToastrModule,
     NgbModule,
+    BreadCrumbComponent,
   ],
   providers: [ToastrService, NgbActiveModal],
 })
