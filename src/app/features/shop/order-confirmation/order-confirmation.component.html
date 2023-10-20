@@ -2,12 +2,7 @@
   <div class="container">
     <div class="row m-4">
       <div class="col-md-12 p-5 shadow-sm bg-white">
-        <div class="d-flex flex-md-row flex-column">
-          <span class="text-secondary"> Home / &nbsp; </span>
-          <span class="text-secondary">Shop / &nbsp; </span>
-          <span class="text-secondary">Checkout /&nbsp;</span>
-          <span class="">Order Confirmation</span>
-        </div>
+        <app-bread-crumb [links]="links"></app-bread-crumb>
         <div class="d-flex flex-column flex-md-row py-2">
           <span class="sub-title">Order Confirmation</span>
           <button

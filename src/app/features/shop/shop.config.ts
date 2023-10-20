@@ -64,3 +64,31 @@ export const checkoutLinks: BreadCrumbLinks[] = [
     link: '/shop/checkout?isStandardCut=true',
   },
 ];
+export const paymentLinks: BreadCrumbLinks[] = [
+  {
+    name: 'Home',
+    link: '/home',
+  },
+  {
+    name: 'Shop',
+    link: '/shop',
+  },
+  {
+    name: 'Payment',
+    link: '/shop/payment?isStandardCut=true',
+  },
+];
+export const orderConfirmationLinks: BreadCrumbLinks[] = [
+  {
+    name: 'Home',
+    link: '/home',
+  },
+  {
+    name: 'Shop',
+    link: '/shop',
+  },
+  {
+    name: 'Order Confirmation',
+    link: '/shop/order-confirmation?isStandardCut=true',
+  },
+];

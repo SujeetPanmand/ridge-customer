@@ -1,16 +1,18 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
+import { paymentLinks } from '../shop.config';
 
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss'],
 })
-export class PaymentComponent implements OnInit {
+export class PaymentComponent implements OnInit, AfterViewInit {
   TAX_AMOUNT = 70;
   SHIPPING_AMOUNT = 40;
   finalOrderProducts = [];
@@ -21,6 +23,7 @@ export class PaymentComponent implements OnInit {
   orderAddress = [];
   orderDate = '';
   orderSlot = '';
+  links: BreadCrumbLinks[] = paymentLinks;
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute,
@@ -28,13 +31,22 @@ export class PaymentComponent implements OnInit {
   ) {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
+    let substr = this.isStandardCut
+      ? 'isStandardCut=true'
+      : 'isStandardCut=false';
+    this.links[2].link = `/shop/payment?${substr}`;
+  }
+  ngAfterViewInit(): void {
+    let substr = this.isStandardCut
+      ? 'isStandardCut=true'
+      : 'isStandardCut=false';
+    this.links[2].link = `/shop/payment?${substr}`;
   }
 
   ngOnInit() {
     this.defaultSetting();
   }
   defaultSetting() {
-    debugger;
     this.isSelfPickUp =
       localStorage.getItem('selfPickUp') == '0' || null ? false : true;
     this.orderDate = localStorage.getItem('orderDate')

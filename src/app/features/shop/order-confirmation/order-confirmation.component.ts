@@ -1,25 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { orderConfirmationLinks } from '../shop.config';
 
 @Component({
   selector: 'app-order-confirmation',
   templateUrl: './order-confirmation.component.html',
   styleUrls: ['./order-confirmation.component.scss'],
 })
-export class OrderConfirmationComponent implements OnInit {
+export class OrderConfirmationComponent implements OnInit, AfterViewInit {
   TAX_AMOUNT = 70;
   SHIPPING_AMOUNT = 40;
   finalOrderProducts = [];
   orderTotal = 0;
   orderSubTotal = 0;
   isStandardCut = false;
+  links: BreadCrumbLinks[] = orderConfirmationLinks;
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute
   ) {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
+    let substr = this.isStandardCut
+      ? 'isStandardCut=true'
+      : 'isStandardCut=false';
+    this.links[2].link = `/shop/order-confirmation?${substr}`;
+  }
+  ngAfterViewInit(): void {
+    let substr = this.isStandardCut
+      ? 'isStandardCut=true'
+      : 'isStandardCut=false';
+    this.links[2].link = `/shop/order-confirmation?${substr}`;
   }
 
   ngOnInit() {
