@@ -39,6 +39,10 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
     this.defaultSetting();
   }
 
+  printInvoice(){
+    window.print();
+  }
+
   defaultSetting() {
     let list = [];
     if (this.isStandardCut) {

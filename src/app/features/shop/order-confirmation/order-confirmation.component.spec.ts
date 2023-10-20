@@ -25,4 +25,6 @@ describe('OrderConfirmationComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+ 
 });

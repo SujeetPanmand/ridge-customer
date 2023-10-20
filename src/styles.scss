@@ -114,3 +114,34 @@ h5 {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+@page { size: auto;  margin: 0mm; }
+@media print {
+.container {
+  width: 100% !important;
+  max-width: 100%;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  padding-right: calc(var(--bs-gutter-x) * .5);
+  padding-left: calc(var(--bs-gutter-x) * .5);
+}
+.fixed-top {
+  display: none;
+}
+.bg-footer {
+  display: none;
+}
+.shadow-sm {
+  box-shadow: unset !important;
+}
+.mt-5 {
+  margin: unset !important;
+  padding: unset !important;
+}
+.button-orange {
+  display: none !important;
+}
+
+.bread-crumb {
+  display: none;
+}
+}
