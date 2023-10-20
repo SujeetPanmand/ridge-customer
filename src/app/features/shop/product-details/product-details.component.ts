@@ -74,39 +74,23 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       ? JSON.parse(localStorage.getItem('cart'))
       : [];
 
-    this.reletedProductsList = this.addedProducts.filter((x) => x.count == 0);
     let index = this.addedProducts.findIndex(
       (x) => x.id == this.route.snapshot.params['productId']
     );
     this.addMultipe = index >= 0 ? this.addedProducts[index].count : 0;
     this.setGlobalCartCount(this.addedProducts);
   }
-  ngAfterView;
 
-  getProductDetails() {
-    this.apiService
+  async getProductDetails() {
+    await this.apiService
       .request('GET_PRODUCT_DETAILS', {
         params: { id: this.route.snapshot.params['productId'] },
       })
       .subscribe((res) => {
         if (res) {
           this.selctedProduct = res.productDetails;
-          if (!this.addedProducts.length) {
-            this.mapFirstProduct();
-          }
         }
       });
-  }
-
-  mapFirstProduct() {
-    this.addedProducts = JSON.parse(localStorage.getItem('cart'))
-      ? JSON.parse(localStorage.getItem('cart'))
-      : [];
-
-    this.addedProducts.push(this.selctedProduct);
-    this.addedProducts.forEach((x) => {
-      x['count'] = 0;
-    });
   }
 
   addMoreToCart(flag) {
@@ -114,7 +98,13 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     let index = this.addedProducts.findIndex(
       (x) => x.id == this.route.snapshot.params['productId']
     );
-    this.addedProducts[index].count = this.addMultipe;
+    if (index >= 0) {
+      this.addedProducts[index].count = this.addMultipe;
+    } else {
+      this.selctedProduct['count'] = 0;
+      this.addedProducts.push(this.selctedProduct);
+    }
+
     console.log(this.addedProducts);
     localStorage.setItem('cart', JSON.stringify(this.addedProducts));
     this.setGlobalCartCount(this.addedProducts);
