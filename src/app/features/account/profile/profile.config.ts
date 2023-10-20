@@ -21,3 +21,14 @@ export const myAddressLinks: BreadCrumbLinks[] = [
     link: '/profile/edit-address',
   },
 ];
+
+export const myOrderLinks: BreadCrumbLinks[] = [
+  {
+    name: 'Home',
+    link: '/home',
+  },
+  {
+    name: 'My Orders',
+    link: '/profile/my-orders',
+  },
+];

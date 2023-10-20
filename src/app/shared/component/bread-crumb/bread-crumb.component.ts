@@ -15,6 +15,6 @@ export class BreadCrumbComponent implements OnInit {
   ngOnInit(): void {}
 
   goToPage(li) {
-    this.router.navigate([li.link]);
+    this.router.navigateByUrl(li.link);
   }
 }

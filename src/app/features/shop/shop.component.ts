@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
+import { shopLinks } from './shop.config';
 
 @Component({
   selector: 'app-shop',
@@ -17,6 +19,7 @@ export class ShopComponent implements OnInit {
   isPreOrder = false;
   cutForm: FormGroup;
   url = '';
+  links: BreadCrumbLinks[] = shopLinks;
   constructor(
     private apiService: ApiService,
     private router: Router,

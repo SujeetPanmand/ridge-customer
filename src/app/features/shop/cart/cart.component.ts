@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   OnDestroy,
@@ -8,13 +9,15 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { cartLinks } from '../shop.config';
+import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, AfterViewInit {
   addedProducts = [];
   orderProducts = [];
   orderTotal = 0;
@@ -22,6 +25,7 @@ export class CartComponent implements OnInit {
   isStandardCut = false;
   @ViewChild('removeItemFromCartTemplate', { static: false })
   private removeItemFromCartTemplate: ElementRef;
+  links: BreadCrumbLinks[] = cartLinks;
   constructor(
     private router: Router,
     private modalService: NgbModal,
@@ -30,6 +34,17 @@ export class CartComponent implements OnInit {
   ) {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
+    let substr = this.isStandardCut
+      ? 'isStandardCut=true'
+      : 'isStandardCut=false';
+    this.links[2].link = `/shop/cart?${substr}`;
+  }
+
+  ngAfterViewInit(): void {
+    let substr = this.isStandardCut
+      ? 'isStandardCut=true'
+      : 'isStandardCut=false';
+    this.links[2].link = `/shop/cart?${substr}`;
   }
 
   ngOnInit() {

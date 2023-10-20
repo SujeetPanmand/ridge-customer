@@ -1,19 +1,20 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/shared/interfaces/user/user-details';
 import { CommonService } from 'src/app/shared/services/common.service';
-import { dayList } from '../shop.config';
+import { checkoutLinks, dayList } from '../shop.config';
 import { DatePipe } from '@angular/common';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss'],
 })
-export class CheckoutComponent {
+export class CheckoutComponent implements OnInit, AfterViewInit {
   TAX_AMOUNT = 70;
   SHIPPING_AMOUNT = 40;
   isSelfPickUp = false;
@@ -30,6 +31,7 @@ export class CheckoutComponent {
   allSlots = [];
   singleSlotId = '';
   singleSlot = '';
+  links: BreadCrumbLinks[] = checkoutLinks;
 
   constructor(
     public commonService: CommonService,
@@ -43,12 +45,25 @@ export class CheckoutComponent {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
     this.todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.isStandardCut =
+      this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
+    let substr = this.isStandardCut
+      ? 'isStandardCut=true'
+      : 'isStandardCut=false';
+    this.links[2].link = `/shop/checkout?${substr}`;
   }
 
   ngOnInit() {
     this.defaultSetting();
     this.generateUserDetailsForm();
     this.patchUserDetailsForm();
+  }
+
+  ngAfterViewInit(): void {
+    let substr = this.isStandardCut
+      ? 'isStandardCut=true'
+      : 'isStandardCut=false';
+    this.links[2].link = `/shop/checkout?${substr}`;
   }
 
   defaultSetting() {

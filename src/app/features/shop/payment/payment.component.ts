@@ -34,13 +34,14 @@ export class PaymentComponent implements OnInit {
     this.defaultSetting();
   }
   defaultSetting() {
+    debugger;
     this.isSelfPickUp =
       localStorage.getItem('selfPickUp') == '0' || null ? false : true;
-    this.orderDate = JSON.parse(localStorage.getItem('orderDate'))
-      ? JSON.parse(localStorage.getItem('orderDate'))
+    this.orderDate = localStorage.getItem('orderDate')
+      ? localStorage.getItem('orderDate')
       : '';
-    this.orderSlot = JSON.parse(localStorage.getItem('orderSlot'))
-      ? JSON.parse(localStorage.getItem('orderSlot'))
+    this.orderSlot = localStorage.getItem('orderSlot')
+      ? localStorage.getItem('orderSlot')
       : '';
     this.orderAddress = JSON.parse(localStorage.getItem('orderAddress'))
       ? JSON.parse(localStorage.getItem('orderAddress'))

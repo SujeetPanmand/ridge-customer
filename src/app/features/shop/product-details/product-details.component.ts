@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/api.service';
 
@@ -7,13 +7,15 @@ import { ToastrService } from 'ngx-toastr';
 import { Rating } from 'src/app/shared/interfaces/product';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
+import { prductDetailLinks } from '../shop.config';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit, AfterViewInit {
   selctedProduct;
   addMultipe: number = 0;
   reletedProductsList = [];
@@ -36,6 +38,7 @@ export class ProductDetailsComponent implements OnInit {
 
   reviewForm: FormGroup;
   formSubmitAttempt = false;
+  links: BreadCrumbLinks[] = prductDetailLinks;
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
@@ -44,7 +47,12 @@ export class ProductDetailsComponent implements OnInit {
     private toastrService: ToastrService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.links[2].link = `/shop/product-details/${this.route.snapshot.params['productId']}`;
+  }
+  ngAfterViewInit(): void {
+    this.links[2].link = `/shop/product-details/${this.route.snapshot.params['productId']}`;
+  }
 
   ngOnInit() {
     this.getProductDetails();
@@ -73,6 +81,7 @@ export class ProductDetailsComponent implements OnInit {
     this.addMultipe = index >= 0 ? this.addedProducts[index].count : 0;
     this.setGlobalCartCount(this.addedProducts);
   }
+  ngAfterView;
 
   getProductDetails() {
     this.apiService

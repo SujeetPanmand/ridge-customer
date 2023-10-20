@@ -1,160 +1,177 @@
-<div class="tab-pane fade rounded bg-white show p-5" id="my-orders" role="tabpanel"
-            aria-labelledby="myOrders">
-            <div class="row justify-content-center">
-              <div class="col-md-11">
-                <div class="d-flex flex-md-row flex-column">
-                  <span class="text-secondary"> Home /&nbsp; </span>
-                  <span class="text-secondary">Shop /&nbsp; </span>
-                  <span class="">My Orders</span>
-                </div>
+<div
+  class="tab-pane fade rounded bg-white show p-5"
+  id="my-orders"
+  role="tabpanel"
+  aria-labelledby="myOrders"
+>
+  <div class="row justify-content-center">
+    <div class="col-md-11">
+      <app-bread-crumb [links]="links"></app-bread-crumb>
 
-                <h2 class="fw-bold sub-title py-2">My Orders</h2>
+      <h2 class="fw-bold sub-title py-2">My Orders</h2>
 
-                <div class="table-responsive pt-3">
-                  <table class="table accordion table-borderless">
+      <div class="table-responsive pt-3">
+        <table class="table accordion table-borderless">
+          <thead>
+            <tr class="border-bottom">
+              <th>ORDER ID</th>
+              <th>ORDER DATE</th>
+              <th>PRICE</th>
+              <th>STATUS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              data-bs-toggle="collapse"
+              data-bs-target="#r1"
+              class="border-bottom"
+            >
+              <td>#NG4595F57952</td>
+              <td>9/12/2023</td>
+              <td>$998</td>
+              <td>
+                <span class="badge p-2 rounded-pill bg-green">
+                  <i class="bi bi-check"></i><span class="m-2">Delivered</span>
+                </span>
+              </td>
+              <th scope="row">
+                <i class="bi bi-chevron-down"></i>
+              </th>
+            </tr>
+            <tr
+              class="collapse accordion-collapse"
+              id="r1"
+              data-bs-parent=".table"
+            >
+              <td colspan="5">
+                <div class="table-responsive">
+                  <table class="table table-borderless my-2">
                     <thead>
-                      <tr class="border-bottom">
-                        <th>ORDER ID</th>
-                        <th>ORDER DATE</th>
-                        <th>PRICE</th>
-                        <th>STATUS</th>
+                      <div class="pb-3">
+                        <div class="fw-bold">Delivered to</div>
+                        <span class="">
+                          15071-8112 New Tedshire Heathcote Land 39345 Reece
+                          Drive
+                        </span>
+                      </div>
+                      <tr>
+                        <th>Ordered Items</th>
+                        <th colspan="3"></th>
+                        <th>Price</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr data-bs-toggle="collapse" data-bs-target="#r1" class="border-bottom">
-                        <td>#NG4595F57952</td>
-                        <td>9/12/2023</td>
+                      <tr>
+                        <td>Native grass-fed artisan beef x 2</td>
+                        <td colspan="3"></td>
                         <td>$998</td>
-                        <td>
-                          <span class="badge p-2 rounded-pill bg-green">
-                            <i class="bi bi-check"></i><span class="m-2">Delivered</span>
-                          </span>
-                        </td>
-                        <th scope="row">
-                          <i class="bi bi-chevron-down"></i>
-                        </th>
                       </tr>
-                      <tr class="collapse accordion-collapse" id="r1" data-bs-parent=".table">
-                        <td colspan="5">
-                          <div class="table-responsive">
-                            <table class="table table-borderless my-2">
-                              <thead>
-                                <div class="pb-3">
-                                  <div class="fw-bold">Delivered to</div>
-                                  <span class="">
-                                    15071-8112 New Tedshire Heathcote Land 39345
-                                    Reece Drive
-                                  </span>
-                                </div>
-                                <tr>
-                                  <th>Ordered Items</th>
-                                  <th colspan="3"></th>
-                                  <th>Price</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>Native grass-fed artisan beef x 2</td>
-                                  <td colspan="3"></td>
-                                  <td>$998</td>
-                                </tr>
-                                <tr>
-                                  <td>Organic and Grass-Fed x 2</td>
-                                  <td colspan="3"></td>
-                                  <td>$998</td>
-                                </tr>
-                                <tr>
-                                  <td>Subtotal</td>
-                                  <td colspan="3"></td>
-                                  <td>$1,996</td>
-                                </tr>
-                                <tr>
-                                  <td>$1,996</td>
-                                  <td colspan="3"></td>
-                                  <td>$40</td>
-                                </tr>
-                                <tr class="border-bottom">
-                                  <td>Tax</td>
-                                  <td colspan="3"></td>
-                                  <td>$70</td>
-                                </tr>
-                                <tr class="custom-border">
-                                  <td>Total</td>
-                                  <td colspan="3"></td>
-                                  <td>$2,106</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr data-bs-toggle="collapse" data-bs-target="#r2" class="border-bottom">
-                        <td>#OG3463475374</td>
-                        <td>9/12/2023</td>
+                      <tr>
+                        <td>Organic and Grass-Fed x 2</td>
+                        <td colspan="3"></td>
                         <td>$998</td>
-                        <td>
-                          <span class="badge p-2 rounded-pill bg-green">
-                            <i class="bi bi-check"></i><span class="m-2">Delivered</span>
-                          </span>
-                        </td>
-                        <th scope="row"><i class="bi bi-chevron-down"></i></th>
                       </tr>
-                      <tr class="collapse accordion-collapse" id="r2" data-bs-parent=".table">
-                        <td colspan="5">
-                          <div class="table-responsive">
-                            <table class="table table-borderless my-2">
-                              <thead>
-                                <div class="pb-3">
-                                  <div class="fw-bold">Delivered to</div>
-                                  <span>
-                                    15071-8112 New Tedshire Heathcote Land 39345
-                                    Reece Drive
-                                  </span>
-                                </div>
-                                <tr>
-                                  <th>Ordered Items</th>
-                                  <th colspan="3"></th>
-                                  <th>Price</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>Native grass-fed artisan beef x 2</td>
-                                  <td colspan="3"></td>
-                                  <td>$998</td>
-                                </tr>
-                                <tr>
-                                  <td>Organic and Grass-Fed x 2</td>
-                                  <td colspan="3"></td>
-                                  <td>$998</td>
-                                </tr>
-                                <tr>
-                                  <td>Subtotal</td>
-                                  <td colspan="3"></td>
-                                  <td>$1,996</td>
-                                </tr>
-                                <tr>
-                                  <td>$1,996</td>
-                                  <td colspan="3"></td>
-                                  <td>$40</td>
-                                </tr>
-                                <tr class="border-bottom">
-                                  <td>Tax</td>
-                                  <td colspan="3"></td>
-                                  <td>$70</td>
-                                </tr>
-                                <tr class="custom-border">
-                                  <td>Total</td>
-                                  <td colspan="3"></td>
-                                  <td>$2,106</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </td>
+                      <tr>
+                        <td>Subtotal</td>
+                        <td colspan="3"></td>
+                        <td>$1,996</td>
+                      </tr>
+                      <tr>
+                        <td>$1,996</td>
+                        <td colspan="3"></td>
+                        <td>$40</td>
+                      </tr>
+                      <tr class="border-bottom">
+                        <td>Tax</td>
+                        <td colspan="3"></td>
+                        <td>$70</td>
+                      </tr>
+                      <tr class="custom-border">
+                        <td>Total</td>
+                        <td colspan="3"></td>
+                        <td>$2,106</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-              </div>
-            </div>
+              </td>
+            </tr>
+            <tr
+              data-bs-toggle="collapse"
+              data-bs-target="#r2"
+              class="border-bottom"
+            >
+              <td>#OG3463475374</td>
+              <td>9/12/2023</td>
+              <td>$998</td>
+              <td>
+                <span class="badge p-2 rounded-pill bg-green">
+                  <i class="bi bi-check"></i><span class="m-2">Delivered</span>
+                </span>
+              </td>
+              <th scope="row"><i class="bi bi-chevron-down"></i></th>
+            </tr>
+            <tr
+              class="collapse accordion-collapse"
+              id="r2"
+              data-bs-parent=".table"
+            >
+              <td colspan="5">
+                <div class="table-responsive">
+                  <table class="table table-borderless my-2">
+                    <thead>
+                      <div class="pb-3">
+                        <div class="fw-bold">Delivered to</div>
+                        <span>
+                          15071-8112 New Tedshire Heathcote Land 39345 Reece
+                          Drive
+                        </span>
+                      </div>
+                      <tr>
+                        <th>Ordered Items</th>
+                        <th colspan="3"></th>
+                        <th>Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Native grass-fed artisan beef x 2</td>
+                        <td colspan="3"></td>
+                        <td>$998</td>
+                      </tr>
+                      <tr>
+                        <td>Organic and Grass-Fed x 2</td>
+                        <td colspan="3"></td>
+                        <td>$998</td>
+                      </tr>
+                      <tr>
+                        <td>Subtotal</td>
+                        <td colspan="3"></td>
+                        <td>$1,996</td>
+                      </tr>
+                      <tr>
+                        <td>$1,996</td>
+                        <td colspan="3"></td>
+                        <td>$40</td>
+                      </tr>
+                      <tr class="border-bottom">
+                        <td>Tax</td>
+                        <td colspan="3"></td>
+                        <td>$70</td>
+                      </tr>
+                      <tr class="custom-border">
+                        <td>Total</td>
+                        <td colspan="3"></td>
+                        <td>$2,106</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

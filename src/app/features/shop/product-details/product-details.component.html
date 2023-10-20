@@ -2,11 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="shadow bg-white p-5">
-        <div class="d-flex flex-md-row flex-column">
-          <span class="text-secondary"> Home /&nbsp; </span>
-          <span class="text-secondary">Shop /&nbsp; </span>
-          <span>{{ selctedProduct?.name }}</span>
-        </div>
+        <app-bread-crumb [links]="links"></app-bread-crumb>
 
         <h2 class="fw-bold sub-title pt-2">{{ selctedProduct?.name }}</h2>
 
