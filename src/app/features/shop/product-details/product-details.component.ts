@@ -101,7 +101,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     if (index >= 0) {
       this.addedProducts[index].count = this.addMultipe;
     } else {
-      this.selctedProduct['count'] = 0;
+      this.selctedProduct['count'] = 1;
       this.addedProducts.push(this.selctedProduct);
     }
 
