@@ -5,9 +5,8 @@
   aria-labelledby="myAccount"
 >
   <div class="row justify-content-center">
-    <div class="col-md-11">
+    <div class="col-md-10">
       <app-bread-crumb [links]="links"></app-bread-crumb>
-
       <h2 class="fw-bold sub-title pt-2">My Account</h2>
       <div class="pt-4">
         <form [formGroup]="myAccountForm">
@@ -96,6 +95,31 @@
             Save Changes
           </button>
         </form>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="row p-3">
+        <div class="col-md-3 text-center mt-5">
+          <div class="position-relative d-inline-block">
+            <img
+              class="user-profile-pic"
+              [src]="profilePictureUrl"
+              (click)="fileInput.click()"
+              ngbTooltip="Click To Edit"
+            />
+            <div>
+              <label class="profile-upload">
+                <i class="fas fa-pen" (click)="fileInput.click()"></i>
+              </label>
+            </div>
+          </div>
+          <input
+            type="file"
+            #fileInput
+            accept=".png, .jpg, .jpeg"
+            (change)="onSelectFile($event)"
+          />
+        </div>
       </div>
     </div>
   </div>

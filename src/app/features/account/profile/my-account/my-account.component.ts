@@ -22,6 +22,7 @@ export class MyAccountComponent implements OnInit {
   myAccountFormSubmitAttempt: boolean = false;
   userDetails: User;
   links: BreadCrumbLinks[] = myAccountlinks;
+  profilePictureUrl = 'assets/em_user.png';
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -95,5 +96,47 @@ export class MyAccountComponent implements OnInit {
       emailAddress: this.userDetails.userDetails.email,
       phone: this.userDetails.userDetails.phoneNumber,
     });
+  }
+  onSelectFile = (event) => {
+    let allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+    if (!allowedExtensions.exec(event.target.value)) {
+      this.toastrService.error(
+        '  "Upload only .jpg, .jpeg and .png file format"',
+        '',
+        {
+          positionClass: 'toast-bottom-right',
+        }
+      );
+    } else {
+      if (event.target.files && event.target.files[0]) {
+        this.uploadProfilePicture(event.target.files[0]);
+        event.target.value = '';
+      }
+    }
+  };
+
+  uploadProfilePicture = (file: any) => {
+    const formdata = new FormData();
+
+    formdata.append('file', file);
+    formdata.append('referenceKey', this.userDetails.userDetails.email);
+    this.loadUrl(file);
+    const apiRequest = { data: formdata };
+    this.apiService
+      .request('EDIT_PROFILE_IMAGE', apiRequest)
+      .subscribe((res) => {
+        if (res.statusCode === 200) {
+          this.profilePictureUrl = '';
+          this.loadUrl(file);
+        }
+      });
+  };
+
+  private loadUrl(file: any) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async (event: any) => {
+      this.profilePictureUrl = event.target.result;
+    };
   }
 }

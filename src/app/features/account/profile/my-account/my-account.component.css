@@ -1,0 +1,31 @@
+.user-profile-pic {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 1px solid #fff;
+  box-shadow: 0 0px 3px 1px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.profile-upload {
+  cursor: pointer;
+  background-color: #3772fe;
+  border-radius: 50%;
+  width: 1.6rem;
+  height: 1.6rem;
+  position: absolute;
+  top: 4rem;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  box-shadow: 0px 0px 20px 0px rgba(103, 92, 139, 0.05);
+  transition: all 0.3s;
+  color: #fff;
+}
