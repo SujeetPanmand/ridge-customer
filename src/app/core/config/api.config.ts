@@ -43,6 +43,11 @@ const shopEndPoints = [
     method: 'POST',
     url: environment.baseUrl + '/api/productReview/setlikeStatus',
   },
+  {
+    name: 'MY_ORDERS',
+    method: 'GET',
+    url: environment.baseUrl + '/api/order/my-orders',
+  },
 ];
 
 const contactEndPoints = [
