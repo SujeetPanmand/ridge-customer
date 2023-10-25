@@ -11,4 +11,5 @@ export interface Rating {
 }
 export interface UserBasics {
   fullName: string;
+  id: string;
 }

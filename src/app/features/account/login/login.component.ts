@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
   setUserBasics(userDetails) {
     localStorage.setItem('token', userDetails.token);
     localStorage.setItem('userName', this.userName);
+    localStorage.setItem('userId', userDetails.id);
   }
 
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>

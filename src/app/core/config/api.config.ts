@@ -39,6 +39,11 @@ const shopEndPoints = [
     url: environment.baseUrl + '/api/productReview/add-productReview',
   },
   {
+    name: 'UPDATE_REVIEW',
+    method: 'PUT',
+    url: environment.baseUrl + '/api/productReview/update',
+  },
+  {
     name: 'LIKE_DISLIKE',
     method: 'POST',
     url: environment.baseUrl + '/api/productReview/setlikeStatus',

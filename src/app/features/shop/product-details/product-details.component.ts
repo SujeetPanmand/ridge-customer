@@ -25,6 +25,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   rating = '';
   avg = 0;
   allRating = [];
+  loginUserId = '';
   segrigatedRating = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
   starBox = [
     { value: false, index: 1 },
@@ -39,6 +40,8 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   reviewForm: FormGroup;
   formSubmitAttempt = false;
   links: BreadCrumbLinks[] = prductDetailLinks;
+  isEditReview = false;
+  selectedReview: Rating;
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
@@ -70,6 +73,9 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
 
   defaultSetting() {
+    this.loginUserId = localStorage.getItem('userId')
+      ? localStorage.getItem('userId')
+      : '';
     this.addedProducts = JSON.parse(localStorage.getItem('cart'))
       ? JSON.parse(localStorage.getItem('cart'))
       : [];
@@ -253,23 +259,38 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     if (this.reviewForm.invalid) {
       return;
     }
-    const apiRequest = {
-      data: {
-        productId: this.route.snapshot.params['productId'],
-        rating: this.getRatingCount(),
-        title: this.reviewForm.controls['title'].value,
-        review: this.reviewForm.controls['review'].value,
-      },
-    };
-    this.apiService.request('POST_USER_REVIEW', apiRequest).subscribe((res) => {
-      this.formSubmitAttempt = false;
-      this.modalService.dismissAll();
-      if (res && res.statusCode == 200) {
-        console.log('___', res);
-        this.isShowWriteReviewbtn = false;
-        this.getReviewInfo();
-      }
-    });
+    const apiRequest = !this.isEditReview
+      ? {
+          data: {
+            productId: this.route.snapshot.params['productId'],
+            rating: this.getRatingCount(),
+            title: this.reviewForm.controls['title'].value,
+            review: this.reviewForm.controls['review'].value,
+          },
+        }
+      : {
+          data: {
+            id: this.selectedReview.id,
+            rating: this.getRatingCount(),
+            title: this.reviewForm.controls['title'].value,
+            review: this.reviewForm.controls['review'].value,
+          },
+        };
+    this.apiService
+      .request(
+        this.isEditReview ? 'UPDATE_REVIEW' : 'POST_USER_REVIEW',
+        apiRequest
+      )
+      .subscribe((res) => {
+        this.isEditReview = false;
+        this.formSubmitAttempt = false;
+        this.modalService.dismissAll();
+        if (res && res.statusCode == 200) {
+          console.log('___', res);
+          this.isShowWriteReviewbtn = false;
+          this.getReviewInfo();
+        }
+      });
   }
 
   getRatingCount() {
@@ -335,5 +356,22 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
         return <any>new Date(b.createdAt) - <any>new Date(a.createdAt);
       });
     }
+  }
+  onEditReview(content, item: Rating) {
+    this.isEditReview = true;
+    this.selectedReview = item;
+
+    console.log('___', this.selectedReview);
+    this.modalService.open(content, { size: 'lg', centered: true });
+    this.patchEditReviewForm();
+  }
+  patchEditReviewForm() {
+    for (let i = 0; i < this.selectedReview.rating; i++) {
+      this.starBox[i].value = true;
+    }
+    this.reviewForm.patchValue({
+      title: this.selectedReview.title,
+      review: this.selectedReview.review,
+    });
   }
 }
