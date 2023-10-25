@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { myAccountlinks } from '../profile.config';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-my-account',
@@ -23,6 +24,7 @@ export class MyAccountComponent implements OnInit {
   userDetails: User;
   links: BreadCrumbLinks[] = myAccountlinks;
   profilePictureUrl = 'assets/em_user.png';
+  userId = '';
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -46,11 +48,21 @@ export class MyAccountComponent implements OnInit {
   }
 
   defaultSetting() {
+    this.userId = localStorage.getItem('userId')
+      ? localStorage.getItem('userId')
+      : '';
     this.commonService.getUserDetails().then((res) => {
       this.userDetails = res;
       console.log('___', this.userDetails);
       this.patchUserDetails();
     });
+    this.setUserPicture();
+  }
+  setUserPicture() {
+    this.profilePictureUrl =
+      this.userId != null && this.userId != ''
+        ? environment.baseUrl + '/api/user/image/' + this.userId
+        : 'assets/em_user.png';
   }
 
   updateMyAccountInfo() {
@@ -120,7 +132,6 @@ export class MyAccountComponent implements OnInit {
 
     formdata.append('file', file);
     formdata.append('referenceKey', this.userDetails.userDetails.email);
-    this.loadUrl(file);
     const apiRequest = { data: formdata };
     this.apiService
       .request('EDIT_PROFILE_IMAGE', apiRequest)

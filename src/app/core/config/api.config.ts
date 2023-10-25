@@ -86,6 +86,11 @@ const accountEndPoints = [
     method: 'PUT',
     url: environment.baseUrl + '/api/user/update-address',
   },
+  {
+    name: 'EDIT_PROFILE_IMAGE',
+    method: 'PUT',
+    url: environment.baseUrl + '/api/user/update-image',
+  },
 ];
 const paymentEndPoints = [
   {
