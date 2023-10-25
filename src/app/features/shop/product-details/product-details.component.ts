@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { prductDetailLinks } from '../shop.config';
+import { ConfirmationPopUpComponent } from 'src/app/shared/component/confirmation-pop-up/confirmation-pop-up.component';
 
 @Component({
   selector: 'app-product-details',
@@ -282,11 +283,14 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
         apiRequest
       )
       .subscribe((res) => {
-        this.isEditReview = false;
         this.formSubmitAttempt = false;
         this.modalService.dismissAll();
         if (res && res.statusCode == 200) {
-          console.log('___', res);
+          let msg = this.isEditReview
+            ? 'Review Updated Successfully'
+            : 'Review added successfully';
+          this.toastrService.success(msg);
+          this.isEditReview = false;
           this.isShowWriteReviewbtn = false;
           this.getReviewInfo();
         }
@@ -372,6 +376,33 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     this.reviewForm.patchValue({
       title: this.selectedReview.title,
       review: this.selectedReview.review,
+    });
+  }
+  onDeleteReview(item: Rating) {
+    this.selectedReview = item;
+    let dialogRef = this.modalService.open(ConfirmationPopUpComponent, {
+      size: 'md',
+      centered: true,
+    });
+    let data = {
+      action_button_name: 'Delete',
+      title_text: 'Confirmation',
+      text: `Do you really want to remove your review`,
+    };
+
+    dialogRef.componentInstance.data = data;
+
+    dialogRef.result.then((res) => {
+      if (res) {
+        this.apiService
+          .request('DELETE_REVIEW', { params: { id: this.selectedReview.id } })
+          .subscribe((res) => {
+            if (res && res.statusCode == 200) {
+              this.toastrService.success('Review deleted');
+              this.getReviewInfo();
+            }
+          });
+      }
     });
   }
 }

@@ -290,7 +290,10 @@
                       >
                         <i style="color: #fff" class="fas fa-pen"></i>
                       </button>
-                      <button class="btn btn-danger">
+                      <button
+                        (click)="onDeleteReview(item)"
+                        class="btn btn-danger"
+                      >
                         <i style="color: #fff" class="fas fa-trash"></i>
                       </button>
                     </div>
