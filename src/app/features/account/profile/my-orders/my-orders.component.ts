@@ -3,6 +3,7 @@ import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { myOrderLinks } from '../profile.config';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { MyOrders } from 'src/app/shared/interfaces/my-orders';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-my-orders',
@@ -12,7 +13,8 @@ import { MyOrders } from 'src/app/shared/interfaces/my-orders';
 export class MyOrdersComponent implements OnInit {
   links: BreadCrumbLinks[] = myOrderLinks;
   orderDetails:MyOrders[];
-  constructor( private apiService: ApiService) {}
+  reason='';
+  constructor( private apiService: ApiService, private modalService: NgbModal) {}
 
   ngOnInit() {this.myOrderDetails();}
 
@@ -27,5 +29,9 @@ export class MyOrdersComponent implements OnInit {
         (error) => {
         }
       );
+  }
+
+  cancelOrder(content) {
+    this.modalService.open(content, {size:'md',centered:true})
   }
 }

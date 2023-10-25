@@ -8,7 +8,7 @@ export interface MyOrders {
     totalAmount?:number;
     paymentStatus?:number;
     slot?:SlotOrder[];
-    orderStatus?:string;
+    orderStatus?:number;
     orderType?:string;
     orderItemDetails?:OrderItemDetail[];
     isSelfPickup?:boolean;

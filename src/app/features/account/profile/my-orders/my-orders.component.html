@@ -15,29 +15,43 @@
               <th>STATUS</th>
             </tr>
           </thead>
-          <tbody *ngFor="let order of orderDetails">  
-            <tr data-bs-toggle="collapse" [attr.data-bs-target]="'#r1' + order.id" class="border-bottom" >
-              <td>{{order.id}}</td>
-              <td>{{order.expectedDeliveryDate | date}}</td>
-              <td>${{order.totalAmount}}</td>
+          <tbody *ngFor="let order of orderDetails">
+            <tr data-bs-toggle="collapse" [attr.data-bs-target]="'#r1' + order.id" class="border-bottom">
+              <td>{{ order.id }}</td>
+              <td>{{ order.expectedDeliveryDate | date }}</td>
+              <td>${{ order.totalAmount }}</td>
               <td>
                 <span class="badge p-2 rounded-pill bg-green">
-                  <i class="bi bi-check"></i><span class="m-2">{{order.orderStatus}}</span>
+                  <i class="bi bi-check"></i><span class="m-2">{{ order.orderStatus }}</span>
                 </span>
               </td>
               <th scope="row">
                 <i class="bi bi-chevron-down"></i>
               </th>
             </tr>
-            <tr class="collapse accordion-collapse" [id]="'r1'+ order.id" data-bs-parent=".table">
+            <tr class="collapse accordion-collapse" [id]="'r1' + order.id" data-bs-parent=".table">
               <td colspan="5">
                 <div class="table-responsive">
                   <table class="table table-borderless my-2">
                     <thead>
                       <div class="pb-3">
-                        <div class="fw-bold">{{ order.isSelfPickup ? "Pickup from" : "Delivery to" }} </div>
+                        <div class="fw-bold">
+                          {{
+                          order.isSelfPickup ? "Pickup from" : "Delivery to"
+                          }}
+                        </div>
                         <span class="">
-                         {{order.address1 + ' ' + order.address2 + ' ' + order.city + ' ' + order.state + ' ' + order.country}}
+                          {{
+                          order.address1 +
+                          " " +
+                          order.address2 +
+                          " " +
+                          order.city +
+                          " " +
+                          order.state +
+                          " " +
+                          order.country
+                          }}
                         </span>
                       </div>
                       <tr>
@@ -48,15 +62,15 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let product of order.orderItemDetails">
-                        <td>{{product.name}}</td>
+                        <td>{{ product.name }}</td>
                         <td colspan="3"></td>
                         <td>$998</td>
                       </tr>
-                      
+
                       <tr>
                         <td>Subtotal</td>
                         <td colspan="3"></td>
-                        <td>${{order.subTotalAmount}}</td>
+                        <td>${{ order.subTotalAmount }}</td>
                       </tr>
                       <tr>
                         <td>Shipping</td>
@@ -66,12 +80,20 @@
                       <tr class="border-bottom">
                         <td>Tax</td>
                         <td colspan="3"></td>
-                        <td>${{order.tax}}</td>
+                        <td>${{ order.tax }}</td>
                       </tr>
                       <tr class="custom-border">
                         <td>Total</td>
                         <td colspan="3"></td>
-                        <td>${{order.totalAmount}}</td>
+                        <td>${{ order.totalAmount }}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="4"></td>
+                        <td *ngIf="order.orderStatus === 1">
+                          <button class="btn btn-danger" (click)="cancelOrder(canelOrderTemplate)">
+                         Cancel
+                          </button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -84,3 +106,25 @@
     </div>
   </div>
 </div>
+
+
+<ng-template #canelOrderTemplate let-modal>
+  <div class="modal-header border-bottom py-2">
+    <h5 class="modal-title">Confirmation</h5>
+    <i class="fas fa-times close-icon mt-2" (click)="modal.close()"></i>
+  </div>
+  <div class="modal-body">
+    <div class="pb-2 px-2">
+      <label for="">Reason <span class="text-danger">*</span></label>
+      <textarea [(ngModel)]="reason" class="form-control mb-4"></textarea>
+      <div class="mt-2 d-flex justify-content-end">
+        <button type="button" class="btn rounded-1 button-orange me-2 py-1">
+          Yes
+        </button>
+        <button class="btn btn-light-primary" (click)="modal.close()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
