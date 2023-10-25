@@ -151,8 +151,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       console.log('___', this.userDetails);
     });
     this.userDetailsForm.patchValue({
-      firstName: this.userDetails.userDetails.fullName.split(' ')[0],
-      lastName: this.userDetails.userDetails.fullName.split(' ')[1],
+      firstName: this.userDetails.userDetails.firstName,
+      lastName: this.userDetails.userDetails.lastName,
       email: this.userDetails.userDetails.email,
       phone: this.userDetails.userDetails.phoneNumber,
       address: this.userDetails.userDetails.addressList[0].addressLine,

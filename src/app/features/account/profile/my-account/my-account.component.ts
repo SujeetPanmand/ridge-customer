@@ -91,8 +91,8 @@ export class MyAccountComponent implements OnInit {
 
   patchUserDetails() {
     this.myAccountForm.patchValue({
-      firstName: this.userDetails.userDetails.fullName.split(' ')[0],
-      lastName: this.userDetails.userDetails.fullName.split(' ')[1],
+      firstName: this.userDetails.userDetails.firstName,
+      lastName: this.userDetails.userDetails.lastName,
       emailAddress: this.userDetails.userDetails.email,
       phone: this.userDetails.userDetails.phoneNumber,
     });

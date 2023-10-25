@@ -6,7 +6,8 @@ export interface User {
 
 export interface UserDetails {
   email: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
   phoneNumber: string;
   addressList: Address[];
 }
