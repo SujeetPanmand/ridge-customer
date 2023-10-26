@@ -130,8 +130,7 @@ export class MyAccountComponent implements OnInit {
   uploadProfilePicture = (file: any) => {
     const formdata = new FormData();
 
-    formdata.append('file', file);
-    formdata.append('referenceKey', this.userDetails.userDetails.email);
+    formdata.append('image', file);
     const apiRequest = { data: formdata };
     this.apiService
       .request('EDIT_PROFILE_IMAGE', apiRequest)
@@ -139,6 +138,7 @@ export class MyAccountComponent implements OnInit {
         if (res.statusCode === 200) {
           this.profilePictureUrl = '';
           this.loadUrl(file);
+          this.commonService.newProfileImageEmitter.emit(true);
         }
       });
   };

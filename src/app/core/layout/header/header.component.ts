@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -11,15 +12,17 @@ export class HeaderComponent implements OnInit {
   addedProducts = [];
   cartValue = 0;
   isLogginShow = true;
-  constructor(private router: Router, public commonService: CommonService) {
-    this.commonService.cartProductValue.subscribe((val) => {
-      this.cartValue = val;
-    });
-    this.commonService.islogginButtonShow.subscribe((val) => {
-      this.isLogginShow = val;
-    });
+  userId = '';
+  profilePictureUrl = 'assets/em_user.png';
+  constructor(private router: Router, public commonService: CommonService) {}
+
+  ngOnInit(): void {
+    this.subscribeTo();
+    this.userId = localStorage.getItem('userId')
+      ? localStorage.getItem('userId')
+      : '';
+    this.setProfilePic();
   }
-  ngOnInit(): void {}
 
   navigateToAbout() {
     this.router.navigate(['about']);
@@ -34,5 +37,24 @@ export class HeaderComponent implements OnInit {
     localStorage.clear();
     this.router.navigate(['login']);
     this.commonService.getUserDetails();
+  }
+
+  subscribeTo() {
+    this.commonService.cartProductValue.subscribe((val) => {
+      this.cartValue = val;
+    });
+    this.commonService.islogginButtonShow.subscribe((val) => {
+      this.isLogginShow = val;
+    });
+    this.commonService.newProfileImageEmitter.subscribe((val) => {
+      this.profilePictureUrl = '';
+      this.setProfilePic();
+    });
+  }
+  setProfilePic() {
+    this.profilePictureUrl =
+      this.userId != null && this.userId != ''
+        ? environment.baseUrl + '/api/user/image/' + this.userId
+        : 'assets/em_user.png';
   }
 }

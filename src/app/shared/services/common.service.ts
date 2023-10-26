@@ -12,6 +12,7 @@ export class CommonService {
   userDetails: User;
   @Output() cartProductValue = new EventEmitter<number>();
   @Output() islogginButtonShow = new EventEmitter<boolean>();
+  @Output() newProfileImageEmitter = new EventEmitter<boolean>();
   constructor(
     private apiService: ApiService,
     private toastrService: ToastrService
