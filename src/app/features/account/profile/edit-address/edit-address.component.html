@@ -116,6 +116,7 @@
                 name="zipCode"
                 [(ngModel)]="zipCode"
                 [class.is-invalid]="isFieldValid(editAddressForm, 'zipCode')"
+                (keyup)="checkZipCode()"
               />
               <span
                 class="text-orange"

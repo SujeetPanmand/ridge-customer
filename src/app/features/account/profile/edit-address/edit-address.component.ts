@@ -7,6 +7,7 @@ import { User } from 'src/app/shared/interfaces/user/user-details';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { myAddressLinks } from '../profile.config';
+import { ZipCodeDetails } from 'src/app/shared/interfaces/zipcode/zipcode-details';
 
 @Component({
   selector: 'app-edit-address',
@@ -22,6 +23,7 @@ export class EditAddressComponent implements OnInit {
   townCity: string = '';
   zipCode: string = '';
   userDetails: User;
+  zipCodeDetails: ZipCodeDetails;
   state: string = '';
   links: BreadCrumbLinks[] = myAddressLinks;
   constructor(
@@ -64,15 +66,17 @@ export class EditAddressComponent implements OnInit {
     const apiRequest = {
       data: {
         address1: this.addressLine1,
-        address2: '',
-        zipCodeId: '',
+        address2: this.addressLine2,
+        zipCodeId: this.zipCodeDetails.zipCodeDetails.id,
         zipCode: this.zipCode,
         hideAddressFromPublic: true,
         country: this.countryRegion,
         city: this.townCity,
         state: this.state,
-        stateAbbreviation: '',
-        latitude: 0,
+        stateAbbreviation: this.zipCodeDetails.zipCodeDetails.stateAbbreviation,
+        latitude: this.zipCodeDetails.zipCodeDetails.latitude,
+        longitude: this.zipCodeDetails.zipCodeDetails.longitude,
+        county:this.zipCodeDetails.zipCodeDetails.county
       },
     };
     this.apiService.request('UPDATE_ADDRESS', apiRequest).subscribe((res) => {
@@ -81,6 +85,37 @@ export class EditAddressComponent implements OnInit {
         this.toastrService.success('Updated Successfully!');
       }
     });
+  }
+
+  checkZipCode(){
+    if(this.zipCode.length >= 5){
+      this.fetchZipCodeDetails(this.zipCode);
+    }
+  }
+
+  async fetchZipCodeDetails(zipcode){
+    await this.apiService
+      .request('GET_ZIPCODE_DETAILS', {
+        params: { zipcode: zipcode },
+      })
+      .subscribe((res) => {
+        if (res && res.statusCode == 200) {
+          this.zipCodeDetails = res;
+          console.log(this.zipCodeDetails.zipCodeDetails.zipcode);
+          this.setZipCodeDetails(this.zipCodeDetails);
+        } else {
+          this.toastrService.error(res.message)
+        }
+      });
+  }
+
+  setZipCodeDetails(zipCodeDetails: ZipCodeDetails){
+    this.editAddressForm.patchValue({
+      zipCode: zipCodeDetails.zipCodeDetails.zipcode,
+      townCity: zipCodeDetails.zipCodeDetails.city,
+      state: zipCodeDetails.zipCodeDetails.state,
+      countryRegion: zipCodeDetails.zipCodeDetails.country
+    })
   }
 
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>
@@ -98,11 +133,13 @@ export class EditAddressComponent implements OnInit {
 
   patchUserDetails() {
     this.editAddressForm.patchValue({
-      addressLine1: this.userDetails.userDetails.addressList[0].addressLine,
+      addressLine1: this.userDetails.userDetails.addressList[0]['address1'],
+      addressLine2: this.userDetails.userDetails.addressList[0]['address2'],
       townCity: this.userDetails.userDetails.addressList[0].city,
       countryRegion: this.userDetails.userDetails.addressList[0].country,
       zipCode: this.userDetails.userDetails.addressList[0].postalCode,
       state: this.userDetails.userDetails.addressList[0].state,
     });
+    this.fetchZipCodeDetails(this.zipCode);
   }
 }
