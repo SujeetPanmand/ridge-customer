@@ -9,6 +9,7 @@ import { User } from '../interfaces/user/user-details';
 export class CommonService {
   cartProducts = 0;
   isLogginShow = false;
+  profilePictureUrl = 'assets/em_user.png';
   userDetails: User;
   @Output() cartProductValue = new EventEmitter<number>();
   @Output() islogginButtonShow = new EventEmitter<boolean>();

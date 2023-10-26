@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -61,7 +62,13 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('token', userDetails.token);
     localStorage.setItem('userName', this.userName);
     localStorage.setItem('userId', userDetails.id);
-    this.commonService.newProfileImageEmitter.emit(true);
+    this.setUserProfilePic(userDetails.id);
+  }
+  setUserProfilePic(userId) {
+    this.commonService.profilePictureUrl =
+      userId != null && userId != ''
+        ? environment.baseUrl + '/api/user/image/' + userId
+        : 'assets/em_user.png';
   }
 
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>

@@ -63,6 +63,7 @@ export class MyAccountComponent implements OnInit {
       this.userId != null && this.userId != ''
         ? environment.baseUrl + '/api/user/image/' + this.userId
         : 'assets/em_user.png';
+    this.commonService.profilePictureUrl = this.profilePictureUrl;
   }
 
   updateMyAccountInfo() {
@@ -148,6 +149,7 @@ export class MyAccountComponent implements OnInit {
     reader.readAsDataURL(file);
     reader.onload = async (event: any) => {
       this.profilePictureUrl = event.target.result;
+      this.commonService.profilePictureUrl = event.target.result;
     };
   }
 }
