@@ -281,24 +281,6 @@
             <hr class="border" />
             <div *ngIf="allProductReviews.length" class="review-box">
               <div *ngFor="let item of allProductReviews">
-                <div *ngIf="item.userDetails.id == loginUserId" class="me-2">
-                  <div class="d-flex justify-content-end">
-                    <div class="d-flex">
-                      <button
-                        (click)="onEditReview(addReviewTemplate, item)"
-                        class="btn btn-warning me-1"
-                      >
-                        <i style="color: #fff" class="fas fa-pen"></i>
-                      </button>
-                      <button
-                        (click)="onDeleteReview(item)"
-                        class="btn btn-danger"
-                      >
-                        <i style="color: #fff" class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
                 <div class="d-flex align-items-start pt-3">
                   <img
                     [src]="getProfileImage(item.userDetails.id)"
@@ -356,6 +338,24 @@
                         ></i
                       ></span>
                       <span>{{ item.disLikeCount }}</span>
+                    </div>
+                  </div>
+                  <div *ngIf="item.userDetails.id == loginUserId" class="me-2">
+                    <div class="d-flex justify-content-end">
+                      <div class="d-flex">
+                        <button
+                          (click)="onEditReview(addReviewTemplate, item)"
+                          class="btn btn-outline-primary me-1"
+                        >
+                          <i class="color-ff" class="fas fa-pen"></i>
+                        </button>
+                        <button
+                          (click)="onDeleteReview(item)"
+                          class="btn btn-outline-danger"
+                        >
+                          <i class="color-ff" class="fas fa-trash"></i>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
