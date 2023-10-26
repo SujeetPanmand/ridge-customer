@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { prductDetailLinks } from '../shop.config';
 import { ConfirmationPopUpComponent } from 'src/app/shared/component/confirmation-pop-up/confirmation-pop-up.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-details',
@@ -43,6 +44,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   links: BreadCrumbLinks[] = prductDetailLinks;
   isEditReview = false;
   selectedReview: Rating;
+  profilePicture = 'assets/em_user.png';
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
@@ -308,11 +310,11 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
 
   hideReviewButton() {
-    let name = localStorage.getItem('userFullName')
-      ? localStorage.getItem('userFullName')
+    let id = localStorage.getItem('userId')
+      ? localStorage.getItem('userId')
       : '';
     let x = this.unFilterdallProductReviews.findIndex(
-      (x) => x.userDetails.fullName == name
+      (x) => x.userDetails.id == id
     );
     if (x < 0) {
       this.isShowWriteReviewbtn = true;
@@ -404,5 +406,9 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
           });
       }
     });
+  }
+  getProfileImage(id) {
+    let image = environment.baseUrl + '/api/user/image/' + id;
+    return image ? image : 'assets/em_user.png';
   }
 }
