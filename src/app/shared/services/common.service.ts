@@ -2,6 +2,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ApiService } from './api.service';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../interfaces/user/user-details';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +42,7 @@ export class CommonService {
             this.isLogginShow = false;
             this.islogginButtonShow.emit(this.isLogginShow);
             this.userDetails = res.userDetails;
+            this.setProfilePic(res.userDetails.id);
             resolve(res);
             localStorage.setItem('userFullName', res.userDetails.fullName);
           }
@@ -51,5 +53,11 @@ export class CommonService {
         }
       );
     });
+  }
+  setProfilePic(userId) {
+    this.profilePictureUrl =
+      userId != null && userId != ''
+        ? environment.baseUrl + '/api/user/image/' + userId
+        : 'assets/em_user.png';
   }
 }
