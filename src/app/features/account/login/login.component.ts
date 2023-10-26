@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('token', userDetails.token);
     localStorage.setItem('userName', this.userName);
     localStorage.setItem('userId', userDetails.id);
+    this.commonService.newProfileImageEmitter.emit(true);
   }
 
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>
