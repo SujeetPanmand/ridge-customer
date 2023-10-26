@@ -10,6 +10,7 @@ export interface Rating {
   disLikeCount?: number;
 }
 export interface UserBasics {
-  fullName: string;
+  firstName: string;
+  lastName: string;
   id: string;
 }

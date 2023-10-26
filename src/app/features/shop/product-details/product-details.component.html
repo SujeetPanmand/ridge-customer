@@ -307,7 +307,10 @@
                     alt="..."
                   />
                   <div class="ps-3">
-                    <h5 class="mt-0">{{ item.userDetails.fullName }}</h5>
+                    <h5 class="mt-0">
+                      {{ item.userDetails.firstName }}
+                      {{ item.userDetails.lastName }}
+                    </h5>
                     <div>
                       <span
                         [ngClass]="getStarClass(1, item.rating)"
