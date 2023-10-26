@@ -58,6 +58,11 @@ const shopEndPoints = [
     method: 'GET',
     url: environment.baseUrl + '/api/order/my-orders',
   },
+  {
+    name: 'CANCEL_ORDER',
+    method: 'PUT',
+    url: environment.baseUrl + '/api/order/cancel-order'
+  }
 ];
 
 const contactEndPoints = [
@@ -91,6 +96,11 @@ const accountEndPoints = [
     method: 'PUT',
     url: environment.baseUrl + '/api/user/update-image',
   },
+  {
+    name: 'GET_ZIPCODE_DETAILS',
+    method: 'GET',
+    url: environment.baseUrl + '/api/zipcodes/[zipcode]'
+  }
 ];
 const paymentEndPoints = [
   {
