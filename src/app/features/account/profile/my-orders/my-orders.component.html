@@ -89,9 +89,9 @@
                       </tr>
                       <tr>
                         <td colspan="4"></td>
-                        <td *ngIf="order.orderStatus === 1">
-                          <button class="btn btn-danger" (click)="cancelOrder(canelOrderTemplate)">
-                         Cancel
+                        <td *ngIf="order.orderStatus === 0">
+                          <button class="btn btn-danger" (click)="openCancelDialog(canelOrderTemplate,order)">
+                            Cancel
                           </button>
                         </td>
                       </tr>
@@ -113,18 +113,28 @@
     <h5 class="modal-title">Confirmation</h5>
     <i class="fas fa-times close-icon mt-2" (click)="modal.close()"></i>
   </div>
-  <div class="modal-body">
-    <div class="pb-2 px-2">
-      <label for="">Reason <span class="text-danger">*</span></label>
-      <textarea [(ngModel)]="reason" class="form-control mb-4"></textarea>
-      <div class="mt-2 d-flex justify-content-end">
-        <button type="button" class="btn rounded-1 button-orange me-2 py-1">
-          Yes
-        </button>
-        <button class="btn btn-light-primary" (click)="modal.close()">
-          Cancel
-        </button>
+  <form [formGroup]="cancelReasonForm">
+    <div class="modal-body">
+      <div class="pb-2 px-2">
+        <label>Note: For Refund please contact Administrator.</label><br><br>
+        <label for="">Reason <span class="text-danger">*</span></label>
+        <textarea [(ngModel)]="cancelReason" formControlName="cancelReason" class="form-control mb-4"
+          [class.is-invalid]="isFieldValid(cancelReasonForm, 'cancelReason')"> 
+         </textarea> <span
+         class="text-orange"
+         *ngIf="hasError(cancelReasonForm, 'cancelReason', 'required')"
+         >Please enter reason for cancel.
+       </span>
+        
+        <div class="mt-2 d-flex justify-content-end">
+          <button type="button" class="btn rounded-1 button-orange me-2 py-1" (click)="cancelOrder()">
+            Yes
+          </button>
+          <button class="btn btn-light-primary" (click)="modal.close()">
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </ng-template>
