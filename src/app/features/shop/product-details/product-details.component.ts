@@ -147,7 +147,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
           );
 
           this.calculateAvgRating();
-          this.calculateRatingWisePercentage();
+          this.sortRating();
           this.hideReviewButton();
         } else {
           this.toastrService.error(res.message);
@@ -166,7 +166,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     this.avg = Math.floor(this.avg);
   }
 
-  calculateRatingWisePercentage() {
+  sortRating() {
     this.unFilterdallProductReviews.forEach((x) => {
       this.allRating.push(Number(x.rating));
     });
