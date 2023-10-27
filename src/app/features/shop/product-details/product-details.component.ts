@@ -65,7 +65,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     this.defaultSetting();
     this.getReviewInfo();
     this.generateReviewForm();
-    this.gotoTop();
+    this.commonService.gotoTop();
   }
 
   generateReviewForm() {
@@ -227,14 +227,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
-
-  gotoTop() {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }
 
   toggleStar(star) {
     if (!star.value) {
