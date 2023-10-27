@@ -1,8 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "ngx-toastr/toastr";
+
 body {
   font-family: "Muli";
 }
+
 label {
   font: normal normal 600 16px/28px Muli;
   letter-spacing: 0px;
@@ -21,6 +23,12 @@ label {
   letter-spacing: 0px;
   color: #180800;
   opacity: 1;
+}
+
+@media (max-width: 767.98px) {
+.sub-title {
+  font: normal normal bold 25px/29px Georgia;
+}
 }
 
 h4 {
@@ -67,12 +75,14 @@ h5 {
 .checked {
   color: #ef4c00;
 }
+
 .far p {
   font: normal normal 600 16px/26px Muli;
   letter-spacing: 0px;
   color: #180800;
   opacity: 0.8;
 }
+
 .bg-pink {
   /* background-color: #FEEDE5; */
   background: #feede5 0% 0% no-repeat padding-box;
@@ -83,16 +93,20 @@ h5 {
   color: #ef4c00;
   opacity: 1;
 }
+
 .cursor {
   cursor: pointer !important;
 }
+
 .rounded-circle {
   border-radius: 50% !important;
 }
+
 .badge-danger {
   color: #fff;
   background-color: #e63757;
 }
+
 .notification {
   width: 17px;
   font-size: 12px;
@@ -103,45 +117,57 @@ h5 {
   background-color: transparent;
   box-shadow: none;
 }
+
 .accordion-button:focus {
   border-color: transparent;
   outline: 0;
   box-shadow: none;
 }
+
 .hide-name {
   overflow: hidden;
   width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-@page { size: auto;  margin: 0mm; }
-@media print {
-.container {
-  width: 100% !important;
-  max-width: 100%;
-  margin-right: auto !important;
-  margin-left: auto !important;
-  padding-right: calc(var(--bs-gutter-x) * .5);
-  padding-left: calc(var(--bs-gutter-x) * .5);
-}
-.fixed-top {
-  display: none;
-}
-.bg-footer {
-  display: none;
-}
-.shadow-sm {
-  box-shadow: unset !important;
-}
-.mt-5 {
-  margin: unset !important;
-  padding: unset !important;
-}
-.button-orange {
-  display: none !important;
+
+@page {
+  size: auto;
+  margin: 0mm;
 }
 
-.bread-crumb {
-  display: none;
-}
+@media print {
+  .container {
+    width: 100% !important;
+    max-width: 100%;
+    margin-right: auto !important;
+    margin-left: auto !important;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+  }
+
+  .fixed-top {
+    display: none;
+  }
+
+  .bg-footer {
+    display: none;
+  }
+
+  .shadow-sm {
+    box-shadow: unset !important;
+  }
+
+  .mt-5 {
+    margin: unset !important;
+    padding: unset !important;
+  }
+
+  .button-orange {
+    display: none !important;
+  }
+
+  .bread-crumb {
+    display: none;
+  }
 }

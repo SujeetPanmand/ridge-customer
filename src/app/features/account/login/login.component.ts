@@ -33,6 +33,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  navigateToResetPassword() {
+    this.router.navigate(['/resetpassword']);
+  }
+
   navigateToHome() {
     this.formSubmitAttempt = true;
     if (this.loginForm.invalid) {
@@ -83,4 +87,6 @@ export class LoginComponent implements OnInit {
     formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
+
+   
 }
