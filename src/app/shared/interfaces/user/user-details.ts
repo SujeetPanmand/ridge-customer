@@ -10,6 +10,7 @@ export interface UserDetails {
   lastName: string;
   phoneNumber: string;
   addressList: Address[];
+  id: string;
 }
 
 export interface Address {
