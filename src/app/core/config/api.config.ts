@@ -11,6 +11,16 @@ const authEndPoint = [
     url: environment.baseUrl + '/api/auth/sign-up',
   },
   {
+    name: 'FORGOT_PASSWORD',
+    method: 'POST',
+    url: environment.baseUrl + '/api/auth/customer-forgot-password',
+  },
+  {
+    name: 'RESET_PASSWORD',
+    method: 'POST',
+    url: environment.baseUrl + '/api/auth/reset-password',
+  },
+  {
     name: 'GET_USER_DETAILS',
     method: 'GET',
     url: environment.baseUrl + '/api/user/me',

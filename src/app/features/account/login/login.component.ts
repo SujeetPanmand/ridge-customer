@@ -33,8 +33,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  navigateToResetPassword() {
-    this.router.navigate(['/resetpassword']);
+  navigateToForgotPassword() {
+    this.router.navigate(['/forgotpassword']);
   }
 
   navigateToHome() {

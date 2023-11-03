@@ -29,14 +29,16 @@
                   [(ngModel)]="password" [class.is-invalid]="isFieldValid(loginForm, 'password')" />
                 <span class="text-danger" *ngIf="hasError(loginForm, 'password', 'required')">Please enter a password.
                 </span>
+                <div class="mt-3 float-end" (click)="navigateToForgotPassword()">
+                  <u class="text-orange"> Forgot Password? </u>
+                </div>
               </div>
-              <button type="submit" class="btn rounded-0 button-orange py-2" (click)="navigateToHome()">
+              
+              <button type="submit" class="btn rounded-0 button-orange py-2 mt-4 w-100" (click)="navigateToHome()">
                 Sign In
               </button>
 
-              <div class="pt-3 cursor" (click)="navigateToResetPassword()">
-                <u class="text-orange"> Forgot Password? </u>
-              </div>
+              
             </form>
           </div>
           <div class="col-md-6 p-5 d-md-block d-none">
