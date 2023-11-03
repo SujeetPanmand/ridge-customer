@@ -26,9 +26,13 @@ label {
 }
 
 @media (max-width: 767.98px) {
-.sub-title {
-  font: normal normal bold 25px/29px Georgia;
-}
+  .sub-title {
+    font: normal normal bold 25px/29px Georgia;
+  }
+
+  .main-title {
+    font: normal normal bold 42px/44px Georgia;
+  }
 }
 
 h4 {
