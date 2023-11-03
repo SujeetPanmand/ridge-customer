@@ -50,3 +50,13 @@
 .no-decoration {
   text-decoration: none !important;
 }
+
+@media (max-width: 992px) {
+.active {
+  color: #fff !important;
+  background: #948d8db8;
+  border-radius: 4px;
+  padding: 7px 8px;
+  font-weight: 600;
+}
+}

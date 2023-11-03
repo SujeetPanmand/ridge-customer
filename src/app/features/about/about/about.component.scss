@@ -1,9 +1,10 @@
 .bgAbout {
-  background-image: url("/assets/about/about-banner.png");
+  background-image: url(/assets/about/about-banner.png);
   height: 500px;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+  background-position: center,center;
 }
 
 .about-text {
@@ -17,4 +18,8 @@
   .about-text {
      left: 50%;
   }
+  .bgAbout {
+  height: 342px;
+  }
+
 }

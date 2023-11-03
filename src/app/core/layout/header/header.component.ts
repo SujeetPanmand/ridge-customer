@@ -46,4 +46,13 @@ export class HeaderComponent implements OnInit {
       this.isLogginShow = val;
     });
   }
+
+  closeMobileMenu() {
+    const toggleButton = document.querySelector('.navbar-toggler') as HTMLElement;
+    const navbarCollapse = document.querySelector('.navbar-collapse') as HTMLElement;
+
+    if (toggleButton && navbarCollapse && navbarCollapse.classList.contains('show')) {
+      toggleButton.click();
+    }
+  }
 }
