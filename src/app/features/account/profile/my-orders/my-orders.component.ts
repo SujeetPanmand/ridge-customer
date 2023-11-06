@@ -20,13 +20,13 @@ export class MyOrdersComponent implements OnInit {
   cancelReasonForm: FormGroup;
   cancelReasonFormSubmitAttempt: boolean = false;
   cancelReason: string = '';
-  selectedOrderId: string= '';
+  selectedOrderId: string = '';
   constructor(
     private apiService: ApiService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
-    private commonService:CommonService
+    public commonService: CommonService
   ) {}
 
   ngOnInit() {
@@ -79,24 +79,21 @@ export class MyOrdersComponent implements OnInit {
     const apiRequest = {
       data: {
         cancelledReason: this.cancelReason,
-        id: this.selectedOrderId
+        id: this.selectedOrderId,
       },
     };
-    this.apiService
-      .request('CANCEL_ORDER', apiRequest)
-      .subscribe((res) => {
-        this.cancelReasonFormSubmitAttempt = false;
-        if (res && res.statusCode == 200) {
-          this.myOrderDetails();
-          this.commonService.gotoTop();
-          this.toastrService.success('Updated Successfully!');
-          this.modalService.dismissAll();
-        }else if(res.statusCode == 404){
-          this.toastrService.error(res.message);
-        }
-        else{
-          this.toastrService.error('Something went wrong.')
-        }
-      });
+    this.apiService.request('CANCEL_ORDER', apiRequest).subscribe((res) => {
+      this.cancelReasonFormSubmitAttempt = false;
+      if (res && res.statusCode == 200) {
+        this.myOrderDetails();
+        this.commonService.gotoTop();
+        this.toastrService.success('Updated Successfully!');
+        this.modalService.dismissAll();
+      } else if (res.statusCode == 404) {
+        this.toastrService.error(res.message);
+      } else {
+        this.toastrService.error('Something went wrong.');
+      }
+    });
   }
 }

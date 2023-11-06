@@ -60,4 +60,18 @@ export class CommonService {
         ? environment.baseUrl + '/api/user/image/' + userId
         : 'assets/em_user.png';
   }
+  getOrderStatus(num) {
+    switch (num) {
+      case 0:
+        return 'Pending';
+      case 1:
+        return 'Delivered';
+      case 2:
+        return 'Cancelled';
+      case 3:
+        return 'Confirmed';
+      default:
+        return '';
+    }
+  }
 }

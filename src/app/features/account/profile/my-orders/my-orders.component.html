@@ -32,7 +32,9 @@
               <td>
                 <span class="badge p-2 rounded-pill bg-green">
                   <i class="bi bi-check"></i
-                  ><span class="m-2">{{ order.orderStatus }}</span>
+                  ><span class="m-2">{{
+                    commonService.getOrderStatus(order.orderStatus)
+                  }}</span>
                 </span>
               </td>
               <th scope="row">
