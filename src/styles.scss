@@ -75,6 +75,13 @@ h5 {
   color: #000 !important;
 }
 
+.slick-prev {
+  left: -10px !important;
+}
+.slick-next {
+  right: -10px !important;
+}
+
 .text-orange,
 .checked {
   color: #ef4c00;

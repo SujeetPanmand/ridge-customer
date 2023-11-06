@@ -1,6 +1,6 @@
 <section class="mt-5">
   <div class="container">
-    <div class="bg-white p-5 mt-4">
+    <div class="bg-white pt-md-5 mt-4">
       <app-bread-crumb [links]="links"></app-bread-crumb>
       <h1 class="pt-3 sub-title">Cart</h1>
       <div class="table-responsive py-3">
@@ -19,17 +19,17 @@
               *ngFor="let product of addedProducts; index as i"
               class="border-bottom"
             >
-              <td>
+              <td class="d-flex align-items-center">
                 <i
                   (click)="removeItemFromCart(product)"
-                  class="cursor bi bi-x text-danger pe-1"
+                  class="cursor bi bi-x text-danger pe-3"
                 ></i
                 ><img
                   src="assets/cart/article1.png"
                   class="img-fluid table-img"
                 />
               </td>
-              <td style="width: 30%">
+              <td style="width: 40%">
                 <div class="accordion" id="accordionProduct">
                   <div class="accordion-item border-0" id="headingOne">
                     <h2 class="accordion-header">

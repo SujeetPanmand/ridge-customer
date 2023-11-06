@@ -1,9 +1,8 @@
 .section {
-  // background-image: url('/src/assets/home/homepagebanner.png');
   background-image: url("/assets/home/homepagebanner.png");
   background-repeat: no-repeat;
   background-size: cover;
-  position: center, center;
+  background-position: center, center;
 }
 
 .bgImag {
@@ -38,6 +37,7 @@
   height: auto;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center, center;
 }
 
 .nav-img {

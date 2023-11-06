@@ -1,20 +1,16 @@
 <section class="py-5 mt-5 bg-light-gray">
   <div class="container">
-    <div class="p-5 bg-white mt-4">
+    <div class="p-md-5 p-3 bg-white mt-4">
       <app-bread-crumb [links]="links"></app-bread-crumb>
 
       <h1 class="sub-title">Checkout</h1>
 
       <form>
         <div class="row pt-4">
-          <div class="col-md-7">
+          <div class="col-md-6">
             <div class="form-check mb-4">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                (change)="onChangeType($any($event.target).checked)"
-                id="selfPickup"
-              />
+              <input class="form-check-input" type="checkbox" (change)="onChangeType($any($event.target).checked)"
+                id="selfPickup" />
               <label class="form-check-label" for="selfPickup">
                 Self Pickup
               </label>
@@ -27,87 +23,45 @@
 
                 <div class="row mb-3">
                   <div class="col-md-6">
-                    <label for="firstName" class="form-label"
-                      >First Name <span class="text-orange">*</span></label
-                    >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="firstName"
-                      name="firstName"
-                      formControlName="firstName"
-                    />
+                    <label for="firstName" class="form-label">First Name <span class="text-orange">*</span></label>
+                    <input type="text" class="form-control" id="firstName" name="firstName"
+                      formControlName="firstName" />
                   </div>
                   <div class="col-md-6">
-                    <label for="lastName" class="form-label"
-                      >Last Name
+                    <label for="lastName" class="form-label">Last Name
                       <span class="text-orange">*</span>
                     </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="lastName"
-                      name="lastName"
-                      formControlName="lastName"
-                    />
+                    <input type="text" class="form-control" id="lastName" name="lastName" formControlName="lastName" />
                   </div>
                 </div>
                 <div class="mb-3">
-                  <label for="email" class="form-label"
-                    >Email Address
+                  <label for="email" class="form-label">Email Address
                     <span class="text-orange">*</span>
                   </label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    formControlName="email"
-                  />
+                  <input type="email" class="form-control" id="email" name="email" formControlName="email" />
                 </div>
 
                 <div class="mb-3">
-                  <label for="phone" class="form-label"
-                    >Phone Number
+                  <label for="phone" class="form-label">Phone Number
                     <span class="text-orange">*</span>
                   </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="phone"
-                    name="phone"
-                    placeholder=""
-                    formControlName="phone"
-                  />
+                  <input type="text" class="form-control" id="phone" name="phone" placeholder=""
+                    formControlName="phone" />
                 </div>
 
                 <div class="mb-3">
-                  <label for="company" class="form-label"
-                    >Company(Optional)</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="company"
-                    name="company"
-                    placeholder=""
-                    formControlName="company"
-                  />
+                  <label for="company" class="form-label">Company(Optional)</label>
+                  <input type="text" class="form-control" id="company" name="company" placeholder=""
+                    formControlName="company" />
                 </div>
 
                 <div class="mb-3">
-                  <label for="country" class="form-label"
-                    >Country/ Region
+                  <label for="country" class="form-label">Country/ Region
                     <span class="text-orange">*</span>
                   </label>
 
-                  <select
-                    class="form-select form-select mb-3"
-                    id="country"
-                    name="country"
-                    formControlName="country"
-                    aria-label=".form-select-lg example"
-                  >
+                  <select class="form-select form-select mb-3" id="country" name="country" formControlName="country"
+                    aria-label=".form-select-lg example">
                     <option value="US">USA</option>
                     <option value="India">India</option>
                     <option value="UK">UK</option>
@@ -115,46 +69,24 @@
                 </div>
 
                 <div class="mb-3">
-                  <label for="address" class="form-label"
-                    >Address <span class="text-orange">*</span></label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="address"
-                    name="address"
-                    formControlName="address"
-                    placeholder="House name and street name"
-                  />
+                  <label for="address" class="form-label">Address <span class="text-orange">*</span></label>
+                  <input type="text" class="form-control" id="address" name="address" formControlName="address"
+                    placeholder="House name and street name" />
                   <label for="address2" class="form-label"></label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="address2"
-                    name="address2"
-                    formControlName="address2"
-                    placeholder="Appartment,suit ,unit,etc.(Optional)"
-                  />
+                  <input type="text" class="form-control" id="address2" name="address2" formControlName="address2"
+                    placeholder="Appartment,suit ,unit,etc.(Optional)" />
                 </div>
 
                 <div class="mb-3">
-                  <label for="city" class="form-label"
-                    >Town / City
+                  <label for="city" class="form-label">Town / City
                     <span class="text-orange">*</span>
                   </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="city"
-                    name="city"
-                    formControlName="city"
-                  />
+                  <input type="text" class="form-control" id="city" name="city" formControlName="city" />
                 </div>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="mb-3">
-                      <label for="state" class="form-label"
-                        >State
+                      <label for="state" class="form-label">State
                         <span class="text-orange">*</span>
                       </label>
                       <select id="state" name="state" class="form-select">
@@ -166,28 +98,16 @@
                   </div>
                   <div class="col-md-6">
                     <div class="mb-3">
-                      <label for="zip" class="form-label"
-                        >Zip Code
+                      <label for="zip" class="form-label">Zip Code
                         <span class="text-orange">*</span>
                       </label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="zip"
-                        name="zip"
-                        formControlName="zip"
-                      />
+                      <input type="text" class="form-control" id="zip" name="zip" formControlName="zip" />
                     </div>
                   </div>
                 </div>
                 <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="saveAddress"
-                    formControlName="defaultFlag"
-                  />
+                  <input class="form-check-input" type="checkbox" value="" id="saveAddress"
+                    formControlName="defaultFlag" />
                   <label class="form-check-label" for="saveAddress">
                     Save this address as my default
                   </label>
@@ -196,14 +116,8 @@
                   <h1 class="text-title">Billing Address</h1>
                 </div>
                 <hr class="border" />
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="myBilling"
-                    formControlName="billFlag"
-                  />
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" value="" id="myBilling" formControlName="billFlag" />
                   <label class="form-check-label" for="myBilling">
                     My billing address is same as shipping address
                   </label>
@@ -217,79 +131,64 @@
             </div>
           </div>
 
-          <div class="col-md-5 px-3">
-            <div class="shadow-sm p-4 mb-5 border">
+          <div class="col-md-6 px-3">
+            <div class="shadow-sm p-md-4 p-2 mb-5 border">
               <span class="text-title"> Your Order </span>
+              <div class="row pt-3" *ngFor="let product of finalOrderProducts; index as i">
+                <div class="col-xl-3">
+                  <button type="button" class="btn position-relative p-0">
+                    <img src="assets/checkout/article1.png" class="img-fluid img" />
+                    <span class="position-absolute top-0 translate-middle badge rounded-circle bg-danger">
+                      {{ product.count }}
+                      <span class="visually-hidden">unread messages</span>
+                    </span>
+                  </button>
+                </div>
+                <div class="col-xl-9">
+                  <div class="d-flex justify-content-between align-items-baseline">
+                    <div class="accordion" id="accordionProduct">
+                      <div class="accordion-item border-0">
+                        <h2 class="accordion-header">
+                          <button class="accordion-button collapsed pb-0 pt-3 ps-0" type="button"
+                            data-bs-toggle="collapse" [attr.data-bs-target]="'#productInfo' + i" aria-expanded="false"
+                            aria-controls="productInfo">
+                            <h5>{{ product.name }}</h5>
+                          </button>
+                        </h2>
+                        <div [id]="'productInfo' + i" class="accordion-collapse collapse"
+                          data-bs-parent="#accordionProduct">
+                          <div class="accordion-body">
+                            <p [innerHTML]="product?.cutInfo"></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="pe-2"> {{ product.count * product.price }}</div>
+                  </div>
+                </div>
+              </div>
               <div class="table-responsive mt-3">
                 <table class="table align-middle table-borderless">
                   <tbody>
-                    <tr
-                      *ngFor="let product of finalOrderProducts; index as i"
-                      class="border-bottom"
-                    >
-                      <td>
-                        <button type="button" class="btn position-relative p-0">
-                          <img
-                            src="assets/checkout/article1.png"
-                            class="img-fluid img"
-                          />
-                          <span
-                            class="position-absolute top-0 translate-middle badge rounded-circle bg-danger"
-                          >
-                            {{ product.count }}
-                            <span class="visually-hidden">unread messages</span>
-                          </span>
-                        </button>
-                      </td>
-                      <td>
-                        <div class="accordion" id="accordionProduct">
-                          <div class="accordion-item border-0">
-                            <h2 class="accordion-header">
-                              <button
-                                class="accordion-button collapsed pb-0 pt-3"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                [attr.data-bs-target]="'#productInfo' + i"
-                                aria-expanded="false"
-                                aria-controls="productInfo"
-                              >
-                                <h5>{{ product.name }}</h5>
-                              </button>
-                            </h2>
-                            <div
-                              [id]="'productInfo' + i"
-                              class="accordion-collapse collapse"
-                              data-bs-parent="#accordionProduct"
-                            >
-                              <div class="accordion-body">
-                                <p [innerHTML]="product?.cutInfo"></p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td>{{ product.count * product.price }}</td>
-                    </tr>
-
                     <tr class="pt-3">
                       <td>Subtotal</td>
                       <td></td>
-                      <td>{{ orderSubTotal }}</td>
+                      <td class="text-end">{{ orderSubTotal }}</td>
                     </tr>
                     <tr>
                       <td>Shipping</td>
                       <td></td>
-                      <td>{{ SHIPPING_AMOUNT }}</td>
+                      <td class="text-end">{{ SHIPPING_AMOUNT }}</td>
                     </tr>
                     <tr>
                       <td>Tax</td>
                       <td></td>
-                      <td>{{ TAX_AMOUNT }}</td>
+                      <td class="text-end">{{ TAX_AMOUNT }}</td>
                     </tr>
                     <tr>
                       <td class="fw-bold">Total</td>
                       <td></td>
-                      <td class="fw-bold">{{ orderTotal }}</td>
+                      <td class="fw-bold text-end">{{ orderTotal }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -304,23 +203,12 @@
                 Please select the delivary date for this order
               </div>
               <div class="mb-3">
-                <input
-                  type="date"
-                  id="birthday"
-                  name="birthday "
-                  [min]="todayDate"
-                  (change)="getCurrentDay()"
-                  [(ngModel)]="selectedDate"
-                  class="form-control mb-3"
-                />
+                <input type="date" id="birthday" name="birthday " [min]="todayDate" (change)="getCurrentDay()"
+                  [(ngModel)]="selectedDate" class="form-control mb-3" />
               </div>
               <div class="mb-3">
-                <select
-                  (change)="onChangeSlot()"
-                  [(ngModel)]="singleSlotId"
-                  class="form-control form-select"
-                  name="slot"
-                >
+                <select (change)="onChangeSlot()" [(ngModel)]="singleSlotId" class="form-control form-select"
+                  name="slot">
                   <option value="">Select Slot</option>
                   <option *ngFor="let item of allSlots" [value]="item.id">
                     {{ item.startTime }}&nbsp;To&nbsp;{{ item.endTime }}
@@ -328,12 +216,7 @@
                 </select>
               </div>
             </div>
-            <a
-              (click)="onRedirectToPayment()"
-              class="btn button-orange w-100"
-              type="button"
-              >Checkout</a
-            >
+            <a (click)="onRedirectToPayment()" class="btn button-orange w-100" type="button">Checkout</a>
           </div>
         </div>
       </form>
