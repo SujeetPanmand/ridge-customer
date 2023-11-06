@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, throwError } from 'rxjs';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 })
 export class HomeComponent implements OnInit {
   productList = [];
+  productPicUrl = '';
   constructor(
     private router: Router,
     private commonService: CommonService,
@@ -88,5 +90,16 @@ export class HomeComponent implements OnInit {
           this.productList = res.allProductDetails;
         }
       });
+  }
+
+  setProductPic(id) {
+    let date = new Date().getTime();
+    this.productPicUrl = '';
+    let url = environment.baseUrl + '/api/product/image/' + id;
+    this.productPicUrl = url
+      ? url + '?' + date
+      : 'assets/product/wholeBeef.png';
+
+    return this.productPicUrl;
   }
 }

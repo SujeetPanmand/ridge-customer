@@ -12,7 +12,12 @@
           quality in every bite. Our commitment to traditional farming
           practices.
         </p>
-        <a routerLink="/shop" type="button" class="btn rounded-0 button-orange shadow-none">Shop Now</a>
+        <a
+          routerLink="/shop"
+          type="button"
+          class="btn rounded-0 button-orange shadow-none"
+          >Shop Now</a
+        >
       </div>
     </div>
   </div>
@@ -43,14 +48,20 @@
               </div>
             </div>
           </div> -->
-          <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig"
-            (init)="slickInit($event)" (breakpoint)="breakpoint($event)" (afterChange)="afterChange($event)"
-            (beforeChange)="beforeChange($event)">
+          <ngx-slick-carousel
+            class="carousel"
+            #slickModal="slick-carousel"
+            [config]="slideConfig"
+            (init)="slickInit($event)"
+            (breakpoint)="breakpoint($event)"
+            (afterChange)="afterChange($event)"
+            (beforeChange)="beforeChange($event)"
+          >
             <div ngxSlickItem *ngFor="let product of productList" class="slide">
               <div class="px-2 my-slider">
                 <div class="card card-recipes rounded-4">
                   <div class="content-overlay"></div>
-                  <img src="assets/home/products.png " class="img-fluid" />
+                  <img height="200px" [src]="setProductPic(product.id)" />
                   <div class="d-flex mb-0 p-2">
                     <h5 class="fw-bold hide-name">{{ product.name }}</h5>
                     <h5 class="ms-auto fw-bold text-orange">
@@ -63,7 +74,12 @@
           </ngx-slick-carousel>
         </div>
         <div class="text-center pt-md-5 pt-4">
-          <a routerLink="/shop" type="button" class="btn rounded-0 button-orange">View All Products</a>
+          <a
+            routerLink="/shop"
+            type="button"
+            class="btn rounded-0 button-orange"
+            >View All Products</a
+          >
         </div>
       </div>
     </div>
@@ -87,7 +103,7 @@
   <section class="py-5">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 ">
+        <div class="col-md-6">
           <h2 class="fw-bold sub-title">
             Why Native Grass-fed<br />
             Artisan Beef
@@ -100,24 +116,41 @@
             rich in flavor. The taste is a testament to the authenticity of our
             artisan approach.
           </p>
-          <a routerLink="/about" type="button" class="btn rounded-0 button-orange">Know More About Us</a>
+          <a
+            routerLink="/about"
+            type="button"
+            class="btn rounded-0 button-orange"
+            >Know More About Us</a
+          >
         </div>
         <div class="col-md-6 col mx-auto">
           <div class="row g-2">
             <div class="col-md-6">
               <div class=" ">
-                <img src="assets/home/a8yt8ici.png" class="img-fluid rounded-3 pt-5 ps-xl-5 d-flex mx-auto" />
+                <img
+                  src="assets/home/a8yt8ici.png"
+                  class="img-fluid rounded-3 pt-5 ps-xl-5 d-flex mx-auto"
+                />
               </div>
               <div class="mt-3">
-                <img src="assets/home/2mou6w3x.png" class="img-fluid rounded-3 d-flex mx-auto" />
+                <img
+                  src="assets/home/2mou6w3x.png"
+                  class="img-fluid rounded-3 d-flex mx-auto"
+                />
               </div>
             </div>
             <div class="col-md-6 gy-2">
               <div class=" ">
-                <img src="assets/home/qv3g3gmi.png" class="img-fluid rounded-3 d-flex mx-auto" />
+                <img
+                  src="assets/home/qv3g3gmi.png"
+                  class="img-fluid rounded-3 d-flex mx-auto"
+                />
               </div>
               <div class="mt-2">
-                <img src="assets/home/o9kwrr26.png" class="img-fluid rounded-3 d-flex mx-auto" />
+                <img
+                  src="assets/home/o9kwrr26.png"
+                  class="img-fluid rounded-3 d-flex mx-auto"
+                />
               </div>
             </div>
           </div>
@@ -149,16 +182,18 @@
         <img src="assets/home/organic.svg" class="img-fluid pt-3" />
         <h4 class="fw-bold pt-2">Organic Certification</h4>
         <p class="pt-2">
-          Our Organic beef comes with certifications that provide consumers with transparency and assurance that the
-          product meets specific organic standards
+          Our Organic beef comes with certifications that provide consumers with
+          transparency and assurance that the product meets specific organic
+          standards
         </p>
       </div>
       <div class="col-md-4 text-center">
         <img src="assets/home/environment.svg" class="img-fluid" />
         <h4 class="fw-bold pt-2">Environmental Sustainability</h4>
         <p class="pt-2">
-          Our Organic beef comes with certifications that provide consumers with transparency and assurance that the
-          product meets specific organic standards
+          Our Organic beef comes with certifications that provide consumers with
+          transparency and assurance that the product meets specific organic
+          standards
         </p>
       </div>
       <div class="col-md-4 text-center">
@@ -190,7 +225,11 @@
           for quality, sustainability, and flavor. Choose The Ridge today!
         </p>
         <div class="pt-4">
-          <button routerLink="/shop" type="button" class="btn rounded-0 button-orange shadow-none">
+          <button
+            routerLink="/shop"
+            type="button"
+            class="btn rounded-0 button-orange shadow-none"
+          >
             Order Now
           </button>
         </div>
@@ -218,9 +257,15 @@
         <div class="ourCustomerSlider">
           <div class="customerSlide">
             <div class="py-3">
-              <img src="assets/home/gleson.png " class="img-fluid rounded-pill mx-auto" />
+              <img
+                src="assets/home/gleson.png "
+                class="img-fluid rounded-pill mx-auto"
+              />
               <h5 class="pt-2 fw-bold">Gleason Tristin</h5>
-              <i class="fa fa-quote-right text-orange pt-2" aria-hidden="true"></i>
+              <i
+                class="fa fa-quote-right text-orange pt-2"
+                aria-hidden="true"
+              ></i>
             </div>
             <p class="fw-semibold">
               "I'm blown away by the quality of The Ridge's beef. The steaks are
@@ -301,10 +346,17 @@
         </h2>
         <div class="mx-auto mb-5">
           <div class="input-group pt-5">
-            <input type="text" class="form-control" placeholder="example@yourmail.com" aria-label="Recipient's username"
-              aria-describedby="basic-addon2" />
-            <span class="input-group-text btn button-orange align-items-baseline d-flex shadow-none"
-              id="basic-addon2">Subscribe
+            <input
+              type="text"
+              class="form-control"
+              placeholder="example@yourmail.com"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+            <span
+              class="input-group-text btn button-orange align-items-baseline d-flex shadow-none"
+              id="basic-addon2"
+              >Subscribe
               <i class="bi bi-cursor px-2"></i>
             </span>
           </div>

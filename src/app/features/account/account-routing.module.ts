@@ -9,28 +9,28 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    pathMatch:'full'
+    pathMatch: 'full',
   },
   {
     path: 'signup',
     component: SignupComponent,
-    pathMatch:'full'
+    pathMatch: 'full',
   },
   {
     path: 'forgotpassword',
     component: ForgotPasswordComponent,
-    pathMatch:'full'
+    pathMatch: 'full',
   },
   {
-    path: 'resetpassword:rt',
+    path: 'resetpassword',
     component: ResetpasswordComponent,
-    pathMatch:'full'
+    pathMatch: 'full',
   },
   {
     path: 'profile',
     loadChildren: () =>
       import('./profile/profile.module').then((a) => a.ProfileModule),
-      pathMatch:'full'
+    pathMatch: 'full',
   },
 ];
 
