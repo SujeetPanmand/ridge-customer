@@ -22,7 +22,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'resetpassword',
+    path: 'resetpassword:er',
     component: ResetpasswordComponent,
     pathMatch: 'full',
   },
@@ -30,7 +30,6 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () =>
       import('./profile/profile.module').then((a) => a.ProfileModule),
-    pathMatch: 'full',
   },
 ];
 

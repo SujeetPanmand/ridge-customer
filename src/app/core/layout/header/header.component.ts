@@ -63,7 +63,4 @@ export class HeaderComponent implements OnInit {
       toggleButton.click();
     }
   }
-  redirectToMyAccount() {
-    this.router.navigate(['profile/my-account']);
-  }
 }

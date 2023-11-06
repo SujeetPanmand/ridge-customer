@@ -1,4 +1,9 @@
-<div class="tab-pane fade rounded bg-white show p-5" id="my-orders" role="tabpanel" aria-labelledby="myOrders">
+<div
+  class="tab-pane fade rounded bg-white show p-5"
+  id="my-orders"
+  role="tabpanel"
+  aria-labelledby="myOrders"
+>
   <div class="row justify-content-center">
     <div class="col-md-11">
       <app-bread-crumb [links]="links"></app-bread-crumb>
@@ -16,20 +21,29 @@
             </tr>
           </thead>
           <tbody *ngFor="let order of orderDetails">
-            <tr data-bs-toggle="collapse" [attr.data-bs-target]="'#r1' + order.id" class="border-bottom">
+            <tr
+              data-bs-toggle="collapse"
+              [attr.data-bs-target]="'#r1' + order.id"
+              class="border-bottom"
+            >
               <td>{{ order.id }}</td>
               <td>{{ order.expectedDeliveryDate | date }}</td>
               <td>${{ order.totalAmount }}</td>
               <td>
                 <span class="badge p-2 rounded-pill bg-green">
-                  <i class="bi bi-check"></i><span class="m-2">{{ order.orderStatus }}</span>
+                  <i class="bi bi-check"></i
+                  ><span class="m-2">{{ order.orderStatus }}</span>
                 </span>
               </td>
               <th scope="row">
                 <i class="bi bi-chevron-down"></i>
               </th>
             </tr>
-            <tr class="collapse accordion-collapse" [id]="'r1' + order.id" data-bs-parent=".table">
+            <tr
+              class="collapse accordion-collapse"
+              [id]="'r1' + order.id"
+              data-bs-parent=".table"
+            >
               <td colspan="5">
                 <div class="table-responsive">
                   <table class="table table-borderless my-2">
@@ -37,21 +51,15 @@
                       <div class="pb-3">
                         <div class="fw-bold">
                           {{
-                          order.isSelfPickup ? "Pickup from" : "Delivery to"
+                            order.isSelfPickup ? "Pickup from" : "Delivery to"
                           }}
                         </div>
                         <span class="">
-                          {{
-                          order.address1 +
-                          " " +
-                          order.address2 +
-                          " " +
-                          order.city +
-                          " " +
-                          order.state +
-                          " " +
-                          order.country
-                          }}
+                          {{ order.address1 ? order.address1 : "" }}
+                          {{ order.address2 ? order.address2 : "" }}
+                          {{ order.city ? order.city : "-" }}
+                          {{ order.state ? order.state : "" }}
+                          {{ order.country ? order.country : "" }}
                         </span>
                       </div>
                       <tr>
@@ -90,7 +98,12 @@
                       <tr>
                         <td colspan="4"></td>
                         <td *ngIf="order.orderStatus === 0">
-                          <button class="btn btn-danger" (click)="openCancelDialog(canelOrderTemplate,order)">
+                          <button
+                            class="btn btn-danger"
+                            (click)="
+                              openCancelDialog(canelOrderTemplate, order)
+                            "
+                          >
                             Cancel
                           </button>
                         </td>
@@ -115,18 +128,28 @@
   <form [formGroup]="cancelReasonForm">
     <div class="modal-body">
       <div class="pb-2 px-2">
-        <label>Note: For Refund please contact Administrator.</label><br><br>
+        <label>Note: For Refund please contact Administrator.</label
+        ><br /><br />
         <label for="">Reason <span class="text-danger">*</span></label>
-        <textarea [(ngModel)]="cancelReason" formControlName="cancelReason" class="form-control mb-4"
-          [class.is-invalid]="isFieldValid(cancelReasonForm, 'cancelReason')"> 
-         </textarea> <span
-         class="text-orange"
-         *ngIf="hasError(cancelReasonForm, 'cancelReason', 'required')"
-         >Please enter reason for cancel.
-       </span>
-        
+        <textarea
+          [(ngModel)]="cancelReason"
+          formControlName="cancelReason"
+          class="form-control mb-4"
+          [class.is-invalid]="isFieldValid(cancelReasonForm, 'cancelReason')"
+        >
+        </textarea>
+        <span
+          class="text-orange"
+          *ngIf="hasError(cancelReasonForm, 'cancelReason', 'required')"
+          >Please enter reason for cancel.
+        </span>
+
         <div class="mt-2 d-flex justify-content-end">
-          <button type="button" class="btn rounded-1 button-orange me-2 py-1" (click)="cancelOrder()">
+          <button
+            type="button"
+            class="btn rounded-1 button-orange me-2 py-1"
+            (click)="cancelOrder()"
+          >
             Yes
           </button>
           <button class="btn btn-light-primary" (click)="modal.close()">
