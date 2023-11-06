@@ -45,6 +45,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   isEditReview = false;
   selectedReview: Rating;
   profilePicture = 'assets/em_user.png';
+  productPicUrl = '';
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
@@ -402,5 +403,14 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   getProfileImage(id) {
     let image = environment.baseUrl + '/api/user/image/' + id;
     return image ? image : 'assets/em_user.png';
+  }
+  setProductPic(id) {
+    let date = new Date().getTime();
+    this.productPicUrl = '';
+    let url = environment.baseUrl + '/api/product/image/' + id;
+    this.productPicUrl = url
+      ? url + '?' + date
+      : 'assets/product/wholeBeef.png';
+    return this.productPicUrl;
   }
 }

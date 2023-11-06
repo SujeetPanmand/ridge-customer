@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { paymentLinks } from '../shop.config';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-payment',
@@ -24,6 +25,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   orderDate = '';
   orderSlot = '';
   links: BreadCrumbLinks[] = paymentLinks;
+  productPicUrl = '';
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute,
@@ -103,5 +105,14 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl(
       `shop/checkout?isStandardCut=${this.isStandardCut ? 'true' : 'false'}`
     );
+  }
+  setProductPic(id) {
+    let date = new Date().getTime();
+    this.productPicUrl = '';
+    let url = environment.baseUrl + '/api/product/image/' + id;
+    this.productPicUrl = url
+      ? url + '?' + date
+      : 'assets/product/wholeBeef.png';
+    return this.productPicUrl;
   }
 }

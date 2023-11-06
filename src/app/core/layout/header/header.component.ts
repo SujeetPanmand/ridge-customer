@@ -48,11 +48,22 @@ export class HeaderComponent implements OnInit {
   }
 
   closeMobileMenu() {
-    const toggleButton = document.querySelector('.navbar-toggler') as HTMLElement;
-    const navbarCollapse = document.querySelector('.navbar-collapse') as HTMLElement;
+    const toggleButton = document.querySelector(
+      '.navbar-toggler'
+    ) as HTMLElement;
+    const navbarCollapse = document.querySelector(
+      '.navbar-collapse'
+    ) as HTMLElement;
 
-    if (toggleButton && navbarCollapse && navbarCollapse.classList.contains('show')) {
+    if (
+      toggleButton &&
+      navbarCollapse &&
+      navbarCollapse.classList.contains('show')
+    ) {
       toggleButton.click();
     }
+  }
+  redirectToMyAccount() {
+    this.router.navigate(['profile/my-account']);
   }
 }

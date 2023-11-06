@@ -98,36 +98,54 @@
         <div class="col-md-6 px-3">
           <div class="shadow-sm border p-4 mb-5">
             <span class="text-title"> Your Order </span>
-            <div class="row pt-3" *ngFor="let product of finalOrderProducts; index as i">
+            <div
+              class="row pt-3"
+              *ngFor="let product of finalOrderProducts; index as i"
+            >
               <div class="col-xl-3">
                 <button type="button" class="btn position-relative p-0">
-                  <img src="assets/checkout/article1.png" class="img-fluid img" />
-                  <span class="position-absolute top-0 translate-middle badge rounded-circle bg-danger">
+                  <img
+                    [src]="setProductPic(product.id)"
+                    class="img-fluid img"
+                  />
+                  <span
+                    class="position-absolute top-0 translate-middle badge rounded-circle bg-danger"
+                  >
                     {{ product.count }}
                     <span class="visually-hidden">unread messages</span>
                   </span>
                 </button>
               </div>
               <div class="col-xl-9">
-                <div class="d-flex justify-content-between align-items-baseline">
+                <div
+                  class="d-flex justify-content-between align-items-baseline"
+                >
                   <div class="accordion" id="accordionProduct">
                     <div class="accordion-item border-0">
                       <h2 class="accordion-header">
-                        <button class="accordion-button collapsed pb-0 pt-3 ps-0" type="button"
-                          data-bs-toggle="collapse" [attr.data-bs-target]="'#productInfo' + i" aria-expanded="false"
-                          aria-controls="productInfo">
+                        <button
+                          class="accordion-button collapsed pb-0 pt-3 ps-0"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          [attr.data-bs-target]="'#productInfo' + i"
+                          aria-expanded="false"
+                          aria-controls="productInfo"
+                        >
                           <h5>{{ product.name }}</h5>
                         </button>
                       </h2>
-                      <div [id]="'productInfo' + i" class="accordion-collapse collapse"
-                        data-bs-parent="#accordionProduct">
+                      <div
+                        [id]="'productInfo' + i"
+                        class="accordion-collapse collapse"
+                        data-bs-parent="#accordionProduct"
+                      >
                         <div class="accordion-body">
                           <p [innerHTML]="product?.cutInfo"></p>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="pe-2"> {{ product.count * product.price }}</div>
+                  <div class="pe-2">{{ product.count * product.price }}</div>
                 </div>
               </div>
             </div>

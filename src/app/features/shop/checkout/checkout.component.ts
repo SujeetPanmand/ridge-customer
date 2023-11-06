@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-checkout',
@@ -32,6 +33,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   singleSlotId = '';
   singleSlot = '';
   links: BreadCrumbLinks[] = checkoutLinks;
+  productPicUrl = '';
 
   constructor(
     public commonService: CommonService,
@@ -190,5 +192,14 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.singleSlot =
       element[0].startTime + ' ' + 'To' + ' ' + element[0].endTime;
     localStorage.setItem('orderSlot', JSON.stringify(this.singleSlot));
+  }
+  setProductPic(id) {
+    let date = new Date().getTime();
+    this.productPicUrl = '';
+    let url = environment.baseUrl + '/api/product/image/' + id;
+    this.productPicUrl = url
+      ? url + '?' + date
+      : 'assets/product/wholeBeef.png';
+    return this.productPicUrl;
   }
 }

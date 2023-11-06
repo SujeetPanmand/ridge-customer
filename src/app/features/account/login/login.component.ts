@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
       data: {
         email: this.userName,
         password: this.password,
+        featureForAdmin: false,
       },
     };
 
@@ -87,6 +88,4 @@ export class LoginComponent implements OnInit {
     formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
-
-   
 }

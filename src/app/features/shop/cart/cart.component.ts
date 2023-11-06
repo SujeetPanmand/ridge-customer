@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { cartLinks } from '../shop.config';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cart',
@@ -23,6 +24,7 @@ export class CartComponent implements OnInit, AfterViewInit {
   orderTotal = 0;
   removeFromCartItem;
   isStandardCut = false;
+  productPicUrl = '';
   @ViewChild('removeItemFromCartTemplate', { static: false })
   private removeItemFromCartTemplate: ElementRef;
   links: BreadCrumbLinks[] = cartLinks;
@@ -128,5 +130,14 @@ export class CartComponent implements OnInit, AfterViewInit {
       list.find((item) => item.id == x.id).count = x.count;
     });
     localStorage.setItem('cart', JSON.stringify(list));
+  }
+  setProductPic(id) {
+    let date = new Date().getTime();
+    this.productPicUrl = '';
+    let url = environment.baseUrl + '/api/product/image/' + id;
+    this.productPicUrl = url
+      ? url + '?' + date
+      : 'assets/product/wholeBeef.png';
+    return this.productPicUrl;
   }
 }

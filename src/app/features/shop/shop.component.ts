@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { shopLinks } from './shop.config';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-shop',
@@ -19,6 +20,7 @@ export class ShopComponent implements OnInit {
   isPreOrder = false;
   cutForm: FormGroup;
   url = '';
+  productPicUrl = '';
   links: BreadCrumbLinks[] = shopLinks;
   constructor(
     private apiService: ApiService,
@@ -138,5 +140,14 @@ export class ShopComponent implements OnInit {
   imgShow(content, url) {
     this.url = url;
     this.modalService.open(content, { size: 'xl', centered: true });
+  }
+  setProductPic(id) {
+    let date = new Date().getTime();
+    this.productPicUrl = '';
+    let url = environment.baseUrl + '/api/product/image/' + id;
+    this.productPicUrl = url
+      ? url + '?' + date
+      : 'assets/product/wholeBeef.png';
+    return this.productPicUrl;
   }
 }
