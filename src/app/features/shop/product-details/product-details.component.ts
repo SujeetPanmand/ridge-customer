@@ -63,7 +63,8 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getProductDetails();
-    this.defaultSetting();
+    this.getProductCart();
+    // this.defaultSetting();
     this.getReviewInfo();
     this.generateReviewForm();
     this.commonService.gotoTop();
@@ -76,18 +77,32 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getProductCart(){
+    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+      (res) => {
+        if (res && res.statusCode == 200) {
+          debugger;
+          this.addedProducts = res.allCartItemDetails;
+          // console.log(this.cartItems);
+          this.defaultSetting()
+        }
+      },
+      (error) => {}
+    );
+  }
+
   defaultSetting() {
     this.loginUserId = localStorage.getItem('userId')
       ? localStorage.getItem('userId')
       : '';
-    this.addedProducts = JSON.parse(localStorage.getItem('cart'))
-      ? JSON.parse(localStorage.getItem('cart'))
-      : [];
-
+    // this.addedProducts = JSON.parse(localStorage.getItem('cart'))
+    //   ? JSON.parse(localStorage.getItem('cart'))
+    //   : [];
+    debugger;
     let index = this.addedProducts.findIndex(
-      (x) => x.id == this.route.snapshot.params['productId']
+      (x) => x.productId == this.route.snapshot.params['productId']
     );
-    this.addMultipe = index >= 0 ? this.addedProducts[index].count : 0;
+    this.addMultipe = index >= 0 ? this.addedProducts[index].quantity : 0;
     this.setGlobalCartCount(this.addedProducts);
   }
 
@@ -116,7 +131,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     }
 
     console.log(this.addedProducts);
-    localStorage.setItem('cart', JSON.stringify(this.addedProducts));
+    // localStorage.setItem('cart', JSON.stringify(this.addedProducts));
     this.setGlobalCartCount(this.addedProducts);
   }
 

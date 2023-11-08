@@ -25,7 +25,7 @@
                   class="cursor bi bi-x text-danger pe-3"
                 ></i
                 ><img
-                  [src]="setProductPic(product.id)"
+                  [src]="setProductPic(product.productId)"
                   class="img-fluid table-img"
                 />
               </td>
@@ -41,7 +41,7 @@
                         aria-expanded="false"
                         aria-controls="productInfo"
                       >
-                        <h5>{{ product.name }}</h5>
+                        <h5>{{ product.productName }}</h5>
                       </button>
                     </h2>
                     <div
@@ -70,7 +70,7 @@
                   <input
                     name="quantity"
                     type="text"
-                    [(ngModel)]="product.count"
+                    [(ngModel)]="product.quantity"
                     class="quantity__input"
                     disabled
                   />
@@ -81,7 +81,7 @@
                   >
                 </div>
               </td>
-              <td>{{ product.price * product.count }}</td>
+              <td>{{ product.totalPrice }}</td>
             </tr>
             <tr *ngIf="addedProducts.length > 0">
               <td colspan="3"></td>

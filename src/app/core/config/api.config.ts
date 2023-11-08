@@ -72,6 +72,21 @@ const shopEndPoints = [
     name: 'CANCEL_ORDER',
     method: 'PUT',
     url: environment.baseUrl + '/api/order/cancel-order'
+  },
+  {
+    name: 'ADD_CART_ITEM',
+    method: 'POST',
+    url: environment.baseUrl + '/api/cartItem/add-cart-item'
+  },
+  {
+    name: 'GET_CART_ITEMS',
+    method: 'GET',
+    url: environment.baseUrl + '/api/cartItem/get-cart-items'
+  },
+  {
+    name: 'DELETE_CART_ITEMS',
+    method: 'DELETE',
+    url: environment.baseUrl + '/api/cartItem/delete/[id]'
   }
 ];
 

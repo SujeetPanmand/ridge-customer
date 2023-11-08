@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, throwError } from 'rxjs';
+import { AllCartItemDetail } from 'src/app/shared/interfaces/all-cart-item-details';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { environment } from 'src/environments/environment';
@@ -14,6 +15,7 @@ import { environment } from 'src/environments/environment';
 export class HomeComponent implements OnInit {
   productList = [];
   productPicUrl = '';
+  cartItems: AllCartItemDetail[]; 
   constructor(
     private router: Router,
     private commonService: CommonService,
@@ -21,13 +23,24 @@ export class HomeComponent implements OnInit {
     private toastrService: ToastrService
   ) {}
   ngOnInit(): void {
-    let list = JSON.parse(localStorage.getItem('cart'))
-      ? JSON.parse(localStorage.getItem('cart'))
-      : [];
-    this.setGlobalCartCount(list);
-
+    // let list = JSON.parse(localStorage.getItem('cart'))
+    //   ? JSON.parse(localStorage.getItem('cart'))
+    //   : [];
+    this.getProductCart();
     this.commonService.gotoTop();
     this.getAllProducts();
+  }
+
+  getProductCart(){
+    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+      (res) => {
+        if (res && res.statusCode == 200) {
+          this.cartItems = res.allCartItemDetails;
+          this.setGlobalCartCount(this.cartItems);
+        }
+      },
+      (error) => {}
+    );
   }
 
   title = 'ng-carousel-demo';
@@ -76,7 +89,7 @@ export class HomeComponent implements OnInit {
   setGlobalCartCount(data) {
     let count = 0;
     data.forEach((x) => {
-      count = count + x.count;
+      count = count + x.quantity;
     });
     this.commonService.addProducts(count);
   }
