@@ -14,6 +14,8 @@ import { environment } from 'src/environments/environment';
 export class HomeComponent implements OnInit {
   productList = [];
   productPicUrl = '';
+  promotionList = [];
+  promotionPicUrl = '';
   constructor(
     private router: Router,
     private commonService: CommonService,
@@ -28,6 +30,7 @@ export class HomeComponent implements OnInit {
 
     this.commonService.gotoTop();
     this.getAllProducts();
+    this.getAllPromotions();
   }
 
   title = 'ng-carousel-demo';
@@ -86,7 +89,7 @@ export class HomeComponent implements OnInit {
       .request('GET_ALL_PRODUCTS', { params: {} })
       .subscribe(async (res) => {
         if (res) {
-          console.log(res);
+          // console.log(res);
           this.productList = res.allProductDetails;
         }
       });
@@ -101,5 +104,28 @@ export class HomeComponent implements OnInit {
       : 'assets/product/wholeBeef.png';
 
     return this.productPicUrl;
+  }
+
+  getAllPromotions() {
+    this.apiService
+      .request('PROMOTION_DETAILS', { params: {} })
+      .subscribe(async (res) => {
+        if (res) {
+          console.log(res);
+          this.promotionList = res.allPromotionDetails;
+        }
+      });
+  }
+
+  
+  setPromotionPics(id) {
+    let date = new Date().getTime();
+    this.promotionPicUrl = '';
+    let url = environment.baseUrl + '/api/promotion/image/' + id;
+    this.promotionPicUrl = url
+      ? url + '?' + date
+      : 'assets/home/homepagebanner.png';
+
+    return this.promotionPicUrl;
   }
 }

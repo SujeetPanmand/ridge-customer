@@ -120,6 +120,14 @@ const paymentEndPoints = [
   },
 ];
 
+const homeEndPoints = [ 
+  {
+    name: 'PROMOTION_DETAILS',
+    method: 'GET',
+    url: environment.baseUrl + '/api/promotion/get',
+  },
+];
+
 export const ApiConfig = {
   baseUrl: '',
   endpoints: [
@@ -129,5 +137,6 @@ export const ApiConfig = {
     ...blogEndPoint,
     ...accountEndPoints,
     ...paymentEndPoints,
+    ...homeEndPoints,
   ],
 };
