@@ -22,7 +22,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'resetpassword:er',
+    path: 'resetpassword',
     component: ResetpasswordComponent,
     pathMatch: 'full',
   },
