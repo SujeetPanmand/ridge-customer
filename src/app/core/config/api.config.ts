@@ -71,23 +71,23 @@ const shopEndPoints = [
   {
     name: 'CANCEL_ORDER',
     method: 'PUT',
-    url: environment.baseUrl + '/api/order/cancel-order'
+    url: environment.baseUrl + '/api/order/cancel-order',
   },
   {
     name: 'ADD_CART_ITEM',
     method: 'POST',
-    url: environment.baseUrl + '/api/cartItem/add-cart-item'
+    url: environment.baseUrl + '/api/cartItem/add-cart-item',
   },
   {
     name: 'GET_CART_ITEMS',
     method: 'GET',
-    url: environment.baseUrl + '/api/cartItem/get-cart-items'
+    url: environment.baseUrl + '/api/cartItem/get-cart-items',
   },
   {
     name: 'DELETE_CART_ITEMS',
     method: 'DELETE',
-    url: environment.baseUrl + '/api/cartItem/delete/[id]'
-  }
+    url: environment.baseUrl + '/api/cartItem/delete/[id]',
+  },
 ];
 
 const contactEndPoints = [
@@ -102,6 +102,21 @@ const blogEndPoint = [
     name: 'GET_ALL_BLOGS',
     method: 'GET',
     url: environment.baseUrl + '/api/blog',
+  },
+  {
+    name: 'GET_BLOG_DETAILS_BY_ID',
+    method: 'GET',
+    url: environment.baseUrl + '/api/blog/[id]',
+  },
+  {
+    name: 'GET_ALL_COMMENT',
+    method: 'GET',
+    url: environment.baseUrl + '/api/comment/get-blog-comments/[id]',
+  },
+  {
+    name: 'ADD_COMMENT',
+    method: 'POST',
+    url: environment.baseUrl + '/api/comment/add-comment',
   },
 ];
 
@@ -124,8 +139,8 @@ const accountEndPoints = [
   {
     name: 'GET_ZIPCODE_DETAILS',
     method: 'GET',
-    url: environment.baseUrl + '/api/zipcodes/[zipcode]'
-  }
+    url: environment.baseUrl + '/api/zipcodes/[zipcode]',
+  },
 ];
 const paymentEndPoints = [
   {
@@ -135,7 +150,7 @@ const paymentEndPoints = [
   },
 ];
 
-const homeEndPoints = [ 
+const homeEndPoints = [
   {
     name: 'PROMOTION_DETAILS',
     method: 'GET',

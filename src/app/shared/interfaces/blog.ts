@@ -18,3 +18,29 @@ export interface SingleBlogDetails {
   statusCode?: number;
   message?: string;
 }
+
+export interface Comment {
+  commentList?: CommentList[];
+  statusCode?: number;
+  message?: string;
+}
+
+export interface CommentList {
+  id?: string;
+  user?: User;
+  blogId?: string;
+  blog?: null;
+  message?: string;
+  replies?: Reply[];
+}
+
+export interface Reply {
+  id?: string;
+  message?: string;
+  replier?: User;
+}
+
+export interface User {
+  id?: string;
+  name?: string;
+}
