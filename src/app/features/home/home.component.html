@@ -1,14 +1,12 @@
-<section class="pt-5 mt-4">
+<section class="pt-5 mt-4 pt-xl-0 mt-xl-0">
   <div class="container-fluid p-0">
-    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="true">
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button *ngFor="let promotion of promotionList; let i = index" type="button" data-bs-target="#carouselExampleCaptions" [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-label]="'Slide ' + (i + 1)"></button>
       </div>
       <div class="carousel-inner">
-        <div *ngFor="let promotion of promotionList" class="carousel-item active">
-          <img [src]="setPromotionPics(promotion.id)" class="d-block w-100 height" alt="..." >
+        <div *ngFor="let promotion of promotionList; let i = index" class="carousel-item" [class.active]="i === 0">
+          <img [src]="setPromotionPics(promotion.id)" class="d-block w-100 height" alt="...">
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -22,6 +20,7 @@
     </div>
   </div>
 </section>
+
 <!-- ----------------------------------- -->
 <div class="bg-img-section">
   <section class="py-5">
@@ -179,8 +178,8 @@
 
     <div class="row pt-md-4">
       <div class="col-md-4 text-center">
-        <img src="assets/home/organic.svg" class="img-fluid pt-3" />
-        <h4 class="fw-bold pt-2">Organic Certification</h4>
+        <img src="assets/home/organic.png" class="img-fluid mb-3 h-60" />
+        <h4 class="fw-bold">Organic Certification</h4>
         <p class="pt-2">
           Our Organic beef comes with certifications that provide consumers with
           transparency and assurance that the product meets specific organic
@@ -188,8 +187,8 @@
         </p>
       </div>
       <div class="col-md-4 text-center">
-        <img src="assets/home/environment.svg" class="img-fluid" />
-        <h4 class="fw-bold pt-2">Environmental Sustainability</h4>
+        <img src="assets/home/environment.png" class="img-fluid mb-3 h-60" />
+        <h4 class="fw-bold">Environmental Sustainability</h4>
         <p class="pt-2">
           Our Organic beef comes with certifications that provide consumers with
           transparency and assurance that the product meets specific organic
@@ -197,9 +196,9 @@
         </p>
       </div>
       <div class="col-md-4 text-center">
-        <img src="assets/home/healthydiet.svg" class="img-fluid pt-1" />
-        <h4 class="fw-bold pt-2">Healthy Diet</h4>
-        <p class="pt-3">
+        <img src="assets/home/healthydiet.png" class="img-fluid mb-3 h-60" />
+        <h4 class="fw-bold">Healthy Diet</h4>
+        <p class="pt-2">
           Organic beef is not only delicious but Organic beef is not only
           delicious but also healthier for you and your family.It's free from
           synthetic chemicals and antibiotics, making it a cleaner and
@@ -340,11 +339,11 @@
 <section class="py-5">
   <div class="container">
     <div class="row justify-content-center mx-auto">
-      <div class="col-md-8 shadow-sm px-5">
+      <div class="col-md-8 shadow-sm">
         <h2 class="text-center fw-bold pt-3 sub-title">
           Want to get the latest Updates?
         </h2>
-        <div class="mx-auto mb-5">
+        <div class="col-md-12 col-xl-10 mx-auto mb-5">
           <div class="input-group pt-5">
             <input
               type="text"
@@ -354,7 +353,7 @@
               aria-describedby="basic-addon2"
             />
             <span
-              class="input-group-text btn button-orange align-items-baseline d-flex shadow-none"
+              class="input-group-text btn button-orange align-items-baseline d-flex shadow-none px-2 px-md-4"
               id="basic-addon2"
               >Subscribe
               <i class="bi bi-cursor px-2"></i>

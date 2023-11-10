@@ -89,6 +89,7 @@
 .review-box {
   height: 300px;
   overflow-y: auto !important;
+  overflow-x: hidden;
 }
 
 textarea.ng-invalid.ng-touched {
@@ -97,4 +98,9 @@ textarea.ng-invalid.ng-touched {
 
 .color-ff:hover {
   color: #fff !important;
+}
+
+.profileImg{
+  height: 50px;
+  width: 50px;
 }
