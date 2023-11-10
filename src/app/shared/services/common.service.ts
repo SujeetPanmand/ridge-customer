@@ -20,10 +20,11 @@ export class CommonService {
     private toastrService: ToastrService
   ) {
     this.getUserDetails();
+    this.setGlobalCartCount();
   }
   addProducts(value) {
     this.cartProducts = value;
-    this.cartProductValue.emit(this.cartProducts);
+    // this.cartProductValue.emit(this.cartProducts);
   }
 
   gotoTop() {
@@ -32,6 +33,17 @@ export class CommonService {
       left: 0,
       behavior: 'smooth',
     });
+  }
+
+  setGlobalCartCount(){
+    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+      (res) => {
+        if (res && res.statusCode == 200) {
+          this.cartProductValue.emit(res.allCartItemDetails.length);
+        }
+      },
+      (error) => {}
+    );
   }
 
   getUserDetails(): Promise<User> {

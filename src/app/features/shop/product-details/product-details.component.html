@@ -68,12 +68,13 @@
             </p> -->
             <div class="d-flex">
               <div
+              *ngIf="selctedProduct?.count != 0"
                 class="number d-flex justify-content-evenly align-items-center col-4 bg-pink"
               >
                 <span
                   [ngClass]="{ pointer: addMultipe == 0 }"
                   class="minus cursor"
-                  (click)="addMoreToCart(false)"
+                  (click)="addMoreToCart(false,selctedProduct)"
                   >-</span
                 >
                 <input
@@ -82,13 +83,14 @@
                   class="count w-25"
                   disabled
                 />
-                <span (click)="addMoreToCart(true)" class="plus cursor">+</span>
+                <span (click)="addMoreToCart(true,selctedProduct)" class="plus cursor">+</span>
               </div>
-              <button
+              <button 
+              *ngIf="selctedProduct?.count == 0 "
                 class="btn btn ms-3 bg-pink px-4"
-                (click)="onNavigateToCart()"
+                (click)="selectCut($event, selectCutTemplate, selctedProduct)"
               >
-                Add To Cart
+                Add
               </button>
             </div>
           </div>
@@ -453,5 +455,69 @@
         {{ isEditReview ? "Edit Review" : "Submit Review" }}
       </button>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #selectCutTemplate let-modal>
+  <div class="modal-header border-bottom py-2">
+    <h5 class="modal-title preorder-title text-orange">Select Cut</h5>
+    <i class="fas fa-times close-icon mt-2" (click)="modal.close()"></i>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="cutForm">
+      <div class="d-flex">
+        <div class="form-check ml-0 form-check-inline">
+          <input
+            formControlName="searchCheckOption"
+            name="searchCheckOption"
+            class="form-check-input"
+            type="radio"
+            id="standard"
+            value="standard"
+          />
+          <label class="form-check-label" for="standard">Standard Cut</label>
+        </div>
+        <div class="form-check ml-0 form-check-inline">
+          <input
+            formControlName="searchCheckOption"
+            name="searchCheckOption"
+            class="form-check-input"
+            type="radio"
+            id="custom"
+            value="custom"
+          />
+          <label class="form-check-label" for="custom">Custom Cut</label>
+        </div>
+      </div>
+    </form>
+
+    <div class="border mt-2 mx-4">
+      <ul class="list-unstyled p-3">
+        <li>180 lbs – Ground Beef 2</li>
+        <li>
+          120 lbs – Assorted Roasts (Chuck, Brisket (2), Short Ribs, Rump, Arm,
+          Round)
+        </li>
+        <li>
+          72 lbs - Premium Steaks (Filet, Bone-In Ribeye, Boneless Ribeye, NY
+          Strip)
+        </li>
+        <li>8 lbs - Family Steaks (Sirloin, Bavette, Flat Iron, Tri Tip)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="modal-footer justify-content-end">
+    <button type="button" class="btn" (click)="modal.close()">Cancel</button>
+    <button
+      (click)="addProductToCart()"
+      type="button"
+      class="btn rounded-0 button-orange"
+    >
+      {{
+        cutForm.controls["searchCheckOption"].value === "standard"
+          ? "Add to Cart"
+          : "Checkout"
+      }}
+    </button>
   </div>
 </ng-template>

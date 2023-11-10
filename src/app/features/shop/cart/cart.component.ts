@@ -64,8 +64,11 @@ export class CartComponent implements OnInit, AfterViewInit {
     this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
       (res) => {
         if (res && res.statusCode == 200) {
+          debugger;
           this.cartItems = res.allCartItemDetails;
           this.addedProducts = this.cartItems;
+          this.commonService.cartProductValue.emit(this.cartItems.length ?? 0);
+          this.calculateOrderTotal();
         }
       },
       (error) => {}
@@ -78,13 +81,15 @@ export class CartComponent implements OnInit, AfterViewInit {
     //   : [];
     // this.addedProducts = this.addedProducts.filter((x) => x.count !== 0);
     this.calculateOrderTotal();
-    this.setGlobalCartCount();
+    // this.setGlobalCartCount();
   }
 
   calculateOrderTotal() {
     this.orderTotal = 0;
-    this.addedProducts.forEach((x) => {
-      this.orderTotal = this.orderTotal + x.count * x.price;
+    this.cartItems.forEach((x) => {
+      debugger;
+      this.orderTotal = this.orderTotal + x.quantity * x.price;
+      this.orderTotal = Number(this.orderTotal);
     });
   }
 
@@ -94,18 +99,41 @@ export class CartComponent implements OnInit, AfterViewInit {
   addMoreItem(item, str) {
     let index = this.addedProducts.findIndex((x) => x.id === item.id);
     if (str == 'minus') {
-      this.addedProducts[index].count = this.addedProducts[index].count - 1;
-      this.setItemsToLocalStorage();
-      if (this.addedProducts[index].count == 0) {
+      item.quantity = item.quantity - 1;
+      debugger;
+      // this.setItemsToLocalStorage();
+      if (item.quantity == 0) {
+        this.removeCartItem(item.productId);
         this.addedProducts.splice(index, 1);
         this.commonSection(item);
+      }else{
+        this.updateCartItem(item.productId, item.quantity);
       }
     } else {
-      this.addedProducts[index].count = this.addedProducts[index].count + 1;
-      this.setItemsToLocalStorage();
+      item.quantity = item.quantity + 1;
+      debugger;
+      this.updateCartItem(item.productId, item.quantity);
+      // this.setItemsToLocalStorage();
     }
     this.calculateOrderTotal();
     this.setGlobalCartCount();
+  }
+
+  updateCartItem(productId,quantity){
+    const apiRequest = {
+      data: {
+        productId: productId,
+        quantity: quantity
+      },
+    };
+    debugger;
+    this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
+      if (res && res.statusCode == 200) {
+        console.log(res);
+        this.getProductCart();
+        this.calculateOrderTotal();
+      }
+    });
   }
 
   confirmBeforeRemoval(item) {
@@ -117,9 +145,10 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   removeItemFromCart(item) {
+    debugger;
     let index = this.addedProducts.findIndex((x) => x.id === item.id);
-    this.addedProducts.splice(index, 1);
     this.removeCartItem(this.addedProducts[index].productId);
+    this.addedProducts.splice(index, 1);
     this.commonSection(item);
     this.calculateOrderTotal();
     this.setGlobalCartCount();
@@ -133,7 +162,9 @@ export class CartComponent implements OnInit, AfterViewInit {
             if (res && res.statusCode == 200) {
               this.toastrService.success('Cart Item Deleted Successfully.');
             }
+            this.getProductCart();
           });
+
   }
 
   commonSection(item) {

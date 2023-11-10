@@ -33,9 +33,9 @@ export class ShopComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
   ngOnInit() {
+    this.getAllProducts();
     this.getProductCart();
     this.generateCutForm();
-    this.getAllProducts();
     this.commonService.gotoTop();
   }
   generateCutForm() {
@@ -61,7 +61,7 @@ export class ShopComponent implements OnInit {
           console.log(res);
           this.productList = await this.formatRecords(res.allProductDetails);
           console.log(this.productList);
-          this.defaultSetting();
+          // this.defaultSetting();
           this.getProductCart();
         }
       },
@@ -81,6 +81,7 @@ export class ShopComponent implements OnInit {
   }
 
   navigateToProductDetail(product) {
+    
     this.router.navigate([`shop/product-details/${product.id}`]);
   }
 
@@ -101,7 +102,7 @@ export class ShopComponent implements OnInit {
         }
         this.setProductCart(this.selectedProduct);
         // localStorage.setItem('cart', JSON.stringify(this.productList));
-        this.setGlobalCartCount(this.cartItems);
+        // this.setGlobalCartCount(this.cartItems);
       } else {
         let arr = [];
         arr.push(this.selectedProduct);
@@ -133,9 +134,10 @@ export class ShopComponent implements OnInit {
     const apiRequest = {
       data: {
         productId: selectedProduct.id,
-        count: 1
+        quantity: 1
       },
     };
+    debugger;
     this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
       if (res && res.statusCode == 200) {
         console.log(res);
@@ -150,19 +152,22 @@ export class ShopComponent implements OnInit {
         if (res && res.statusCode == 200) {
           this.cartItems = res.allCartItemDetails;
           this.commonService.cartProductValue.emit(this.cartItems.length ?? 0);
-          this.updateAllProductListCount(this.cartItems);
+          this.updateProductListCount(this.cartItems);
         }
       },
       (error) => {}
     );
   }
-  updateAllProductListCount(data){
+  updateProductListCount(data){
   data.forEach((x)=>{
       // let index = this.productList.findIndex(p=> p.id == x.productId);
       // this.productList[index].count = x.quantity;
       this.productList.forEach((item)=>{
+        debugger;
         if(item.id == x.productId){
           item.count = x.quantity;
+        }else{
+          item.count = 0;
         }
       });
     })
