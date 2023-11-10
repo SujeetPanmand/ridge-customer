@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import {
+  AllBlogsDetailsList,
+  BlogsDetails,
+} from 'src/app/shared/interfaces/blog';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 
@@ -8,10 +13,11 @@ import { CommonService } from 'src/app/shared/services/common.service';
   styleUrls: ['./blog.component.scss'],
 })
 export class BlogComponent implements OnInit {
-  allBlogList = [];
+  allBlogList: AllBlogsDetailsList[] = [];
   constructor(
     private apiService: ApiService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.getAllBlogs();
@@ -21,26 +27,15 @@ export class BlogComponent implements OnInit {
   getAllBlogs() {
     this.apiService
       .request('GET_ALL_BLOGS', { params: { id: '' } })
-      .subscribe((res) => {
+      .subscribe((res: BlogsDetails) => {
         if (res) {
           console.log(res);
           this.allBlogList = res.allBlogsDetailsList;
         }
       });
   }
-  myFunction(event) {
-    var dots = event.target.previousElementSibling.querySelector('.dots');
-    var moreText = event.target.previousElementSibling.querySelector('.more');
-    var btnText = event.target;
-
-    if (dots.style.display === 'none') {
-      dots.style.display = 'inline';
-      btnText.innerHTML = 'Read more';
-      moreText.style.display = 'none';
-    } else {
-      dots.style.display = 'none';
-      btnText.innerHTML = 'Read less';
-      moreText.style.display = 'inline';
-    }
+  navigateToBlogView(blog: AllBlogsDetailsList) {
+    debugger;
+    this.router.navigate([`/blog/blog-details/${blog.id}`]);
   }
 }
