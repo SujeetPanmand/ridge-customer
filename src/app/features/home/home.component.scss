@@ -205,8 +205,12 @@
   height: 500px;
 }
 
+.h-60 {
+  height: 60px;
+}
+
 @media (max-width: 767.98px) {
   .height {
-    height: auto;
+    height: 230px;
   }
 }

@@ -1,10 +1,10 @@
 <div
-  class="tab-pane fade active rounded bg-white show p-5"
+  class="tab-pane fade active rounded bg-white show p-md-5 p-3"
   id="my-account"
   role="tabpanel"
   aria-labelledby="myAccount"
 >
-  <div class="row justify-content-center">
+  <div class="row justify-content-center flex-column-reverse flex-md-row">
     <div class="col-md-10">
       <app-bread-crumb [links]="links"></app-bread-crumb>
       <h2 class="fw-bold sub-title pt-2">My Account</h2>
@@ -97,9 +97,7 @@
         </form>
       </div>
     </div>
-    <div class="col-md-2">
-      <div class="row p-3">
-        <div class="col-md-3 text-center mt-5">
+    <div class="col-md-2 d-flex justify-content-center mb-2">
           <div class="position-relative d-inline-block">
             <img
               class="user-profile-pic"
@@ -120,7 +118,5 @@
             (change)="onSelectFile($event)"
           />
         </div>
-      </div>
-    </div>
   </div>
 </div>
