@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { shopLinks } from './shop.config';
 import { environment } from 'src/environments/environment';
+import { AllCartItemDetail, AllCartItemDetails } from 'src/app/shared/interfaces/all-cart-item-details';
 
 @Component({
   selector: 'app-shop',
@@ -19,6 +20,8 @@ export class ShopComponent implements OnInit {
   selectedProduct;
   isPreOrder = false;
   cutForm: FormGroup;
+  allCartItemDetails: AllCartItemDetails[];
+  cartItems: AllCartItemDetail[]=[]; 
   url = '';
   productPicUrl = '';
   links: BreadCrumbLinks[] = shopLinks;
@@ -30,8 +33,9 @@ export class ShopComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
   ngOnInit() {
-    this.generateCutForm();
     this.getAllProducts();
+    this.getProductCart();
+    this.generateCutForm();
     this.commonService.gotoTop();
   }
   generateCutForm() {
@@ -44,10 +48,10 @@ export class ShopComponent implements OnInit {
     let list = JSON.parse(localStorage.getItem('cart'))
       ? JSON.parse(localStorage.getItem('cart'))
       : [];
-    list.forEach((x) => {
-      this.productList.find((item) => item.id == x.id).count = x.count;
+      this.cartItems.forEach((x) => {
+      this.productList.find((item) => item.id == x.productId).count = x.quantity;
     });
-    this.setGlobalCartCount(list);
+    this.setGlobalCartCount(this.cartItems);
   }
 
   async getAllProducts() {
@@ -57,7 +61,8 @@ export class ShopComponent implements OnInit {
           console.log(res);
           this.productList = await this.formatRecords(res.allProductDetails);
           console.log(this.productList);
-          this.defaultSetting();
+          // this.defaultSetting();
+          this.getProductCart();
         }
       },
       (error) => {
@@ -76,26 +81,28 @@ export class ShopComponent implements OnInit {
   }
 
   navigateToProductDetail(product) {
+    
     this.router.navigate([`shop/product-details/${product.id}`]);
   }
 
   addProductToCart() {
     if (this.cutForm.controls['searchCheckOption'].value === 'standard') {
       if (!this.selectedProduct.outOfStock) {
-        if (this.productList.length == 0) {
-          this.productList.push(this.selectedProduct);
+        if (this.cartItems.length == 0) {
+          this.cartItems.push(this.selectedProduct);
         } else {
-          const index = this.productList.findIndex(
-            (x) => x.id == this.selectedProduct.id
+          const index = this.cartItems.findIndex(
+            (x) => x.productId == this.selectedProduct.id
           );
           if (index >= 0) {
-            this.productList[index].count = this.productList[index].count + 1;
+            this.cartItems[index].quantity = this.cartItems[index].quantity + 1;
           } else {
-            this.productList.push(this.selectedProduct);
+            this.cartItems.push(this.selectedProduct);
           }
         }
-        localStorage.setItem('cart', JSON.stringify(this.productList));
-        this.setGlobalCartCount(this.productList);
+        this.setProductCart(this.selectedProduct);
+        // localStorage.setItem('cart', JSON.stringify(this.productList));
+        // this.setGlobalCartCount(this.cartItems);
       } else {
         let arr = [];
         arr.push(this.selectedProduct);
@@ -123,10 +130,54 @@ export class ShopComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
+  setProductCart(selectedProduct:any){
+    const apiRequest = {
+      data: {
+        productId: selectedProduct.id,
+        quantity: 1
+      },
+    };
+    debugger;
+    this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
+      if (res && res.statusCode == 200) {
+        console.log(res);
+        this.getProductCart();
+      }
+    });
+  }
+  
+  getProductCart(){
+    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+      (res) => {
+        if (res && res.statusCode == 200) {
+          this.cartItems = res.allCartItemDetails;
+          this.commonService.cartProductValue.emit(this.cartItems.length ?? 0);
+          this.updateProductListCount(this.cartItems);
+        }
+      },
+      (error) => {}
+    );
+  }
+  updateProductListCount(data){
+  data.forEach((x)=>{
+      // let index = this.productList.findIndex(p=> p.id == x.productId);
+      // this.productList[index].count = x.quantity;
+      this.productList.forEach((item)=>{
+        debugger;
+        if(item.id == x.productId){
+          item.count = x.quantity;
+        }else{
+          item.count = 0;
+        }
+      });
+    })
+    console.log(this.productList);
+  }
+
   setGlobalCartCount(data) {
     let count = 0;
     data.forEach((x) => {
-      count = count + x.count;
+      count = count + x.quantity;
     });
     this.commonService.addProducts(count);
   }

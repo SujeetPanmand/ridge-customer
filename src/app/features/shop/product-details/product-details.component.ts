@@ -19,6 +19,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ProductDetailsComponent implements OnInit, AfterViewInit {
   selctedProduct;
+  selectedProduct;
   addMultipe: number = 0;
   reletedProductsList = [];
   allProductReviews: Rating[] = [];
@@ -38,7 +39,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   ];
   isShowWriteReviewbtn = false;
   sortkey = 'recent';
-
   reviewForm: FormGroup;
   formSubmitAttempt = false;
   links: BreadCrumbLinks[] = prductDetailLinks;
@@ -46,6 +46,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   selectedReview: Rating;
   profilePicture = 'assets/em_user.png';
   productPicUrl = '';
+  cutForm: FormGroup;
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
@@ -62,8 +63,9 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.getProductCart();
     this.getProductDetails();
-    this.defaultSetting();
+    // this.defaultSetting();
     this.getReviewInfo();
     this.generateReviewForm();
     this.commonService.gotoTop();
@@ -76,18 +78,31 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getProductCart(){
+    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+      (res) => {
+        if (res && res.statusCode == 200) {
+          this.addedProducts = res.allCartItemDetails;
+          // console.log(this.cartItems);
+          this.defaultSetting()
+        }
+      },
+      (error) => {}
+
+    );
+  }
+
   defaultSetting() {
     this.loginUserId = localStorage.getItem('userId')
       ? localStorage.getItem('userId')
       : '';
-    this.addedProducts = JSON.parse(localStorage.getItem('cart'))
-      ? JSON.parse(localStorage.getItem('cart'))
-      : [];
-
+    // this.addedProducts = JSON.parse(localStorage.getItem('cart'))
+    //   ? JSON.parse(localStorage.getItem('cart'))
+    //   : [];
     let index = this.addedProducts.findIndex(
-      (x) => x.id == this.route.snapshot.params['productId']
+      (x) => x.productId == this.route.snapshot.params['productId']
     );
-    this.addMultipe = index >= 0 ? this.addedProducts[index].count : 0;
+    this.addMultipe = index >= 0 ? this.addedProducts[index].quantity : 0;
     this.setGlobalCartCount(this.addedProducts);
   }
 
@@ -99,25 +114,112 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       .subscribe((res) => {
         if (res) {
           this.selctedProduct = res.productDetails;
+          debugger;
+          if(this.addedProducts.length > 0){
+           
+            this.selctedProduct.forEach((area=>{
+              if(this.addedProducts['productId'] == this.selctedProduct.id){
+                this.selctedProduct.count = this.addedProducts['quantity'];
+              }
+            }))
+          }else{
+            this.selctedProduct.count = 0;
+          }
+          console.log(this.selctedProduct);
         }
       });
   }
 
-  addMoreToCart(flag) {
-    this.addMultipe = flag ? this.addMultipe + 1 : this.addMultipe - 1;
-    let index = this.addedProducts.findIndex(
-      (x) => x.id == this.route.snapshot.params['productId']
-    );
-    if (index >= 0) {
-      this.addedProducts[index].count = this.addMultipe;
-    } else {
-      this.selctedProduct['count'] = 1;
-      this.addedProducts.push(this.selctedProduct);
+  addMoreToCart(flag,selectedProduct) {
+    let currentSelectedProduct = this.addedProducts.find(area=> area.productId == selectedProduct.id);
+    if(currentSelectedProduct){
+      currentSelectedProduct.quantity = flag ? currentSelectedProduct.quantity + 1 : currentSelectedProduct.quantity - 1;
+      if(currentSelectedProduct.quantity >= 0){
+        this.updateItemCartQuantity(currentSelectedProduct.quantity,currentSelectedProduct.productId);
+      }
+    }else{
+      
     }
+    // let index = this.addedProducts.findIndex(
+    //   (x) => x.id == this.route.snapshot.params['productId']
+    // );
+    // if (index >= 0) {
+    //   this.updateItemCartQuantity(this.addMultipe,selectedProduct);
+    // } else {
+    //   this.selctedProduct['count'] = 1;
+    //   this.addedProducts.push(this.selctedProduct);
+    // }
 
-    console.log(this.addedProducts);
-    localStorage.setItem('cart', JSON.stringify(this.addedProducts));
+    // console.log(this.addedProducts);
+    // localStorage.setItem('cart', JSON.stringify(this.addedProducts));
     this.setGlobalCartCount(this.addedProducts);
+  }
+
+  selectCut(event, content, product){
+    event.stopPropagation();
+    this.selectedProduct = product;
+    this.modalService.open(content, { size: 'lg', centered: true });
+  }
+
+  updateItemCartQuantity(quantity,productId){
+    const apiRequest = {
+      data: {
+        productId: productId,
+        quantity: quantity
+      },
+    };
+    this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
+      if (res && res.statusCode == 200) {
+        console.log(res);
+        this.getProductCart();
+      }
+    });
+
+  }
+
+  addProductToCart() {
+    // if (this.cutForm.controls['searchCheckOption'].value === 'standard') {
+    //   if (!this.selectedProduct.outOfStock) {
+    //     if (this.cartItems.length == 0) {
+    //       this.cartItems.push(this.selectedProduct);
+    //     } else {
+    //       const index = this.cartItems.findIndex(
+    //         (x) => x.productId == this.selectedProduct.id
+    //       );
+    //       if (index >= 0) {
+    //         this.cartItems[index].quantity = this.cartItems[index].quantity + 1;
+    //       } else {
+    //         this.cartItems.push(this.selectedProduct);
+    //       }
+    //     }
+    //     this.setProductCart(this.selectedProduct);
+    //     // localStorage.setItem('cart', JSON.stringify(this.productList));
+    //     // this.setGlobalCartCount(this.cartItems);
+    //   } else {
+    //     let arr = [];
+    //     arr.push(this.selectedProduct);
+    //     arr = arr.map((x) => {
+    //       return {
+    //         ...x,
+    //         count: 1,
+    //       };
+    //     });
+    //     localStorage.setItem('directOrderProduct', JSON.stringify(arr));
+    //     this.router.navigateByUrl('shop/checkout?isStandardCut=false');
+    //   }
+    // } else {
+    //   let arr = [];
+    //   arr.push(this.selectedProduct);
+    //   arr = arr.map((x) => {
+    //     return {
+    //       ...x,
+    //       count: 1,
+    //     };
+    //   });
+    //   localStorage.setItem('directOrderProduct', JSON.stringify(arr));
+    //   this.router.navigateByUrl('shop/checkout?isStandardCut=false');
+    // }
+    // this.modalService.dismissAll();
   }
 
   setGlobalCartCount(addedProducts) {
