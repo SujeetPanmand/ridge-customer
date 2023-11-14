@@ -101,7 +101,7 @@ export class ShopComponent implements OnInit {
           }
         }
         this.setProductCart(this.selectedProduct);
-        // localStorage.setItem('cart', JSON.stringify(this.productList));
+        localStorage.setItem('cart', JSON.stringify(this.productList));
         // this.setGlobalCartCount(this.cartItems);
       } else {
         let arr = [];

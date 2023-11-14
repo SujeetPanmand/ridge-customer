@@ -56,6 +56,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.commonService.gotoTop();
+    this.getCartItems();
     this.defaultSetting();
     this.generateUserDetailsForm();
     this.patchUserDetailsForm();
@@ -68,35 +70,69 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.links[2].link = `/shop/checkout?${substr}`;
   }
 
-  defaultSetting() {
-    localStorage.setItem('orderDate', '');
-    localStorage.setItem('orderSlot', '');
-    localStorage.setItem('selfPickUp', '0');
-    let list = [];
-    if (this.isStandardCut) {
-      list = JSON.parse(localStorage.getItem('cart'))
-        ? JSON.parse(localStorage.getItem('cart'))
-        : [];
-    } else {
-      list = JSON.parse(localStorage.getItem('directOrderProduct'))
-        ? JSON.parse(localStorage.getItem('directOrderProduct'))
-        : [];
-    }
+  getCartItems(){
+    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+      (res) => {
+        if (res && res.statusCode == 200) {
+          debugger;
+          if (this.isStandardCut) {
+          this.finalOrderProducts = res.allCartItemDetails;
+          this.finalOrderProducts.forEach((x) => {
+            this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+          });
+          this.orderTotal =
+          this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+        }else{
+              let standardList = JSON.parse(localStorage.getItem('directOrderProduct'))
+                ? JSON.parse(localStorage.getItem('directOrderProduct'))
+                : [];
+                standardList.forEach((item)=>{
+                  item.quantity = item.count;
+                  item.productId = item.id;
+                  item.productName = item.name;
+                })
+                this.finalOrderProducts = standardList;    
+                this.finalOrderProducts.forEach((x) => {
+                  this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+                });
+                this.orderTotal =
+                this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+        }
+          // this.addedProducts = this.cartItems;
+          // this.commonService.cartProductValue.emit(this.cartItems.length ?? 0);
+          // this.calculateOrderTotal();
+        }
+      },
+      (error) => {}
+    );
+  }
 
-    this.finalOrderProducts = list.filter((x) => x.count !== 0);
-    this.finalOrderProducts.forEach((x) => {
-      this.orderSubTotal = this.orderSubTotal + x.price * x.count;
-    });
-    this.orderTotal =
-      this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-    if (this.isStandardCut) {
-      this.setGlobalCartCount(list);
-    } else {
-      let standardList = JSON.parse(localStorage.getItem('cart'))
-        ? JSON.parse(localStorage.getItem('cart'))
-        : [];
-      this.setGlobalCartCount(standardList);
-    }
+  defaultSetting() {
+    // localStorage.setItem('orderDate', '');
+    // localStorage.setItem('orderSlot', '');
+    // localStorage.setItem('selfPickUp', '0');
+    // let list = [];
+    // if (this.isStandardCut) {
+    //   list = JSON.parse(localStorage.getItem('cart'))
+    //     ? JSON.parse(localStorage.getItem('cart'))
+    //     : [];
+    // } else {
+    //   list = JSON.parse(localStorage.getItem('directOrderProduct'))
+    //     ? JSON.parse(localStorage.getItem('directOrderProduct'))
+    //     : [];
+    // }
+
+    // this.finalOrderProducts = list.filter((x) => x.count !== 0);
+   
+    
+    // if (this.isStandardCut) {
+    //   this.setGlobalCartCount(list);
+    // } else {
+    //   let standardList = JSON.parse(localStorage.getItem('cart'))
+    //     ? JSON.parse(localStorage.getItem('cart'))
+    //     : [];
+    //   this.setGlobalCartCount(standardList);
+    // }
   }
 
   setGlobalCartCount(addedProducts) {
@@ -150,6 +186,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   async patchUserDetailsForm() {
     await this.commonService.getUserDetails().then((res) => {
       this.userDetails = res;
+      debugger;
       console.log('___', this.userDetails);
     });
     this.userDetailsForm.patchValue({
@@ -157,7 +194,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       lastName: this.userDetails.userDetails.lastName,
       email: this.userDetails.userDetails.email,
       phone: this.userDetails.userDetails.phoneNumber,
-      address: this.userDetails.userDetails.addressList[0].addressLine,
+      address: this.userDetails.userDetails.addressList[0]['address1'],
+      address2: this.userDetails.userDetails.addressList[0]['address2'],
       city: this.userDetails.userDetails.addressList[0].city,
       country: this.userDetails.userDetails.addressList[0].country,
       zip: this.userDetails.userDetails.addressList[0].postalCode,
