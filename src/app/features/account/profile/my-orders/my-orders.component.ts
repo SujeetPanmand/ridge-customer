@@ -58,6 +58,7 @@ export class MyOrdersComponent implements OnInit {
       (res) => {
         console.log(res);
         if (res && res.statusCode == 200) {
+          debugger;
           this.orderDetails = res.allUserOrdersDetails;
         }
       },
