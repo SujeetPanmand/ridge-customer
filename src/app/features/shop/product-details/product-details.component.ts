@@ -156,7 +156,10 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
         if (res && res.statusCode == 200) {
           this.addedProducts = res.allCartItemDetails;
           // console.log(this.cartItems);
+          this.commonService.cartProductValue.emit(this.addedProducts.length ?? 0);
           this.defaultSetting()
+          this.getProductDetails();
+          
         }
       },
       (error) => {}
@@ -186,14 +189,14 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       .subscribe((res) => {
         if (res) {
           this.selctedProduct = res.productDetails;
-          debugger;
           if(this.addedProducts.length > 0){
-           
-            this.selctedProduct.forEach((area=>{
-              if(this.addedProducts['productId'] == this.selctedProduct.id){
-                this.selctedProduct.count = this.addedProducts['quantity'];
+            this.addedProducts.forEach((area=>{
+              if(area.productId == this.selctedProduct.id){
+                this.selctedProduct.count = area.quantity;
+              }else{
+                this.selctedProduct.count = 0;
               }
-            }))
+            }));
           }else{
             this.selctedProduct.count = 0;
           }
@@ -230,12 +233,10 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
 
   removeCartItem(productId){
-    debugger;
     this.apiService
           .request('DELETE_CART_ITEMS', { params: { id: productId } })
           .subscribe((res) => {
             if (res && res.statusCode == 200) {
-              location.reload();
               this.toastrService.success('Cart Item Deleted Successfully.');
             }
             this.getProductCart();
