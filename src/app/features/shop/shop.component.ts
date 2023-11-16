@@ -9,6 +9,7 @@ import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { shopLinks } from './shop.config';
 import { environment } from 'src/environments/environment';
 import { AllCartItemDetail, AllCartItemDetails } from 'src/app/shared/interfaces/all-cart-item-details';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-shop',
@@ -30,7 +31,8 @@ export class ShopComponent implements OnInit {
     private router: Router,
     private commonService: CommonService,
     private modalService: NgbModal,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastrService: ToastrService,
   ) {}
   ngOnInit() {
     this.getAllProducts();
@@ -197,4 +199,41 @@ export class ShopComponent implements OnInit {
       : 'assets/product/wholeBeef.png';
     return this.productPicUrl;
   }
+
+  addMoreToCart(flag,selectedProduct) {
+    selectedProduct.count = flag ? selectedProduct.count + 1 : selectedProduct.count - 1;
+      if(selectedProduct.count > 0){
+        this.updateItemCartQuantity(selectedProduct.count,selectedProduct.id);
+      }else if(selectedProduct.count == 0){
+        this.removeCartItem(selectedProduct.id);
+      }
+    }
+
+    updateItemCartQuantity(quantity,productId){
+      const apiRequest = {
+        data: {
+          productId: productId,
+          quantity: quantity
+        },
+      };
+      this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
+        if (res && res.statusCode == 200) {
+          console.log(res);
+          this.getProductCart();
+        }
+      });
+    }
+
+    removeCartItem(productId){
+      this.apiService
+            .request('DELETE_CART_ITEMS', { params: { id: productId } })
+            .subscribe((res) => {
+              if (res && res.statusCode == 200) {
+                this.toastrService.success('Cart Item removed Successfully.');
+              }
+              this.getProductCart();
+              
+            });
+  
+    }
 }

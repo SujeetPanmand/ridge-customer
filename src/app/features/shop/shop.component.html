@@ -119,10 +119,10 @@
               </div>
               <div class="row gy-4 py-5">
                 <div *ngFor="let product of productList" class="col-md-4 col-xl-3 cursor">
-                  <a (click)="navigateToProductDetail(product)" class="text-decoration-none">
+                  <!-- <a class="text-decoration-none"> -->
                     <div [ngClass]="{ 'card-recipes': product.outOfStock }" class="card rounded-4">
                       <div *ngIf="product.outOfStock" class="content-overlay"></div>
-                      <img [src]="setProductPic(product.id)" height="200px" alt="" />
+                      <img (click)="navigateToProductDetail(product)"  [src]="setProductPic(product.id)" height="200px" alt="" />
                       <div *ngIf="product.outOfStock" class="content-details fadeIn-top">
                         <h4 class="text-light">Out of stock</h4>
                         <button type="button" class="btn text-light rounded-0 mt-2 button-orange py-2" (click)="
@@ -136,9 +136,7 @@
                           {{ product.name }}
                         </h5>
 
-                        <div (click)="
-                              selectCut($event, selectCutTemplate, product)
-                            " class="d-flex text-orange align-items-center justify-content-around">
+                        <div class="d-flex text-orange align-items-center justify-content-around">
                           <div class="card-text fw-bold text-black">${{ product.price }}</div>
                           <div class="vr mx-2"></div>
                           <div class="d-flex">
@@ -146,18 +144,20 @@
                             <div class="notification badge-danger rounded-circle">
                               {{ product.count }}
                             </div>
-                            <div *ngIf="product.count === 0" class="mx-2"> Add</div>
+                            <div (click)="
+                            selectCut($event, selectCutTemplate, product)
+                          " *ngIf="product.count === 0" class="mx-2"> Add</div>
                           </div>
                           <div *ngIf="product.count !== 0" style="width: 36%!important;"
                             class="number d-flex justify-content-evenly align-items-center bg-pink">
-                            <span class="minus cursor">-</span>
-                            <input type="text" class="count w-50 text-center border-0" value="10" disabled />
-                            <span class="plus cursor">+</span>
+                            <span class="minus cursor" (click)="addMoreToCart(false,product)">-</span>
+                            <input type="text" class="count w-50 text-center border-0" value={{product.count}} disabled />
+                            <span class="plus cursor" (click)="addMoreToCart(true,product)">+</span>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </a>
+                  <!-- </a> -->
                 </div>
               </div>
             </div>
