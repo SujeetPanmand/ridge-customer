@@ -1,13 +1,13 @@
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 
 export const dayList = [
-  { key: 0, day: 'sunday' },
-  { key: 1, day: 'monday' },
-  { key: 2, day: 'tuesday' },
-  { key: 3, day: 'wednesday' },
-  { key: 4, day: 'thursday' },
-  { key: 5, day: 'friday' },
-  { key: 6, day: 'saturday' },
+  { key: 1, day: 'sunday' },
+  { key: 2, day: 'monday' },
+  { key: 3, day: 'tuesday' },
+  { key: 4, day: 'wednesday' },
+  { key: 5, day: 'thursday' },
+  { key: 6, day: 'friday' },
+  { key: 7, day: 'saturday' },
 ];
 
 export const shopLinks: BreadCrumbLinks[] = [
