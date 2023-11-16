@@ -9,6 +9,7 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { environment } from 'src/environments/environment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-checkout',
@@ -42,7 +43,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private datePipe: DatePipe,
     private apiService: ApiService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private modalService: NgbModal,
   ) {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
@@ -70,11 +72,14 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.links[2].link = `/shop/checkout?${substr}`;
   }
 
+  showPageExitAlert(){
+    this.modalService.open("", { size: 'lg', centered: true });
+  }
+
   getCartItems(){
     this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
       (res) => {
         if (res && res.statusCode == 200) {
-          debugger;
           if (this.isStandardCut) {
           this.finalOrderProducts = res.allCartItemDetails;
           this.finalOrderProducts.forEach((x) => {
@@ -106,7 +111,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       (error) => {}
     );
   }
-
   defaultSetting() {
     // localStorage.setItem('orderDate', '');
     // localStorage.setItem('orderSlot', '');
@@ -186,7 +190,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   async patchUserDetailsForm() {
     await this.commonService.getUserDetails().then((res) => {
       this.userDetails = res;
-      debugger;
       console.log('___', this.userDetails);
     });
     this.userDetailsForm.patchValue({
