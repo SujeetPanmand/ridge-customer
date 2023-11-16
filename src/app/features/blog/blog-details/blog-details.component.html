@@ -111,11 +111,11 @@
               </div>
             </div>
 
-            <div class="pt-4 comment">Comments</div>
+            <div class="py-4 comment">Comments</div>
             <div style="height: 60vh; overflow-y: auto; overflow-x: hidden">
               <div
                 *ngFor="let comment of comments"
-                class="d-flex flex-column flex-md-row text-center text-md-start pb-3"
+                class="d-flex pb-3"
               >
                 <div class="flex-shrink-0 mb-3">
                   <img
@@ -132,18 +132,17 @@
                     {{ comment?.message }}
                   </p>
                   <div class="row">
-                    <div class="col-md-2"></div>
                     <div class="col-md-8">
                       <div
                         *ngFor="let reply of comment.replies"
-                        class="d-flex flex-column flex-md-row text-center text-md-start pb-3"
+                        class="d-flex  pb-3"
                       >
-                        <div class="flex-shrink-0 mb-3">
+                        <!-- <div class="flex-shrink-0 mb-3">
                           <img
                             class="img-fluid border rounded-circle profileImg"
                             [src]="setProfilePic(reply?.replier?.id)"
                           />
-                        </div>
+                        </div> -->
                         <div class="flex-grow-1 ms-3">
                           <div class="d-flex flex-column flex-md-row">
                             <div class="h5 fw-bold">
