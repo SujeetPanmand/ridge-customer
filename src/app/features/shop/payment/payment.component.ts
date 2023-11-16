@@ -48,6 +48,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.defaultSetting();
   }
+
   defaultSetting() {
     this.isSelfPickUp =
       localStorage.getItem('selfPickUp') == '0' || null ? false : true;
@@ -94,6 +95,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     });
     this.commonService.addProducts(count);
   }
+
   onRedirectToOrderConfirm() {
     this.router.navigateByUrl(
       `shop/order-confirmation?isStandardCut=${
@@ -101,11 +103,15 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       }`
     );
   }
+
   goBack() {
     this.router.navigateByUrl(
-      `shop/checkout?isStandardCut=${this.isStandardCut ? 'true' : 'false'}`
+      `shop/checkout?isStandardCut=${
+        this.isStandardCut ? 'true' : 'false'
+      }&isEdit=true`
     );
   }
+
   setProductPic(id) {
     let date = new Date().getTime();
     this.productPicUrl = '';

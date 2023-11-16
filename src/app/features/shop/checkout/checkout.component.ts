@@ -35,6 +35,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   singleSlot = '';
   links: BreadCrumbLinks[] = checkoutLinks;
   productPicUrl = '';
+  returnFromEditDate = '';
 
   constructor(
     public commonService: CommonService,
@@ -63,6 +64,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.defaultSetting();
     this.generateUserDetailsForm();
     this.patchUserDetailsForm();
+    if (this.router.url.includes('isEdit')) {
+      this.returnFromPaymentSetData();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -117,7 +121,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   defaultSetting() {
     // localStorage.setItem('orderDate', '');
     // localStorage.setItem('orderSlot', '');
-    localStorage.setItem('selfPickUp', '0');
+    // localStorage.setItem('selfPickUp', '0');
     // let list = [];
     // if (this.isStandardCut) {
     //   list = JSON.parse(localStorage.getItem('cart'))
@@ -155,6 +159,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   async onRedirectToPayment() {
+    localStorage.setItem('orderSlot', JSON.stringify(this.singleSlot));
+    localStorage.setItem('slotId', JSON.stringify(this.singleSlotId));
     if (!this.singleSlotId) {
       this.toastrService.error('Please choose date and time slot.');
       return;
@@ -212,7 +218,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   getCurrentDay() {
     this.singleSlotId = '';
-    var today = new Date(this.selectedDate).getDay() + 1;
+    let date = this.router.url.includes('isEdit')
+      ? this.returnFromEditDate
+      : this.selectedDate;
+    var today = new Date(date).getDay() + 1;
     this.dayList.forEach((x) => {
       if (x.key == today) this.selectedDay = x.key;
     });
@@ -239,6 +248,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
             : this.toastrService.error(
                 'There are no available slots for selected day.'
               );
+          if (this.router.url.includes('isEdit')) {
+            this.singleSlotId = JSON.parse(localStorage.getItem('slotId'));
+          }
         }
       });
   }
@@ -258,7 +270,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       ': ' +
       element[0].endTimeMinut +
       element[0].endTimeUnit;
-    localStorage.setItem('orderSlot', JSON.stringify(this.singleSlot));
   }
 
   setProductPic(id) {
@@ -269,5 +280,16 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       ? url + '?' + date
       : 'assets/product/wholeBeef.png';
     return this.productPicUrl;
+  }
+
+  async returnFromPaymentSetData() {
+    let item = localStorage.getItem('selfPickUp');
+    this.isSelfPickUp = item == '0' ? false : true;
+    this.selectedDate = await this.datePipe.transform(
+      new Date(JSON.parse(localStorage.getItem('orderDate'))),
+      'yyyy-MM-dd'
+    );
+    this.returnFromEditDate = JSON.parse(localStorage.getItem('orderDate'));
+    this.getCurrentDay();
   }
 }
