@@ -153,7 +153,7 @@ export class CartComponent implements OnInit, AfterViewInit {
           .request('DELETE_CART_ITEMS', { params: { id: productId } })
           .subscribe((res) => {
             if (res && res.statusCode == 200) {
-              this.toastrService.success('Cart Item Deleted Successfully.');
+              this.toastrService.success('Cart Item removed Successfully.');
             }
             this.getProductCart();
           });
