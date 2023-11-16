@@ -137,7 +137,6 @@ export class ShopComponent implements OnInit {
         quantity: 1
       },
     };
-    debugger;
     this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
       if (res && res.statusCode == 200) {
         console.log(res);
@@ -163,11 +162,8 @@ export class ShopComponent implements OnInit {
       // let index = this.productList.findIndex(p=> p.id == x.productId);
       // this.productList[index].count = x.quantity;
       this.productList.forEach((item)=>{
-        debugger;
         if(item.id == x.productId){
           item.count = x.quantity;
-        }else{
-          item.count = 0;
         }
       });
     })
