@@ -51,6 +51,17 @@
                   <table class="table table-borderless my-2">
                     <thead>
                       <div class="pb-3">
+                        <div class="text-danger" *ngIf="order.cutType === '2'">
+                            <label for="">If you haven not filled the Google sheet for custom cut details please fill it here &nbsp;</label>
+                            <a
+                              class="text-orange fw-bold"
+                              href="https://docs.google.com/forms/d/e/1FAIpQLSdOuwOSuawMOIri4gf9XD_IfK-jwB26HdyNlqBpRTafemwYQA/viewform?vc=0&c=0&w=1&flr=0"
+                              target="_blank"
+                            >
+                            Google Form
+                          </a>
+                          
+                        </div>
                         <div class="fw-bold">
                           {{
                             order.isSelfPickup ? "Pickup from" : "Delivery to"

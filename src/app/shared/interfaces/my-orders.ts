@@ -22,6 +22,7 @@ export interface MyOrders {
     lastName?:string;
     emailAddress?:string;
     company?:string;
+    cutType?:string;
 }
 export interface UserOrder{
     id?:string;

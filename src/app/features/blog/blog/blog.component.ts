@@ -35,7 +35,6 @@ export class BlogComponent implements OnInit {
       });
   }
   navigateToBlogView(blog: AllBlogsDetailsList) {
-    debugger;
     this.router.navigate([`/blog/blog-details/${blog.id}`]);
   }
 }

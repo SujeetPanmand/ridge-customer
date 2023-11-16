@@ -186,7 +186,7 @@
                             >
                               {{ product.count }}
                             </div>
-                            <span class="mx-2"> {{ product.count == 0 ? "Add" : "" }}</span>
+                            <span class="mx-2"> Add</span>
                           </div>
                         </div>
                       </div>
@@ -232,6 +232,9 @@
           />
           <label class="form-check-label" for="custom">Custom Cut</label>
         </div>
+      </div>
+      <div *ngIf="cutForm.controls['searchCheckOption'].value === 'custom' ">
+        <label class="small text-danger form-check-label"> Note: For the custom cut, you will have to make advance payment, and fill up the Google sheet of custom cut details, which will be available on order confirmation page. </label>
       </div>
     </form>
 

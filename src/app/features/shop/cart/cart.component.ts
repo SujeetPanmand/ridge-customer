@@ -64,7 +64,6 @@ export class CartComponent implements OnInit, AfterViewInit {
     this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
       (res) => {
         if (res && res.statusCode == 200) {
-          debugger;
           this.cartItems = res.allCartItemDetails;
           this.addedProducts = this.cartItems;
           this.commonService.cartProductValue.emit(this.cartItems.length ?? 0);
@@ -87,7 +86,6 @@ export class CartComponent implements OnInit, AfterViewInit {
   calculateOrderTotal() {
     this.orderTotal = 0;
     this.cartItems.forEach((x) => {
-      debugger;
       this.orderTotal = this.orderTotal + x.quantity * x.price;
       this.orderTotal = Number(this.orderTotal);
     });
@@ -100,7 +98,6 @@ export class CartComponent implements OnInit, AfterViewInit {
     let index = this.addedProducts.findIndex((x) => x.id === item.id);
     if (str == 'minus') {
       item.quantity = item.quantity - 1;
-      debugger;
       // this.setItemsToLocalStorage();
       if (item.quantity == 0) {
         this.removeCartItem(item.productId);
@@ -111,7 +108,6 @@ export class CartComponent implements OnInit, AfterViewInit {
       }
     } else {
       item.quantity = item.quantity + 1;
-      debugger;
       this.updateCartItem(item.productId, item.quantity);
       // this.setItemsToLocalStorage();
     }
@@ -126,7 +122,6 @@ export class CartComponent implements OnInit, AfterViewInit {
         quantity: quantity
       },
     };
-    debugger;
     this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
       if (res && res.statusCode == 200) {
         console.log(res);
@@ -145,7 +140,6 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   removeItemFromCart(item) {
-    debugger;
     let index = this.addedProducts.findIndex((x) => x.id === item.id);
     this.removeCartItem(this.addedProducts[index].productId);
     this.addedProducts.splice(index, 1);
@@ -155,7 +149,6 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   removeCartItem(productId){
-    debugger;
     this.apiService
           .request('DELETE_CART_ITEMS', { params: { id: productId } })
           .subscribe((res) => {
