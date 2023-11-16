@@ -267,7 +267,9 @@
                         </div>
                       </div>
                     </div>
-                    <div class="pe-2">{{ product.quantity * product.price }}</div>
+                    <div class="pe-2">
+                      {{ product.quantity * product.price }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -326,7 +328,10 @@
                 >
                   <option value="">Select Slot</option>
                   <option *ngFor="let item of allSlots" [value]="item.id">
-                    {{ item.startTime }}&nbsp;To&nbsp;{{ item.endTime }}
+                    {{ item.startTimeHour }}:{{ item.startTimeMinut
+                    }}{{ item.startTimeUnit }} To {{ item.endTimeHour }}:{{
+                      item.endTimeMinut
+                    }}{{ item.endTimeUnit }}
                   </option>
                 </select>
               </div>

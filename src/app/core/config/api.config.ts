@@ -142,11 +142,16 @@ const accountEndPoints = [
     url: environment.baseUrl + '/api/zipcodes/[zipcode]',
   },
 ];
-const paymentEndPoints = [
+const slotEndPoints = [
   {
-    name: 'GET_SLOTS',
+    name: 'GET_DELIVERY_SLOTS',
     method: 'GET',
     url: environment.baseUrl + '/api/slot/get-slot',
+  },
+  {
+    name: 'GET_PICKUP_SLOTS',
+    method: 'GET',
+    url: environment.baseUrl + '/api/pickup-slot/get',
   },
 ];
 
@@ -166,7 +171,7 @@ export const ApiConfig = {
     ...contactEndPoints,
     ...blogEndPoint,
     ...accountEndPoints,
-    ...paymentEndPoints,
+    ...slotEndPoints,
     ...homeEndPoints,
   ],
 };

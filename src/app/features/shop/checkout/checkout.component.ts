@@ -28,7 +28,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   userDetails: User;
   todayDate = '';
   selectedDate = '';
-  selectedDay = '';
+  selectedDay: number;
   dayList = dayList;
   allSlots = [];
   singleSlotId = '';
@@ -44,7 +44,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     private datePipe: DatePipe,
     private apiService: ApiService,
     private toastrService: ToastrService,
-    private modalService: NgbModal,
+    private modalService: NgbModal
   ) {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
@@ -72,37 +72,39 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.links[2].link = `/shop/checkout?${substr}`;
   }
 
-  showPageExitAlert(){
-    this.modalService.open("", { size: 'lg', centered: true });
+  showPageExitAlert() {
+    this.modalService.open('', { size: 'lg', centered: true });
   }
 
-  getCartItems(){
+  getCartItems() {
     this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
       (res) => {
         if (res && res.statusCode == 200) {
           if (this.isStandardCut) {
-          this.finalOrderProducts = res.allCartItemDetails;
-          this.finalOrderProducts.forEach((x) => {
-            this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
-          });
-          this.orderTotal =
-          this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-        }else{
-              let standardList = JSON.parse(localStorage.getItem('directOrderProduct'))
-                ? JSON.parse(localStorage.getItem('directOrderProduct'))
-                : [];
-                standardList.forEach((item)=>{
-                  item.quantity = item.count;
-                  item.productId = item.id;
-                  item.productName = item.name;
-                })
-                this.finalOrderProducts = standardList;    
-                this.finalOrderProducts.forEach((x) => {
-                  this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
-                });
-                this.orderTotal =
-                this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-        }
+            this.finalOrderProducts = res.allCartItemDetails;
+            this.finalOrderProducts.forEach((x) => {
+              this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+            });
+            this.orderTotal =
+              this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+          } else {
+            let standardList = JSON.parse(
+              localStorage.getItem('directOrderProduct')
+            )
+              ? JSON.parse(localStorage.getItem('directOrderProduct'))
+              : [];
+            standardList.forEach((item) => {
+              item.quantity = item.count;
+              item.productId = item.id;
+              item.productName = item.name;
+            });
+            this.finalOrderProducts = standardList;
+            this.finalOrderProducts.forEach((x) => {
+              this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+            });
+            this.orderTotal =
+              this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+          }
           // this.addedProducts = this.cartItems;
           // this.commonService.cartProductValue.emit(this.cartItems.length ?? 0);
           // this.calculateOrderTotal();
@@ -111,10 +113,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       (error) => {}
     );
   }
+
   defaultSetting() {
     // localStorage.setItem('orderDate', '');
     // localStorage.setItem('orderSlot', '');
-    // localStorage.setItem('selfPickUp', '0');
+    localStorage.setItem('selfPickUp', '0');
     // let list = [];
     // if (this.isStandardCut) {
     //   list = JSON.parse(localStorage.getItem('cart'))
@@ -125,10 +128,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     //     ? JSON.parse(localStorage.getItem('directOrderProduct'))
     //     : [];
     // }
-
     // this.finalOrderProducts = list.filter((x) => x.count !== 0);
-   
-    
     // if (this.isStandardCut) {
     //   this.setGlobalCartCount(list);
     // } else {
@@ -155,6 +155,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   async onRedirectToPayment() {
+    if (!this.singleSlotId) {
+      this.toastrService.error('Please choose date and time slot.');
+      return;
+    }
     let str = [];
     await Object.keys(this.userDetailsForm.controls).forEach((key) => {
       console.log();
@@ -207,33 +211,56 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   getCurrentDay() {
-    var today = new Date(this.selectedDate).getDay();
+    this.singleSlotId = '';
+    var today = new Date(this.selectedDate).getDay() + 1;
     this.dayList.forEach((x) => {
-      if (x.key == today) this.selectedDay = x.day;
+      if (x.key == today) this.selectedDay = x.key;
     });
 
     this.getAllSlot();
   }
+
   getAllSlot() {
-    this.apiService.request('GET_SLOTS', { params: {} }).subscribe((x) => {
-      if (x) {
-        console.log('res', x);
-        this.allSlots = x.allSlotDetails.filter(
-          (x) => x.day == this.selectedDay
-        );
-        this.allSlots.length
-          ? localStorage.setItem('orderDate', JSON.stringify(this.selectedDate))
-          : this.toastrService.error('No slots available');
-      }
-    });
+    this.apiService
+      .request(this.isSelfPickUp ? 'GET_PICKUP_SLOTS' : 'GET_DELIVERY_SLOTS', {
+        params: {},
+      })
+      .subscribe((x) => {
+        if (x) {
+          console.log('res', x);
+          this.allSlots = this.isSelfPickUp
+            ? x.allPickupSlotDetails.filter((x) => x.day == this.selectedDay)
+            : x.allSlotDetails.filter((x) => x.day == this.selectedDay);
+          this.allSlots.length
+            ? localStorage.setItem(
+                'orderDate',
+                JSON.stringify(this.selectedDate)
+              )
+            : this.toastrService.error(
+                'There are no available slots for selected day.'
+              );
+        }
+      });
   }
+
   onChangeSlot() {
     let element = [];
     element = this.allSlots.filter((x) => x.id == this.singleSlotId);
     this.singleSlot =
-      element[0].startTime + ' ' + 'To' + ' ' + element[0].endTime;
+      element[0].startTimeHour +
+      ': ' +
+      element[0].startTimeMinut +
+      element[0].startTimeUnit +
+      +' ' +
+      'To' +
+      ' ' +
+      element[0].endTimeHour +
+      ': ' +
+      element[0].endTimeMinut +
+      element[0].endTimeUnit;
     localStorage.setItem('orderSlot', JSON.stringify(this.singleSlot));
   }
+
   setProductPic(id) {
     let date = new Date().getTime();
     this.productPicUrl = '';
