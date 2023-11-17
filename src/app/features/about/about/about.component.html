@@ -177,23 +177,34 @@
         <h2 class="text-center fw-bold sub-title pb-3">
           Want to get the latest Updates?
         </h2>
-        <div class="col-md-10 mx-auto">
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="example@yourmail.com"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-            />
+         <form [formGroup]="subscribeForm" class="pt-3">
+          <div class="col-md-10 mx-auto">
+            <div class="input-group">
+              <input
+                type="email"
+                class="form-control"
+                formControlName="emailSubscribe" 
+                placeholder="example@yourmail.com"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+                [(ngModel)]="emailSubscribe"
+                [class.is-invalid]="isFieldValid(subscribeForm, 'emailSubscribe')"
+              />
+              <span
+                class="input-group-text btn button-orange text-white"
+                id="basic-addon2"
+                (click)="navigateToHome()"
+                >Subscribe
+                <i class="bi bi-cursor px-1"></i>
+              </span>
+            </div>
             <span
-              class="input-group-text btn button-orange text-white"
-              id="basic-addon2"
-              >Subscribe
-              <i class="bi bi-cursor px-1"></i>
-            </span>
+            class="text-danger"
+            *ngIf="hasError(subscribeForm, 'emailSubscribe', 'required')"
+            >Please enter a email.
+          </span>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>

@@ -11,11 +11,13 @@ import { CommonService } from 'src/app/shared/services/common.service';
   styleUrls: ['./contact.component.scss'],
 })
 export class ContactComponent implements OnInit {
+  
   contactForm: FormGroup;
   userEmail: string = '';
   subject: string = '';
   message: string = '';
   formSubmitAttempt: boolean = false;
+  // isEmailFieldDisabled: boolean = false;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -26,10 +28,14 @@ export class ContactComponent implements OnInit {
   ngOnInit(): void {
     this.generateContactForm();
     this.commonService.gotoTop();
+    this.commonService.getUserDetails().then(x => {
+      this.userEmail = x.userDetails.email;
+      this.contactForm.get('userEmail').disable();
+    });
   }
   generateContactForm() {
     this.contactForm = this.formBuilder.group({
-      userEmail: ['', Validators.required],
+      userEmail: ['', [Validators.required, Validators.email]],
       subject: ['', Validators.required],
       message: ['', Validators.required],
     });
@@ -50,7 +56,6 @@ export class ContactComponent implements OnInit {
     this.apiService.request('CONTACT_US', apiRequest).subscribe((res) => {
       this.formSubmitAttempt = false;
       if (res && res.statusCode == 200) {
-        // this.setUserBasics(res.userDetails);
         this.toastrService.success('Contact Added Successfully!');
         this.router.navigate(['']);
       } else {
