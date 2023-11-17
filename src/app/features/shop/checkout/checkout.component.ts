@@ -259,7 +259,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       element[0].startTimeMinut +
       element[0].startTimeUnit +
       +' ' +
-      'To' +
+      'TO' +
       ' ' +
       element[0].endTimeHour +
       ': ' +

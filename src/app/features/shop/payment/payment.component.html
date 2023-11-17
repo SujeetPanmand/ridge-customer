@@ -20,7 +20,7 @@
           </span>
           <h3 class="pt-5 text-title">Payment Method</h3>
           <hr class="border" />
-          <form>
+          <form [formGroup]="paymentForm">
             <div class="d-flex">
               <div class="form-check">
                 <input
@@ -52,6 +52,7 @@
                     value=""
                     class="form-control"
                     placeholder="XXX XXX XXXX 9817"
+                    formControlName="cardNumber"
                   />
                   <a>
                     <i class="fa fa-cc-visa times-icon" aria-hidden="true"></i>
@@ -66,6 +67,7 @@
                     id="exp"
                     name="exp "
                     class="form-control"
+                    formControlName="expiryDate"
                   />
                 </div>
                 <div class="mb-3 col-md-4">
@@ -76,6 +78,7 @@
                     name="cvv"
                     class="form-control"
                     placeholder="---"
+                    formControlName="cvv"
                   />
                 </div>
               </div>
@@ -89,6 +92,7 @@
                   name="cardHolderName"
                   class="form-control"
                   placeholder="Enter cardholder's full name"
+                  formControlName="cardHolderName"
                 />
               </div>
             </div>
