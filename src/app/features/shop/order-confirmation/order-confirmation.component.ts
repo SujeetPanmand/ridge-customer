@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { orderConfirmationLinks } from '../shop.config';
@@ -19,7 +19,8 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
   links: BreadCrumbLinks[] = orderConfirmationLinks;
   constructor(
     private commonService: CommonService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
@@ -36,10 +37,17 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.router.events.forEach((event) => {
+      if (event instanceof NavigationStart) {
+        if (event.navigationTrigger === 'popstate') {
+          this.router.navigate(['/shop']);
+        }
+      }
+    });
     this.defaultSetting();
   }
 
-  printInvoice(){
+  printInvoice() {
     window.print();
   }
 
