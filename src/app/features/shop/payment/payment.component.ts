@@ -26,6 +26,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   orderSlot = '';
   links: BreadCrumbLinks[] = paymentLinks;
   productPicUrl = '';
+  isPreorder = false;
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute,
@@ -33,16 +34,20 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   ) {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
+    this.isPreorder =
+      this.route.snapshot.queryParams['isPreorder'] == 'true' ? true : false;
     let substr = this.isStandardCut
       ? 'isStandardCut=true'
       : 'isStandardCut=false';
-    this.links[2].link = `/shop/payment?${substr}`;
+    let preSubstr = this.isPreorder ? 'isPreorder=true' : 'isPreorder=false';
+    this.links[2].link = `/shop/payment?${substr}&${preSubstr}`;
   }
   ngAfterViewInit(): void {
     let substr = this.isStandardCut
       ? 'isStandardCut=true'
       : 'isStandardCut=false';
-    this.links[2].link = `/shop/payment?${substr}`;
+    let preSubstr = this.isPreorder ? 'isPreorder=true' : 'isPreorder=false';
+    this.links[2].link = `/shop/payment?${substr}&${preSubstr}`;
   }
 
   ngOnInit() {
@@ -98,12 +103,14 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl(
       `shop/order-confirmation?isStandardCut=${
         this.isStandardCut ? 'true' : 'false'
-      }`
+      }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
     );
   }
   goBack() {
     this.router.navigateByUrl(
-      `shop/checkout?isStandardCut=${this.isStandardCut ? 'true' : 'false'}`
+      `shop/checkout?isStandardCut=${
+        this.isStandardCut ? 'true' : 'false'
+      }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
     );
   }
   setProductPic(id) {

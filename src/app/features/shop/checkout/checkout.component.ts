@@ -35,6 +35,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   singleSlot = '';
   links: BreadCrumbLinks[] = checkoutLinks;
   productPicUrl = '';
+  isPreorder = false;
 
   constructor(
     public commonService: CommonService,
@@ -51,10 +52,13 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
+    this.isPreorder =
+      this.route.snapshot.queryParams['isPreorder'] == 'true' ? true : false;
     let substr = this.isStandardCut
       ? 'isStandardCut=true'
       : 'isStandardCut=false';
-    this.links[2].link = `/shop/checkout?${substr}`;
+    let preSubstr = this.isPreorder ? 'isPreorder=true' : 'isPreorder=false';
+    this.links[2].link = `/shop/checkout?${substr}&${preSubstr}`;
   }
 
   ngOnInit() {
@@ -69,7 +73,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     let substr = this.isStandardCut
       ? 'isStandardCut=true'
       : 'isStandardCut=false';
-    this.links[2].link = `/shop/checkout?${substr}`;
+    let preSubstr = this.isPreorder ? 'isPreorder=true' : 'isPreorder=false';
+    this.links[2].link = `/shop/checkout?${substr}&${preSubstr}`;
   }
 
   showPageExitAlert() {
@@ -117,7 +122,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   defaultSetting() {
     // localStorage.setItem('orderDate', '');
     // localStorage.setItem('orderSlot', '');
-    localStorage.setItem('selfPickUp', '0');
+    //localStorage.setItem('selfPickUp', '0');
     // let list = [];
     // if (this.isStandardCut) {
     //   list = JSON.parse(localStorage.getItem('cart'))
@@ -169,7 +174,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     });
     localStorage.setItem('orderAddress', JSON.stringify(str));
     this.router.navigateByUrl(
-      `shop/payment?isStandardCut=${this.isStandardCut ? 'true' : 'false'}`
+      `shop/payment?isStandardCut=${
+        this.isStandardCut ? 'true' : 'false'
+      }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
     );
   }
 

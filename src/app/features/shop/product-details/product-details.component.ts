@@ -48,7 +48,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   profilePicture = 'assets/em_user.png';
   productPicUrl = '';
   cutForm: FormGroup;
-  cartItems: AllCartItemDetail[]=[]; 
+  cartItems: AllCartItemDetail[] = [];
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
@@ -76,35 +76,19 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
 
   addProductToCart() {
     if (this.cutForm.controls['searchCheckOption'].value === 'standard') {
-      if (!this.selectedProduct.outOfStock) {
-        if (this.cartItems.length == 0) {
-          this.cartItems.push(this.selectedProduct);
-        } else {
-          const index = this.cartItems.findIndex(
-            (x) => x.productId == this.selectedProduct.id
-          );
-          if (index >= 0) {
-            this.cartItems[index].quantity = this.cartItems[index].quantity + 1;
-          } else {
-            this.cartItems.push(this.selectedProduct);
-          }
-        }
-        this.setProductCart(this.selectedProduct);
-        
-        // localStorage.setItem('cart', JSON.stringify(this.productList));
-        // this.setGlobalCartCount(this.cartItems);
+      if (this.cartItems.length == 0) {
+        this.cartItems.push(this.selectedProduct);
       } else {
-        let arr = [];
-        arr.push(this.selectedProduct);
-        arr = arr.map((x) => {
-          return {
-            ...x,
-            count: 1,
-          };
-        });
-        localStorage.setItem('directOrderProduct', JSON.stringify(arr));
-        this.router.navigateByUrl('shop/checkout?isStandardCut=false');
+        const index = this.cartItems.findIndex(
+          (x) => x.productId == this.selectedProduct.id
+        );
+        if (index >= 0) {
+          this.cartItems[index].quantity = this.cartItems[index].quantity + 1;
+        } else {
+          this.cartItems.push(this.selectedProduct);
+        }
       }
+      this.setProductCart(this.selectedProduct);
     } else {
       let arr = [];
       arr.push(this.selectedProduct);
@@ -115,17 +99,18 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
         };
       });
       localStorage.setItem('directOrderProduct', JSON.stringify(arr));
-      this.router.navigateByUrl('shop/checkout?isStandardCut=false');
+      this.router.navigateByUrl(
+        'shop/checkout?isStandardCut=false&isPreorder=false'
+      );
     }
     this.modalService.dismissAll();
   }
 
-
-  setProductCart(selectedProduct:any){
+  setProductCart(selectedProduct: any) {
     const apiRequest = {
       data: {
         productId: selectedProduct.id,
-        quantity: 1
+        quantity: 1,
       },
     };
     this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
@@ -142,7 +127,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     });
   }
 
-
   generateReviewForm() {
     this.reviewForm = this.formBuilder.group({
       review: ['', Validators.required],
@@ -150,20 +134,20 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getProductCart(){
+  getProductCart() {
     this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
       (res) => {
         if (res && res.statusCode == 200) {
           this.addedProducts = res.allCartItemDetails;
           // console.log(this.cartItems);
-          this.commonService.cartProductValue.emit(this.addedProducts.length ?? 0);
-          this.defaultSetting()
+          this.commonService.cartProductValue.emit(
+            this.addedProducts.length ?? 0
+          );
+          this.defaultSetting();
           this.getProductDetails();
-          
         }
       },
       (error) => {}
-
     );
   }
 
@@ -189,15 +173,15 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       .subscribe((res) => {
         if (res) {
           this.selctedProduct = res.productDetails;
-          if(this.addedProducts.length > 0){
-            this.addedProducts.forEach((area=>{
-              if(area.productId == this.selctedProduct.id){
+          if (this.addedProducts.length > 0) {
+            this.addedProducts.forEach((area) => {
+              if (area.productId == this.selctedProduct.id) {
                 this.selctedProduct.count = area.quantity;
-              }else{
+              } else {
                 this.selctedProduct.count = 0;
               }
-            }));
-          }else{
+            });
+          } else {
             this.selctedProduct.count = 0;
           }
           console.log(this.selctedProduct);
@@ -205,17 +189,23 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       });
   }
 
-  addMoreToCart(flag,selectedProduct) {
-    let currentSelectedProduct = this.addedProducts.find(area=> area.productId == selectedProduct.id);
-    if(currentSelectedProduct){
-      currentSelectedProduct.quantity = flag ? currentSelectedProduct.quantity + 1 : currentSelectedProduct.quantity - 1;
-      if(currentSelectedProduct.quantity > 0){
-        this.updateItemCartQuantity(currentSelectedProduct.quantity,currentSelectedProduct.productId);
-      }else if(currentSelectedProduct.quantity == 0){
+  addMoreToCart(flag, selectedProduct) {
+    let currentSelectedProduct = this.addedProducts.find(
+      (area) => area.productId == selectedProduct.id
+    );
+    if (currentSelectedProduct) {
+      currentSelectedProduct.quantity = flag
+        ? currentSelectedProduct.quantity + 1
+        : currentSelectedProduct.quantity - 1;
+      if (currentSelectedProduct.quantity > 0) {
+        this.updateItemCartQuantity(
+          currentSelectedProduct.quantity,
+          currentSelectedProduct.productId
+        );
+      } else if (currentSelectedProduct.quantity == 0) {
         this.removeCartItem(currentSelectedProduct.productId);
       }
-    }else{
-      
+    } else {
     }
     // let index = this.addedProducts.findIndex(
     //   (x) => x.id == this.route.snapshot.params['productId']
@@ -232,30 +222,28 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     this.setGlobalCartCount(this.addedProducts);
   }
 
-  removeCartItem(productId){
+  removeCartItem(productId) {
     this.apiService
-          .request('DELETE_CART_ITEMS', { params: { id: productId } })
-          .subscribe((res) => {
-            if (res && res.statusCode == 200) {
-              this.toastrService.success('Cart Item Deleted Successfully.');
-            }
-            this.getProductCart();
-            
-          });
-
+      .request('DELETE_CART_ITEMS', { params: { id: productId } })
+      .subscribe((res) => {
+        if (res && res.statusCode == 200) {
+          this.toastrService.success('Cart Item Deleted Successfully.');
+        }
+        this.getProductCart();
+      });
   }
 
-  selectCut(event, content, product){
+  selectCut(event, content, product) {
     event.stopPropagation();
     this.selectedProduct = product;
     this.modalService.open(content, { size: 'lg', centered: true });
   }
 
-  updateItemCartQuantity(quantity,productId){
+  updateItemCartQuantity(quantity, productId) {
     const apiRequest = {
       data: {
         productId: productId,
-        quantity: quantity
+        quantity: quantity,
       },
     };
     this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
@@ -264,7 +252,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
         this.getProductCart();
       }
     });
-
   }
 
   setGlobalCartCount(addedProducts) {
