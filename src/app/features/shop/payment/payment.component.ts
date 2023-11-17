@@ -30,7 +30,8 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private apiService: ApiService
   ) {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
@@ -65,41 +66,49 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     this.orderAddress = JSON.parse(localStorage.getItem('orderAddress'))
       ? JSON.parse(localStorage.getItem('orderAddress'))
       : [];
-    let list = [];
-    if (this.isStandardCut) {
-      list = JSON.parse(localStorage.getItem('cart'))
-        ? JSON.parse(localStorage.getItem('cart'))
-        : [];
-    } else {
-      list = JSON.parse(localStorage.getItem('directOrderProduct'))
-        ? JSON.parse(localStorage.getItem('directOrderProduct'))
-        : [];
-    }
-
-    this.finalOrderProducts = list.filter((x) => x.count !== 0);
-    this.finalOrderProducts.forEach((x) => {
-      this.orderSubTotal = this.orderSubTotal + x.price * x.count;
-    });
-    this.orderTotal =
-      this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-    if (this.isStandardCut) {
-      this.setGlobalCartCount(list);
-    } else {
-      let standardList = JSON.parse(localStorage.getItem('cart'))
-        ? JSON.parse(localStorage.getItem('cart'))
-        : [];
-      this.setGlobalCartCount(standardList);
-    }
+    this.getCartItems();
   }
 
-  setGlobalCartCount(addedProducts) {
-    let count = 0;
-    addedProducts.forEach((x) => {
-      count = count + x.count;
-    });
+  getCartItems() {
+    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+      (res) => {
+        if (res && res.statusCode == 200) {
+          this.setGlobalCartCount(res.allCartItemDetails.length);
+          if (this.isStandardCut) {
+            this.finalOrderProducts = res.allCartItemDetails;
+            this.finalOrderProducts.forEach((x) => {
+              this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+            });
+            this.orderTotal =
+              this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+          } else {
+            let standardList = JSON.parse(
+              localStorage.getItem('directOrderProduct')
+            )
+              ? JSON.parse(localStorage.getItem('directOrderProduct'))
+              : [];
+            standardList.forEach((item) => {
+              item.quantity = item.count;
+              item.productId = item.id;
+              item.productName = item.name;
+            });
+            this.finalOrderProducts = standardList;
+            this.finalOrderProducts.forEach((x) => {
+              this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+            });
+            this.orderTotal =
+              this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+          }
+        }
+      },
+      (error) => {}
+    );
+  }
+
+  setGlobalCartCount(count) {
     this.commonService.addProducts(count);
   }
-  onRedirectToOrderConfirm() {
+  createOrder() {
     this.router.navigateByUrl(
       `shop/order-confirmation?isStandardCut=${
         this.isStandardCut ? 'true' : 'false'

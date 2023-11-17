@@ -105,13 +105,13 @@
               <div class="col-xl-3">
                 <button type="button" class="btn position-relative p-0">
                   <img
-                    [src]="setProductPic(product.id)"
+                    [src]="setProductPic(product.productId)"
                     class="img-fluid img"
                   />
                   <span
                     class="position-absolute top-0 translate-middle badge rounded-circle bg-danger"
                   >
-                    {{ product.count }}
+                    {{ product.quantity }}
                     <span class="visually-hidden">unread messages</span>
                   </span>
                 </button>
@@ -145,7 +145,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="pe-2">{{ product.count * product.price }}</div>
+                  <div class="pe-2">{{ product.quantity * product.price }}</div>
                 </div>
               </div>
             </div>
@@ -231,7 +231,7 @@
             </div>
           </div>
           <button
-            (click)="onRedirectToOrderConfirm()"
+            (click)="createOrder()"
             class="btn button-orange w-100"
             type="button"
           >
