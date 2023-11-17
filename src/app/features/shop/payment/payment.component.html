@@ -53,11 +53,17 @@
                     class="form-control"
                     placeholder="XXX XXX XXXX 9817"
                     formControlName="cardNumber"
+                    [class.is-invalid]="isFieldValid(paymentForm, 'cardNumber')"
                   />
                   <a>
                     <i class="fa fa-cc-visa times-icon" aria-hidden="true"></i>
                   </a>
                 </div>
+                <span
+                  class="text-danger"
+                  *ngIf="hasError(paymentForm, 'cardNumber', 'required')"
+                  >Please enter a card Number.
+                </span>
               </div>
               <div class="row">
                 <div class="mb-3 col-md-8">
@@ -68,7 +74,13 @@
                     name="exp "
                     class="form-control"
                     formControlName="expiryDate"
+                    [class.is-invalid]="isFieldValid(paymentForm, 'expiryDate')"
                   />
+                  <span
+                    class="text-danger"
+                    *ngIf="hasError(paymentForm, 'expiryDate', 'required')"
+                    >Please enter a expiry date.
+                  </span>
                 </div>
                 <div class="mb-3 col-md-4">
                   <label for="cvv" class="form-label">CVV</label>
@@ -79,8 +91,14 @@
                     class="form-control"
                     placeholder="---"
                     formControlName="cvv"
+                    [class.is-invalid]="isFieldValid(paymentForm, 'cvv')"
                   />
                 </div>
+                <span
+                  class="text-danger"
+                  *ngIf="hasError(paymentForm, 'cvv', 'required')"
+                  >Please enter a cvv.
+                </span>
               </div>
               <div class="mb-3">
                 <label for="cardHoldNumber" class="form-label"
@@ -93,7 +111,15 @@
                   class="form-control"
                   placeholder="Enter cardholder's full name"
                   formControlName="cardHolderName"
+                  [class.is-invalid]="
+                    isFieldValid(paymentForm, 'cardHolderName')
+                  "
                 />
+                <span
+                  class="text-danger"
+                  *ngIf="hasError(paymentForm, 'cardHolderName', 'required')"
+                  >Please enter a cardholder name.
+                </span>
               </div>
             </div>
           </form>
