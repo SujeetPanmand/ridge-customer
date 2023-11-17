@@ -14,6 +14,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 })
 export class BlogComponent implements OnInit {
   allBlogList: AllBlogsDetailsList[] = [];
+  allTags = [];
   constructor(
     private apiService: ApiService,
     private commonService: CommonService,
@@ -21,6 +22,7 @@ export class BlogComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.getAllBlogs();
+    this.getAllTags();
     this.commonService.gotoTop();
   }
 
@@ -36,5 +38,15 @@ export class BlogComponent implements OnInit {
   }
   navigateToBlogView(blog: AllBlogsDetailsList) {
     this.router.navigate([`/blog/blog-details/${blog.id}`]);
+  }
+  getAllTags() {
+    this.apiService
+      .request('GET_ALL_TAGS', { params: { id: '' } })
+      .subscribe((res) => {
+        if (res) {
+          console.log(res);
+          this.allTags = res.allTagList;
+        }
+      });
   }
 }

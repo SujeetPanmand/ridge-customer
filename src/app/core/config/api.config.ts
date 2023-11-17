@@ -118,6 +118,11 @@ const blogEndPoint = [
     method: 'POST',
     url: environment.baseUrl + '/api/comment/add-comment',
   },
+  {
+    name: 'GET_ALL_TAGS',
+    method: 'GET',
+    url: environment.baseUrl + '/api/tag',
+  },
 ];
 
 const accountEndPoints = [
@@ -188,6 +193,6 @@ export const ApiConfig = {
     ...slotEndPoints,
     ...homeEndPoints,
     ...orderCreateEndPoints,
-    ...subscribeEndPoint
+    ...subscribeEndPoint,
   ],
 };
