@@ -107,18 +107,7 @@ export class ShopComponent implements OnInit {
         localStorage.setItem('cart', JSON.stringify(this.productList));
         // this.setGlobalCartCount(this.cartItems);
       } else {
-        let arr = [];
-        arr.push(this.selectedProduct);
-        arr = arr.map((x) => {
-          return {
-            ...x,
-            count: 1,
-          };
-        });
-        localStorage.setItem('directOrderProduct', JSON.stringify(arr));
-        this.router.navigateByUrl(
-          'shop/checkout?isStandardCut=true&isPreorder=true'
-        );
+        this.apllyPreOrder();
       }
     } else {
       let arr = [];
@@ -139,6 +128,21 @@ export class ShopComponent implements OnInit {
           );
     }
     this.modalService.dismissAll();
+  }
+
+  apllyPreOrder() {
+    let arr = [];
+    arr.push(this.selectedProduct);
+    arr = arr.map((x) => {
+      return {
+        ...x,
+        count: 1,
+      };
+    });
+    localStorage.setItem('directOrderProduct', JSON.stringify(arr));
+    this.router.navigateByUrl(
+      'shop/checkout?isStandardCut=true&isPreorder=true'
+    );
   }
 
   setProductCart(selectedProduct: any) {
@@ -194,7 +198,9 @@ export class ShopComponent implements OnInit {
     this.selectedProduct = product;
 
     product.outOfStock
-      ? this.modalService.open(content, { size: 'lg', centered: true })
+      ? product.isSample
+        ? this.apllyPreOrder()
+        : this.modalService.open(content, { size: 'lg', centered: true })
       : product.isSample
       ? this.updateItemCartQuantity(1, product.id)
       : this.modalService.open(content, { size: 'lg', centered: true });
