@@ -71,6 +71,21 @@ h5 {
   border-color: var(--bs-btn-hover-border-color);
 }
 
+.button-orange-weekdays {
+  // box-shadow: 0px 15px 29px #f98169ad;
+  background-color: #ef4c00;
+  color: #fff;
+  font-family: "Muli";
+}
+
+.button-orange-weekdays:hover {
+  // box-shadow: 0px 15px 29px #f98169ad;
+  background-color: #ef4c00;
+  color: #fff;
+  font-family: "Muli";
+}
+
+
 .bg-light-gray {
   background-color: #f8f5f4;
 }

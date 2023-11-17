@@ -37,6 +37,14 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   productPicUrl = '';
   isPreorder = false;
   returnFromEditDate = '';
+  allAvailableSlot = [];
+  isSundaySlot: boolean = false;
+  isMondaySlot: boolean = false;
+  isTuesdaySlot: boolean = false;
+  isWednesdaySlot: boolean = false;
+  isThursdaySlot: boolean = false;
+  isFridaySlot: boolean = false;
+  isSaturdaySlot: boolean = false;
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
@@ -62,6 +70,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.getAvailableSlot();
     this.commonService.gotoTop();
     this.getCartItems();
     this.defaultSetting();
@@ -82,6 +91,58 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   showPageExitAlert() {
     this.modalService.open('', { size: 'lg', centered: true });
+  }
+
+  getAvailableSlot() {
+    this.apiService
+      .request(this.isSelfPickUp ? 'GET_PICKUP_SLOTS' : 'GET_DELIVERY_SLOTS', {
+        params: {},
+      })
+      .subscribe((res) => {
+        if (res) {
+          this.allAvailableSlot = res.allSlotDetails;
+          this.dayList;
+          this.allAvailableSlot.forEach((element) => {
+            switch (element.day.toString()) {
+              case "1":
+                {
+                  this.isSundaySlot = true;
+                }
+                break;
+              case "2":
+                {
+                  this.isMondaySlot = true;
+                }
+                break;
+              case "3":
+                {
+                  this.isTuesdaySlot = true;
+                }
+                break;
+              case "4":
+                {
+                  this.isWednesdaySlot = true;
+                }
+                break;
+              case "5":
+                {
+                  this.isThursdaySlot = true;
+                }
+                break;
+              case "6":
+                {
+                  this.isFridaySlot = true;
+                }
+                break;
+              case "7":
+                {
+                  this.isSaturdaySlot = true;
+                }
+                break;
+            }
+          });
+        }
+      });
   }
 
   getCartItems() {
@@ -118,7 +179,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
           // this.calculateOrderTotal();
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -179,8 +240,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     });
     localStorage.setItem('orderAddress', JSON.stringify(str));
     this.router.navigateByUrl(
-      `shop/payment?isStandardCut=${
-        this.isStandardCut ? 'true' : 'false'
+      `shop/payment?isStandardCut=${this.isStandardCut ? 'true' : 'false'
       }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
     );
   }
@@ -231,6 +291,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.dayList.forEach((x) => {
       if (x.key == today) this.selectedDay = x.key;
     });
+    this.getAllSlot();
   }
 
   getAllSlot() {
@@ -246,12 +307,12 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
             : x.allSlotDetails.filter((x) => x.day == this.selectedDay);
           this.allSlots.length
             ? localStorage.setItem(
-                'orderDate',
-                JSON.stringify(this.selectedDate)
-              )
+              'orderDate',
+              JSON.stringify(this.selectedDate)
+            )
             : this.toastrService.error(
-                'There are no available slots for selected day.'
-              );
+              'There are no available slots for selected day.'
+            );
           if (this.router.url.includes('isEdit')) {
             this.singleSlotId = JSON.parse(localStorage.getItem('slotId'));
           }
