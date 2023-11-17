@@ -192,7 +192,12 @@ export class ShopComponent implements OnInit {
   selectCut(event, content, product) {
     event.stopPropagation();
     this.selectedProduct = product;
-    this.modalService.open(content, { size: 'lg', centered: true });
+
+    product.outOfStock
+      ? this.modalService.open(content, { size: 'lg', centered: true })
+      : product.isSample
+      ? this.updateItemCartQuantity(1, product.id)
+      : this.modalService.open(content, { size: 'lg', centered: true });
   }
 
   imgShow(content, url) {
