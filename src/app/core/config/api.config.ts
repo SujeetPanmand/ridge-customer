@@ -169,6 +169,13 @@ const orderCreateEndPoints = [
     url: environment.baseUrl + '/api/order/create-order',
   },
 ];
+const subscribeEndPoint = [
+  {
+    name: 'EMAIL_SUBSCRIBE',
+    method: 'POST',
+    url: environment.baseUrl + '/api/email-subscribe',
+  },
+];
 
 export const ApiConfig = {
   baseUrl: '',
@@ -181,5 +188,6 @@ export const ApiConfig = {
     ...slotEndPoints,
     ...homeEndPoints,
     ...orderCreateEndPoints,
+    ...subscribeEndPoint,
   ],
 };
