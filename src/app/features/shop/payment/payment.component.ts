@@ -214,7 +214,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl(
       `shop/checkout?isStandardCut=${
         this.isStandardCut ? 'true' : 'false'
-      }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
+      }&isEdit=true&${this.isPreorder ? 'isPreorder=true' : 'isPreorder=false'}`
     );
   }
   setProductPic(id) {
