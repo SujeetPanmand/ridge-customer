@@ -188,6 +188,6 @@ export const ApiConfig = {
     ...slotEndPoints,
     ...homeEndPoints,
     ...orderCreateEndPoints,
-    ...subscribeEndPoint,
+    ...subscribeEndPoint
   ],
 };
