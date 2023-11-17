@@ -8,7 +8,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { shopLinks } from './shop.config';
 import { environment } from 'src/environments/environment';
-import { AllCartItemDetail, AllCartItemDetails } from 'src/app/shared/interfaces/all-cart-item-details';
+import {
+  AllCartItemDetail,
+  AllCartItemDetails,
+} from 'src/app/shared/interfaces/all-cart-item-details';
 
 @Component({
   selector: 'app-shop',
@@ -21,7 +24,7 @@ export class ShopComponent implements OnInit {
   isPreOrder = false;
   cutForm: FormGroup;
   allCartItemDetails: AllCartItemDetails[];
-  cartItems: AllCartItemDetail[]=[]; 
+  cartItems: AllCartItemDetail[] = [];
   url = '';
   productPicUrl = '';
   links: BreadCrumbLinks[] = shopLinks;
@@ -48,8 +51,9 @@ export class ShopComponent implements OnInit {
     let list = JSON.parse(localStorage.getItem('cart'))
       ? JSON.parse(localStorage.getItem('cart'))
       : [];
-      this.cartItems.forEach((x) => {
-      this.productList.find((item) => item.id == x.productId).count = x.quantity;
+    this.cartItems.forEach((x) => {
+      this.productList.find((item) => item.id == x.productId).count =
+        x.quantity;
     });
     this.setGlobalCartCount(this.cartItems);
   }
@@ -81,7 +85,6 @@ export class ShopComponent implements OnInit {
   }
 
   navigateToProductDetail(product) {
-    
     this.router.navigate([`shop/product-details/${product.id}`]);
   }
 
@@ -113,7 +116,9 @@ export class ShopComponent implements OnInit {
           };
         });
         localStorage.setItem('directOrderProduct', JSON.stringify(arr));
-        this.router.navigateByUrl('shop/checkout?isStandardCut=false');
+        this.router.navigateByUrl(
+          'shop/checkout?isStandardCut=true&isPreorder=true'
+        );
       }
     } else {
       let arr = [];
@@ -125,16 +130,22 @@ export class ShopComponent implements OnInit {
         };
       });
       localStorage.setItem('directOrderProduct', JSON.stringify(arr));
-      this.router.navigateByUrl('shop/checkout?isStandardCut=false');
+      this.selectedProduct.outOfStock
+        ? this.router.navigateByUrl(
+            'shop/checkout?isStandardCut=false&isPreorder=true'
+          )
+        : this.router.navigateByUrl(
+            'shop/checkout?isStandardCut=false&isPreorder=false'
+          );
     }
     this.modalService.dismissAll();
   }
 
-  setProductCart(selectedProduct:any){
+  setProductCart(selectedProduct: any) {
     const apiRequest = {
       data: {
         productId: selectedProduct.id,
-        quantity: 1
+        quantity: 1,
       },
     };
     this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
@@ -144,8 +155,8 @@ export class ShopComponent implements OnInit {
       }
     });
   }
-  
-  getProductCart(){
+
+  getProductCart() {
     this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
       (res) => {
         if (res && res.statusCode == 200) {
@@ -157,16 +168,16 @@ export class ShopComponent implements OnInit {
       (error) => {}
     );
   }
-  updateProductListCount(data){
-  data.forEach((x)=>{
+  updateProductListCount(data) {
+    data.forEach((x) => {
       // let index = this.productList.findIndex(p=> p.id == x.productId);
       // this.productList[index].count = x.quantity;
-      this.productList.forEach((item)=>{
-        if(item.id == x.productId){
+      this.productList.forEach((item) => {
+        if (item.id == x.productId) {
           item.count = x.quantity;
         }
       });
-    })
+    });
     console.log(this.productList);
   }
 

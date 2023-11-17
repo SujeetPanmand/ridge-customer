@@ -162,6 +162,13 @@ const homeEndPoints = [
     url: environment.baseUrl + '/api/promotion/get',
   },
 ];
+const orderCreateEndPoints = [
+  {
+    name: 'CREATE_ORDER',
+    method: 'POST',
+    url: environment.baseUrl + '/api/order/create-order',
+  },
+];
 
 export const ApiConfig = {
   baseUrl: '',
@@ -173,5 +180,6 @@ export const ApiConfig = {
     ...accountEndPoints,
     ...slotEndPoints,
     ...homeEndPoints,
+    ...orderCreateEndPoints,
   ],
 };
