@@ -207,6 +207,8 @@ export class PaymentComponent implements OnInit, AfterViewInit {
           }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
         );
         this.toastrService.success('Thank you; your order is placed.');
+      } else {
+        this.toastrService.error(res.message);
       }
     });
   }
