@@ -40,7 +40,7 @@ export class AboutComponent implements OnInit {
     }
     const apiRequest = {
       data: {
-        emailSubscribe: this.emailSubscribe,
+        subscribeEmail: this.emailSubscribe,
       },
     };
     this.apiService.request('EMAIL_SUBSCRIBE', apiRequest).subscribe((res) => {
