@@ -9,13 +9,20 @@ const routes: Routes = [
     children: [
       {
         path: '*',
-        redirectTo: '/',
+        redirectTo: '/account/login',
         pathMatch: 'full',
       },
       {
         path: '',
-        redirectTo: '/home',
+        redirectTo: '/account/login',
         pathMatch: 'full',
+      },
+      {
+        path: 'account',
+        loadChildren: () =>
+          import('./features/account/account.module').then(
+            (a) => a.AccountModule
+          ),
       },
       {
         path: 'home',
@@ -26,13 +33,6 @@ const routes: Routes = [
         path: 'about',
         loadChildren: () =>
           import('./features/about/about.module').then((a) => a.AboutModule),
-      },
-      {
-        path: '',
-        loadChildren: () =>
-          import('./features/account/account.module').then(
-            (a) => a.AccountModule
-          ),
       },
 
       {
@@ -53,7 +53,7 @@ const routes: Routes = [
             (a) => a.ContactModule
           ),
       },
-      { path: '**', redirectTo: '' },
+      { path: '**', redirectTo: '/account/login' },
     ],
   },
 ];

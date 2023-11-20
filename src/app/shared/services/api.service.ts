@@ -60,7 +60,7 @@ export class ApiService {
       this.loaderService.setLoaderDisplay(false);
       if (error.status === 401) {
         localStorage.removeItem('username');
-        this.router.navigate(['login']);
+        this.router.navigate(['/account/login']);
       } else if (error.status === 422) {
         return throwError(() => error.error);
       } else if (error.error instanceof ErrorEvent) {
