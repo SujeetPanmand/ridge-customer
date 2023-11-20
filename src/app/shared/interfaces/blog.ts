@@ -7,7 +7,7 @@ export interface BlogsDetails {
 export interface AllBlogsDetailsList {
   id?: string;
   title?: string;
-  tag?: string;
+  tagId?: string;
   author?: string;
   content?: string;
   isActive?: boolean;

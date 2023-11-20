@@ -23,8 +23,8 @@
 }
 
 .border {
-  border-color: #EF4C00 !important;
-  border: 2px solid #fcded0 !important
+  border-color: #ef4c00 !important;
+  border: 2px solid #fcded0 !important;
 }
 
 @media (max-width: 576px) {
@@ -32,8 +32,6 @@
     left: 50%;
   }
 }
-
-
 
 .date {
   font: normal normal bold 14px/17px muli;
@@ -44,6 +42,9 @@
 }
 
 .comment {
-  font: normal normal bold 14px/17px muli ;
+  font: normal normal bold 14px/17px muli;
   letter-spacing: 0.35px;
+}
+.tag-highlighter {
+  background-color: antiquewhite !important;
 }

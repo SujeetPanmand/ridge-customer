@@ -14,7 +14,9 @@ import { CommonService } from 'src/app/shared/services/common.service';
 })
 export class BlogComponent implements OnInit {
   allBlogList: AllBlogsDetailsList[] = [];
-  allTags = [];
+  allTagsDetailsList = [];
+  unFilteredBlogs: AllBlogsDetailsList[] = [];
+  selectedTag = 'all';
   constructor(
     private apiService: ApiService,
     private commonService: CommonService,
@@ -33,6 +35,7 @@ export class BlogComponent implements OnInit {
         if (res) {
           console.log(res);
           this.allBlogList = res.allBlogsDetailsList;
+          this.unFilteredBlogs = res.allBlogsDetailsList;
         }
       });
   }
@@ -45,8 +48,15 @@ export class BlogComponent implements OnInit {
       .subscribe((res) => {
         if (res) {
           console.log(res);
-          this.allTags = res.allTagList;
+          this.allTagsDetailsList = res.allTagsDetailsList;
         }
       });
+  }
+  onTagChange(tagName, tag?) {
+    this.selectedTag = tagName;
+    this.allBlogList =
+      this.selectedTag !== 'all'
+        ? this.unFilteredBlogs.filter((x) => x.tagId === tag.id)
+        : (this.allBlogList = this.unFilteredBlogs);
   }
 }

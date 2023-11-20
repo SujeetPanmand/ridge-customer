@@ -20,49 +20,23 @@
         <div class="fw-semibold">TAGS</div>
         <div class="pt-3">
           <button
+            (click)="onTagChange('all')"
+            [ngClass]="{ 'tag-highlighter': selectedTag === 'all' }"
             type="button"
             class="btn border text-orange rounded-pill mx-1 mb-2"
           >
-            Promo
+            All
           </button>
           <button
+            *ngFor="let tag of allTagsDetailsList"
+            (click)="onTagChange(tag.blogTag, tag)"
+            [ngClass]="{ 'tag-highlighter': selectedTag === tag.blogTag }"
             type="button"
             class="btn border text-orange rounded-pill mx-1 mb-2"
           >
-            Holidays
-          </button>
-          <button
-            type="button"
-            class="btn border text-orange rounded-pill mx-1 mb-2"
-          >
-            Gift
-          </button>
-          <button
-            type="button"
-            class="btn border text-orange rounded-pill mx-1 mb-2"
-          >
-            Christmas
-          </button>
-          <button
-            type="button"
-            class="btn border text-orange rounded-pill mx-1 mb-2"
-          >
-            Giveaway
-          </button>
-          <button
-            type="button"
-            class="btn border text-orange rounded-pill mx-1 mb-2"
-          >
-            Tips
-          </button>
-          <button
-            type="button"
-            class="btn border text-orange rounded-pill mx-1 mb-2"
-          >
-            New Year
+            {{ tag.blogTag }}
           </button>
         </div>
-
         <div *ngFor="let blog of allBlogList" class="py-3">
           <a class="text-decoration-none">
             <h1 (click)="navigateToBlogView(blog)" class="sub-title cursor">
@@ -74,6 +48,9 @@
             <span class="text-orange comment">2 Comments</span>
             <span class="px-1 date"> September 12 2023</span>
           </div>
+        </div>
+        <div *ngIf="allBlogList.length == 0" class="text-center">
+          No such blogs found.
         </div>
       </div>
     </div>
