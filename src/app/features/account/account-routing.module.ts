@@ -9,22 +9,18 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    pathMatch: 'full',
   },
   {
     path: 'signup',
     component: SignupComponent,
-    pathMatch: 'full',
   },
   {
     path: 'forgotpassword',
     component: ForgotPasswordComponent,
-    pathMatch: 'full',
   },
   {
     path: 'resetpassword',
     component: ResetpasswordComponent,
-    pathMatch: 'full',
   },
   {
     path: 'profile',

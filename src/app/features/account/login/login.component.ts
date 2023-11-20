@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       if (res && res.statusCode == 200) {
         this.setUserBasics(res.userDetails);
         this.toastrService.success('User Logged In Successfully!');
-        this.router.navigate(['']);
+        this.router.navigate(['home']);
         this.commonService.getUserDetails();
       } else {
         this.toastrService.error(res.message);
