@@ -104,37 +104,37 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
           this.dayList;
           this.allAvailableSlot.forEach((element) => {
             switch (element.day.toString()) {
-              case "1":
+              case '1':
                 {
                   this.isSundaySlot = true;
                 }
                 break;
-              case "2":
+              case '2':
                 {
                   this.isMondaySlot = true;
                 }
                 break;
-              case "3":
+              case '3':
                 {
                   this.isTuesdaySlot = true;
                 }
                 break;
-              case "4":
+              case '4':
                 {
                   this.isWednesdaySlot = true;
                 }
                 break;
-              case "5":
+              case '5':
                 {
                   this.isThursdaySlot = true;
                 }
                 break;
-              case "6":
+              case '6':
                 {
                   this.isFridaySlot = true;
                 }
                 break;
-              case "7":
+              case '7':
                 {
                   this.isSaturdaySlot = true;
                 }
@@ -179,7 +179,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
           // this.calculateOrderTotal();
         }
       },
-      (error) => { }
+      (error) => {}
     );
   }
 
@@ -226,6 +226,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   async onRedirectToPayment() {
     localStorage.setItem('orderSlot', JSON.stringify(this.singleSlot));
     localStorage.setItem('slotId', JSON.stringify(this.singleSlotId));
+    this.isSelfPickUp
+      ? localStorage.setItem('selfPickUp', '1')
+      : localStorage.setItem('selfPickUp', '0');
     if (!this.singleSlotId) {
       this.toastrService.error('Please choose date and time slot.');
       return;
@@ -240,7 +243,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     });
     localStorage.setItem('orderAddress', JSON.stringify(str));
     this.router.navigateByUrl(
-      `shop/payment?isStandardCut=${this.isStandardCut ? 'true' : 'false'
+      `shop/payment?isStandardCut=${
+        this.isStandardCut ? 'true' : 'false'
       }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
     );
   }
@@ -307,12 +311,12 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
             : x.allSlotDetails.filter((x) => x.day == this.selectedDay);
           this.allSlots.length
             ? localStorage.setItem(
-              'orderDate',
-              JSON.stringify(this.selectedDate)
-            )
+                'orderDate',
+                JSON.stringify(this.selectedDate)
+              )
             : this.toastrService.error(
-              'There are no available slots for selected day.'
-            );
+                'There are no available slots for selected day.'
+              );
           if (this.router.url.includes('isEdit')) {
             this.singleSlotId = JSON.parse(localStorage.getItem('slotId'));
           }

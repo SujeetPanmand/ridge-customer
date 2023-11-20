@@ -72,7 +72,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
   defaultSetting() {
     this.isSelfPickUp =
-      localStorage.getItem('selfPickUp') == '0' || null ? false : true;
+      JSON.parse(localStorage.getItem('selfPickUp')) == '0' ? false : true;
     this.orderDate = JSON.parse(localStorage.getItem('orderDate'))
       ? JSON.parse(localStorage.getItem('orderDate'))
       : '';
