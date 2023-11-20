@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, throwError } from 'rxjs';
 import { AllCartItemDetail } from 'src/app/shared/interfaces/all-cart-item-details';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { CommonService } from 'src/app/shared/services/common.service';
+
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -17,23 +19,52 @@ export class HomeComponent implements OnInit {
   productPicUrl = '';
   promotionList = [];
   promotionPicUrl = '';
-  
+  emailSubscribe = ''
+  formSubmitAttempt: boolean = false;
+
   constructor(
     private router: Router,
     private commonService: CommonService,
     private apiService: ApiService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private formBuilder: FormBuilder,
   ) {}
   ngOnInit(): void {
-    // let list = JSON.parse(localStorage.getItem('cart'))
-    //   ? JSON.parse(localStorage.getItem('cart'))
-    //   : [];
+   
+
     this.commonService.gotoTop();
     this.getAllProducts();
     this.getAllPromotions();
+
+    this.commonService.getUserDetails().then(x => {
+      this.emailSubscribe = x.userDetails.email;  
+      const input = document.querySelector('input');
+input.setAttribute('disabled', 'true');
+    })
   }
 
-  title = 'ng-carousel-demo';
+  navigateToHome() {
+    this.formSubmitAttempt = true;
+    if (!this.emailSubscribe) {
+      return;
+    }
+    const apiRequest = {
+      data: {
+        subscribeEmail: this.emailSubscribe,
+      },
+    };
+    this.apiService.request('EMAIL_SUBSCRIBE',apiRequest).subscribe((res) => {
+      this.formSubmitAttempt = false;
+      if (res && res.statusCode == 200) {
+        this.emailSubscribe = ''
+        this.toastrService.success('Subscribe Successfully!');
+        this.router.navigate(['']);
+      } else {
+        this.toastrService.error(res.message);
+      }
+    });
+  }
+
 
   slideConfig = {
     slidesToShow: 4,
@@ -116,7 +147,6 @@ export class HomeComponent implements OnInit {
         }
       });
   }
-
   
   setPromotionPics(id) {
     let date = new Date().getTime();
@@ -128,4 +158,6 @@ export class HomeComponent implements OnInit {
 
     return this.promotionPicUrl;
   }
+
+ 
 }

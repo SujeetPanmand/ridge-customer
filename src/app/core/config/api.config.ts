@@ -178,7 +178,7 @@ const subscribeEndPoint = [
   {
     name: 'EMAIL_SUBSCRIBE',
     method: 'POST',
-    url: environment.baseUrl + '/api/email-subscribe',
+    url: environment.baseUrl + '/api/subscribe/subscribe-user',
   },
 ];
 
