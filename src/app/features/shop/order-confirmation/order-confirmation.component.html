@@ -7,7 +7,8 @@
           <span class="sub-title">Order Confirmation</span>
           <button
             type="button"
-            class="btn button-orange rounded-0 text-white ms-auto py-2" (click)="printInvoice()"
+            class="btn button-orange rounded-0 text-white ms-auto py-2"
+            (click)="printInvoice()"
           >
             Print
           </button>
@@ -59,12 +60,12 @@
               </thead>
               <tbody>
                 <tr *ngFor="let product of finalOrderProducts">
-                  <td>#NG4595F57952</td>
-                  <td>9/12/2023</td>
+                  <td>{{ orderDetails?.id }}</td>
+                  <td>{{ orderOn }}</td>
                   <td>
-                    {{ product.name }} X <span>{{ product.count }}</span>
+                    {{ product.name }} X <span>{{ product.quantity }}</span>
                   </td>
-                  <td>{{ product.price * product.count }}</td>
+                  <td>{{ product.price * product.quantity }}</td>
                 </tr>
 
                 <tr>

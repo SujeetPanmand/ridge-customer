@@ -89,6 +89,6 @@ export const orderConfirmationLinks: BreadCrumbLinks[] = [
   },
   {
     name: 'Order Confirmation',
-    link: '/shop/order-confirmation?isStandardCut=true',
+    link: '/shop/order-confirmation/id?isStandardCut=true',
   },
 ];

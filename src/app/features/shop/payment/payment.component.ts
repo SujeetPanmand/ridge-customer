@@ -202,7 +202,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       if (res && res.statusCode == 200) {
         this.removLocalItems();
         this.router.navigateByUrl(
-          `shop/order-confirmation?isStandardCut=${
+          `shop/order-confirmation/${res.message}?isStandardCut=${
             this.isStandardCut ? 'true' : 'false'
           }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
         );
@@ -239,7 +239,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
   removLocalItems() {
     localStorage.removeItem('orderAddress');
-    localStorage.removeItem('directOrderProduct');
     localStorage.removeItem('orderSlot');
     localStorage.removeItem('slotId');
     localStorage.removeItem('cart');

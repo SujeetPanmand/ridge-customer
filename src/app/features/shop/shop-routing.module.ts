@@ -25,7 +25,7 @@ const routes: Routes = [
     component: PaymentComponent,
   },
   {
-    path: 'order-confirmation',
+    path: 'order-confirmation/:orderId',
     component: OrderConfirmationComponent,
   },
   {

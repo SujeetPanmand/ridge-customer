@@ -173,6 +173,11 @@ const orderCreateEndPoints = [
     method: 'POST',
     url: environment.baseUrl + '/api/order/create-order',
   },
+  {
+    name: 'GET_INVOICE',
+    method: 'GET',
+    url: environment.baseUrl + '/api/order/get-order-details/[id]',
+  },
 ];
 const subscribeEndPoint = [
   {
