@@ -134,7 +134,7 @@
             </li>
             <li *ngIf="isLogginShow" class="nav-item mx-3">
               <a
-                routerLink="/signup"
+                routerLink="/account/signup"
                 class="nav-link"
                 (click)="closeMobileMenu()"
                 routerLinkActive="active"
@@ -170,7 +170,9 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li>
-                    <a routerLink="profile/my-account" class="dropdown-item"
+                    <a
+                      routerLink="account/profile/my-account"
+                      class="dropdown-item"
                       >Account</a
                     >
                   </li>
