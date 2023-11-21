@@ -22,6 +22,7 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
   links: BreadCrumbLinks[] = orderConfirmationLinks;
   orderDetails: MyOrders;
   orderOn: any;
+  isPreorder = false;
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute,
@@ -31,16 +32,20 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
   ) {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
+    this.isPreorder =
+      this.route.snapshot.queryParams['isPreorder'] == 'true' ? true : false;
     let substr = this.isStandardCut
       ? 'isStandardCut=true'
       : 'isStandardCut=false';
-    this.links[2].link = `/shop/order-confirmation/${this.route.snapshot.params['orderId']}?${substr}`;
+    let substr1 = this.isPreorder ? 'isPreorder=true' : 'isPreorder=false';
+    this.links[2].link = `/shop/order-confirmation/${this.route.snapshot.params['orderId']}?${substr}&${substr1}`;
   }
   ngAfterViewInit(): void {
     let substr = this.isStandardCut
       ? 'isStandardCut=true'
       : 'isStandardCut=false';
-    this.links[2].link = `/shop/order-confirmation/${this.route.snapshot.params['orderId']}?${substr}`;
+    let substr1 = this.isPreorder ? 'isPreorder=true' : 'isPreorder=false';
+    this.links[2].link = `/shop/order-confirmation/${this.route.snapshot.params['orderId']}?${substr}&${substr1}`;
   }
 
   ngOnInit() {
@@ -108,7 +113,7 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
       (res) => {
         if (res && res.statusCode == 200) {
           this.setGlobalCartCount(res.allCartItemDetails.length);
-          if (this.isStandardCut) {
+          if (this.isStandardCut && !this.isPreorder) {
             this.finalOrderProducts = res.allCartItemDetails;
             this.finalOrderProducts.forEach((x) => {
               this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
@@ -116,27 +121,28 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
             this.orderTotal =
               this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
           } else {
-            let standardList = JSON.parse(
-              localStorage.getItem('directOrderProduct')
-            )
-              ? JSON.parse(localStorage.getItem('directOrderProduct'))
-              : [];
-            standardList.forEach((item) => {
-              item.quantity = item.count;
-              item.productId = item.id;
-              item.productName = item.name;
-            });
-            this.finalOrderProducts = standardList;
-            this.finalOrderProducts.forEach((x) => {
-              this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
-            });
-            this.orderTotal =
-              this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+            this.showPreorderProductOrCustomProducts();
           }
         }
       },
       (error) => {}
     );
+  }
+  showPreorderProductOrCustomProducts() {
+    let standardList = JSON.parse(localStorage.getItem('directOrderProduct'))
+      ? JSON.parse(localStorage.getItem('directOrderProduct'))
+      : [];
+    standardList.forEach((item) => {
+      item.quantity = item.count;
+      item.productId = item.id;
+      item.productName = item.name;
+    });
+    this.finalOrderProducts = standardList;
+    this.finalOrderProducts.forEach((x) => {
+      this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+    });
+    this.orderTotal =
+      this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
   }
   setGlobalCartCount(count) {
     this.commonService.addProducts(count);

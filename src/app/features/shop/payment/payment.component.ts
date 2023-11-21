@@ -82,7 +82,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     this.orderAddress = JSON.parse(localStorage.getItem('orderAddress'))
       ? JSON.parse(localStorage.getItem('orderAddress'))
       : [];
-
     this.slotId = JSON.parse(localStorage.getItem('slotId'))
       ? JSON.parse(localStorage.getItem('slotId'))
       : [];
@@ -94,7 +93,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       (res) => {
         if (res && res.statusCode == 200) {
           this.setGlobalCartCount(res.allCartItemDetails.length);
-          if (this.isStandardCut) {
+          if (this.isStandardCut && !this.isPreorder) {
             this.finalOrderProducts = res.allCartItemDetails;
             this.finalOrderProducts.forEach((x) => {
               this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
@@ -102,27 +101,29 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             this.orderTotal =
               this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
           } else {
-            let standardList = JSON.parse(
-              localStorage.getItem('directOrderProduct')
-            )
-              ? JSON.parse(localStorage.getItem('directOrderProduct'))
-              : [];
-            standardList.forEach((item) => {
-              item.quantity = item.count;
-              item.productId = item.id;
-              item.productName = item.name;
-            });
-            this.finalOrderProducts = standardList;
-            this.finalOrderProducts.forEach((x) => {
-              this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
-            });
-            this.orderTotal =
-              this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+            this.showPreorderProductOrCustomProducts();
           }
         }
       },
       (error) => {}
     );
+  }
+
+  showPreorderProductOrCustomProducts() {
+    let standardList = JSON.parse(localStorage.getItem('directOrderProduct'))
+      ? JSON.parse(localStorage.getItem('directOrderProduct'))
+      : [];
+    standardList.forEach((item) => {
+      item.quantity = item.count;
+      item.productId = item.id;
+      item.productName = item.name;
+    });
+    this.finalOrderProducts = standardList;
+    this.finalOrderProducts.forEach((x) => {
+      this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+    });
+    this.orderTotal =
+      this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
   }
 
   setGlobalCartCount(count) {
@@ -143,17 +144,20 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             cvv: Number(this.paymentForm.controls['cvv'].value),
             cardHolderName: this.paymentForm.controls['cardHolderName'].value,
             isSelfPickup: this.isSelfPickUp,
-            country: this.orderAddress[0],
-            zipCode: this.orderAddress[1],
-            state: this.orderAddress[2],
-            city: this.orderAddress[3],
-            address1: this.orderAddress[4],
-            address2: '',
-            firstName: this.orderAddress[5],
-            lastName: this.orderAddress[6],
-            emailAddress: this.orderAddress[7],
-            phoneNumber: this.orderAddress[8],
-            company: this.orderAddress[9],
+
+            country: this.orderAddress['country'],
+            zipCode: this.orderAddress['zipCode'],
+            state: this.orderAddress['state'],
+            city: this.orderAddress['city'],
+            address1: this.orderAddress['address1'],
+
+            firstName: this.orderAddress['firstName'],
+            lastName: this.orderAddress['lastName'],
+
+            emailAddress: this.orderAddress['emailAddress'],
+            phoneNumber: this.orderAddress['phoneNumber'],
+            company: this.orderAddress['company'],
+            address2: this.orderAddress['address2'],
             subTotalAmount: this.orderSubTotal,
             tax: this.TAX_AMOUNT + this.SHIPPING_AMOUNT,
             totalAmount: this.orderTotal,
@@ -174,17 +178,17 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             cvv: Number(this.paymentForm.controls['cvv'].value),
             cardHolderName: this.paymentForm.controls['cardHolderName'].value,
             isSelfPickup: this.isSelfPickUp,
-            country: this.orderAddress[0],
-            zipCode: this.orderAddress[1],
-            state: this.orderAddress[2],
-            city: this.orderAddress[3],
-            address1: this.orderAddress[4],
-            address2: '',
-            firstName: this.orderAddress[5],
-            lastName: this.orderAddress[6],
-            emailAddress: this.orderAddress[7],
-            phoneNumber: this.orderAddress[8],
-            company: this.orderAddress[9],
+            country: this.orderAddress['country'],
+            zipCode: this.orderAddress['zipCode'],
+            state: this.orderAddress['state'],
+            city: this.orderAddress['city'],
+            address1: this.orderAddress['address1'],
+            firstName: this.orderAddress['firstName'],
+            lastName: this.orderAddress['lastName'],
+            emailAddress: this.orderAddress['emailAddress'],
+            phoneNumber: this.orderAddress['phoneNumber'],
+            company: this.orderAddress['company'],
+            address2: this.orderAddress['address2'],
             subTotalAmount: this.orderSubTotal,
             tax: this.TAX_AMOUNT + this.SHIPPING_AMOUNT,
             totalAmount: this.orderTotal,

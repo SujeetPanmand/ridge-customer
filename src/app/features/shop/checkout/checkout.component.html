@@ -64,7 +64,7 @@
                     class="form-control"
                     id="email"
                     name="email"
-                    formControlName="email"
+                    formControlName="emailAddress"
                   />
                 </div>
 
@@ -79,7 +79,7 @@
                     id="phone"
                     name="phone"
                     placeholder=""
-                    formControlName="phone"
+                    formControlName="phoneNumber"
                   />
                 </div>
 
@@ -125,7 +125,7 @@
                     class="form-control"
                     id="address"
                     name="address"
-                    formControlName="address"
+                    formControlName="address1"
                     placeholder="House name and street name"
                   />
                   <label for="address2" class="form-label"></label>
@@ -177,7 +177,7 @@
                         class="form-control"
                         id="zip"
                         name="zip"
-                        formControlName="zip"
+                        formControlName="zipCode"
                       />
                     </div>
                   </div>
@@ -309,26 +309,77 @@
               </div>
               <div class="mb-3 fw-semibold">
                 Please select the delivary date for this order
-                <label class="text-danger small">Note: Available slots days are highlighted here</label>
+                <label class="text-danger small"
+                  >Note: Available slots days are highlighted here</label
+                >
               </div>
-              
-              <div class="d-flex justify-content-between">
-                <button [ngClass]="{'button-orange-weekdays':isSundaySlot,
-              ' border-secondary':!isSundaySlot}" class="btn">Sun</button>&nbsp;
-                <button [ngClass]="{'button-orange-weekdays':isMondaySlot,
-                ' border-secondary':!isMondaySlot}" class="btn">Mon</button>&nbsp;
-                <button  [ngClass]="{'button-orange-weekdays':isTuesdaySlot,
-                ' border-secondary':!isTuesdaySlot}" class="btn">Tue</button>&nbsp;
-                <button  [ngClass]="{'button-orange-weekdays':isWednesdaySlot,
-                ' border-secondary':!isWednesdaySlot}" class="btn">Wed</button>&nbsp;
-                <button  [ngClass]="{'button-orange-weekdays':isThursdaySlot,
-                ' border-secondary':!isThursdaySlot}" class="btn">Thu</button>&nbsp;
-                <button  [ngClass]="{'button-orange-weekdays':isFridaySlot,
-                ' border-secondary':!isFridaySlot}" class="btn">Fri</button>&nbsp;
-                <button  [ngClass]="{'button-orange-weekdays':isSaturdaySlot,
-                ' border-secondary':!isSaturdaySlot}" class="btn">Sat</button>
 
-<!-- <ul class="nav nav-pills">
+              <div class="d-flex justify-content-between">
+                <button
+                  [ngClass]="{
+                    'button-orange-weekdays': isSundaySlot,
+                    ' border-secondary': !isSundaySlot
+                  }"
+                  class="btn"
+                >
+                  Sun</button
+                >&nbsp;
+                <button
+                  [ngClass]="{
+                    'button-orange-weekdays': isMondaySlot,
+                    ' border-secondary': !isMondaySlot
+                  }"
+                  class="btn"
+                >
+                  Mon</button
+                >&nbsp;
+                <button
+                  [ngClass]="{
+                    'button-orange-weekdays': isTuesdaySlot,
+                    ' border-secondary': !isTuesdaySlot
+                  }"
+                  class="btn"
+                >
+                  Tue</button
+                >&nbsp;
+                <button
+                  [ngClass]="{
+                    'button-orange-weekdays': isWednesdaySlot,
+                    ' border-secondary': !isWednesdaySlot
+                  }"
+                  class="btn"
+                >
+                  Wed</button
+                >&nbsp;
+                <button
+                  [ngClass]="{
+                    'button-orange-weekdays': isThursdaySlot,
+                    ' border-secondary': !isThursdaySlot
+                  }"
+                  class="btn"
+                >
+                  Thu</button
+                >&nbsp;
+                <button
+                  [ngClass]="{
+                    'button-orange-weekdays': isFridaySlot,
+                    ' border-secondary': !isFridaySlot
+                  }"
+                  class="btn"
+                >
+                  Fri</button
+                >&nbsp;
+                <button
+                  [ngClass]="{
+                    'button-orange-weekdays': isSaturdaySlot,
+                    ' border-secondary': !isSaturdaySlot
+                  }"
+                  class="btn"
+                >
+                  Sat
+                </button>
+
+                <!-- <ul class="nav nav-pills">
   <li class="nav-item me-2">
     <a class="nav-link" [ngClass]="{'button-orange-weekdays':isSundaySlot,
     ' border-secondary':!isSundaySlot}"  aria-current="page">Sun</a>
@@ -358,7 +409,8 @@
     ' border-secondary':!isSaturdaySlot}"  aria-current="page">Sat</a>
   </li>
 </ul> -->
-              </div><br>
+              </div>
+              <br />
               <div class="mb-3">
                 <input
                   type="date"

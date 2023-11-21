@@ -149,7 +149,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
       (res) => {
         if (res && res.statusCode == 200) {
-          if (this.isStandardCut) {
+          if (this.isStandardCut && !this.isPreorder) {
             this.finalOrderProducts = res.allCartItemDetails;
             this.finalOrderProducts.forEach((x) => {
               this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
@@ -157,30 +157,29 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
             this.orderTotal =
               this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
           } else {
-            let standardList = JSON.parse(
-              localStorage.getItem('directOrderProduct')
-            )
-              ? JSON.parse(localStorage.getItem('directOrderProduct'))
-              : [];
-            standardList.forEach((item) => {
-              item.quantity = item.count;
-              item.productId = item.id;
-              item.productName = item.name;
-            });
-            this.finalOrderProducts = standardList;
-            this.finalOrderProducts.forEach((x) => {
-              this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
-            });
-            this.orderTotal =
-              this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+            this.showPreorderProductOrCustomProducts();
           }
-          // this.addedProducts = this.cartItems;
-          // this.commonService.cartProductValue.emit(this.cartItems.length ?? 0);
-          // this.calculateOrderTotal();
         }
       },
       (error) => {}
     );
+  }
+
+  showPreorderProductOrCustomProducts() {
+    let standardList = JSON.parse(localStorage.getItem('directOrderProduct'))
+      ? JSON.parse(localStorage.getItem('directOrderProduct'))
+      : [];
+    standardList.forEach((item) => {
+      item.quantity = item.count;
+      item.productId = item.id;
+      item.productName = item.name;
+    });
+    this.finalOrderProducts = standardList;
+    this.finalOrderProducts.forEach((x) => {
+      this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+    });
+    this.orderTotal =
+      this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
   }
 
   defaultSetting() {
@@ -233,15 +232,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       this.toastrService.error('Please choose date and time slot.');
       return;
     }
-    let str = [];
-    await Object.keys(this.userDetailsForm.controls).forEach((key) => {
-      console.log();
-      if (this.userDetailsForm.controls[key].value) {
-        console.log(this.userDetailsForm.controls[key].value);
-        str.push(this.userDetailsForm.controls[key].value);
-      }
-    });
-    localStorage.setItem('orderAddress', JSON.stringify(str));
+    console.log(this.userDetailsForm.value);
+    localStorage.setItem(
+      'orderAddress',
+      JSON.stringify(this.userDetailsForm.value)
+    );
     this.router.navigateByUrl(
       `shop/payment?isStandardCut=${
         this.isStandardCut ? 'true' : 'false'
@@ -252,14 +247,14 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   generateUserDetailsForm() {
     this.userDetailsForm = this.formBuilder.group({
       country: [''],
-      zip: [''],
+      zipCode: [''],
       state: [''],
       city: [''],
-      address: [''],
+      address1: [''],
       firstName: [''],
       lastName: [''],
-      email: [''],
-      phone: [''],
+      emailAddress: [''],
+      phoneNumber: [''],
       company: [''],
       address2: [''],
       defaultFlag: [false],
@@ -275,13 +270,13 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.userDetailsForm.patchValue({
       firstName: this.userDetails.userDetails.firstName,
       lastName: this.userDetails.userDetails.lastName,
-      email: this.userDetails.userDetails.email,
-      phone: this.userDetails.userDetails.phoneNumber,
-      address: this.userDetails.userDetails.addressList[0]['address1'],
+      emailAddress: this.userDetails.userDetails.email,
+      phoneNumber: this.userDetails.userDetails.phoneNumber,
+      address1: this.userDetails.userDetails.addressList[0]['address1'],
       address2: this.userDetails.userDetails.addressList[0]['address2'],
       city: this.userDetails.userDetails.addressList[0].city,
       country: this.userDetails.userDetails.addressList[0].country,
-      zip: this.userDetails.userDetails.addressList[0].postalCode,
+      zipCode: this.userDetails.userDetails.addressList[0].postalCode,
       state: this.userDetails.userDetails.addressList[0].state,
     });
   }
