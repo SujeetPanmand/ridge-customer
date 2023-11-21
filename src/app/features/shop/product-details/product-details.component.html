@@ -85,7 +85,7 @@
                 />
                 <span (click)="addMoreToCart(true,selctedProduct)" class="plus cursor">+</span>
               </div>
-              <button 
+              <button
               *ngIf="selctedProduct?.count == 0 "
                 class="btn btn ms-3 bg-pink px-4"
                 (click)="selectCut($event, selectCutTemplate, selctedProduct)"
@@ -375,7 +375,7 @@
               class="d-flex justify-content-center"
               *ngIf="!allProductReviews.length"
             >
-              <h4>No Products</h4>
+              <h4>No Reviews.</h4>
             </div>
           </div>
         </div>
