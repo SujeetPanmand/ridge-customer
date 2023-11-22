@@ -205,6 +205,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     this.apiService.request('CREATE_ORDER', apiRequest).subscribe((res) => {
       if (res && res.statusCode == 200) {
         this.removLocalItems();
+        this.getCartItems();
         this.router.navigateByUrl(
           `shop/order-confirmation/${res.message}?isStandardCut=${
             this.isStandardCut ? 'true' : 'false'
@@ -249,6 +250,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     localStorage.removeItem('orderDate');
     localStorage.removeItem('selfPickUp');
   }
+
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>
     formGroup.get(field).invalid &&
     (this.formSubmitAttempt || formGroup.get(field).touched);

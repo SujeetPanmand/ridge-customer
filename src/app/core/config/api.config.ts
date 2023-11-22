@@ -101,7 +101,7 @@ const blogEndPoint = [
   {
     name: 'GET_ALL_BLOGS',
     method: 'GET',
-    url: environment.baseUrl + '/api/blog/customer-blog',
+    url: environment.baseUrl + '/api/blog',
   },
   {
     name: 'GET_BLOG_DETAILS_BY_ID',
