@@ -119,9 +119,14 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       item.productName = item.name;
     });
     this.finalOrderProducts = standardList;
-    this.finalOrderProducts.forEach((x) => {
-      this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
-    });
+    this.orderSubTotal =
+      this.isPreorder && !this.isStandardCut
+        ? (this.finalOrderProducts[0].price *
+            this.finalOrderProducts[0].preorderAmountPercentage) /
+          100
+        : (this.finalOrderProducts[0].price *
+            this.finalOrderProducts[0].customCutPercentage) /
+          100;
     this.orderTotal =
       this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
   }

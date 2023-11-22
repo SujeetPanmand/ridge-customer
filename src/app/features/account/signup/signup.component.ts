@@ -63,7 +63,7 @@ export class SignupComponent implements OnInit {
       this.formSubmitAttempt = false;
       if (res && res.statusCode == 201) {
         this.toastrService.success('User Created Successfully.');
-        this.router.navigate(['login']);
+        this.router.navigate(['account/login']);
       } else {
         this.toastrService.error(res.message);
       }
