@@ -48,9 +48,9 @@ export class ShopComponent implements OnInit {
   }
 
   defaultSetting() {
-    let list = JSON.parse(localStorage.getItem('cart'))
-      ? JSON.parse(localStorage.getItem('cart'))
-      : [];
+    // let list = JSON.parse(localStorage.getItem('cart'))
+    //   ? JSON.parse(localStorage.getItem('cart'))
+    //   : [];
     this.cartItems.forEach((x) => {
       this.productList.find((item) => item.id == x.productId).count =
         x.quantity;

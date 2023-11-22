@@ -104,7 +104,7 @@ export class CartComponent implements OnInit, AfterViewInit {
       if (item.quantity == 0) {
         this.removeCartItem(item.productId);
         this.addedProducts.splice(index, 1);
-        this.commonSection(item);
+        // this.commonSection(item);
       } else {
         this.updateCartItem(item.productId, item.quantity);
       }
@@ -145,7 +145,7 @@ export class CartComponent implements OnInit, AfterViewInit {
     let index = this.addedProducts.findIndex((x) => x.id === item.id);
     this.removeCartItem(this.addedProducts[index].productId);
     this.addedProducts.splice(index, 1);
-    this.commonSection(item);
+    // this.commonSection(item);
     this.calculateOrderTotal();
     this.setGlobalCartCount();
   }
@@ -161,14 +161,14 @@ export class CartComponent implements OnInit, AfterViewInit {
       });
   }
 
-  commonSection(item) {
-    let list = JSON.parse(localStorage.getItem('cart'))
-      ? JSON.parse(localStorage.getItem('cart'))
-      : [];
-    let pointer = list.findIndex((x) => x.id === item.id);
-    list.splice(pointer, 1);
-    // localStorage.setItem('cart', JSON.stringify(list));
-  }
+  // commonSection(item) {
+  //   let list = JSON.parse(localStorage.getItem('cart'))
+  //     ? JSON.parse(localStorage.getItem('cart'))
+  //     : [];
+  //   let pointer = list.findIndex((x) => x.id === item.id);
+  //   list.splice(pointer, 1);
+  //   // localStorage.setItem('cart', JSON.stringify(list));
+  // }
 
   setGlobalCartCount() {
     let count = 0;
@@ -178,15 +178,15 @@ export class CartComponent implements OnInit, AfterViewInit {
     this.commonService.addProducts(count);
   }
 
-  setItemsToLocalStorage() {
-    let list = JSON.parse(localStorage.getItem('cart'))
-      ? JSON.parse(localStorage.getItem('cart'))
-      : [];
-    this.addedProducts.forEach((x) => {
-      list.find((item) => item.id == x.id).count = x.count;
-    });
-    // localStorage.setItem('cart', JSON.stringify(list));
-  }
+  // setItemsToLocalStorage() {
+  //   let list = JSON.parse(localStorage.getItem('cart'))
+  //     ? JSON.parse(localStorage.getItem('cart'))
+  //     : [];
+  //   this.addedProducts.forEach((x) => {
+  //     list.find((item) => item.id == x.id).count = x.count;
+  //   });
+  //   // localStorage.setItem('cart', JSON.stringify(list));
+  // }
   setProductPic(id) {
     let date = new Date().getTime();
     this.productPicUrl = '';
