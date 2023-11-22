@@ -7,15 +7,15 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss']
+  styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent {
   form!: FormGroup;
-  constructor(  private apiService: ApiService,
+  constructor(
+    private apiService: ApiService,
     private toastrService: ToastrService,
-    private router: Router,){
-
-  }
+    private router: Router
+  ) {}
   ngOnInit() {
     this.createForm();
   }
@@ -31,24 +31,24 @@ export class ForgotPasswordComponent {
   }
 
   onSubmit() {
-    if(this.form.valid){
-
+    if (this.form.valid) {
       const apiRequest = {
         data: {
           featureForAdmin: false,
           email: this.form?.get('email')?.value,
         },
       };
-  
-      this.apiService.request('FORGOT_PASSWORD', apiRequest).subscribe((response) => {
-        if (response && response.statusCode === 200) {
-          this.toastrService.success(response?.message);
-          this.router.navigate(['']);
-        } else {
-          this.toastrService.error(response?.message);
-        }
-      });
+
+      this.apiService
+        .request('FORGOT_PASSWORD', apiRequest)
+        .subscribe((response) => {
+          if (response && response.statusCode === 200) {
+            this.toastrService.success(response?.message);
+            this.router.navigate(['account/resetpassword']);
+          } else {
+            this.toastrService.error(response?.message);
+          }
+        });
     }
-    }
-    
+  }
 }
