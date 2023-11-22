@@ -30,7 +30,7 @@ export class MyAccountComponent implements OnInit {
     private router: Router,
     private toastrService: ToastrService,
     private apiService: ApiService,
-    private commonService: CommonService
+    public commonService: CommonService
   ) {}
 
   ngOnInit() {
@@ -124,6 +124,7 @@ export class MyAccountComponent implements OnInit {
       if (event.target.files && event.target.files[0]) {
         this.uploadProfilePicture(event.target.files[0]);
         event.target.value = '';
+        this.profilePictureUrl = '';
       }
     }
   };
@@ -137,7 +138,6 @@ export class MyAccountComponent implements OnInit {
       .request('EDIT_PROFILE_IMAGE', apiRequest)
       .subscribe((res) => {
         if (res.statusCode === 200) {
-          this.profilePictureUrl = '';
           this.loadUrl(file);
           this.commonService.newProfileImageEmitter.emit(true);
         }

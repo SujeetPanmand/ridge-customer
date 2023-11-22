@@ -98,25 +98,25 @@
       </div>
     </div>
     <div class="col-md-2 d-flex justify-content-center mb-2">
-          <div class="position-relative d-inline-block">
-            <img
-              class="user-profile-pic"
-              [src]="profilePictureUrl"
-              (click)="fileInput.click()"
-              ngbTooltip="Click To Edit"
-            />
-            <div>
-              <label class="profile-upload">
-                <i class="fas fa-pen" (click)="fileInput.click()"></i>
-              </label>
-            </div>
-          </div>
-          <input
-            type="file"
-            #fileInput
-            accept=".png, .jpg, .jpeg"
-            (change)="onSelectFile($event)"
-          />
+      <div class="position-relative d-inline-block">
+        <img
+          class="user-profile-pic"
+          [src]="commonService.profilePictureUrl"
+          (click)="fileInput.click()"
+          ngbTooltip="Click To Edit"
+        />
+        <div>
+          <label class="profile-upload">
+            <i class="fas fa-pen" (click)="fileInput.click()"></i>
+          </label>
         </div>
+      </div>
+      <input
+        type="file"
+        #fileInput
+        accept=".png, .jpg, .jpeg"
+        (change)="onSelectFile($event)"
+      />
+    </div>
   </div>
 </div>
