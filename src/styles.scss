@@ -208,3 +208,23 @@ h5 {
     display: none;
   }
 }
+
+// badge color
+.badge-bg-gr {
+  background: #e8fadf 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  color: #71dd37;
+  width: 100px;
+}
+.badge-bg-red {
+  background: #fdede5 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  color: #ff3e1d;
+  width: 100px;
+}
+.badge-bg-blue {
+  border-radius: 4px;
+  color: #6c6fff;
+  background: #e7e7ff 0% 0% no-repeat padding-box;
+  width: 100px;
+}
