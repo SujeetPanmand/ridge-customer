@@ -29,6 +29,7 @@ export interface CommentList {
   id?: string;
   user?: User;
   blogId?: string;
+  createdAt?:Date;
   blog?: null;
   message?: string;
   replies?: Reply[];
@@ -38,6 +39,7 @@ export interface Reply {
   id?: string;
   message?: string;
   replier?: User;
+  createdAt?:Date;
 }
 
 export interface User {

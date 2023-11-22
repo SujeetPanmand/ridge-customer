@@ -66,6 +66,7 @@ export class BlogDetailsComponent implements OnInit {
         params: { id: this.route.snapshot.params['blogId'] },
       })
       .subscribe((res: Comment) => {
+        console.log("Comment", res);
         if (res && res.statusCode == 200) {
           this.comments = this.formatRecords(res.commentList);
         }

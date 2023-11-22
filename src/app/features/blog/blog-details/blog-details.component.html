@@ -22,51 +22,12 @@
             type="button"
             class="btn border text-orange rounded-pill mx-1 mb-2"
           >
-            Promo
-          </button>
-          <button
-            type="button"
-            class="btn border text-orange rounded-pill mx-1 mb-2"
-          >
-            Holidays
-          </button>
-          <button
-            type="button"
-            class="btn border text-orange rounded-pill mx-1 mb-2"
-          >
-            Gift
-          </button>
-          <button
-            type="button"
-            class="btn border text-orange rounded-pill mx-1 mb-2"
-          >
-            Christmas
-          </button>
-          <button
-            type="button"
-            class="btn border text-orange rounded-pill mx-1 mb-2"
-          >
-            Giveaway
-          </button>
-          <button
-            type="button"
-            class="btn border text-orange rounded-pill mx-1 mb-2"
-          >
-            Tips
-          </button>
-          <button
-            type="button"
-            class="btn border text-orange rounded-pill mx-1 mb-2"
-          >
-            New Year
+            {{blogDetails.tagId}}
           </button>
         </div>
 
         <div class="py-3">
-          <img
-            src="/assets/blogdetails/grass.png"
-            class="img-fluid pb-2 w-100"
-          />
+          <img class="img-fluid w-100" [src]="setProductPic()" style="height: 500px;" />
         </div>
       </div>
     </div>
@@ -74,33 +35,14 @@
     <div class="row">
       <div class="col-md-9">
         <div class="pt-2">
-          <span class="text-orange fw-bold">2 Comments</span>
+          <span class="text-orange fw-bold">{{comments.length}} Comments</span>
           <span class="px-1 fw-bold"> September 12 2023</span>
         </div>
         <div class="pt-3">
           <h1 class="sub-title text-orange">{{ blogDetails?.title }}</h1>
           <div class="col-md-10">
             <div [innerHTML]="blogDetails?.content" class="pt-4"></div>
-
-            <div class="py-5">
-              <div>
-                <img class="img-fluid w-100" [src]="setProductPic()" />
-              </div>
-            </div>
-            <div class="">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-              aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-              eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
-              est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-              velit, sed quia non numquam eius modi tempora incidunt ut labore
-              et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima
-              veniam, quis nostrum exercitationem ullam corporis suscipit
-              laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem
-              vel eum iure
-            </div>
+         
             <div class="d-flex py-5">
               <div class="fw-bold">Share</div>
               <div class="mx-3">
@@ -112,7 +54,7 @@
             </div>
 
             <div class="py-4 comment">Comments</div>
-            <div style="height: 60vh; overflow-y: auto; overflow-x: hidden">
+            <div class="border border-bottom-0 p-4" style="height: 60vh; overflow-y: auto; overflow-x: hidden">
               <div
                 *ngFor="let comment of comments"
                 class="d-flex pb-3"
@@ -126,7 +68,7 @@
                 <div class="flex-grow-1 ms-3">
                   <div class="d-flex flex-column flex-md-row">
                     <div class="h5 fw-bold">{{ comment?.user.name }}</div>
-                    <div class="ms-md-3 text-secondary">04/11/2023</div>
+                    <div class="ms-md-3 text-secondary">{{comment?.createdAt | date:'MM/dd/yyyy'}}</div>
                   </div>
                   <p class="pt-2">
                     {{ comment?.message }}
@@ -137,18 +79,12 @@
                         *ngFor="let reply of comment.replies"
                         class="d-flex  pb-3"
                       >
-                        <!-- <div class="flex-shrink-0 mb-3">
-                          <img
-                            class="img-fluid border rounded-circle profileImg"
-                            [src]="setProfilePic(reply?.replier?.id)"
-                          />
-                        </div> -->
                         <div class="flex-grow-1 ms-3">
                           <div class="d-flex flex-column flex-md-row">
                             <div class="h5 fw-bold">
                               {{ reply?.replier.name }}
                             </div>
-                            <div class="ms-md-3 text-secondary">05/11/2023</div>
+                            <div class="ms-md-3 text-secondary">{{reply?.createdAt | date:'MM/dd/yyyy'}}</div>
                           </div>
                           <p class="pt-2">
                             {{ reply?.message }}
@@ -160,12 +96,12 @@
                 </div>
               </div>
             </div>
-            <div class="ms-md-5 mt-2">
+            <div class="">
               <input
                 [(ngModel)]="comment"
                 (keydown.enter)="addComment()"
                 type="text"
-                class="form-control"
+                class="form-control rounded-0"
                 placeholder="Add Comment"
               />
             </div>
