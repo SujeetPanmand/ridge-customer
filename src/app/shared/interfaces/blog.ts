@@ -2,15 +2,24 @@ export interface BlogsDetails {
   allBlogsDetailsList?: AllBlogsDetailsList[];
   statusCode?: number;
   message?: string;
+  createdAt?:Date;
 }
 
 export interface AllBlogsDetailsList {
+createdAt: any;
   id?: string;
   title?: string;
   tagId?: string;
+  tag?:TagDetail;
   author?: string;
   content?: string;
   isActive?: boolean;
+}
+
+export interface TagDetail {
+  blogTag?:string;
+  createdAt?:Date;
+  id?:string;
 }
 
 export interface SingleBlogDetails {
