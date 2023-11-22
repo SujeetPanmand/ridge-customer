@@ -142,7 +142,9 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   removeItemFromCart(item) {
-    let index = this.addedProducts.findIndex((x) => x.id === item.id);
+    let index = this.addedProducts.findIndex(
+      (x) => x.productId === item.productId
+    );
     this.removeCartItem(this.addedProducts[index].productId);
     this.addedProducts.splice(index, 1);
     // this.commonSection(item);
