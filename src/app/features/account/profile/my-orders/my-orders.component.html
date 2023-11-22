@@ -30,10 +30,10 @@
               <td>{{ order.expectedDeliveryDate | date }}</td>
               <td>${{ order.totalAmount }}</td>
               <td>
-                <span class="badge p-2 rounded-pill bg-green">
+                <span class="badge p-2 rounded-pill" [ngClass]=" commonService.getOrderStatus(order.orderStatus).color">
                   <i class="bi bi-check"></i
                   ><span class="m-2">{{
-                    commonService.getOrderStatus(order.orderStatus)
+                    commonService.getOrderStatus(order.orderStatus).status
                   }}</span>
                 </span>
               </td>

@@ -75,15 +75,15 @@ export class CommonService {
   getOrderStatus(num) {
     switch (num) {
       case 0:
-        return 'Pending';
+        return { status: 'Pending', color: 'badge  badge-bg-red' };
       case 1:
-        return 'Delivered';
+        return { status: 'Delivered', color: 'badge badge-bg-gr' };
       case 2:
-        return 'Cancelled';
+        return { status: 'Cancelled', color: 'badge badge-bg-red' };
       case 3:
-        return 'Confirmed';
+        return { status: 'Confirmed', color: 'badge badge-bg-blue' };
       default:
-        return '';
+        return { status: '', color: '' };;
     }
   }
 }
