@@ -21,6 +21,9 @@ export class HeaderComponent implements OnInit {
     this.userId = localStorage.getItem('userId')
       ? localStorage.getItem('userId')
       : '';
+
+    // this.setuserProfile();
+    // this.subscribeToImage();
   }
 
   navigateToAbout() {
@@ -62,5 +65,19 @@ export class HeaderComponent implements OnInit {
     ) {
       toggleButton.click();
     }
+  }
+  subscribeToImage() {
+    this.commonService.newProfileImageEmitter.subscribe((res) => {
+      this.setuserProfile();
+    });
+  }
+
+  setuserProfile() {
+    let date = new Date().getTime();
+    this.profilePictureUrl =
+      this.userId != null && this.userId != ''
+        ? environment.baseUrl + '/api/user/image/' + this.userId + '?' + date
+        : 'assets/em_user.png';
+    this.commonService.profilePictureUrl = this.profilePictureUrl;
   }
 }

@@ -421,6 +421,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
           this.toastrService.success(msg);
           this.isEditReview = false;
           this.isShowWriteReviewbtn = false;
+          this.allRating = [];
           this.getReviewInfo();
         }
       });
@@ -528,6 +529,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
           .subscribe((res) => {
             if (res && res.statusCode == 200) {
               this.toastrService.success('Review deleted');
+              this.allRating = [];
               this.getReviewInfo();
             }
           });
