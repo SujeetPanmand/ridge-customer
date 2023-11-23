@@ -30,7 +30,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   selectedDate = '';
   selectedDay: number;
   dayList = dayList;
-  allSlots = [];
+  allFilteredSlots = [];
   singleSlotId = '';
   singleSlot = '';
   links: BreadCrumbLinks[] = checkoutLinks;
@@ -85,7 +85,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   toggleAccordion(index: number) {
     // Toggle the clicked accordion
     this.isAccordionOpen[index] = !this.isAccordionOpen[index];
-  
+
     // Close all other accordions
     for (let i = 0; i < this.isAccordionOpen.length; i++) {
       if (i !== index) {
@@ -107,55 +107,77 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   getAvailableSlot() {
+    this.resetDay();
     this.apiService
       .request(this.isSelfPickUp ? 'GET_PICKUP_SLOTS' : 'GET_DELIVERY_SLOTS', {
         params: {},
       })
       .subscribe((res) => {
         if (res) {
-          this.allAvailableSlot = res.allSlotDetails;
-          this.dayList;
-          this.allAvailableSlot.forEach((element) => {
-            switch (element.day.toString()) {
-              case '1':
-                {
-                  this.isSundaySlot = true;
-                }
-                break;
-              case '2':
-                {
-                  this.isMondaySlot = true;
-                }
-                break;
-              case '3':
-                {
-                  this.isTuesdaySlot = true;
-                }
-                break;
-              case '4':
-                {
-                  this.isWednesdaySlot = true;
-                }
-                break;
-              case '5':
-                {
-                  this.isThursdaySlot = true;
-                }
-                break;
-              case '6':
-                {
-                  this.isFridaySlot = true;
-                }
-                break;
-              case '7':
-                {
-                  this.isSaturdaySlot = true;
-                }
-                break;
-            }
-          });
+          this.allAvailableSlot = this.isSelfPickUp
+            ? res.allPickupSlotDetails
+              ? res.allPickupSlotDetails
+              : []
+            : res.allSlotDetails
+            ? res.allSlotDetails
+            : [];
+          this.heighLightSlotDay();
         }
       });
+  }
+
+  heighLightSlotDay() {
+    this.allAvailableSlot.forEach((element) => {
+      switch (element.day.toString()) {
+        case '1':
+          {
+            this.isSundaySlot = true;
+          }
+          break;
+        case '2':
+          {
+            this.isMondaySlot = true;
+          }
+          break;
+        case '3':
+          {
+            this.isTuesdaySlot = true;
+          }
+          break;
+        case '4':
+          {
+            this.isWednesdaySlot = true;
+          }
+          break;
+        case '5':
+          {
+            this.isThursdaySlot = true;
+          }
+          break;
+        case '6':
+          {
+            this.isFridaySlot = true;
+          }
+          break;
+        case '7':
+          {
+            this.isSaturdaySlot = true;
+          }
+          break;
+      }
+    });
+  }
+
+  resetDay() {
+    this.selectedDate = '';
+    this.isSundaySlot = false;
+    this.isMondaySlot = false;
+    this.isTuesdaySlot = false;
+    this.isWednesdaySlot = false;
+    this.isThursdaySlot = false;
+    this.isFridaySlot = false;
+    this.isSaturdaySlot = false;
+    this.isSundaySlot = false;
   }
 
   getCartItems() {
@@ -240,6 +262,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.isSelfPickUp
       ? localStorage.setItem('selfPickUp', '1')
       : localStorage.setItem('selfPickUp', '0');
+    this.getAvailableSlot();
   }
 
   async onRedirectToPayment() {
@@ -310,38 +333,23 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.dayList.forEach((x) => {
       if (x.key == today) this.selectedDay = x.key;
     });
-    this.getAllSlot();
-  }
+    if (this.router.url.includes('isEdit')) {
+      this.singleSlotId = JSON.parse(localStorage.getItem('slotId'));
+    }
 
-  getAllSlot() {
-    this.apiService
-      .request(this.isSelfPickUp ? 'GET_PICKUP_SLOTS' : 'GET_DELIVERY_SLOTS', {
-        params: {},
-      })
-      .subscribe((x) => {
-        if (x) {
-          console.log('res', x);
-          this.allSlots = this.isSelfPickUp
-            ? x.allPickupSlotDetails.filter((x) => x.day == this.selectedDay)
-            : x.allSlotDetails.filter((x) => x.day == this.selectedDay);
-          this.allSlots.length
-            ? localStorage.setItem(
-                'orderDate',
-                JSON.stringify(this.selectedDate)
-              )
-            : this.toastrService.error(
-                'There are no available slots for selected day.'
-              );
-          if (this.router.url.includes('isEdit')) {
-            this.singleSlotId = JSON.parse(localStorage.getItem('slotId'));
-          }
-        }
-      });
+    this.allFilteredSlots = this.allAvailableSlot.filter(
+      (x) => x.day == this.selectedDay
+    );
+    this.allFilteredSlots.length
+      ? localStorage.setItem('orderDate', JSON.stringify(this.selectedDate))
+      : this.toastrService.error(
+          'There are no available slots for selected day.'
+        );
   }
 
   onChangeSlot() {
     let element = [];
-    element = this.allSlots.filter((x) => x.id == this.singleSlotId);
+    element = this.allFilteredSlots.filter((x) => x.id == this.singleSlotId);
     this.singleSlot =
       element[0].startTimeHour +
       ': ' +
