@@ -77,40 +77,40 @@
                       </div>
                       <tr>
                         <th>Ordered Items</th>
-                        <th colspan="3"></th>
-                        <th>Price</th>
+                        <th colspan="4"></th>
+                        <th class="text-end">Price</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let product of order.orderItemDetails">
                         <td>{{ product.name }}</td>
-                        <td colspan="3"></td>
-                        <td>$998</td>
+                        <td colspan="4"></td>
+                        <td class="text-end">$998</td>
                       </tr>
 
                       <tr>
                         <td>Subtotal</td>
-                        <td colspan="3"></td>
-                        <td>${{ order.subTotalAmount }}</td>
+                        <td colspan="4"></td>
+                        <td class="text-end">${{ order.subTotalAmount }}</td>
                       </tr>
                       <tr>
                         <td>Shipping</td>
-                        <td colspan="3"></td>
-                        <td>$0</td>
+                        <td colspan="4"></td>
+                        <td class="text-end">$0</td>
                       </tr>
                       <tr class="border-bottom">
                         <td>Tax</td>
-                        <td colspan="3"></td>
-                        <td>${{ order.tax }}</td>
+                        <td colspan="4"></td>
+                        <td class="text-end">${{ order.tax }}</td>
                       </tr>
                       <tr class="custom-border">
                         <td>Total</td>
-                        <td colspan="3"></td>
-                        <td>${{ order.totalAmount }}</td>
+                        <td colspan="4"></td>
+                        <td class="text-end">${{ order.totalAmount }}</td>
                       </tr>
                       <tr>
-                        <td colspan="4"></td>
-                        <td *ngIf="order.orderStatus === 0">
+                        <td colspan="5"></td>
+                        <td *ngIf="order.orderStatus === 0" class="text-end">
                           <button
                             class="btn btn-danger"
                             (click)="

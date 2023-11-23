@@ -52,20 +52,22 @@
                 <div class="input-col">
                   <input
                     type="text"
-                    value=""
                     class="form-control"
                     placeholder="XXX XXX XXXX 9817"
-                    formControlName="cardNumber"
-                    [class.is-invalid]="isFieldValid(paymentForm, 'cardNumber')"
+                    formControlName="cardNumber" pattern="^\d{16}$"
+                    [class.is-invalid]="isFieldValid(paymentForm, 'cardNumber')" 
+                    (input)="onCardNumberInput($event)"
+                     maxlength="16"
                   />
                   <a>
-                    <i class="fa fa-cc-visa times-icon" aria-hidden="true"></i>
+                    <i [class]="cardIconClass + ' times-icon'" aria-hidden="true"></i>
                   </a>
                 </div>
-                <span
-                  class="text-danger"
-                  *ngIf="hasError(paymentForm, 'cardNumber', 'required')"
-                  >Please enter a card Number.
+                <span class="text-danger" *ngIf="hasError(paymentForm, 'cardNumber', 'required')">
+                  Please enter a card number.
+                </span>
+                <span class="text-danger" *ngIf="hasError(paymentForm, 'cardNumber', 'invalidCardNumber')">
+                  Please enter a valid 16-digit card number.
                 </span>
               </div>
               <div class="row">
@@ -178,77 +180,32 @@
                       </div>
                     </div>
                   </div>
-                  <div class="pe-2">{{ product.quantity * product.price }}</div>
+                  <div class="pe-2">${{ product.quantity * product.price }}</div>
                 </div>
               </div>
             </div>
             <div class="table-responsive mt-3">
               <table class="table align-middle table-borderless">
                 <tbody>
-                  <!-- <tr *ngFor="let products of finalOrderProducts; index as i">
-                    <td>
-                      <button type="button" class="btn position-relative p-0">
-                        <img
-                          src="assets/checkout/about-banner.png"
-                          class="img-fluid img"
-                        />
-                        <span
-                          class="position-absolute top-0 translate-middle badge rounded-circle bg-danger"
-                        >
-                          {{ products.count }}
-                          <span class="visually-hidden">unread messages</span>
-                        </span>
-                      </button>
-                    </td>
-
-                    <td>
-                      <div class="accordion" id="accordionProduct">
-                        <div class="accordion-item border-0">
-                          <h2 class="accordion-header">
-                            <button
-                              class="accordion-button collapsed pb-0 pt-3"
-                              type="button"
-                              data-bs-toggle="collapse"
-                              [attr.data-bs-target]="'#productInfo' + i"
-                              aria-expanded="false"
-                              aria-controls="productInfo"
-                            >
-                              <h5>{{ products?.name }}</h5>
-                            </button>
-                          </h2>
-                          <div
-                            [id]="'productInfo' + i"
-                            class="accordion-collapse collapse"
-                            data-bs-parent="#accordionProduct"
-                          >
-                            <div class="accordion-body">
-                              <p [innerHTML]="products?.cutInfo"></p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>${{ products.price * products.count }}</td>
-                  </tr> -->
                   <tr class="pt-3">
                     <td>Subtotal</td>
                     <td></td>
-                    <td class="text-end">{{ orderSubTotal }}</td>
+                    <td class="text-end">${{ orderSubTotal }}</td>
                   </tr>
                   <tr>
                     <td>Shipping</td>
                     <td></td>
-                    <td class="text-end">{{ SHIPPING_AMOUNT }}</td>
+                    <td class="text-end">${{ SHIPPING_AMOUNT }}</td>
                   </tr>
                   <tr>
                     <td>Tax</td>
                     <td></td>
-                    <td class="text-end">{{ TAX_AMOUNT }}</td>
+                    <td class="text-end">${{ TAX_AMOUNT }}</td>
                   </tr>
                   <tr>
                     <td class="fw-bold">Total</td>
                     <td></td>
-                    <td class="fw-bold text-end">{{ orderTotal }}</td>
+                    <td class="fw-bold text-end">${{ orderTotal }}</td>
                   </tr>
                 </tbody>
               </table>

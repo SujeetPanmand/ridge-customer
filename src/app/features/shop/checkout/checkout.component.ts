@@ -81,6 +81,19 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     }
   }
 
+  isAccordionOpen: boolean[] = [];
+  toggleAccordion(index: number) {
+    // Toggle the clicked accordion
+    this.isAccordionOpen[index] = !this.isAccordionOpen[index];
+  
+    // Close all other accordions
+    for (let i = 0; i < this.isAccordionOpen.length; i++) {
+      if (i !== index) {
+        this.isAccordionOpen[i] = false;
+      }
+    }
+  }
+
   ngAfterViewInit(): void {
     let substr = this.isStandardCut
       ? 'isStandardCut=true'

@@ -57,7 +57,7 @@
                   </div>
                 </div>
               </td>
-              <td>{{ product.price }}</td>
+              <td>${{ product.price }}</td>
               <td>
                 <div class="d-flex align-items-center">
                   <a class="quantity__minus"
@@ -81,12 +81,12 @@
                   >
                 </div>
               </td>
-              <td>{{ product.totalPrice }}</td>
+              <td>${{ product.totalPrice }}</td>
             </tr>
             <tr *ngIf="addedProducts.length > 0">
               <td colspan="3"></td>
               <td class="py-3 fs-2 fw-semibold">TOTAL</td>
-              <td class="py-3 fs-2 fw-semibold">{{ orderTotal }}</td>
+              <td class="py-3 fs-2 fw-semibold">${{ orderTotal }}</td>
             </tr>
             <tr *ngIf="addedProducts.length > 0">
               <td colspan="3"></td>

@@ -63,31 +63,31 @@
                   <td>{{ orderDetails?.id }}</td>
                   <td>{{ orderOn }}</td>
                   <td>
-                    {{ product.name }} X <span>{{ product.quantity }}</span>
+                    {{ product.name }}  <span>{{ product.quantity }}</span>
                   </td>
-                  <td>{{ product.price * product.quantity }}</td>
+                  <td>${{ product.price * product.quantity }}</td>
                 </tr>
 
                 <tr>
                   <td colspan="2"></td>
                   <td>Subtotal</td>
-                  <td>{{ orderSubTotal }}</td>
+                  <td>${{ orderSubTotal }}</td>
                 </tr>
                 <tr>
                   <td colspan="2"></td>
                   <td>Shipping</td>
-                  <td>{{ SHIPPING_AMOUNT }}</td>
+                  <td>${{ SHIPPING_AMOUNT }}</td>
                 </tr>
                 <tr>
                   <td colspan="2"></td>
                   <td class="pb-4">Tax</td>
-                  <td class="pb-4">{{ TAX_AMOUNT }}</td>
+                  <td class="pb-4">${{ TAX_AMOUNT }}</td>
                 </tr>
 
                 <tr>
                   <td colspan="2"></td>
                   <td class="line-top fw-semibold">Total</td>
-                  <td class="line-top fw-semibold">{{ orderTotal }}</td>
+                  <td class="line-top fw-semibold">${{ orderTotal }}</td>
                 </tr>
               </tbody>
             </table>

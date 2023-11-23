@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { paymentLinks } from '../shop.config';
 import { environment } from 'src/environments/environment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-payment',
@@ -63,11 +63,31 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   }
   generatePaymentForm() {
     this.paymentForm = this.formBuilder.group({
-      cardNumber: ['', Validators.required],
+      cardNumber: ['', [Validators.required, Validators.pattern(/^\d{16}$/)]],
       expiryDate: ['', Validators.required],
       cvv: ['', Validators.required],
       cardHolderName: ['', Validators.required],
     });
+  }
+
+  get cardIconClass(): string {
+    const numericCardNumber = this.paymentForm.get('cardNumber').value.replace(/\D/g, '');
+
+    if (numericCardNumber.startsWith('4')) {
+      return 'fab fa-cc-visa';
+    } else if (numericCardNumber.startsWith('5')) {
+      return 'fab fa-cc-mastercard';
+    } else {
+      return 'fas fa-credit-card';
+    }
+  }
+
+  onCardNumberInput(event: any): void {
+    // Remove non-numeric characters from the input value
+    const numericValue = event.target.value.replace(/\D/g, '');
+
+    // Limit the input to 16 characters
+    this.paymentForm.get('cardNumber').setValue(numericValue.slice(0, 16));
   }
 
   defaultSetting() {

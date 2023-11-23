@@ -9,14 +9,8 @@
         <div class="row pt-4">
           <div class="col-md-6">
             <div class="form-check mb-4">
-              <input
-                [(ngModel)]="isSelfPickUp"
-                [ngModelOptions]="{ standalone: true }"
-                class="form-check-input"
-                type="checkbox"
-                (change)="onChangeType($any($event.target).checked)"
-                id="selfPickup"
-              />
+              <input [(ngModel)]="isSelfPickUp" [ngModelOptions]="{ standalone: true }" class="form-check-input"
+                type="checkbox" (change)="onChangeType($any($event.target).checked)" id="selfPickup" />
               <label class="form-check-label" for="selfPickup">
                 Self Pickup
               </label>
@@ -29,87 +23,45 @@
 
                 <div class="row mb-3">
                   <div class="col-md-6">
-                    <label for="firstName" class="form-label"
-                      >First Name <span class="text-orange">*</span></label
-                    >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="firstName"
-                      name="firstName"
-                      formControlName="firstName"
-                    />
+                    <label for="firstName" class="form-label">First Name <span class="text-orange">*</span></label>
+                    <input type="text" class="form-control" id="firstName" name="firstName"
+                      formControlName="firstName" />
                   </div>
                   <div class="col-md-6">
-                    <label for="lastName" class="form-label"
-                      >Last Name
+                    <label for="lastName" class="form-label">Last Name
                       <span class="text-orange">*</span>
                     </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="lastName"
-                      name="lastName"
-                      formControlName="lastName"
-                    />
+                    <input type="text" class="form-control" id="lastName" name="lastName" formControlName="lastName" />
                   </div>
                 </div>
                 <div class="mb-3">
-                  <label for="email" class="form-label"
-                    >Email Address
+                  <label for="email" class="form-label">Email Address
                     <span class="text-orange">*</span>
                   </label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    formControlName="emailAddress"
-                  />
+                  <input type="email" class="form-control" id="email" name="email" formControlName="emailAddress" />
                 </div>
 
                 <div class="mb-3">
-                  <label for="phone" class="form-label"
-                    >Phone Number
+                  <label for="phone" class="form-label">Phone Number
                     <span class="text-orange">*</span>
                   </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="phone"
-                    name="phone"
-                    placeholder=""
-                    formControlName="phoneNumber"
-                  />
+                  <input type="text" class="form-control" id="phone" name="phone" placeholder=""
+                    formControlName="phoneNumber" />
                 </div>
 
                 <div class="mb-3">
-                  <label for="company" class="form-label"
-                    >Company(Optional)</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="company"
-                    name="company"
-                    placeholder=""
-                    formControlName="company"
-                  />
+                  <label for="company" class="form-label">Company(Optional)</label>
+                  <input type="text" class="form-control" id="company" name="company" placeholder=""
+                    formControlName="company" />
                 </div>
 
                 <div class="mb-3">
-                  <label for="country" class="form-label"
-                    >Country/ Region
+                  <label for="country" class="form-label">Country/ Region
                     <span class="text-orange">*</span>
                   </label>
 
-                  <select
-                    class="form-select form-select mb-3"
-                    id="country"
-                    name="country"
-                    formControlName="country"
-                    aria-label=".form-select-lg example"
-                  >
+                  <select class="form-select form-select mb-3" id="country" name="country" formControlName="country"
+                    aria-label=".form-select-lg example">
                     <option value="US">USA</option>
                     <option value="India">India</option>
                     <option value="UK">UK</option>
@@ -117,46 +69,24 @@
                 </div>
 
                 <div class="mb-3">
-                  <label for="address" class="form-label"
-                    >Address <span class="text-orange">*</span></label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="address"
-                    name="address"
-                    formControlName="address1"
-                    placeholder="House name and street name"
-                  />
+                  <label for="address" class="form-label">Address <span class="text-orange">*</span></label>
+                  <input type="text" class="form-control" id="address" name="address" formControlName="address1"
+                    placeholder="House name and street name" />
                   <label for="address2" class="form-label"></label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="address2"
-                    name="address2"
-                    formControlName="address2"
-                    placeholder="Appartment,suit ,unit,etc.(Optional)"
-                  />
+                  <input type="text" class="form-control" id="address2" name="address2" formControlName="address2"
+                    placeholder="Appartment,suit ,unit,etc.(Optional)" />
                 </div>
 
                 <div class="mb-3">
-                  <label for="city" class="form-label"
-                    >Town / City
+                  <label for="city" class="form-label">Town / City
                     <span class="text-orange">*</span>
                   </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="city"
-                    name="city"
-                    formControlName="city"
-                  />
+                  <input type="text" class="form-control" id="city" name="city" formControlName="city" />
                 </div>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="mb-3">
-                      <label for="state" class="form-label"
-                        >State
+                      <label for="state" class="form-label">State
                         <span class="text-orange">*</span>
                       </label>
                       <select id="state" name="state" class="form-select">
@@ -168,28 +98,16 @@
                   </div>
                   <div class="col-md-6">
                     <div class="mb-3">
-                      <label for="zip" class="form-label"
-                        >Zip Code
+                      <label for="zip" class="form-label">Zip Code
                         <span class="text-orange">*</span>
                       </label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="zip"
-                        name="zip"
-                        formControlName="zipCode"
-                      />
+                      <input type="text" class="form-control" id="zip" name="zip" formControlName="zipCode" />
                     </div>
                   </div>
                 </div>
                 <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="saveAddress"
-                    formControlName="defaultFlag"
-                  />
+                  <input class="form-check-input" type="checkbox" value="" id="saveAddress"
+                    formControlName="defaultFlag" />
                   <label class="form-check-label" for="saveAddress">
                     Save this address as my default
                   </label>
@@ -199,13 +117,7 @@
                 </div>
                 <hr class="border" />
                 <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="myBilling"
-                    formControlName="billFlag"
-                  />
+                  <input class="form-check-input" type="checkbox" value="" id="myBilling" formControlName="billFlag" />
                   <label class="form-check-label" for="myBilling">
                     My billing address is same as shipping address
                   </label>
@@ -222,38 +134,29 @@
           <div class="col-md-6 px-3">
             <div class="shadow-sm p-md-4 p-2 mb-5 border">
               <span class="text-title"> Your Order </span>
-              <div
-                class="row pt-3"
-                *ngFor="let product of finalOrderProducts; index as i"
-              >
+              <div class="row pt-3" *ngFor="let product of finalOrderProducts; index as i">
                 <div class="col-xl-3">
                   <button type="button" class="btn position-relative p-0">
-                    <img
-                      [src]="setProductPic(product.productId)"
-                      class="img-fluid img"
-                    />
-                    <span
-                      class="position-absolute top-0 translate-middle badge rounded-circle bg-danger"
-                    >
+                    <img [src]="setProductPic(product.productId)" class="img-fluid img" />
+                    <span class="position-absolute top-0 translate-middle badge rounded-circle bg-danger">
                       {{ product.quantity }}
                       <span class="visually-hidden">unread messages</span>
                     </span>
                   </button>
                 </div>
                 <div class="col-xl-9">
-                  <div
-                    class="d-flex justify-content-between align-items-baseline"
-                  >
-                    <div class="accordion" id="accordionProduct">
+                  <div class="d-flex justify-content-between align-items-baseline">
+                    <div class="accordion" [id]="'accordionProduct' + i">
                       <div class="accordion-item border-0">
                         <h2 class="accordion-header">
                           <button
                             class="accordion-button collapsed pb-0 pt-3 ps-0"
                             type="button"
+                            (click)="toggleAccordion(i)"
                             data-bs-toggle="collapse"
                             [attr.data-bs-target]="'#productInfo' + i"
-                            aria-expanded="false"
-                            aria-controls="productInfo"
+                            [ngClass]="{ 'collapsed': !isAccordionOpen[i], 'expanded': isAccordionOpen[i] }"
+                            [attr.aria-expanded]="isAccordionOpen[i] ? 'true' : 'false'"
                           >
                             <h5>{{ product.productName }}</h5>
                           </button>
@@ -261,7 +164,8 @@
                         <div
                           [id]="'productInfo' + i"
                           class="accordion-collapse collapse"
-                          data-bs-parent="#accordionProduct"
+                          [attr.data-bs-parent]="'#accordionProduct' + i"
+                          [ngClass]="{ 'show': isAccordionOpen[i] }"
                         >
                           <div class="accordion-body">
                             <p [innerHTML]="product?.cutInfo"></p>
@@ -270,7 +174,7 @@
                       </div>
                     </div>
                     <div class="pe-2">
-                      {{ product.quantity * product.price }}
+                      ${{ product.quantity * product.price }}
                     </div>
                   </div>
                 </div>
@@ -281,22 +185,22 @@
                     <tr class="pt-3">
                       <td>Subtotal</td>
                       <td></td>
-                      <td class="text-end">{{ orderSubTotal }}</td>
+                      <td class="text-end">${{ orderSubTotal }}</td>
                     </tr>
                     <tr>
                       <td>Shipping</td>
                       <td></td>
-                      <td class="text-end">{{ SHIPPING_AMOUNT }}</td>
+                      <td class="text-end">${{ SHIPPING_AMOUNT }}</td>
                     </tr>
                     <tr>
                       <td>Tax</td>
                       <td></td>
-                      <td class="text-end">{{ TAX_AMOUNT }}</td>
+                      <td class="text-end">${{ TAX_AMOUNT }}</td>
                     </tr>
                     <tr>
                       <td class="fw-bold">Total</td>
                       <td></td>
-                      <td class="fw-bold text-end">{{ orderTotal }}</td>
+                      <td class="fw-bold text-end">${{ orderTotal }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -309,142 +213,66 @@
               </div>
               <div class="mb-3 fw-semibold">
                 Please select the delivary date for this order
-                <label class="text-danger small"
-                  >Note: Available slots days are highlighted here</label
-                >
+                <label class="text-danger small">Note: Available slots days are highlighted here</label>
               </div>
 
-              <div class="d-flex justify-content-between">
-                <button
-                  [ngClass]="{
+              <div class="d-flex flex-wrap justify-content-md-between">
+                <button [ngClass]="{
                     'button-orange-weekdays': isSundaySlot,
                     ' border-secondary': !isSundaySlot
-                  }"
-                  class="btn"
-                >
-                  Sun</button
-                >&nbsp;
-                <button
-                  [ngClass]="{
+                  }" class="btn mb-3">
+                  Sun</button>&nbsp;
+                <button [ngClass]="{
                     'button-orange-weekdays': isMondaySlot,
                     ' border-secondary': !isMondaySlot
-                  }"
-                  class="btn"
-                >
-                  Mon</button
-                >&nbsp;
-                <button
-                  [ngClass]="{
+                  }" class="btn mb-3">
+                  Mon</button>&nbsp;
+                <button [ngClass]="{
                     'button-orange-weekdays': isTuesdaySlot,
                     ' border-secondary': !isTuesdaySlot
-                  }"
-                  class="btn"
-                >
-                  Tue</button
-                >&nbsp;
-                <button
-                  [ngClass]="{
+                  }" class="btn mb-3">
+                  Tue</button>&nbsp;
+                <button [ngClass]="{
                     'button-orange-weekdays': isWednesdaySlot,
                     ' border-secondary': !isWednesdaySlot
-                  }"
-                  class="btn"
-                >
-                  Wed</button
-                >&nbsp;
-                <button
-                  [ngClass]="{
+                  }" class="btn mb-3">
+                  Wed</button>&nbsp;
+                <button [ngClass]="{
                     'button-orange-weekdays': isThursdaySlot,
                     ' border-secondary': !isThursdaySlot
-                  }"
-                  class="btn"
-                >
-                  Thu</button
-                >&nbsp;
-                <button
-                  [ngClass]="{
+                  }" class="btn mb-3">
+                  Thu</button>&nbsp;
+                <button [ngClass]="{
                     'button-orange-weekdays': isFridaySlot,
                     ' border-secondary': !isFridaySlot
-                  }"
-                  class="btn"
-                >
-                  Fri</button
-                >&nbsp;
-                <button
-                  [ngClass]="{
+                  }" class="btn mb-3">
+                  Fri</button>&nbsp;
+                <button [ngClass]="{
                     'button-orange-weekdays': isSaturdaySlot,
                     ' border-secondary': !isSaturdaySlot
-                  }"
-                  class="btn"
-                >
+                  }" class="btn mb-3">
                   Sat
                 </button>
 
-                <!-- <ul class="nav nav-pills">
-  <li class="nav-item me-2">
-    <a class="nav-link" [ngClass]="{'button-orange-weekdays':isSundaySlot,
-    ' border-secondary':!isSundaySlot}"  aria-current="page">Sun</a>
-  </li>
-  <li class="nav-item me-2">
-    <a class="nav-link" [ngClass]="{'button-orange-weekdays':isMondaySlot,
-    ' border-secondary':!isMondaySlot}"  aria-current="page">Mon</a>
-  </li>
-  <li class="nav-item me-2">
-    <a class="nav-link" [ngClass]="{'button-orange-weekdays':isTuesdaySlot,
-    ' border-secondary':!isTuesdaySlot}"  aria-current="page">Tue</a>
-  </li>
-  <li class="nav-item me-2">
-    <a class="nav-link" [ngClass]="{'button-orange-weekdays':isWednesdaySlot,
-    ' border-secondary':!isWednesdaySlot}"  aria-current="page">Wed</a>
-  </li>
-  <li class="nav-item me-2">
-    <a class="nav-link" [ngClass]="{'button-orange-weekdays':isThursdaySlot,
-    ' border-secondary':!isThursdaySlot}"  aria-current="page">Thu</a>
-  </li>
-  <li class="nav-item me-2">
-    <a class="nav-link" [ngClass]="{'button-orange-weekdays':isFridaySlot,
-    ' border-secondary':!isFridaySlot}"  aria-current="page">Fri</a>
-  </li>
-  <li class="nav-item ">
-    <a class="nav-link" [ngClass]="{'button-orange-weekdays':isSaturdaySlot,
-    ' border-secondary':!isSaturdaySlot}"  aria-current="page">Sat</a>
-  </li>
-</ul> -->
               </div>
-              <br />
-              <div class="mb-3">
-                <input
-                  type="date"
-                  id="birthday"
-                  name="birthday "
-                  [min]="todayDate"
-                  (change)="getCurrentDay()"
-                  [(ngModel)]="selectedDate"
-                  class="form-control mb-3"
-                />
+              <div class="mb-3 pt-2">
+                <input type="date" id="birthday" name="birthday " [min]="todayDate" (change)="getCurrentDay()"
+                  [(ngModel)]="selectedDate" class="form-control mb-3" />
               </div>
               <div class="mb-3">
-                <select
-                  (change)="onChangeSlot()"
-                  [(ngModel)]="singleSlotId"
-                  class="form-control form-select"
-                  name="slot"
-                >
+                <select (change)="onChangeSlot()" [(ngModel)]="singleSlotId" class="form-control form-select"
+                  name="slot">
                   <option value="">Select Slot</option>
                   <option *ngFor="let item of allSlots" [value]="item.id">
                     {{ item.startTimeHour }}:{{ item.startTimeMinut
                     }}{{ item.startTimeUnit }} To {{ item.endTimeHour }}:{{
-                      item.endTimeMinut
+                    item.endTimeMinut
                     }}{{ item.endTimeUnit }}
                   </option>
                 </select>
               </div>
             </div>
-            <a
-              (click)="onRedirectToPayment()"
-              class="btn button-orange w-100"
-              type="button"
-              >Checkout</a
-            >
+            <a (click)="onRedirectToPayment()" class="btn button-orange w-100" type="button">Checkout</a>
           </div>
         </div>
       </form>
