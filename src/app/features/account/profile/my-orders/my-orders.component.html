@@ -51,7 +51,7 @@
                   <table class="table table-borderless my-2">
                     <thead>
                       <div class="pb-3">
-                        <div class="text-danger" *ngIf="order.cutType === '2'">
+                        <div class="text-danger" *ngIf="order.cutType === '2' && order.paymentStatus == 1">
                             <label for="">If you haven not filled the Google sheet for custom cut details please fill it here &nbsp;</label>
                             <a
                               class="text-orange fw-bold"
