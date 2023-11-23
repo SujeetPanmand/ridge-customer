@@ -30,8 +30,7 @@ export class HomeComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) {}
   ngOnInit(): void {
-   
-
+    this.getProductCart();
     this.commonService.gotoTop();
     this.getAllProducts();
     this.getAllPromotions();
@@ -41,6 +40,18 @@ export class HomeComponent implements OnInit {
       const input = document.querySelector('input');
 input.setAttribute('disabled', 'true');
     })
+  }
+
+  getProductCart() {
+    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+      (res) => {
+        if (res && res.statusCode == 200) {
+          debugger;
+          this.commonService.cartProductValue.emit(res.allCartItemDetails.length ?? 0);
+        }
+      },
+      (error) => {}
+    );
   }
 
   navigateToHome() {
