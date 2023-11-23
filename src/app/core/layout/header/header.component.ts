@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit {
   }
   onLogout() {
     localStorage.clear();
+    this.commonService.cartProductValue.emit(0);
     this.router.navigate(['/account/login']);
     this.commonService.getUserDetails();
   }
