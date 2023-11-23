@@ -35,7 +35,7 @@ export class CommonService {
     });
   }
 
-  setGlobalCartCount(){
+  setGlobalCartCount() {
     this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
       (res) => {
         if (res && res.statusCode == 200) {
@@ -83,7 +83,7 @@ export class CommonService {
       case 3:
         return { status: 'Confirmed', color: 'badge badge-bg-blue' };
       default:
-        return { status: '', color: '' };;
+        return { status: '', color: '' };
     }
   }
 }
