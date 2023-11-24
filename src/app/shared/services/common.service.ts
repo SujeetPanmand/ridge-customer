@@ -60,6 +60,7 @@ export class CommonService {
           }
         },
         (error) => {
+          reject(error);
           this.isLogginShow = true;
           this.islogginButtonShow.emit(this.isLogginShow);
         }

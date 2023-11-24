@@ -55,16 +55,16 @@
             <p>
               {{ selctedProduct?.description }}
             </p>
-         
+
             <div class="d-flex">
               <div
-              *ngIf="selctedProduct?.count != 0"
+                *ngIf="selctedProduct?.count != 0"
                 class="number d-flex justify-content-evenly align-items-center col-4 bg-pink"
               >
                 <span
                   [ngClass]="{ pointer: addMultipe == 0 }"
                   class="minus cursor"
-                  (click)="addMoreToCart(false,selctedProduct)"
+                  (click)="addMoreToCart(false, selctedProduct)"
                   >-</span
                 >
                 <input
@@ -73,10 +73,14 @@
                   class="count w-25"
                   disabled
                 />
-                <span (click)="addMoreToCart(true,selctedProduct)" class="plus cursor">+</span>
+                <span
+                  (click)="addMoreToCart(true, selctedProduct)"
+                  class="plus cursor"
+                  >+</span
+                >
               </div>
               <button
-              *ngIf="selctedProduct?.count == 0 "
+                *ngIf="selctedProduct?.count == 0"
                 class="btn btn ms-3 bg-pink px-4"
                 (click)="selectCut($event, selectCutTemplate, selctedProduct)"
               >
@@ -199,11 +203,14 @@
               </div>
               <span class="ps-2">{{ getPercentage(1) }}%</span>
             </div>
-            <h4 *ngIf="isShowWriteReviewbtn" class="py-2">
+            <h4
+              *ngIf="isShowWriteReviewbtn && !isLoggedInButtonShow"
+              class="py-2"
+            >
               Review this product
             </h4>
             <button
-              *ngIf="isShowWriteReviewbtn"
+              *ngIf="isShowWriteReviewbtn && !isLoggedInButtonShow"
               class="btn button-orange"
               (click)="onOpenRatePopUp(addReviewTemplate)"
             >
@@ -297,7 +304,8 @@
                         </p>
                         <div class="gy-2">
                           <span>Was this review helpful?</span>
-                          <span class="ps-md-2"><i
+                          <span class="ps-md-2"
+                            ><i
                               (click)="onAddReview(item, 'up')"
                               class="bi bi-hand-thumbs-up-fill text-orange cursor"
                             ></i

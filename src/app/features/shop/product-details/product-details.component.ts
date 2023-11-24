@@ -1,4 +1,9 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/api.service';
 
@@ -49,6 +54,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   productPicUrl = '';
   cutForm: FormGroup;
   cartItems: AllCartItemDetail[] = [];
+  isLoggedInButtonShow = true;
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
@@ -59,12 +65,16 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder
   ) {
     this.links[2].link = `/shop/product-details/${this.route.snapshot.params['productId']}`;
+    this.subscribeMethod();
   }
   ngAfterViewInit(): void {
     this.links[2].link = `/shop/product-details/${this.route.snapshot.params['productId']}`;
   }
 
   ngOnInit() {
+    this.commonService.getUserDetails().then((res) => {
+      this.isLoggedInButtonShow = res ? false : true;
+    });
     this.getProductCart();
     this.getProductDetails();
     // this.defaultSetting();
@@ -548,5 +558,12 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       ? url + '?' + date
       : 'assets/product/wholeBeef.png';
     return this.productPicUrl;
+  }
+  subscribeMethod() {
+    console.log('before', this.isLoggedInButtonShow);
+    this.commonService.islogginButtonShow.subscribe((res) => {
+      this.isLoggedInButtonShow = res;
+      console.log('after', this.isLoggedInButtonShow);
+    });
   }
 }
