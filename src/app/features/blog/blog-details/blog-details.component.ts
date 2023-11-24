@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   AllBlogsDetailsList,
+  BlogsDetails,
   Comment,
   CommentList,
 } from 'src/app/shared/interfaces/blog';
@@ -19,6 +20,8 @@ export class BlogDetailsComponent implements OnInit {
   blogPictureUrl = '';
   comments: CommentList[] = [];
   comment = '';
+  allBlogList: AllBlogsDetailsList[] = [];
+  allComments: any = [];
   constructor(
     private commonService: CommonService,
     private apiService: ApiService,
@@ -26,10 +29,49 @@ export class BlogDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getAllBlogs();
     this.getBlogById();
     this.commonService.gotoTop();
     this.getAllComment();
   }
+
+  getAllBlogs() {
+    this.apiService
+      .request('GET_ALL_BLOGS', { params: {} })
+      .subscribe((res: BlogsDetails) => {
+        if (res) {
+          console.log(res);
+          this.allBlogList = res.allBlogsDetailsList;
+          this.sortTopArticals();
+        }
+       
+      });
+  }
+
+  sortTopArticals(){
+    this.allBlogList.forEach((element)=>{
+      var obj = {
+        title: element.title,
+        id: element.id,
+        commentCount: element.commentDetails
+      }
+      this.allComments.push(obj);
+    });
+    this.allComments.forEach((element)=>{
+      element.commentCount = element.commentCount.length;
+    });
+    this.allComments.sort((a, b) => {
+      if (a.commentCount !== b.commentCount) {
+        return a.commentCount - b.commentCount;
+      } else {
+        return b.commentCount.localeCompare(a.commentCount);
+      }
+    }).reverse();
+    this.allComments = this.allComments.slice(0,3);
+    console.log(this.allComments);
+  }
+
+
 
   getBlogById() {
     this.apiService
@@ -50,6 +92,13 @@ export class BlogDetailsComponent implements OnInit {
       this.route.snapshot.params['blogId'] +
       '?' +
       date;
+    return this.blogPictureUrl;
+  }
+  
+  setTopArticalPic(id){
+    this.blogPictureUrl =
+    environment.baseUrl +
+    '/api/blog/image/' + id;
     return this.blogPictureUrl;
   }
 

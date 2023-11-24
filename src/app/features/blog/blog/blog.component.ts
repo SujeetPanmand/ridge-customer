@@ -28,9 +28,16 @@ export class BlogComponent implements OnInit {
     this.commonService.gotoTop();
   }
 
+  checkLength(commentDetails:any){
+    let count = 0;
+    for(let d of commentDetails){
+      count +=1;
+    }
+    return count;
+  }
   getAllBlogs() {
     this.apiService
-      .request('GET_ALL_BLOGS', { params: { id: '' } })
+      .request('GET_ALL_BLOGS', { params: {} })
       .subscribe((res: BlogsDetails) => {
         if (res) {
           console.log(res);
