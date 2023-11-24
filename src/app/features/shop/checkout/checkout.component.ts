@@ -72,7 +72,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getAvailableSlot();
     this.commonService.gotoTop();
-    this.getCartItems();
+    this.isStandardCut && !this.isPreorder
+      ? this.getCartItems()
+      : this.showPreorderProductOrCustomProducts();
     this.defaultSetting();
     this.generateUserDetailsForm();
     this.patchUserDetailsForm();
@@ -184,16 +186,12 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
       (res) => {
         if (res && res.statusCode == 200) {
-          if (this.isStandardCut && !this.isPreorder) {
-            this.finalOrderProducts = res.allCartItemDetails;
-            this.finalOrderProducts.forEach((x) => {
-              this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
-            });
-            this.orderTotal =
-              this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-          } else {
-            this.showPreorderProductOrCustomProducts();
-          }
+          this.finalOrderProducts = res.allCartItemDetails;
+          this.finalOrderProducts.forEach((x) => {
+            this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+          });
+          this.orderTotal =
+            this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
         }
       },
       (error) => {}
