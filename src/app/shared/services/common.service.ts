@@ -4,6 +4,10 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from '../interfaces/user/user-details';
 import { environment } from 'src/environments/environment';
 
+export interface PaymentStatus {
+  status: string;
+  color: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -85,6 +89,29 @@ export class CommonService {
         return { status: 'Confirmed', color: 'badge badge-bg-blue' };
       default:
         return { status: '', color: '' };
+    }
+  }
+  getOrderType(num) {
+    switch (num) {
+      case 1:
+        return 'Normal';
+      case 2:
+        return 'PreOrder';
+      default:
+        return '';
+    }
+  }
+
+  getPaymentStatus(num): PaymentStatus | {status: string; color: string} {
+    switch (num) {
+      case 1:
+        return { status: 'Pending', color: 'badge  badge-bg-red' };
+      case 2:
+        return { status: 'Completed', color: 'badge  badge-bg-gr' };
+      case 3:
+        return { status: 'Failed', color: 'badge  badge-bg-red' };
+      default:
+        return { status: 'Unknown', color: 'badge badge-bg-gray' };
     }
   }
 }

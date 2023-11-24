@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'src/app/shared/services/common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-orders',
@@ -26,7 +27,8 @@ export class MyOrdersComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
-    public commonService: CommonService
+    public commonService: CommonService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -65,6 +67,9 @@ export class MyOrdersComponent implements OnInit {
     );
   }
 
+  navigateToDetails(orderId:any){
+    this.router.navigate([`account/order-details/${orderId}`] )
+  }
   openCancelDialog(content, selectedOrderDetails) {
     console.log(selectedOrderDetails.id);
     this.selectedOrderId = selectedOrderDetails.id;

@@ -69,6 +69,11 @@ const shopEndPoints = [
     url: environment.baseUrl + '/api/order/my-orders',
   },
   {
+    name: 'ORDER_DETAILS',
+    method: 'GET',
+    url: environment.baseUrl + '/api/order/get-order-details/[id]',
+  },
+  {
     name: 'CANCEL_ORDER',
     method: 'PUT',
     url: environment.baseUrl + '/api/order/cancel-order',
