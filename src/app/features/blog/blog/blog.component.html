@@ -45,8 +45,8 @@
           >
           <div class="pt-3" [innerHTML]="blog?.content"></div>
           <div class="pt-2">
-            <span class="text-orange comment">2 Comments</span>
-            <span class="px-1 date"> September 12 2023</span>
+            <span class="text-orange comment"> {{ checkLength(blog.commentDetails) + " Comments" }}</span>
+            <span class="px-1 date"> {{ blog.createdAt | date}}</span>
           </div>
         </div>
         <div *ngIf="allBlogList.length == 0" class="text-center">

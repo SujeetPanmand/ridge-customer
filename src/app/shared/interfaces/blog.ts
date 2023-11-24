@@ -14,6 +14,13 @@ createdAt: any;
   author?: string;
   content?: string;
   isActive?: boolean;
+  commentDetails?: CommentDetail;
+}
+
+export interface CommentDetail {
+  id:        string;
+  message:   string;
+  createdAt: Date;
 }
 
 export interface TagDetail {
