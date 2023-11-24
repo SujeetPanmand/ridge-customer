@@ -1,27 +1,15 @@
 <section class="py-5 mt-5 bg-light-gray">
     <div class="container">
-        <div class="py-5 bg-white px-4">
+        <div class=" ">
             <app-bread-crumb [links]="links"></app-bread-crumb>
             <h1 class="sub-title pt-3">Order Payment</h1>
-            <div class="row pt-4">
-                <div class="col-md-6">
-                    <div class="d-flex">
-                        <h2 class="text-title">Amount: 0.0</h2>
-                    </div>
-                        <h2 class="text-title">Order Id: {{orderId}}</h2>
+            <div class="row pt-4 ">
+                <div class="col-md-6 mx-auto bg-white p-4">
+                    <h5 class="text-title">Order Id: {{orderId}}</h5>
+                        <h5 class="text-title">Amount: 0.0</h5>
                     <hr class="border" />
-                    <span *ngIf="isSelfPickUp" class="pt-3">
-                        San Gabriel River In Liberty Hill, Austin, Texas -73301
-                    </span>
-                    <span class="d-flex" *ngIf="!isSelfPickUp" class="pt-3">
-                        <span>
-                            {{ orderAddress["address1"] }} in {{ orderAddress["city"] }},
-                            {{ orderAddress["state"] }},{{ orderAddress["country"] }},{{
-                            orderAddress["zipCode"]
-                            }}
-                        </span>
-                    </span>
-                    <h3 class="pt-5 text-title">Payment Method</h3>
+                
+                    <h4 class=" text-title">Payment Method</h4>
                     <hr class="border" />
                     <form [formGroup]="paymentForm">
                         <div class="d-flex">
