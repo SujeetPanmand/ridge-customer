@@ -234,20 +234,24 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             orderItemsModel: this.formatRecord(this.finalOrderProducts),
           },
     };
-    this.apiService.request('CREATE_ORDER', apiRequest).subscribe((res) => {
-      if (res && res.statusCode == 200) {
-        this.removLocalItems();
-        this.getCartItems();
-        this.router.navigateByUrl(
-          `shop/order-confirmation/${res.message}?isStandardCut=${
-            this.isStandardCut ? 'true' : 'false'
-          }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
-        );
-        this.toastrService.success('Your order has been placed.');
-      } else {
-        this.toastrService.error(res.message);
-      }
-    });
+    this.router.navigateByUrl(
+      `shop/order-payment/SPAR77`
+    );
+    // this.apiService.request('CREATE_ORDER', apiRequest).subscribe((res) => {
+    //   if (res && res.statusCode == 200) {
+    //     console.log("RES HERE : ", res);
+    //     this.removLocalItems();
+    //     this.getCartItems();
+    //     this.router.navigateByUrl(
+    //       `shop/order-confirmation/${res.message}?isStandardCut=${
+    //         this.isStandardCut ? 'true' : 'false'
+    //       }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
+    //     );
+    //     this.toastrService.success('Your order has been placed.');
+    //   } else {
+    //     this.toastrService.error(res.message);
+    //   }
+    // });
   }
   goBack() {
     this.router.navigateByUrl(
