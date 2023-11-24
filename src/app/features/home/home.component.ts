@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, catchError, throwError } from 'rxjs';
@@ -19,7 +24,7 @@ export class HomeComponent implements OnInit {
   productPicUrl = '';
   promotionList = [];
   promotionPicUrl = '';
-  emailSubscribe = ''
+  emailSubscribe = '';
   formSubmitAttempt: boolean = false;
 
   constructor(
@@ -27,7 +32,7 @@ export class HomeComponent implements OnInit {
     private commonService: CommonService,
     private apiService: ApiService,
     private toastrService: ToastrService,
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
     this.getProductCart();
@@ -35,19 +40,20 @@ export class HomeComponent implements OnInit {
     this.getAllProducts();
     this.getAllPromotions();
 
-    this.commonService.getUserDetails().then(x => {
-      this.emailSubscribe = x.userDetails.email;  
+    this.commonService.getUserDetails().then((x) => {
+      this.emailSubscribe = x.userDetails.email;
       const input = document.querySelector('input');
-input.setAttribute('disabled', 'true');
-    })
+      input.setAttribute('disabled', 'true');
+    });
   }
 
   getProductCart() {
     this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
       (res) => {
         if (res && res.statusCode == 200) {
-          debugger;
-          this.commonService.cartProductValue.emit(res.allCartItemDetails.length ?? 0);
+          this.commonService.cartProductValue.emit(
+            res.allCartItemDetails.length ?? 0
+          );
         }
       },
       (error) => {}
@@ -64,10 +70,10 @@ input.setAttribute('disabled', 'true');
         subscribeEmail: this.emailSubscribe,
       },
     };
-    this.apiService.request('EMAIL_SUBSCRIBE',apiRequest).subscribe((res) => {
+    this.apiService.request('EMAIL_SUBSCRIBE', apiRequest).subscribe((res) => {
       this.formSubmitAttempt = false;
       if (res && res.statusCode == 200) {
-        this.emailSubscribe = ''
+        this.emailSubscribe = '';
         this.toastrService.success('Subscribe Successfully!');
         this.router.navigate(['']);
       } else {
@@ -75,7 +81,6 @@ input.setAttribute('disabled', 'true');
       }
     });
   }
-
 
   slideConfig = {
     slidesToShow: 4,
@@ -158,7 +163,7 @@ input.setAttribute('disabled', 'true');
         }
       });
   }
-  
+
   setPromotionPics(id) {
     let date = new Date().getTime();
     this.promotionPicUrl = '';
@@ -169,6 +174,4 @@ input.setAttribute('disabled', 'true');
 
     return this.promotionPicUrl;
   }
-
- 
 }
