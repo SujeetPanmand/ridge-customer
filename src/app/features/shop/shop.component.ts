@@ -63,7 +63,9 @@ export class ShopComponent implements OnInit {
       async (res) => {
         if (res) {
           console.log(res);
-          this.productList = await this.formatRecords(res.allProductDetails);
+          this.productList = await this.formatRecords(
+            res.allProductDetails
+          ).filter((x) => x.isActive);
           console.log(this.productList);
           // this.defaultSetting();
           this.getProductCart();

@@ -54,19 +54,31 @@
                     type="text"
                     class="form-control"
                     placeholder="XXX XXX XXXX 9817"
-                    formControlName="cardNumber" pattern="^\d{16}$"
-                    [class.is-invalid]="isFieldValid(paymentForm, 'cardNumber')" 
+                    formControlName="cardNumber"
+                    pattern="^\d{16}$"
+                    [class.is-invalid]="isFieldValid(paymentForm, 'cardNumber')"
                     (input)="onCardNumberInput($event)"
-                     maxlength="16"
+                    maxlength="16"
                   />
                   <a>
-                    <i [class]="cardIconClass + ' times-icon'" aria-hidden="true"></i>
+                    <i
+                      [class]="cardIconClass + ' times-icon'"
+                      aria-hidden="true"
+                    ></i>
                   </a>
                 </div>
-                <span class="text-danger" *ngIf="hasError(paymentForm, 'cardNumber', 'required')">
+                <span
+                  class="text-danger"
+                  *ngIf="hasError(paymentForm, 'cardNumber', 'required')"
+                >
                   Please enter a card number.
                 </span>
-                <span class="text-danger" *ngIf="hasError(paymentForm, 'cardNumber', 'invalidCardNumber')">
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    hasError(paymentForm, 'cardNumber', 'invalidCardNumber')
+                  "
+                >
                   Please enter a valid 16-digit card number.
                 </span>
               </div>
@@ -180,7 +192,9 @@
                       </div>
                     </div>
                   </div>
-                  <div class="pe-2">${{ product.quantity * product.price }}</div>
+                  <div class="pe-2">
+                    ${{ product.quantity * product.price }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -224,8 +238,22 @@
             (click)="createOrder()"
             class="btn button-orange w-100"
             type="button"
+            [disabled]="isLoading"
           >
             Make Payment
+            <div
+              *ngIf="isLoading"
+              class="ml-2 spinner-border spinner-border-sm text-light"
+              role="status"
+            >
+              <span class="sr-only">Loading...</span>
+            </div>
+            <i
+              style="color: white"
+              *ngIf="!isLoading"
+              class="fas fa-paper-plane ml-2"
+              aria-hidden="true"
+            ></i>
           </button>
         </div>
       </div>
