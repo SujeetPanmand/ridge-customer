@@ -7,7 +7,12 @@ import { ToastrService } from 'ngx-toastr';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { paymentLinks } from '../shop.config';
 import { environment } from 'src/environments/environment';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-payment',
@@ -71,7 +76,9 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   }
 
   get cardIconClass(): string {
-    const numericCardNumber = this.paymentForm.get('cardNumber').value.replace(/\D/g, '');
+    const numericCardNumber = this.paymentForm
+      .get('cardNumber')
+      .value.replace(/\D/g, '');
 
     if (numericCardNumber.startsWith('4')) {
       return 'fab fa-cc-visa';
@@ -236,7 +243,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             this.isStandardCut ? 'true' : 'false'
           }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
         );
-        this.toastrService.success('Thank you; your order is placed.');
+        this.toastrService.success('Your order has been placed.');
       } else {
         this.toastrService.error(res.message);
       }
