@@ -46,7 +46,7 @@ export class CommonService {
           this.cartProductValue.emit(res.allCartItemDetails.length);
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -86,7 +86,9 @@ export class CommonService {
       case 2:
         return { status: 'Cancelled', color: 'badge badge-bg-red' };
       case 3:
-        return { status: 'Confirmed', color: 'badge badge-bg-blue' };
+        return { status: 'Available', color: 'badge badge-bg-blue' };
+      case 4:
+        return { status: 'Confirmed', color: 'badge badge-bg-gr' };
       default:
         return { status: '', color: '' };
     }
@@ -102,7 +104,7 @@ export class CommonService {
     }
   }
 
-  getPaymentStatus(num): PaymentStatus | {status: string; color: string} {
+  getPaymentStatus(num): PaymentStatus | { status: string; color: string } {
     switch (num) {
       case 1:
         return { status: 'Pending', color: 'badge  badge-bg-red' };
@@ -110,6 +112,8 @@ export class CommonService {
         return { status: 'Completed', color: 'badge  badge-bg-gr' };
       case 3:
         return { status: 'Failed', color: 'badge  badge-bg-red' };
+      case 4:
+        return { status: 'Partially Paid', color: 'badge  badge-bg-red' };
       default:
         return { status: 'Unknown', color: 'badge badge-bg-gray' };
     }
