@@ -6,6 +6,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { OrderPaymentComponent } from './order-payment/order-payment.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'product-details/:productId',
     component: ProductDetailsComponent,
+  },
+  {
+    path: 'order-payment/:orderId',
+    component: OrderPaymentComponent,
   },
 ];
 

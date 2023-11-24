@@ -75,7 +75,11 @@ export const paymentLinks: BreadCrumbLinks[] = [
   },
   {
     name: 'Payment',
-    link: '/shop/payment?isStandardCut=true',
+    link: '/shop/payment',
+  },
+  {
+    name: 'OrderPayment',
+    link: '/shop/order-payment?id=SPAR77',
   },
 ];
 export const orderConfirmationLinks: BreadCrumbLinks[] = [

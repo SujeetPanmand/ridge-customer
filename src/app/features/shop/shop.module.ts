@@ -8,6 +8,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { OrderPaymentComponent } from './order-payment/order-payment.component';
 @NgModule({
   declarations: [
     ShopComponent,
@@ -16,6 +17,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     PaymentComponent,
     OrderConfirmationComponent,
     ProductDetailsComponent,
+    OrderPaymentComponent,
   ],
   imports: [CommonModule, ShopRoutingModule, SharedModule],
   providers: [DatePipe],
