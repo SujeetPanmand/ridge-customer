@@ -137,7 +137,7 @@ export class HomeComponent implements OnInit {
       .subscribe(async (res) => {
         if (res) {
           // console.log(res);
-          this.productList = res.allProductDetails;
+          this.productList = res.allProductDetails.filter((x) => x.isActive);
         }
       });
   }

@@ -36,6 +36,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   paymentForm: FormGroup;
   slotId = '';
   formSubmitAttempt = false;
+  isLoading = false;
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute,
@@ -166,6 +167,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     if (this.paymentForm.invalid) {
       return;
     }
+    this.isLoading = true;
     const apiRequest = {
       data: this.isSelfPickUp
         ? {
@@ -234,24 +236,23 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             orderItemsModel: this.formatRecord(this.finalOrderProducts),
           },
     };
-    this.router.navigateByUrl(
-      `shop/order-payment/SPAR77`
-    );
-    // this.apiService.request('CREATE_ORDER', apiRequest).subscribe((res) => {
-    //   if (res && res.statusCode == 200) {
-    //     console.log("RES HERE : ", res);
-    //     this.removLocalItems();
-    //     this.getCartItems();
-    //     this.router.navigateByUrl(
-    //       `shop/order-confirmation/${res.message}?isStandardCut=${
-    //         this.isStandardCut ? 'true' : 'false'
-    //       }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
-    //     );
-    //     this.toastrService.success('Your order has been placed.');
-    //   } else {
-    //     this.toastrService.error(res.message);
-    //   }
-    // });
+
+    this.apiService.request('CREATE_ORDER', apiRequest).subscribe((res) => {
+      if (res && res.statusCode == 200) {
+        this.isLoading = false;
+        this.removLocalItems();
+        this.getCartItems();
+        this.router.navigateByUrl(
+          `shop/order-confirmation/${res.message}?isStandardCut=${
+            this.isStandardCut ? 'true' : 'false'
+          }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
+        );
+        this.toastrService.success('Your order has been placed.');
+      } else {
+        this.isLoading = false;
+        this.toastrService.error(res.message);
+      }
+    });
   }
   goBack() {
     this.router.navigateByUrl(
