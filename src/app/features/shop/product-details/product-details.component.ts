@@ -291,6 +291,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
             res.allProductReviews
           );
 
+          this.applyFilterOnReview();
           this.calculateAvgRating();
           this.sortRating();
           this.hideReviewButton();
@@ -298,6 +299,13 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
           this.toastrService.error(res.message);
         }
       });
+  }
+
+  applyFilterOnReview() {
+    this.sortReviewArray();
+    if (this.rating != null || this.rating != '') {
+      this.sortByRating();
+    }
   }
 
   calculateAvgRating() {
@@ -492,13 +500,15 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
   sortReviewArray() {
     if (this.sortkey == 'recent') {
-      this.allProductReviews = this.allProductReviews.sort((a, b) => {
-        return <any>new Date(a.createdAt) - <any>new Date(b.createdAt);
-      });
+      this.allProductReviews = this.allProductReviews.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
     } else {
-      this.allProductReviews = this.allProductReviews.sort((a, b) => {
-        return <any>new Date(b.createdAt) - <any>new Date(a.createdAt);
-      });
+      this.allProductReviews = this.allProductReviews.sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
     }
   }
   onEditReview(content, item: Rating) {
