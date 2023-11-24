@@ -5,6 +5,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BreadCrumbComponent } from './component/bread-crumb/bread-crumb.component';
 import { ConfirmationPopUpComponent } from './component/confirmation-pop-up/confirmation-pop-up.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [BreadCrumbComponent, ConfirmationPopUpComponent],
@@ -14,6 +15,7 @@ import { ConfirmationPopUpComponent } from './component/confirmation-pop-up/conf
     CommonModule,
     NgbModule,
     ToastrModule.forRoot(),
+    DataTablesModule
   ],
   exports: [
     FormsModule,
@@ -22,6 +24,7 @@ import { ConfirmationPopUpComponent } from './component/confirmation-pop-up/conf
     ToastrModule,
     NgbModule,
     BreadCrumbComponent,
+    DataTablesModule
   ],
   providers: [ToastrService, NgbActiveModal],
 })

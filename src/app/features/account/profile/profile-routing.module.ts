@@ -5,6 +5,7 @@ import { EditAddressComponent } from './edit-address/edit-address.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { ProfileComponent } from './profile.component';
 
+
 const routes: Routes = [
   {
     path: '',
@@ -26,7 +27,10 @@ const routes: Routes = [
       {
         path: 'my-orders',
         component: MyOrdersComponent,
+        
       },
+      
+      
     ],
   },
 ];

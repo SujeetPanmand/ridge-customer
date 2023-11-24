@@ -4,6 +4,10 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from '../interfaces/user/user-details';
 import { environment } from 'src/environments/environment';
 
+export interface PaymentStatus {
+  status: string;
+  color: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -42,7 +46,7 @@ export class CommonService {
           this.cartProductValue.emit(res.allCartItemDetails.length);
         }
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -82,9 +86,36 @@ export class CommonService {
       case 2:
         return { status: 'Cancelled', color: 'badge badge-bg-red' };
       case 3:
-        return { status: 'Confirmed', color: 'badge badge-bg-blue' };
+        return { status: 'Available', color: 'badge badge-bg-blue' };
+      case 4:
+        return { status: 'Confirmed', color: 'badge badge-bg-gr' };
       default:
         return { status: '', color: '' };
+    }
+  }
+  getOrderType(num) {
+    switch (num) {
+      case 1:
+        return 'Normal';
+      case 2:
+        return 'PreOrder';
+      default:
+        return '';
+    }
+  }
+
+  getPaymentStatus(num): PaymentStatus | { status: string; color: string } {
+    switch (num) {
+      case 1:
+        return { status: 'Pending', color: 'badge  badge-bg-red' };
+      case 2:
+        return { status: 'Completed', color: 'badge  badge-bg-gr' };
+      case 3:
+        return { status: 'Failed', color: 'badge  badge-bg-red' };
+      case 4:
+        return { status: 'Partially Paid', color: 'badge  badge-bg-red' };
+      default:
+        return { status: 'Unknown', color: 'badge badge-bg-gray' };
     }
   }
 }

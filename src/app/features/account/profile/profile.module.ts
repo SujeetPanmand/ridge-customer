@@ -6,6 +6,8 @@ import { MyAccountComponent } from './my-account/my-account.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { EditAddressComponent } from './edit-address/edit-address.component';
 import { ProfileComponent } from './profile.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
+
 
 @NgModule({
   declarations: [
@@ -13,6 +15,7 @@ import { ProfileComponent } from './profile.component';
     MyOrdersComponent,
     EditAddressComponent,
     ProfileComponent,
+    OrderDetailsComponent,
   ],
   imports: [CommonModule, ProfileRoutingModule, SharedModule],
 })

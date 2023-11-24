@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { SignupComponent } from './signup/signup.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { OrderDetailsComponent } from './profile/order-details/order-details.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./profile/profile.module').then((a) => a.ProfileModule),
   },
+  {
+    path:'order-details/:orderId',
+    component:OrderDetailsComponent
+  }
 ];
 
 @NgModule({
