@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ZipCodeDetails } from 'src/app/shared/interfaces/zipcode/zipcode-details';
 import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
@@ -18,7 +19,11 @@ export class SignupComponent implements OnInit {
   lastName: string = '';
   address: string = '';
   zipCode: string = '';
+  state: string = '';
   phoneNumber: string = '';
+  city: string = '';
+  country: string = '';
+  zipCodeDetails: ZipCodeDetails;
   constructor(
     private router: Router,
     private apiService: ApiService,
@@ -30,6 +35,36 @@ export class SignupComponent implements OnInit {
     this.generateSignUpForm();
   }
 
+  checkZipCode(){
+    if(this.zipCode.length >= 5){
+      this.fetchZipCodeDetails(this.zipCode);
+    }
+  }
+
+  async fetchZipCodeDetails(zipcode){
+    await this.apiService
+      .request('GET_ZIPCODE_DETAILS', {
+        params: { zipcode: zipcode },
+      })
+      .subscribe((res) => {
+        if (res && res.statusCode == 200) {
+          this.zipCodeDetails = res;
+          console.log(this.zipCodeDetails.zipCodeDetails.zipcode);
+          this.patchDataFromZipCode(this.zipCodeDetails);
+        } else {
+          this.toastrService.error(res.message)
+        }
+      });
+  }
+
+  patchDataFromZipCode(zipCodeDetails: ZipCodeDetails){
+    this.signUpForm.patchValue({
+      city: zipCodeDetails.zipCodeDetails.city,
+      state: zipCodeDetails.zipCodeDetails.state,
+      country: zipCodeDetails.zipCodeDetails.country
+    })
+  }
+
   generateSignUpForm() {
     this.signUpForm = this.formBuilder.group({
       lastName: ['', Validators.required],
@@ -39,6 +74,9 @@ export class SignupComponent implements OnInit {
       address: ['', Validators.required],
       zipCode: ['', Validators.required],
       phoneNumber: ['', Validators.required],
+      state: ['',Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required]
     });
   }
 
@@ -56,6 +94,9 @@ export class SignupComponent implements OnInit {
         address: this.address,
         zipCode: this.zipCode,
         phoneNumber: this.phoneNumber,
+        state: this.state,
+        city: this.city,
+        country: this.country
       },
     };
 

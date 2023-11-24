@@ -9,12 +9,12 @@ const routes: Routes = [
     children: [
       {
         path: '*',
-        redirectTo: '/account/login',
+        redirectTo: '/home',
         pathMatch: 'full',
       },
       {
         path: '',
-        redirectTo: '/account/login',
+        redirectTo: '/home',
         pathMatch: 'full',
       },
       {

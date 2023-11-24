@@ -59,15 +59,6 @@
                 </span>
               </div>
               <div class="mb-3">
-                <label for="zip" class="form-label">ZipCode
-                  <span class="text-orange">*</span>
-                </label>
-                <input type="text" formControlName="zipCode" class="form-control" id="zip" name="zip"
-                  [(ngModel)]="zipCode" [class.is-invalid]="isFieldValid(signUpForm, 'zipCode')" />
-                <span class="text-orange" *ngIf="hasError(signUpForm, 'zipCode', 'required')">Please enter a zip code.
-                </span>
-              </div>
-              <div class="mb-3">
                 <label for="address" class="form-label">Address
                   <span class="text-orange">*</span>
                 </label>
@@ -76,6 +67,75 @@
                 <span class="text-orange" *ngIf="hasError(signUpForm, 'address', 'required')">Please enter a address.
                 </span>
               </div>
+              <div class="mb-3">
+                <label for="zip" class="form-label">ZipCode
+                  <span class="text-orange">*</span>
+                </label>
+                <input type="text" formControlName="zipCode" class="form-control" id="zip" name="zip"
+                  [(ngModel)]="zipCode" [class.is-invalid]="isFieldValid(signUpForm, 'zipCode')" (keyup)="checkZipCode()" />
+                <span class="text-orange" *ngIf="hasError(signUpForm, 'zipCode', 'required')">Please enter a zip code.
+                </span>
+              </div>
+              <div class="mb-4">
+                <label for="city" class="form-label"
+                  >Town / City <span class="text-orange">*</span></label
+                >
+                <input
+                  type="text"
+                  formControlName="city"
+                  class="form-control"
+                  id="city"
+                  name="city"
+                  [(ngModel)]="city"
+                  [class.is-invalid]="isFieldValid(signUpForm, 'city')"
+                />
+                <span
+                  class="text-orange"
+                  *ngIf="hasError(signUpForm, 'city', 'required')"
+                  >Please enter Town / City
+                </span>
+              </div>
+              <div class="col-md mb-4">
+                <label for="state" class="form-label"
+                  >State <span class="text-orange">*</span></label
+                >
+                <input
+                  type="text"
+                  formControlName="state"
+                  class="form-control"
+                  id="state"
+                  name="state"
+                  [(ngModel)]="state"
+                  [class.is-invalid]="isFieldValid(signUpForm, 'state')"
+                />
+                <span
+                  class="text-orange"
+                  *ngIf="hasError(signUpForm, 'state', 'required')"
+                  >Please enter state.
+                </span>
+              </div>
+              <div class="mb-4">
+                <label for="country" class="form-label"
+                  >Country / Region <span class="text-orange">*</span></label
+                >
+                <input
+                  type="text"
+                  formControlName="country"
+                  class="form-control"
+                  id="country"
+                  name="country"
+                  [(ngModel)]="country"
+                  [class.is-invalid]="
+                    isFieldValid(signUpForm, 'country')
+                  "
+                />
+                <span
+                  class="text-orange"
+                  *ngIf="hasError(signUpForm, 'country', 'required')"
+                  >Please enter Country / Region
+                </span>
+              </div>
+              
               <button type="submit" class="btn rounded-0 text-light button-orange mt-3 py-2" (click)="navigateToHome()">
                 Sign Up
               </button>
