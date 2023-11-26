@@ -14,8 +14,8 @@ import { DataTablesModule } from 'angular-datatables';
     ReactiveFormsModule,
     CommonModule,
     NgbModule,
-    ToastrModule.forRoot(),
-    DataTablesModule
+    ToastrModule.forRoot({ timeOut: 500 }),
+    DataTablesModule,
   ],
   exports: [
     FormsModule,
@@ -24,7 +24,7 @@ import { DataTablesModule } from 'angular-datatables';
     ToastrModule,
     NgbModule,
     BreadCrumbComponent,
-    DataTablesModule
+    DataTablesModule,
   ],
   providers: [ToastrService, NgbActiveModal],
 })

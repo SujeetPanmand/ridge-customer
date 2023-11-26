@@ -246,7 +246,11 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   selectCut(event, content, product) {
     event.stopPropagation();
     this.selectedProduct = product;
-    this.modalService.open(content, { size: 'lg', centered: true });
+    this.modalService.open(content, {
+      size: 'lg',
+      centered: true,
+      backdrop: false,
+    });
   }
 
   updateItemCartQuantity(quantity, productId) {
