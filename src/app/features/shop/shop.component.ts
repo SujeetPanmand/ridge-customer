@@ -202,10 +202,18 @@ export class ShopComponent implements OnInit {
     product.outOfStock
       ? product.isSample
         ? this.apllyPreOrder()
-        : this.modalService.open(content, { size: 'lg', centered: true })
+        : this.modalService.open(content, {
+            size: 'lg',
+            centered: true,
+            backdrop: false,
+          })
       : product.isSample
       ? this.updateItemCartQuantity(1, product.id)
-      : this.modalService.open(content, { size: 'lg', centered: true });
+      : this.modalService.open(content, {
+          size: 'lg',
+          centered: true,
+          backdrop: false,
+        });
   }
 
   imgShow(content, url) {
