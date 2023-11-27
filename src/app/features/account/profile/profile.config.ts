@@ -7,7 +7,7 @@ export const myAccountlinks: BreadCrumbLinks[] = [
   },
   {
     name: 'My Account',
-    link: '/profile/my-account',
+    link: 'account/profile/my-account',
   },
 ];
 
@@ -18,7 +18,7 @@ export const myAddressLinks: BreadCrumbLinks[] = [
   },
   {
     name: 'Edit Address',
-    link: '/profile/edit-address',
+    link: 'account/profile/edit-address',
   },
 ];
 
@@ -29,6 +29,6 @@ export const myOrderLinks: BreadCrumbLinks[] = [
   },
   {
     name: 'My Orders',
-    link: '/profile/my-orders',
+    link: 'account/profile/my-orders',
   },
 ];

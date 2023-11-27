@@ -31,7 +31,7 @@ export class CartComponent implements OnInit, AfterViewInit {
   @ViewChild('removeItemFromCartTemplate', { static: false })
   private removeItemFromCartTemplate: ElementRef;
   links: BreadCrumbLinks[] = cartLinks;
-  cartItems: AllCartItemDetail[];
+  cartItems: AllCartItemDetail[] = [];
   isLoading = false;
   constructor(
     private router: Router,
