@@ -169,6 +169,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
   setGlobalCartCount(count) {
     this.commonService.addProducts(count);
+    //this.commonService.cartProductValue.emit(count);
   }
   createOrder() {
     this.formSubmitAttempt = true;
