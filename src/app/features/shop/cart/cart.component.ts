@@ -32,6 +32,7 @@ export class CartComponent implements OnInit, AfterViewInit {
   private removeItemFromCartTemplate: ElementRef;
   links: BreadCrumbLinks[] = cartLinks;
   cartItems: AllCartItemDetail[];
+  isLoading = false;
   constructor(
     private router: Router,
     private modalService: NgbModal,
@@ -142,6 +143,7 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   removeItemFromCart(item) {
+    this.isLoading = true;
     let index = this.addedProducts.findIndex(
       (x) => x.productId === item.productId
     );
@@ -157,6 +159,7 @@ export class CartComponent implements OnInit, AfterViewInit {
       .request('DELETE_CART_ITEMS', { params: { id: productId } })
       .subscribe((res) => {
         if (res && res.statusCode == 200) {
+          this.isLoading = false;
           this.toastrService.success('Cart Item Deleted Successfully.');
         }
         this.getProductCart();

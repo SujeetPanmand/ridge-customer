@@ -146,10 +146,13 @@
             <div
               class="ms-auto d-flex flex-column flex-md-row justify-content-end text-light align-items-baseline"
             >
-              <span> <i class="bi bi-search icon mx-3"></i></span>
+              <!-- <span> <i class="bi bi-search icon mx-3"></i></span> -->
               <a routerLink="/shop/cart" class="text-white no-decoration"
                 ><i class="bi bi-cart icon"></i>
-                <div *ngIf="cartValue != 0" class="cart-count badge-danger rounded-circle text-center">
+                <div
+                  *ngIf="cartValue != 0"
+                  class="cart-count badge-danger rounded-circle text-center"
+                >
                   <span> {{ cartValue }}</span>
                 </div>
               </a>

@@ -11,69 +11,144 @@
           <div class="col-md-6">
             <form [formGroup]="signUpForm" class="p-xl-5 p-3">
               <div class="mb-3">
-                <label for="firstName" class="form-label">First Name
+                <label for="firstName" class="form-label"
+                  >First Name
                   <span class="text-orange">*</span>
                 </label>
-                <input type="text" formControlName="firstName" class="form-control" id="firstName" name="firstName"
-                  [(ngModel)]="firstName" [class.is-invalid]="isFieldValid(signUpForm, 'firstName')" />
-                <span class="text-orange" *ngIf="hasError(signUpForm, 'firstName', 'required')">Please enter a first
-                  name.
+                <input
+                  type="text"
+                  formControlName="firstName"
+                  class="form-control"
+                  id="firstName"
+                  name="firstName"
+                  [(ngModel)]="firstName"
+                  [class.is-invalid]="isFieldValid(signUpForm, 'firstName')"
+                />
+                <span
+                  class="text-orange"
+                  *ngIf="hasError(signUpForm, 'firstName', 'required')"
+                  >Please enter a first name.
                 </span>
               </div>
               <div class="mb-3">
-                <label for="lastName" class="form-label">Last Name
+                <label for="lastName" class="form-label"
+                  >Last Name
                   <span class="text-orange">*</span>
                 </label>
-                <input type="text" formControlName="lastName" class="form-control" id="lastName" name="lastName"
-                  [(ngModel)]="lastName" [class.is-invalid]="isFieldValid(signUpForm, 'lastName')" />
-                <span class="text-orange" *ngIf="hasError(signUpForm, 'lastName', 'required')">Please enter a last name.
+                <input
+                  type="text"
+                  formControlName="lastName"
+                  class="form-control"
+                  id="lastName"
+                  name="lastName"
+                  [(ngModel)]="lastName"
+                  [class.is-invalid]="isFieldValid(signUpForm, 'lastName')"
+                />
+                <span
+                  class="text-orange"
+                  *ngIf="hasError(signUpForm, 'lastName', 'required')"
+                  >Please enter a last name.
                 </span>
               </div>
               <div class="mb-3">
-                <label for="email" class="form-label">Email
+                <label for="email" class="form-label"
+                  >Email
                   <span class="text-orange">*</span>
                 </label>
-                <input type="email" formControlName="email" class="form-control" id="email" name="email"
-                  [(ngModel)]="userName" [class.is-invalid]="isFieldValid(signUpForm, 'email')" />
-                <span class="text-orange" *ngIf="hasError(signUpForm, 'email', 'required')">Please enter a email.
+                <input
+                  type="email"
+                  formControlName="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  [(ngModel)]="userName"
+                  [class.is-invalid]="isFieldValid(signUpForm, 'email')"
+                />
+                <span
+                  class="text-orange"
+                  *ngIf="hasError(signUpForm, 'email', 'required')"
+                  >Please enter a email.
                 </span>
               </div>
               <div class="mb-3">
-                <label for="password" class="form-label">Password
+                <label for="password" class="form-label"
+                  >Password
                   <span class="text-orange">*</span>
                 </label>
-                <input type="password" formControlName="password" class="form-control" id="password" name="password"
-                  [(ngModel)]="password" [class.is-invalid]="isFieldValid(signUpForm, 'password')" />
-                <span class="text-orange" *ngIf="hasError(signUpForm, 'password', 'required')">Please enter a password.
+                <input
+                  type="password"
+                  formControlName="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  [(ngModel)]="password"
+                  [class.is-invalid]="isFieldValid(signUpForm, 'password')"
+                />
+                <span
+                  class="text-orange"
+                  *ngIf="hasError(signUpForm, 'password', 'required')"
+                  >Please enter a password.
                 </span>
               </div>
               <div class="mb-3">
-                <label for="phoneNumber" class="form-label">Phone Number
+                <label for="phoneNumber" class="form-label"
+                  >Phone Number
                   <span class="text-orange">*</span>
                 </label>
-                <input type="text" formControlName="phoneNumber" class="form-control" id="phoneNumber"
-                  name="phoneNumber" [(ngModel)]="phoneNumber"
-                  [class.is-invalid]="isFieldValid(signUpForm, 'phoneNumber')" />
-                <span class="text-orange" *ngIf="hasError(signUpForm, 'phoneNumber', 'required')">Please enter a phone
-                  number.
+                <input
+                  type="text"
+                  formControlName="phoneNumber"
+                  class="form-control"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  [(ngModel)]="phoneNumber"
+                  [class.is-invalid]="isFieldValid(signUpForm, 'phoneNumber')"
+                />
+                <span
+                  class="text-orange"
+                  *ngIf="hasError(signUpForm, 'phoneNumber', 'required')"
+                  >Please enter a phone number.
                 </span>
               </div>
               <div class="mb-3">
-                <label for="address" class="form-label">Address
+                <label for="address" class="form-label"
+                  >Address
                   <span class="text-orange">*</span>
                 </label>
-                <input type="text" formControlName="address" class="form-control" id="address" name="address"
-                  [(ngModel)]="address" [class.is-invalid]="isFieldValid(signUpForm, 'address')" />
-                <span class="text-orange" *ngIf="hasError(signUpForm, 'address', 'required')">Please enter a address.
+                <input
+                  type="text"
+                  formControlName="address"
+                  class="form-control"
+                  id="address"
+                  name="address"
+                  [(ngModel)]="address"
+                  [class.is-invalid]="isFieldValid(signUpForm, 'address')"
+                />
+                <span
+                  class="text-orange"
+                  *ngIf="hasError(signUpForm, 'address', 'required')"
+                  >Please enter a address.
                 </span>
               </div>
               <div class="mb-3">
-                <label for="zip" class="form-label">ZipCode
+                <label for="zip" class="form-label"
+                  >ZipCode
                   <span class="text-orange">*</span>
                 </label>
-                <input type="text" formControlName="zipCode" class="form-control" id="zip" name="zip"
-                  [(ngModel)]="zipCode" [class.is-invalid]="isFieldValid(signUpForm, 'zipCode')" (keyup)="checkZipCode()" />
-                <span class="text-orange" *ngIf="hasError(signUpForm, 'zipCode', 'required')">Please enter a zip code.
+                <input
+                  type="text"
+                  formControlName="zipCode"
+                  class="form-control"
+                  id="zip"
+                  name="zip"
+                  [(ngModel)]="zipCode"
+                  [class.is-invalid]="isFieldValid(signUpForm, 'zipCode')"
+                  (ngModelChange)="this.zipCodeChanged.next($event)"
+                />
+                <span
+                  class="text-orange"
+                  *ngIf="hasError(signUpForm, 'zipCode', 'required')"
+                  >Please enter a zip code.
                 </span>
               </div>
               <div class="mb-4">
@@ -125,9 +200,7 @@
                   id="country"
                   name="country"
                   [(ngModel)]="country"
-                  [class.is-invalid]="
-                    isFieldValid(signUpForm, 'country')
-                  "
+                  [class.is-invalid]="isFieldValid(signUpForm, 'country')"
                 />
                 <span
                   class="text-orange"
@@ -135,15 +208,22 @@
                   >Please enter Country / Region
                 </span>
               </div>
-              
-              <button type="submit" class="btn rounded-0 text-light button-orange mt-3 py-2" (click)="navigateToHome()">
+
+              <button
+                type="submit"
+                class="btn rounded-0 text-light button-orange mt-3 py-2"
+                (click)="navigateToHome()"
+              >
                 Sign Up
               </button>
             </form>
           </div>
 
           <div class="col-md-6 p-5 d-md-block d-none">
-            <img src="assets/signup/microsoft-teams-image1.png" class="img-fluid" />
+            <img
+              src="assets/signup/microsoft-teams-image1.png"
+              class="img-fluid"
+            />
           </div>
         </div>
       </div>
