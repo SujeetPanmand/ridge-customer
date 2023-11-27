@@ -38,8 +38,11 @@
               {{ orderDetails?.user?.lastName }}</label
             >
             <span>
-              {{ orderDetails["address1"] }} in {{ orderDetails["city"] }},
-              {{ orderDetails["state"] }},{{ orderDetails["country"] }}
+              {{ orderDetails ? orderDetails["address1"] : "" }} in
+              {{ orderDetails ? orderDetails["city"] : "" }},
+              {{ orderDetails ? orderDetails["state"] : "" }},{{
+                orderDetails ? orderDetails["country"] : ""
+              }}
             </span>
           </div>
         </div>

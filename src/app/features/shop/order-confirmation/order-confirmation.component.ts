@@ -50,7 +50,6 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.getCartItems();
     this.getOrderInvoiceId();
     this.router.events.forEach((event) => {
       if (event instanceof NavigationStart) {
@@ -71,6 +70,7 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
         if (res && res.statusCode == 200) {
           console.log(res);
           this.orderDetails = res.orderDetails;
+          this.getCartItems(this.orderDetails);
           this.orderOn = this.datePipe.transform(
             new Date(this.orderDetails.createdAt),
             'MM/dd/yyyy'
@@ -109,25 +109,19 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
     //   this.setGlobalCartCount(standardList);
     // }
   }
-  getCartItems() {
-    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-      (res) => {
-        if (res && res.statusCode == 200) {
-          this.setGlobalCartCount(res.allCartItemDetails.length);
-          if (this.isStandardCut && !this.isPreorder) {
-            this.finalOrderProducts = res.allCartItemDetails;
-            this.finalOrderProducts.forEach((x) => {
-              this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
-            });
-            this.orderTotal =
-              this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-          } else {
-            this.showPreorderProductOrCustomProducts();
-          }
-        }
-      },
-      (error) => {}
-    );
+  getCartItems(res) {
+    // this.setGlobalCartCount(res.orderItemDetails.length);
+    if (this.isStandardCut && !this.isPreorder) {
+      this.finalOrderProducts = res.orderItemDetails;
+      this.finalOrderProducts.forEach((x) => {
+        this.orderSubTotal = this.orderSubTotal + x.unitPrice * x.quantity;
+        x['price'] = x.unitPrice;
+      });
+      this.orderTotal =
+        this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+    } else {
+      this.showPreorderProductOrCustomProducts();
+    }
   }
   showPreorderProductOrCustomProducts() {
     let standardList = JSON.parse(localStorage.getItem('directOrderProduct'))
@@ -152,8 +146,5 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
         100;
     this.orderTotal =
       this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-  }
-  setGlobalCartCount(count) {
-    this.commonService.addProducts(count);
   }
 }
