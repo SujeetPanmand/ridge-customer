@@ -209,14 +209,17 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     });
     this.finalOrderProducts = standardList;
 
-    this.orderSubTotal =
-      this.isPreorder && !this.isStandardCut
+    this.orderSubTotal = this.isPreorder
+      ? this.isStandardCut
         ? (this.finalOrderProducts[0].price *
             this.finalOrderProducts[0].preorderAmountPercentage) /
           100
         : (this.finalOrderProducts[0].price *
             this.finalOrderProducts[0].customCutPercentage) /
-          100;
+          100
+      : (this.finalOrderProducts[0].price *
+          this.finalOrderProducts[0].customCutPercentage) /
+        100;
 
     this.orderTotal =
       this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
