@@ -2,16 +2,28 @@
   <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-xl-center">
       <h2 id="hide" class="mb-0">
-        <i routerLink="/account/profile/my-orders" class="bi bi-arrow-left cursor"></i>Order
-        Details
+        <i
+          routerLink="/account/profile/my-orders"
+          class="bi bi-arrow-left cursor"
+        ></i
+        >Order Details
       </h2>
-      <div id="hide" class="text-orange text-decoration-underline fw-bold cursor print" (click)="printInvoice()">
+      <div
+        id="hide"
+        class="text-orange text-decoration-underline fw-bold cursor print"
+        (click)="printInvoice()"
+      >
         Print<span class="mx-1"><i class="bi bi-printer text-orange"></i></span>
       </div>
     </div>
     <div class="p-4 bg-white">
       <div class="d-flex align-items-center">
-        <img src="/assets/ridge-logo.png" width="5%" alt="" class="img-fluid logo">
+        <img
+          src="/assets/ridge-logo.png"
+          width="5%"
+          alt=""
+          class="img-fluid logo"
+        />
         <h3 class="text-center fw-bold text-center w-100">Invoice</h3>
       </div>
       <hr class="border mt-0 mb-4" />
@@ -24,23 +36,31 @@
           <label>Order Date : </label>
           <span> {{ selectedOrder?.createdAt | date : "MM/dd/yyyy" }}</span>
         </div>
-        <div class="text-danger" *ngIf="selectedOrder?.cutType === 2 && selectedOrder?.paymentStatus == 1">
-          <label for="">If you haven not filled the Google sheet for custom cut details please fill it here
-            &nbsp;</label>
-          <a class="text-orange fw-bold"
+        <div
+          class="text-danger"
+          *ngIf="
+            selectedOrder?.cutType === 2 && selectedOrder?.paymentStatus == 1
+          "
+        >
+          <label for=""
+            >If you haven not filled the Google sheet for custom cut details
+            please fill it here &nbsp;</label
+          >
+          <a
+            class="text-orange fw-bold"
             href="https://docs.google.com/forms/d/e/1FAIpQLSdOuwOSuawMOIri4gf9XD_IfK-jwB26HdyNlqBpRTafemwYQA/viewform?vc=0&c=0&w=1&flr=0"
-            target="_blank">
+            target="_blank"
+          >
             Google Form
           </a>
-
         </div>
         <div class="col-md-6 pt-3">
           <div class="mb-2">
             <span class="text-capitalize">
               {{
-              selectedOrder?.user.firstName +
-              " " +
-              selectedOrder?.user.lastName
+                selectedOrder?.user.firstName +
+                  " " +
+                  selectedOrder?.user.lastName
               }}
             </span>
           </div>
@@ -56,15 +76,15 @@
             <label>Shipping Address : </label>
             <span>
               {{
-              selectedOrder?.address1 +
-              " " +
-              selectedOrder?.address2 +
-              " " +
-              selectedOrder?.city +
-              " " +
-              selectedOrder?.state +
-              " " +
-              selectedOrder?.country
+                selectedOrder?.address1 +
+                  " " +
+                  selectedOrder?.address2 +
+                  " " +
+                  selectedOrder?.city +
+                  " " +
+                  selectedOrder?.state +
+                  " " +
+                  selectedOrder?.country
               }}
             </span>
           </div>
@@ -90,18 +110,22 @@
               </tr>
               <tr class="border-top">
                 <td colspan="1"></td>
-                <td class="text-end text-nowrap"><label>Sub Total : </label></td>
-                <td>${{ selectedOrder.subTotalAmount }}</td>
+                <td class="text-end text-nowrap">
+                  <label>Sub Total : </label>
+                </td>
+                <td>${{ selectedOrder?.subTotalAmount }}</td>
               </tr>
               <tr>
                 <td colspan="1"></td>
                 <td class="text-end text-nowrap"><label>Tax : </label></td>
-                <td>${{ selectedOrder.tax }}</td>
+                <td>${{ selectedOrder?.tax }}</td>
               </tr>
               <tr class="align-baseline border-top">
                 <td colspan="1"></td>
-                <td class="text-end text-nowrap"><label class="fs-4">Total : </label></td>
-                <td class="fs-4">${{ selectedOrder.totalAmount }}</td>
+                <td class="text-end text-nowrap">
+                  <label class="fs-4">Total : </label>
+                </td>
+                <td class="fs-4">${{ selectedOrder?.totalAmount }}</td>
               </tr>
             </tbody>
           </table>
@@ -109,18 +133,25 @@
 
         <div class="mb-2">
           <label>Payment Status : </label>
-          <span class=" ms-2 {{ commonService.getPaymentStatus(selectedOrder?.paymentStatus)?.color }}">
+          <span
+            class=" ms-2 {{
+              commonService.getPaymentStatus(selectedOrder?.paymentStatus)
+                ?.color
+            }}"
+          >
             {{
-            commonService.getPaymentStatus(selectedOrder?.paymentStatus)?.status
-            ? commonService.getPaymentStatus(selectedOrder?.paymentStatus)?.status
-            : "--"
+              commonService.getPaymentStatus(selectedOrder?.paymentStatus)
+                ?.status
+                ? commonService.getPaymentStatus(selectedOrder?.paymentStatus)
+                    ?.status
+                : "--"
             }}
           </span>
         </div>
         <div class="mb-2">
           <label>Payment Date : </label>
           <span>
-            {{ selectedOrder.paymentDate ? selectedOrder.paymentDate : "--" }}
+            {{ selectedOrder?.paymentDate ? selectedOrder.paymentDate : "--" }}
           </span>
         </div>
         <!--<div class="mb-2">
@@ -131,17 +162,29 @@
     </div>
 
     <div class="d-flex justify-content-end pt-4 flex-column flex-md-row">
-      <button *ngIf="
-            commonService.getOrderStatus(selectedOrder?.orderStatus).status ==
-              'Pending' && 'Confirmed'
-          " type="button" class="btn button-red rounded-0 mx-3 text-light mb-3" (click)="openCancelDialog(true)">
+      <button
+        *ngIf="
+          commonService.getOrderStatus(selectedOrder?.orderStatus).status ==
+            'Pending' && 'Confirmed'
+        "
+        type="button"
+        class="btn button-red rounded-0 mx-3 text-light mb-3"
+        (click)="openCancelDialog(true)"
+      >
         Cancel Order
       </button>
-      <button *ngIf="
-           selectedOrder?.paymentStatus != 2 && selectedOrder?.orderStatus != 1 && selectedOrder?.orderStatus != 2 && selectedOrder?.orderStatus != 4
-            
-          " type="button" class="btn button-orange rounded-0 mb-3" routerLink="shop/order-payment/"
-        +{{selectedOrder?.id}}>
+      <button
+        *ngIf="
+          selectedOrder?.paymentStatus != 2 &&
+          selectedOrder?.orderStatus != 1 &&
+          selectedOrder?.orderStatus != 2 &&
+          selectedOrder?.orderStatus != 4
+        "
+        type="button"
+        class="btn button-orange rounded-0 mb-3"
+        routerLink="shop/order-payment/"
+        +{{selectedOrder?.id}}
+      >
         Make Payment
       </button>
     </div>
