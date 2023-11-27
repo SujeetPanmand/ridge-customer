@@ -64,15 +64,11 @@
                   <a>
                     <i
                       *ngIf="!cardImage"
-                      [class]="cardIconClass + ' times-icon'"
+                      class="fas fa-credit-card times-icon"
                       aria-hidden="true"
                     ></i>
-                    <img
-                      *ngIf="cardImage"
-                      [class]="cardIconClass + ' times-icon'"
-                      [src]="cardImage"
-                    />
                   </a>
+                  <img class="card_c" *ngIf="cardImage" [src]="cardImage" />
                 </div>
                 <span
                   class="text-danger"
