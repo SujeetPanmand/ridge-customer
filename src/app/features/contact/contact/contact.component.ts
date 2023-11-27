@@ -11,7 +11,6 @@ import { CommonService } from 'src/app/shared/services/common.service';
   styleUrls: ['./contact.component.scss'],
 })
 export class ContactComponent implements OnInit {
-  
   contactForm: FormGroup;
   userEmail: string = '';
   subject: string = '';
@@ -28,7 +27,7 @@ export class ContactComponent implements OnInit {
   ngOnInit(): void {
     this.generateContactForm();
     this.commonService.gotoTop();
-    this.commonService.getUserDetails().then(x => {
+    this.commonService.getUserDetails().then((x) => {
       this.userEmail = x.userDetails.email;
       this.contactForm.get('userEmail').disable();
     });
@@ -57,7 +56,7 @@ export class ContactComponent implements OnInit {
       this.formSubmitAttempt = false;
       if (res && res.statusCode == 200) {
         this.toastrService.success('Contact Added Successfully!');
-        this.router.navigate(['']);
+        this.router.navigate(['home']);
       } else {
         this.toastrService.error(res.message);
       }

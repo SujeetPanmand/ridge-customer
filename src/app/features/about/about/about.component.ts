@@ -12,27 +12,30 @@ import { CommonService } from 'src/app/shared/services/common.service';
 })
 export class AboutComponent implements OnInit {
   subscribeForm: FormGroup;
-  emailSubscribe: string = "";
+  emailSubscribe: string = '';
   formSubmitAttempt: boolean = false;
 
-  constructor(private commonService: CommonService, private router: Router,
+  constructor(
+    private commonService: CommonService,
+    private router: Router,
     private formBuilder: FormBuilder,
     private apiService: ApiService,
-    private toastrService: ToastrService) { }
+    private toastrService: ToastrService
+  ) {}
   ngOnInit(): void {
     this.commonService.gotoTop();
     this.generateSubscribeForm();
-    this.commonService.getUserDetails().then(x => {
+    this.commonService.getUserDetails().then((x) => {
       this.emailSubscribe = x.userDetails.email;
       this.subscribeForm.get('emailSubscribe').disable();
-    })
+    });
   }
   generateSubscribeForm() {
     this.subscribeForm = this.formBuilder.group({
       emailSubscribe: ['', [Validators.required, Validators.email]],
     });
   }
-  
+
   navigateToHome() {
     this.formSubmitAttempt = true;
     if (this.subscribeForm.invalid) {
@@ -48,8 +51,8 @@ export class AboutComponent implements OnInit {
       if (res && res.statusCode == 200) {
         // this.setUserBasics(res.userDetails);
         this.toastrService.success('Subscribe Successfully!');
-        this.router.navigate(['']);
       } else {
+        this.emailSubscribe = '';
         this.toastrService.error(res.message);
       }
     });
@@ -65,5 +68,4 @@ export class AboutComponent implements OnInit {
     formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
-
 }

@@ -75,8 +75,8 @@ export class HomeComponent implements OnInit {
       if (res && res.statusCode == 200) {
         this.emailSubscribe = '';
         this.toastrService.success('Subscribe Successfully!');
-        this.router.navigate(['']);
       } else {
+        this.emailSubscribe = '';
         this.toastrService.error(res.message);
       }
     });
