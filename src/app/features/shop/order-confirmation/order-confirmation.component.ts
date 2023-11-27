@@ -6,6 +6,7 @@ import { orderConfirmationLinks } from '../shop.config';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { MyOrders } from 'src/app/shared/interfaces/my-orders';
 import { DatePipe } from '@angular/common';
+import { OrderDetails } from 'src/app/shared/interfaces/order-confirmation';
 
 @Component({
   selector: 'app-order-confirmation',
@@ -20,7 +21,7 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
   orderSubTotal = 0;
   isStandardCut = false;
   links: BreadCrumbLinks[] = orderConfirmationLinks;
-  orderDetails: MyOrders;
+  orderDetails: OrderDetails;
   orderOn: any;
   isPreorder = false;
   constructor(

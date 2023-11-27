@@ -32,8 +32,16 @@
         <div class="py-5">
           <div class="small-title">Shipping Address</div>
           <hr class="border" />
-          <label class="pt-2">Dibbert Carolyn</label>
-          <div>15071-8112 New Tedshire Heathcote Land 39345 Reece Drive</div>
+          <div class="d-flex flex-column">
+            <label class="pt-2"
+              >{{ orderDetails?.user?.firstName }}
+              {{ orderDetails?.user?.lastName }}</label
+            >
+            <span>
+              {{ orderDetails["address1"] }} in {{ orderDetails["city"] }},
+              {{ orderDetails["state"] }},{{ orderDetails["country"] }}
+            </span>
+          </div>
         </div>
 
         <div>
@@ -63,7 +71,7 @@
                   <td>{{ orderDetails?.id }}</td>
                   <td>{{ orderOn }}</td>
                   <td>
-                    {{ product.name }}  <span>{{ product.quantity }}</span>
+                    {{ product.name }} <span>{{ product.quantity }}</span>
                   </td>
                   <td>${{ product.price * product.quantity }}</td>
                 </tr>

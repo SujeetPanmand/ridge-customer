@@ -59,12 +59,19 @@
                     [class.is-invalid]="isFieldValid(paymentForm, 'cardNumber')"
                     (input)="onCardNumberInput($event)"
                     maxlength="16"
+                    (ngModelChange)="this.checkCardType.next($event)"
                   />
                   <a>
                     <i
+                      *ngIf="!cardImage"
                       [class]="cardIconClass + ' times-icon'"
                       aria-hidden="true"
                     ></i>
+                    <img
+                      *ngIf="cardImage"
+                      [class]="cardIconClass + ' times-icon'"
+                      [src]="cardImage"
+                    />
                   </a>
                 </div>
                 <span

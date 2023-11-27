@@ -5,7 +5,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
-import { paymentLinks } from '../shop.config';
+import { cartTypes, paymentLinks } from '../shop.config';
 import { environment } from 'src/environments/environment';
 import {
   AbstractControl,
@@ -13,6 +13,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Subject, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-payment',
@@ -37,6 +38,9 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   slotId = '';
   formSubmitAttempt = false;
   isLoading = false;
+  checkCardType = new Subject<string>();
+  cardImage = '';
+  cartTypes = cartTypes;
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute,
@@ -45,6 +49,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private toastrService: ToastrService
   ) {
+    this.subscribeToCreditType();
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
     this.isPreorder =
@@ -303,4 +308,16 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
+
+  subscribeToCreditType() {
+    this.checkCardType.pipe(debounceTime(1000)).subscribe((value) => {
+      if (value) {
+        this.cartTypes.forEach((x) => {
+          if (x.expressions[0].pattern.test(value)) {
+            this.cardImage = x.image;
+          }
+        });
+      }
+    });
+  }
 }
