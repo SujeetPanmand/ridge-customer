@@ -44,7 +44,7 @@ export class ForgotPasswordComponent {
         .subscribe((response) => {
           if (response && response.statusCode === 200) {
             this.toastrService.success(response?.message);
-            this.router.navigate(['account/resetpassword']);
+            this.router.navigate(['account/login']);
           } else {
             this.toastrService.error(response?.message);
           }
