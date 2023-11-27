@@ -130,6 +130,8 @@ export class CartComponent implements OnInit, AfterViewInit {
         console.log(res);
         this.getProductCart();
         this.calculateOrderTotal();
+      } else {
+        this.toastrService.error(res.message);
       }
     });
   }

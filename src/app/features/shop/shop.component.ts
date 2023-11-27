@@ -12,6 +12,7 @@ import {
   AllCartItemDetail,
   AllCartItemDetails,
 } from 'src/app/shared/interfaces/all-cart-item-details';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-shop',
@@ -33,7 +34,8 @@ export class ShopComponent implements OnInit {
     private router: Router,
     private commonService: CommonService,
     private modalService: NgbModal,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastrService: ToastrService
   ) {}
   ngOnInit() {
     this.getAllProducts();
@@ -252,6 +254,8 @@ export class ShopComponent implements OnInit {
       if (res && res.statusCode == 200) {
         console.log(res);
         this.getProductCart();
+      } else {
+        this.toastrService.error(res.message);
       }
     });
   }

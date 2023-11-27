@@ -264,6 +264,8 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       if (res && res.statusCode == 200) {
         console.log(res);
         this.getProductCart();
+      } else {
+        this.toastrService.error(res.message);
       }
     });
   }
