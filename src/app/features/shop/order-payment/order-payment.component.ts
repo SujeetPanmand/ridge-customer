@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { paymentLinks } from '../shop.config';
 import { ActivatedRoute } from '@angular/router';
+import { ApiService } from 'src/app/shared/services/api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-order-payment',
@@ -16,12 +18,17 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
   formSubmitAttempt = false;
   links: BreadCrumbLinks[] = paymentLinks;
   orderId:'';
+  orderPaymentDetails: any;
+  isLoading = false;
+  totalAmount:any;
 
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    private apiService: ApiService,
+    private toastrService: ToastrService
   ){
-    this.orderId = this.route.snapshot.params['orderId'];
+   this.orderId = this.route.snapshot.params['orderId'];
     this.links[2].link = `/shop/payment`;
   }
 
@@ -29,6 +36,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     // throw new Error('Method not implemented.');
     this.defaultSetting();
     this.generatePaymentForm();
+    this.getOrderPaymentDetailsById();
   }
 
   generatePaymentForm() {
@@ -80,12 +88,62 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     }
   }
 
-  createOrder(){
+  getOrderPaymentDetailsById() {
+    this.apiService
+      .request('GET_ORDER_PAYMENT_DETAILS', {
+        params: { id: this.route.snapshot.params['orderId'] },
+      })
+      .subscribe((res) => {
+        if (res && res.statusCode == 200) {
+         this.orderPaymentDetails = res.orderPaymentDetails;
+        }
+      });
+  }
+  
+  createOrder() {
     this.formSubmitAttempt = true;
-    console.log("ON CLICK CALLED");
     if (this.paymentForm.invalid) {
       return;
     }
+    this.isLoading = true;
+    const apiRequest = {
+      data: this.isSelfPickUp
+        ? {
+            cardNumber: Number(this.paymentForm.controls['cardNumber'].value),
+            expiryDate: new Date(
+              this.paymentForm.controls['expiryDate'].value
+            ).toISOString(),
+            cvv: Number(this.paymentForm.controls['cvv'].value),
+            cardHolderName: this.paymentForm.controls['cardHolderName'].value,
+            totalAmount: "1000",
+            orderId: this.orderId,
+          }
+        : {
+            cardNumber: Number(this.paymentForm.controls['cardNumber'].value),
+            expiryDate: new Date(
+              this.paymentForm.controls['expiryDate'].value
+            ).toISOString(),
+            cvv: Number(this.paymentForm.controls['cvv'].value),
+            cardHolderName: this.paymentForm.controls['cardHolderName'].value,
+            totalAmount: "1000",
+            orderId: this.orderId,
+          },
+    };
+
+    this.apiService.request('COMPLETE_ORDER_PAYMENT', apiRequest).subscribe((res) => {
+      if (res && res.statusCode == 200) {
+        this.isLoading = false;
+        // this.router.navigateByUrl(
+        //   `shop/order-confirmation/${res.message}?isStandardCut=${
+        //     this.isStandardCut ? 'true' : 'false'
+        //   }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
+        // );
+        this.toastrService.success('Your order has been successfull.');
+      } else {
+        this.isLoading = false;
+        this.toastrService.error(res.message);
+      }
+    });
   }
   
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>
