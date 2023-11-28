@@ -22,6 +22,7 @@ export class BlogDetailsComponent implements OnInit {
   comment = '';
   allBlogList: AllBlogsDetailsList[] = [];
   allComments: any = [];
+  isLoading = false;
   constructor(
     private commonService: CommonService,
     private apiService: ApiService,
@@ -44,34 +45,33 @@ export class BlogDetailsComponent implements OnInit {
           this.allBlogList = res.allBlogsDetailsList;
           this.sortTopArticals();
         }
-       
       });
   }
 
-  sortTopArticals(){
-    this.allBlogList.forEach((element)=>{
+  sortTopArticals() {
+    this.allBlogList.forEach((element) => {
       var obj = {
         title: element.title,
         id: element.id,
-        commentCount: element.commentDetails
-      }
+        commentCount: element.commentDetails,
+      };
       this.allComments.push(obj);
     });
-    this.allComments.forEach((element)=>{
+    this.allComments.forEach((element) => {
       element.commentCount = element.commentCount.length;
     });
-    this.allComments.sort((a, b) => {
-      if (a.commentCount !== b.commentCount) {
-        return a.commentCount - b.commentCount;
-      } else {
-        return b.commentCount.localeCompare(a.commentCount);
-      }
-    }).reverse();
-    this.allComments = this.allComments.slice(0,3);
+    this.allComments
+      .sort((a, b) => {
+        if (a.commentCount !== b.commentCount) {
+          return a.commentCount - b.commentCount;
+        } else {
+          return b.commentCount.localeCompare(a.commentCount);
+        }
+      })
+      .reverse();
+    this.allComments = this.allComments.slice(0, 3);
     console.log(this.allComments);
   }
-
-
 
   getBlogById() {
     this.apiService
@@ -94,11 +94,9 @@ export class BlogDetailsComponent implements OnInit {
       date;
     return this.blogPictureUrl;
   }
-  
-  setTopArticalPic(id){
-    this.blogPictureUrl =
-    environment.baseUrl +
-    '/api/blog/image/' + id;
+
+  setTopArticalPic(id) {
+    this.blogPictureUrl = environment.baseUrl + '/api/blog/image/' + id;
     return this.blogPictureUrl;
   }
 
@@ -110,12 +108,14 @@ export class BlogDetailsComponent implements OnInit {
   }
 
   getAllComment() {
+    this.isLoading = true;
     this.apiService
       .request('GET_ALL_COMMENT', {
         params: { id: this.route.snapshot.params['blogId'] },
       })
       .subscribe((res: Comment) => {
-        console.log("Comment", res);
+        console.log('Comment', res);
+        this.isLoading = false;
         if (res && res.statusCode == 200) {
           this.comments = this.formatRecords(res.commentList);
         }
@@ -131,6 +131,9 @@ export class BlogDetailsComponent implements OnInit {
   }
 
   addComment() {
+    if (!this.comment) {
+      return;
+    }
     const apiRequest = {
       data: {
         message: this.comment,

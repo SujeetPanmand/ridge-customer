@@ -103,6 +103,16 @@
                 placeholder="Add Comment"
               />
             </div>
+            <div class="d-md-none d-block text-center mt-3">
+              <button
+                class="btn button-orange-blog"
+                [disabled]="isLoading"
+                type="button"
+                (click)="addComment()"
+              >
+                Add
+              </button>
+            </div>
           </div>
         </div>
       </div>
