@@ -1,28 +1,27 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
-import { paymentLinks } from '../shop.config';
+import { partialPaymentLinks } from '../shop.config';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-order-payment',
   templateUrl: './order-payment.component.html',
-  styleUrls: ['./order-payment.component.scss']
+  styleUrls: ['./order-payment.component.scss'],
 })
 export class OrderPaymentComponent implements OnInit, AfterViewInit {
   isSelfPickUp = false;
   orderAddress = [];
   paymentForm: FormGroup;
   formSubmitAttempt = false;
-  links: BreadCrumbLinks[] = paymentLinks;
-  orderId:'';
+  links: BreadCrumbLinks[] = partialPaymentLinks;
+  orderId: '';
 
-  constructor(
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
-  ){
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder) {
     this.orderId = this.route.snapshot.params['orderId'];
-    this.links[2].link = `/shop/payment`;
+
+    this.links[3].link = `/account/order-details/${this.orderId}`;
+    this.links[4].link = `/shop/order-payment/${this.orderId}`;
   }
 
   ngOnInit(): void {
@@ -40,12 +39,9 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.links[2].link = `/shop/payment`;
-  }
+  ngAfterViewInit(): void {}
 
-  goBack() {
-  }
+  goBack() {}
 
   defaultSetting() {
     this.isSelfPickUp =
@@ -54,10 +50,8 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     this.orderAddress = JSON.parse(localStorage.getItem('orderAddress'))
       ? JSON.parse(localStorage.getItem('orderAddress'))
       : [];
-
   }
 
-  
   onCardNumberInput(event: any): void {
     // Remove non-numeric characters from the input value
     const numericValue = event.target.value.replace(/\D/g, '');
@@ -80,18 +74,17 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     }
   }
 
-  createOrder(){
+  createOrder() {
     this.formSubmitAttempt = true;
-    console.log("ON CLICK CALLED");
+    console.log('ON CLICK CALLED');
     if (this.paymentForm.invalid) {
       return;
     }
   }
-  
+
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>
     formGroup.get(field).invalid &&
     (this.formSubmitAttempt || formGroup.get(field).touched);
-
 
   hasError = (
     formGroup: FormGroup,

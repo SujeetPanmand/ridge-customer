@@ -21,12 +21,11 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
 })
-export class CartComponent implements OnInit, AfterViewInit {
+export class CartComponent implements OnInit {
   addedProducts = [];
   orderProducts = [];
   orderTotal = 0;
   removeFromCartItem;
-  isStandardCut = false;
   productPicUrl = '';
   @ViewChild('removeItemFromCartTemplate', { static: false })
   private removeItemFromCartTemplate: ElementRef;
@@ -40,21 +39,7 @@ export class CartComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private apiService: ApiService,
     private toastrService: ToastrService
-  ) {
-    this.isStandardCut =
-      this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
-    let substr = this.isStandardCut
-      ? 'isStandardCut=true'
-      : 'isStandardCut=false';
-    this.links[2].link = `/shop/cart?${substr}`;
-  }
-
-  ngAfterViewInit(): void {
-    let substr = this.isStandardCut
-      ? 'isStandardCut=true'
-      : 'isStandardCut=false';
-    this.links[2].link = `/shop/cart?${substr}`;
-  }
+  ) {}
 
   ngOnInit() {
     this.getProductCart();

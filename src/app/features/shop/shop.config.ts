@@ -47,7 +47,7 @@ export const cartLinks: BreadCrumbLinks[] = [
   },
   {
     name: 'Cart',
-    link: '/shop/cart?isStandardCut=true',
+    link: '/shop/cart',
   },
 ];
 export const checkoutLinks: BreadCrumbLinks[] = [
@@ -77,9 +77,28 @@ export const paymentLinks: BreadCrumbLinks[] = [
     name: 'Payment',
     link: '/shop/payment',
   },
+];
+
+export const partialPaymentLinks: BreadCrumbLinks[] = [
   {
-    name: 'OrderPayment',
-    link: '/shop/order-payment?id=SPAR77',
+    name: 'Home',
+    link: '/home',
+  },
+  {
+    name: 'Shop',
+    link: '/shop',
+  },
+  {
+    name: 'My Orders',
+    link: '/account/profile/my-orders',
+  },
+  {
+    name: 'Order Details',
+    link: '/account/order-details',
+  },
+  {
+    name: 'Partial Payment',
+    link: '/shop/order-payment',
   },
 ];
 export const orderConfirmationLinks: BreadCrumbLinks[] = [
