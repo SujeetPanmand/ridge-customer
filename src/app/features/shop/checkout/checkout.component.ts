@@ -353,7 +353,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     element = this.allFilteredSlots.filter((x) => x.id == this.singleSlotId);
     this.singleSlot =
       element[0].startTimeHour +
-      ': ' +
+      ':' +
       element[0].startTimeMinut +
       ' ' +
       element[0].startTimeUnit +
@@ -361,7 +361,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       'TO' +
       ' ' +
       element[0].endTimeHour +
-      ': ' +
+      ':' +
       element[0].endTimeMinut +
       ' ' +
       element[0].endTimeUnit;

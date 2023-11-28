@@ -234,7 +234,7 @@
               {{ isSelfPickUp ? "Pickup" : "Delivery" }} Date &Time
             </div>
             <div class="mb-3 fw-semibold">
-              {{ orderDate }} and {{ orderSlot }}
+              {{ orderDate | date : "MM/dd/yyyy" }} and {{ orderSlot }}
             </div>
           </div>
           <button
