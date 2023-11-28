@@ -133,6 +133,7 @@ export class OrderDetailsComponent {
       this.cancelReasonFormSubmitAttempt = false;
       if (res && res.statusCode == 200) {
         this.toastrService.success('Order cancelled successfully.');
+        this.getOrderDetails();
         this.modalService.dismissAll();
       }
     });
