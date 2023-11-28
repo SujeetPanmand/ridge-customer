@@ -87,9 +87,9 @@ export class CommonService {
       case 2:
         return { status: 'Cancelled', color: 'badge badge-bg-red' };
       case 3:
-        return { status: 'Available', color: 'badge badge-bg-blue' };
+        return { status: 'Confirmed', color: 'badge badge-bg-blue' };
       case 4:
-        return { status: 'Confirmed', color: 'badge badge-bg-gr' };
+        return { status: 'Available', color: 'badge badge-bg-gr' };
       default:
         return { status: '', color: '' };
     }
