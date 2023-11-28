@@ -134,11 +134,14 @@ export class CartComponent implements OnInit {
     let index = this.addedProducts.findIndex(
       (x) => x.productId === item.productId
     );
-    this.removeCartItem(this.addedProducts[index].productId);
-    this.addedProducts.splice(index, 1);
-    // this.commonSection(item);
-    this.calculateOrderTotal();
-    this.setGlobalCartCount();
+    if (index != -1) {
+      const itemToRemove = this.addedProducts[index];
+      this.addedProducts.splice(index, 1);
+      this.removeCartItem(itemToRemove.productId);
+      // this.commonSection(item);
+      this.calculateOrderTotal();
+      this.setGlobalCartCount();
+    }
   }
 
   removeCartItem(productId) {
