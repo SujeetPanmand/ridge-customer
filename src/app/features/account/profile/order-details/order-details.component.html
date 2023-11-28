@@ -164,22 +164,16 @@
     <div class="d-flex justify-content-end pt-4 flex-column flex-md-row">
       <button
         *ngIf="
-          commonService.getOrderStatus(selectedOrder?.orderStatus).status ==
-            'Pending' && 'Confirmed'
+          selectedOrder?.orderStatus !== 1 && selectedOrder?.orderStatus !== 2
         "
         type="button"
-        class="btn button-red rounded-0 mx-3 text-light mb-3"
+        class="btn button-orange rounded-0 mx-3 text-light mb-3"
         (click)="openCancelDialog(true)"
       >
         Cancel Order
       </button>
       <button
-        *ngIf="
-          selectedOrder?.paymentStatus != 2 &&
-          selectedOrder?.orderStatus != 1 &&
-          selectedOrder?.orderStatus != 2 &&
-          selectedOrder?.orderStatus != 4
-        "
+        *ngIf="selectedOrder?.paymentStatus == 4"
         type="button"
         class="btn button-orange rounded-0 mb-3"
         routerLink="shop/order-payment/"
@@ -191,41 +185,41 @@
   </div>
 </section>
 
-<!--<ng-template #canelOrderTemplate let-modal>
-    <div class="modal-header border-bottom py-2">
-      <h5 class="modal-title">Confirmation</h5>
-      <i class="fas fa-times close-icon mt-2" (click)="modal.close()"></i>
+<ng-template #canelOrderTemplate let-modal>
+  <div class="modal-header border-bottom py-2">
+    <h5 class="modal-title">Confirmation</h5>
+    <i class="fas fa-times close-icon mt-2" (click)="modal.close()"></i>
+  </div>
+  <form [formGroup]="cancelReasonForm">
+    <div class="modal-body px-2">
+      <div class="mb-1">
+        Please specify the reason for cancellation or date change to proceed
+      </div>
+      <label class="mb-2">Reason <span class="text-danger">*</span></label>
+      <textarea
+        [(ngModel)]="cancelReason"
+        formControlName="cancelReason"
+        class="form-control mb-2"
+        [class.is-invalid]="isFieldValid(cancelReasonForm, 'cancelReason')"
+      >
+      </textarea>
+      <span
+        class="text-orange"
+        *ngIf="hasError(cancelReasonForm, 'cancelReason', 'required')"
+        >Please enter reason for cancel.
+      </span>
     </div>
-    <form [formGroup]="cancelReasonForm">
-      <div class="modal-body px-2">
-        <div class="mb-1">
-          Please specify the reason for cancellation or date change to proceed
-        </div>
-        <label class="mb-2">Reason <span class="text-danger">*</span></label>
-        <textarea
-          [(ngModel)]="cancelReason"
-          formControlName="cancelReason"
-          class="form-control mb-2"
-          [class.is-invalid]="isFieldValid(cancelReasonForm, 'cancelReason')"
-        >
-        </textarea>
-        <span
-          class="text-orange"
-          *ngIf="hasError(cancelReasonForm, 'cancelReason', 'required')"
-          >Please enter reason for cancel.
-        </span>
-      </div>
-      <div class="modal-footer mt-2 d-flex justify-content-end">
-        <button
-          type="button"
-          class="btn rounded-0 button-red me-2 py-1 text-light"
-          (click)="cancelOrder()"
-        >
-          {{ isCancelOrder ? "Confirm Cancel" : "Change Date" }}
-        </button>
-        <button class="btn btn-light-primary" (click)="modal.close()">
-          Close
-        </button>
-      </div>
-    </form>
-  </ng-template>-->
+    <div class="modal-footer mt-2 d-flex justify-content-end">
+      <button
+        type="button"
+        class="btn rounded-0 button-orange me-2 py-1 text-light"
+        (click)="cancelOrder()"
+      >
+        Confirm Cancel
+      </button>
+      <button class="btn btn-light-primary" (click)="modal.close()">
+        Close
+      </button>
+    </div>
+  </form>
+</ng-template>

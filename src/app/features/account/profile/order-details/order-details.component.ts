@@ -12,7 +12,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
-  styleUrls: ['./order-details.component.scss']
+  styleUrls: ['./order-details.component.scss'],
 })
 export class OrderDetailsComponent {
   @ViewChild('canelOrderTemplate', { static: false })
@@ -22,8 +22,7 @@ export class OrderDetailsComponent {
   cancelReason: string = '';
   cancelReasonFormSubmitAttempt: boolean = false;
   expectedDeliveryDate = '';
-  isCancelOrder = false;
-  orderId="";
+  orderId = '';
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
@@ -31,23 +30,18 @@ export class OrderDetailsComponent {
     private modalService: NgbModal,
     public commonService: CommonService,
     private formBuilder: FormBuilder,
-    private router: Router,
-   // private datePipe: DatePipe
+    private router: Router // private datePipe: DatePipe
   ) {}
   ngOnInit() {
-    
-   this.orderId = this.route.snapshot.params['orderId'];
-    
-    if(this.orderId !=""){
-     this.getOrderDetails();
-     this.saveCancelReasonForm();
-   }
+    this.orderId = this.route.snapshot.params['orderId'];
 
+    if (this.orderId != '') {
+      this.getOrderDetails();
+      this.saveCancelReasonForm();
+    }
   }
 
   getOrderDetails() {
-    
-    
     this.apiService
       .request('ORDER_DETAILS', { params: { id: this.orderId } })
       .subscribe((res) => {
@@ -78,7 +72,7 @@ export class OrderDetailsComponent {
       title_text: 'Confirmation',
       text: `Do you really want to mark as delivered order ${this.selectedOrder.id}?`,
     };
-    let modelRef = this.modalService.open(ConfirmationPopUpComponent , {
+    let modelRef = this.modalService.open(ConfirmationPopUpComponent, {
       size: 'md',
       centered: true,
     });
@@ -96,7 +90,7 @@ export class OrderDetailsComponent {
                 'Mark as selivered order successfully'
               );
 
-             // this.router.navigate(['/orders']);
+              // this.router.navigate(['/orders']);
             }
           });
       }
@@ -105,7 +99,6 @@ export class OrderDetailsComponent {
 
   openCancelDialog(flag) {
     this.cancelReason = '';
-    this.isCancelOrder = flag;
     this.modalService.open(this.canelOrderTemplate, {
       size: 'md',
       centered: true,
@@ -115,59 +108,33 @@ export class OrderDetailsComponent {
     formGroup.get(field).invalid &&
     (this.cancelReasonFormSubmitAttempt || formGroup.get(field).touched);
 
-    hasError = (
-      formGroup: FormGroup,
-      field: string,
-      errorName: string
-    ): boolean =>
-      formGroup.get(field).errors && formGroup.get(field).touched
-        ? formGroup.get(field).errors[errorName]
-        : false;
+  hasError = (
+    formGroup: FormGroup,
+    field: string,
+    errorName: string
+  ): boolean =>
+    formGroup.get(field).errors && formGroup.get(field).touched
+      ? formGroup.get(field).errors[errorName]
+      : false;
 
-        cancelOrder() {
-          this.cancelReasonFormSubmitAttempt = true;
-          if (this.cancelReasonForm.invalid) {
-            return;
-          }
-          const apiRequest = this.isCancelOrder
-            ? {
-                data: {
-                  cancelledReason: this.cancelReason,
-                  id: this.selectedOrder.id,
-                },
-              }
-            : {
-                data: {
-                  featureForAdmin: true,
-                  reason: this.cancelReason,
-                  expectedDeliveryDate: new Date(
-                    this.expectedDeliveryDate
-                  ).toISOString(),
-                  orderId: this.selectedOrder.id,
-                },
-              };
-          this.apiService
-            .request(
-              this.isCancelOrder ? 'CANCEL_ORDER' : 'CHANGE_ORDER_DATE',
-              apiRequest
-            )
-            .subscribe((res) => {
-              this.cancelReasonFormSubmitAttempt = false;
-              if (res && res.statusCode == 200) {
-                this.getOrderDetails();
-                this.commonService.gotoTop();
-                this.toastrService.success('Updated Successfully!');
-                this.modalService.dismissAll();
-              }
-            });
-        }
+  cancelOrder() {
+    this.cancelReasonFormSubmitAttempt = true;
+    if (this.cancelReasonForm.invalid) {
+      return;
+    }
+    const apiRequest = {
+      data: {
+        cancelledReason: this.cancelReason,
+        id: this.selectedOrder.id,
+      },
+    };
 
-        askReasonBeforeDateChange(flag) {
-          this.cancelReason = '';
-          this.isCancelOrder = flag;
-          this.modalService.open(this.canelOrderTemplate, {
-            size: 'md',
-            centered: true,
-          });
-        }
+    this.apiService.request('CANCEL_ORDER', apiRequest).subscribe((res) => {
+      this.cancelReasonFormSubmitAttempt = false;
+      if (res && res.statusCode == 200) {
+        this.toastrService.success('Order cancelled successfully.');
+        this.modalService.dismissAll();
+      }
+    });
+  }
 }
