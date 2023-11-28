@@ -29,6 +29,7 @@ export class CommonService {
   addProducts(value) {
     this.cartProducts = value;
     // this.cartProductValue.emit(this.cartProducts);
+    this.cartProductValue.emit(value);
   }
 
   gotoTop() {
@@ -46,7 +47,7 @@ export class CommonService {
           this.cartProductValue.emit(res.allCartItemDetails.length);
         }
       },
-      (error) => { }
+      (error) => {}
     );
   }
 
