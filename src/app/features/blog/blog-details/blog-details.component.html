@@ -94,7 +94,7 @@
                 </div>
               </div>
             </div>
-            <div class="">
+            <!-- <div class="">
               <input
                 [(ngModel)]="comment"
                 (keydown.enter)="addComment()"
@@ -102,16 +102,19 @@
                 class="form-control rounded-0"
                 placeholder="Add Comment"
               />
-            </div>
-            <div class="text-center mt-3">
-              <button
-                class="btn button-orange-blog"
-                [disabled]="isLoading"
-                type="button"
-                (click)="addComment()"
-              >
-                Add
-              </button>
+            </div> -->
+            <div class="input-group">
+              <input
+                [(ngModel)]="comment"
+                (keydown.enter)="addComment()"
+                type="text"
+                class="form-control rounded-0"
+                placeholder="Add Comment"
+              />
+              <span
+                class="input-group-text eye-inside bg-transparent border-start-0"
+                ><i (click)="addComment()" class="fas fa-arrow-right cursor"></i
+              ></span>
             </div>
           </div>
         </div>
