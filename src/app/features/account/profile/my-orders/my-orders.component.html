@@ -11,38 +11,40 @@
       <h2 class="fw-bold sub-title py-2">My Orders</h2>
 
       <div class="table-responsive pt-3">
-        <table
-        datatable
-       *ngIf="orderDetails.length !=0"
-       
-      >
-        <thead>
-          <tr >
-            <th>ORDER ID</th>
+        <table datatable *ngIf="orderDetails.length != 0">
+          <thead>
+            <tr>
+              <th>ORDER ID</th>
               <th>ORDER DATE</th>
               <th>PRICE</th>
               <th>STATUS</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="p-2" *ngFor="let order of orderDetails" (click)="navigateToDetails(order.id)">
-            <td>{{ order.id }}</td>
-              <td>{{ order.expectedDeliveryDate | date:"MM/dd/yyyy" }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="p-2"
+              *ngFor="let order of orderDetails"
+              (click)="navigateToDetails(order.id)"
+            >
+              <td>{{ order.orderId }}</td>
+              <td>{{ order.expectedDeliveryDate | date : "MM/dd/yyyy" }}</td>
               <td>${{ order.totalAmount }}</td>
               <td>
-                <span class="badge p-2 rounded-pill" [ngClass]=" commonService.getOrderStatus(order.orderStatus).color">
+                <span
+                  class="badge p-2 rounded-pill"
+                  [ngClass]="
+                    commonService.getOrderStatus(order.orderStatus).color
+                  "
+                >
                   <i class="bi bi-check"></i
                   ><span class="m-2">{{
                     commonService.getOrderStatus(order.orderStatus).status
                   }}</span>
                 </span>
               </td>
-            
-          </tr>
-        </tbody>
-      </table>
-        
-        
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

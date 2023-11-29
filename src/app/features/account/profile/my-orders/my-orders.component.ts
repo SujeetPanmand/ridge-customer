@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class MyOrdersComponent implements OnInit {
   links: BreadCrumbLinks[] = myOrderLinks;
-  orderDetails: MyOrders[];
+  orderDetails: MyOrders[] = [];
   reason = '';
   cancelReasonForm: FormGroup;
   cancelReasonFormSubmitAttempt: boolean = false;
@@ -28,7 +28,7 @@ export class MyOrdersComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
     public commonService: CommonService,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -67,8 +67,8 @@ export class MyOrdersComponent implements OnInit {
     );
   }
 
-  navigateToDetails(orderId:any){
-    this.router.navigate([`account/order-details/${orderId}`] )
+  navigateToDetails(orderId: any) {
+    this.router.navigate([`account/order-details/${orderId}`]);
   }
   openCancelDialog(content, selectedOrderDetails) {
     console.log(selectedOrderDetails.id);

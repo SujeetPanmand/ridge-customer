@@ -30,7 +30,7 @@
       <div class="row">
         <div class="mb-2">
           <label>Order ID : </label>
-          <span> {{ selectedOrder?.id }}</span>
+          <span> {{ selectedOrder?.orderId }}</span>
         </div>
         <div class="mb-2">
           <label>Order Date : </label>
@@ -173,7 +173,9 @@
         Cancel Order
       </button>
       <button
-        *ngIf="selectedOrder?.paymentStatus == 4 &&  selectedOrder?.orderStatus == 4"
+        *ngIf="
+          selectedOrder?.paymentStatus == 4 && selectedOrder?.orderStatus == 4
+        "
         type="button"
         class="btn button-orange rounded-0 mb-3"
         routerLink="shop/order-payment/"

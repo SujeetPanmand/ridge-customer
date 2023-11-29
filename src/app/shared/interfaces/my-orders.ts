@@ -24,6 +24,7 @@ export interface MyOrders {
   company?: string;
   cutType?: string;
   createdAt?: string;
+  orderId?: string;
 }
 export interface UserOrder {
   id?: string;
