@@ -52,9 +52,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   zipCode: string = '';
   city: string = '';
   address1: string = '';
-  phoneNumber:any = '';
-  country:string = '';
-  state:string = '';
+  phoneNumber: any = '';
+  country: string = '';
+  state: string = '';
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
@@ -320,8 +320,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       phoneNumber: ['', Validators.required],
       company: [''],
       address2: [''],
-      defaultFlag: [false],
-      billFlag: [false],
     });
   }
 
@@ -408,8 +406,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>
-  formGroup.get(field).invalid &&
-  (this.formSubmitAttempt || formGroup.get(field).touched);
+    formGroup.get(field).invalid &&
+    (this.formSubmitAttempt || formGroup.get(field).touched);
 
   hasError = (
     formGroup: FormGroup,

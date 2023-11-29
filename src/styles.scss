@@ -227,3 +227,9 @@ h5 {
   background: #e7e7ff 0% 0% no-repeat padding-box;
   width: 100px;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
