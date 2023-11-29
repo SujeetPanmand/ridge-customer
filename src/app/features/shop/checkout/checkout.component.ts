@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/shared/interfaces/user/user-details';
 import { CommonService } from 'src/app/shared/services/common.service';
@@ -45,6 +45,16 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   isThursdaySlot: boolean = false;
   isFridaySlot: boolean = false;
   isSaturdaySlot: boolean = false;
+  formSubmitAttempt: boolean = false;
+  firstName: string = '';
+  lastName: string = '';
+  emailAddress: string = '';
+  zipCode: string = '';
+  city: string = '';
+  address1: string = '';
+  phoneNumber:any = '';
+  country:string = '';
+  state:string = '';
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
@@ -272,6 +282,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   async onRedirectToPayment() {
+    this.formSubmitAttempt = true;
+    if (this.userDetailsForm.invalid) {
+      return;
+    }
     localStorage.setItem('orderSlot', JSON.stringify(this.singleSlot));
     localStorage.setItem('slotId', JSON.stringify(this.singleSlotId));
     this.isSelfPickUp
@@ -295,15 +309,15 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   generateUserDetailsForm() {
     this.userDetailsForm = this.formBuilder.group({
-      country: [''],
-      zipCode: [''],
-      state: [''],
-      city: [''],
-      address1: [''],
-      firstName: [''],
-      lastName: [''],
-      emailAddress: [''],
-      phoneNumber: [''],
+      country: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      state: ['', Validators.required],
+      city: ['', Validators.required],
+      address1: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      emailAddress: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
       company: [''],
       address2: [''],
       defaultFlag: [false],
@@ -392,4 +406,17 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.returnFromEditDate = JSON.parse(localStorage.getItem('orderDate'));
     this.getCurrentDay();
   }
+
+  isFieldValid = (formGroup: FormGroup, field: string): boolean =>
+  formGroup.get(field).invalid &&
+  (this.formSubmitAttempt || formGroup.get(field).touched);
+
+  hasError = (
+    formGroup: FormGroup,
+    field: string,
+    errorName: string
+  ): boolean =>
+    formGroup.get(field).errors && formGroup.get(field).touched
+      ? formGroup.get(field).errors[errorName]
+      : false;
 }
