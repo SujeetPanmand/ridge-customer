@@ -100,8 +100,8 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
             ).toISOString(),
             cvv: Number(this.paymentForm.controls['cvv'].value),
             cardHolderName: this.paymentForm.controls['cardHolderName'].value,
-            totalAmount: '1000',
-            orderId: this.orderId,
+            totalAmount: this.orderPaymentDetails.payment,
+            orderId: this.orderId.trim(),
           }
         : {
             cardNumber: Number(this.paymentForm.controls['cardNumber'].value),
@@ -120,8 +120,9 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
       .subscribe((res) => {
         if (res && res.statusCode == 200) {
           this.isLoading = false;
-
-          this.toastrService.success('Your order has been successfull.');
+          this.toastrService.success(
+            'Your remaining payment done succesfully. '
+          );
         }
       });
   }
