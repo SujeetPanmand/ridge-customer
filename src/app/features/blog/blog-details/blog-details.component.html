@@ -61,11 +61,11 @@
                   />
                 </div>
                 <div class="flex-grow-1 ms-3">
-                  <div class="d-flex flex-column flex-md-row">
-                    <div class="h6 fw-bold text-capitalize">
+                  <div class="d-flex flex-row">
+                    <div class="fw-bold text-capitalize">
                       {{ comment?.user.name }}
                     </div>
-                    <div class="ms-md-3 text-secondary">
+                    <div class="ms-md-3 ms-1 text-secondary">
                       {{ comment?.createdAt | date : "MM/dd/yyyy" }}
                     </div>
                   </div>
@@ -76,11 +76,11 @@
                     <div class="col-md-8">
                       <div *ngFor="let reply of comment.replies" class="d-flex">
                         <div class="flex-grow-1 ms-3">
-                          <div class="d-flex flex-column flex-md-row">
-                            <div class="h6 fw-bold">
+                          <div class="d-flex flex-row">
+                            <div class="fw-bold">
                               {{ reply?.replier.name }}
                             </div>
-                            <div class="ms-md-3 text-secondary">
+                            <div class="ms-md-3 ms-1 text-secondary">
                               {{ reply?.createdAt | date : "MM/dd/yyyy" }}
                             </div>
                           </div>
