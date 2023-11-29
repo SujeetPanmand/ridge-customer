@@ -39,7 +39,9 @@ export class ShopComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.getAllProducts();
+
     this.getProductCart();
+
     this.generateCutForm();
     this.commonService.gotoTop();
   }
@@ -176,17 +178,15 @@ export class ShopComponent implements OnInit {
       (error) => {}
     );
   }
+
   updateProductListCount(data) {
     data.forEach((x) => {
-      // let index = this.productList.findIndex(p=> p.id == x.productId);
-      // this.productList[index].count = x.quantity;
       this.productList.forEach((item) => {
         if (item.id == x.productId) {
           item.count = x.quantity;
         }
       });
     });
-    console.log(this.productList);
   }
 
   setGlobalCartCount(data) {
@@ -210,7 +210,7 @@ export class ShopComponent implements OnInit {
             backdrop: false,
           })
       : product.isSample
-      ? this.updateItemCartQuantity(1, product.id)
+      ? this.updateItemCartQuantity(1, product.id, product)
       : this.modalService.open(content, {
           size: 'lg',
           centered: true,
@@ -222,6 +222,7 @@ export class ShopComponent implements OnInit {
     this.url = url;
     this.modalService.open(content, { size: 'xl', centered: true });
   }
+
   setProductPic(id) {
     let date = new Date().getTime();
     this.productPicUrl = '';
@@ -237,27 +238,58 @@ export class ShopComponent implements OnInit {
       ? selectedProduct.count + 1
       : selectedProduct.count - 1;
     if (selectedProduct.count > 0) {
-      this.updateItemCartQuantity(selectedProduct.count, selectedProduct.id);
+      this.updateItemCartQuantity(
+        selectedProduct.count,
+        selectedProduct.id,
+        selectedProduct
+      );
     } else if (selectedProduct.count == 0) {
       this.removeCartItem(selectedProduct.id);
     }
   }
 
-  updateItemCartQuantity(quantity, productId) {
-    const apiRequest = {
-      data: {
-        productId: productId,
-        quantity: quantity,
-      },
+  updateItemCartQuantity(quantity, productId, product) {
+    debugger;
+
+    // const apiRequest = {
+    //   data: {
+    //     productId: productId,
+    //     quantity: quantity,
+    //   },
+    // };
+    // this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
+    //   if (res && res.statusCode == 200) {
+    //     console.log(res);
+    //     this.getProductCart();
+    //   } else {
+    //     this.toastrService.error(res.message);
+    //   }
+    // });
+
+    let ridgeItem = [];
+    let productObject = {
+      productId: '',
+      productName: '',
+      cutInfo: '',
+      quantity: '',
+      price: '',
+      totalPrice: '',
+      description: '',
     };
-    this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
-      if (res && res.statusCode == 200) {
-        console.log(res);
-        this.getProductCart();
+
+    ridgeItem = JSON.parse(localStorage.getItem('cart'));
+    if (!ridgeItem.length) {
+      ridgeItem = [];
+      productObject;
+      ridgeItem.push(product);
+    } else {
+      let index = ridgeItem.findIndex((x) => x.id == productId);
+      if (index !== -1) {
+        ridgeItem[index].count = ridgeItem[index].count + 1;
       } else {
-        this.toastrService.error(res.message);
+        ridgeItem[index].count = 1;
       }
-    });
+    }
   }
 
   removeCartItem(productId) {
