@@ -116,6 +116,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       })
       .subscribe((res) => {
         if (res) {
+          console.log('___', res);
           this.allAvailableSlot = this.isSelfPickUp
             ? res.allPickupSlotDetails
               ? res.allPickupSlotDetails
@@ -123,6 +124,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
             : res.allSlotDetails
             ? res.allSlotDetails
             : [];
+          this.allAvailableSlot = this.allAvailableSlot.filter(
+            (x) => x.isActive
+          );
+          console.log('___', this.allAvailableSlot);
           this.heighLightSlotDay();
         }
       });
