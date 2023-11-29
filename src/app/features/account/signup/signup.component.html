@@ -143,6 +143,7 @@
                   name="zip"
                   [(ngModel)]="zipCode"
                   [class.is-invalid]="isFieldValid(signUpForm, 'zipCode')"
+                  (keydown)="onKeyPress($event)"
                   (ngModelChange)="this.zipCodeChanged.next($event)"
                 />
                 <span

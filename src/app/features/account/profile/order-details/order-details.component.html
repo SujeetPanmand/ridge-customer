@@ -4,9 +4,9 @@
       <h2 class="mb-0 hide">
         <i
           routerLink="/account/profile/my-orders"
-          class="bi bi-arrow-left cursor"
-        ></i
-        >Order Details
+          class="bi-arrow-left cursor"
+        ></i>
+        <span> Order Details</span>
       </h2>
       <div
         id="hide"
@@ -134,7 +134,7 @@
         <div class="mb-2">
           <label>Payment Status : </label>
           <span
-            class=" ms-2 {{
+            class="ms-2 {{
               commonService.getPaymentStatus(selectedOrder?.paymentStatus)
                 ?.color
             }}"

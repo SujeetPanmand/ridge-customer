@@ -39,6 +39,12 @@ export class SignupComponent implements OnInit {
     this.generateSignUpForm();
   }
 
+  onKeyPress(event) {
+    if (this.zipCode.toString().length >= 5) {
+      event.preventDefault();
+    }
+  }
+
   onZipCodeChanged() {
     this.zipCodeChanged.pipe(debounceTime(1000)).subscribe((value) => {
       if (value) {
