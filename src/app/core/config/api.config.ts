@@ -192,6 +192,21 @@ const subscribeEndPoint = [
   },
 ];
 
+const paymentEndPoint = [
+  {
+    name: 'GET_ORDER_PAYMENT_DETAILS',
+    method: 'GET',
+    url:
+      environment.baseUrl +
+      '/api/complete-order-payment/get-order-payment-details/[id]',
+  },
+  {
+    name: 'COMPLETE_ORDER_PAYMENT',
+    method: 'POST',
+    url: environment.baseUrl + '/api/complete-order-payment/add',
+  },
+];
+
 export const ApiConfig = {
   baseUrl: '',
   endpoints: [
@@ -204,5 +219,6 @@ export const ApiConfig = {
     ...homeEndPoints,
     ...orderCreateEndPoints,
     ...subscribeEndPoint,
+    ...paymentEndPoint,
   ],
 };

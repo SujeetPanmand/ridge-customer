@@ -74,7 +74,14 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   }
   generatePaymentForm() {
     this.paymentForm = this.formBuilder.group({
-      cardNumber: ['', [Validators.required, Validators.pattern(/^\d{16}$/)]],
+      cardNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(15),
+          Validators.maxLength(19),
+        ],
+      ],
       expiryDate: ['', Validators.required],
       cvv: ['', Validators.required],
       cardHolderName: ['', Validators.required],

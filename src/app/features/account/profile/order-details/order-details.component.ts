@@ -138,4 +138,11 @@ export class OrderDetailsComponent {
       }
     });
   }
+
+  navigateToSecondPayment() {
+    this.router.navigate([
+      `shop/order-payment/
+    ${this.selectedOrder?.id}`,
+    ]);
+  }
 }

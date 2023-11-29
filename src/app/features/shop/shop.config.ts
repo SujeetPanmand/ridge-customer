@@ -81,14 +81,6 @@ export const paymentLinks: BreadCrumbLinks[] = [
 
 export const partialPaymentLinks: BreadCrumbLinks[] = [
   {
-    name: 'Home',
-    link: '/home',
-  },
-  {
-    name: 'Shop',
-    link: '/shop',
-  },
-  {
     name: 'My Orders',
     link: '/account/profile/my-orders',
   },

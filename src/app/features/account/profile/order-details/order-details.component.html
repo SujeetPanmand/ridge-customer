@@ -173,13 +173,12 @@
         Cancel Order
       </button>
       <button
+        (click)="navigateToSecondPayment()"
         *ngIf="
           selectedOrder?.paymentStatus == 4 && selectedOrder?.orderStatus == 4
         "
         type="button"
         class="btn button-orange rounded-0 mb-3"
-        routerLink="shop/order-payment/"
-        +{{selectedOrder?.id}}
       >
         Make Payment
       </button>
