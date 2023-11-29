@@ -24,6 +24,7 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
   orderDetails: OrderDetails;
   orderOn: any;
   isPreorder = false;
+  isGoogleLinkShow = true;
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute,
@@ -113,6 +114,11 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
     // this.setGlobalCartCount(res.orderItemDetails.length);
     if (this.isStandardCut && !this.isPreorder) {
       this.finalOrderProducts = res.orderItemDetails;
+      // this.finalOrderProducts.forEach((x) => {
+      //   if (x.isSample) {
+      //     this.isGoogleLinkShow = false;
+      //   }
+      // });
       this.finalOrderProducts.forEach((x) => {
         this.orderSubTotal = this.orderSubTotal + x.unitPrice * x.quantity;
         x['price'] = x.unitPrice;
