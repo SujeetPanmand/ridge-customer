@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
-import { partialPaymentLinks } from '../shop.config';
+import { cartTypes, partialPaymentLinks } from '../shop.config';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subject, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-order-payment',
@@ -21,14 +22,17 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
   orderPaymentDetails: any;
   isLoading = false;
   totalAmount: any;
+  cardImage = '';
+  checkCardType = new Subject<string>();
+  cartTypes = cartTypes;
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private apiService: ApiService,
     private toastrService: ToastrService
   ) {
+    this.subscribeToCreditType();
     this.orderId = this.route.snapshot.params['orderId'];
-
     this.links[1].link = `/account/order-details/${this.orderId}`;
     this.links[2].link = `/shop/order-payment/${this.orderId}`;
   }
@@ -42,7 +46,14 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
 
   generatePaymentForm() {
     this.paymentForm = this.formBuilder.group({
-      cardNumber: ['', [Validators.required, Validators.pattern(/^\d{16}$/)]],
+      cardNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(19),
+          Validators.minLength(15),
+        ],
+      ],
       expiryDate: ['', Validators.required],
       cvv: ['', Validators.required],
       cardHolderName: ['', Validators.required],
@@ -62,27 +73,6 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
       : [];
   }
 
-  onCardNumberInput(event: any): void {
-    // Remove non-numeric characters from the input value
-    const numericValue = event.target.value.replace(/\D/g, '');
-
-    // Limit the input to 16 characters
-    this.paymentForm.get('cardNumber').setValue(numericValue.slice(0, 16));
-  }
-
-  get cardIconClass(): string {
-    const numericCardNumber = this.paymentForm
-      .get('cardNumber')
-      .value.replace(/\D/g, '');
-
-    if (numericCardNumber.startsWith('4')) {
-      return 'fab fa-cc-visa';
-    } else if (numericCardNumber.startsWith('5')) {
-      return 'fab fa-cc-mastercard';
-    } else {
-      return 'fas fa-credit-card';
-    }
-  }
   getOrderPaymentDetailsById() {
     this.apiService
       .request('GET_ORDER_PAYMENT_DETAILS', {
@@ -130,15 +120,8 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
       .subscribe((res) => {
         if (res && res.statusCode == 200) {
           this.isLoading = false;
-          // this.router.navigateByUrl(
-          //   `shop/order-confirmation/${res.message}?isStandardCut=${
-          //     this.isStandardCut ? 'true' : 'false'
-          //   }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
-          // );
+
           this.toastrService.success('Your order has been successfull.');
-        } else {
-          this.isLoading = false;
-          this.toastrService.error(res.message);
         }
       });
   }
@@ -155,4 +138,16 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
+
+  subscribeToCreditType() {
+    this.checkCardType.pipe(debounceTime(1000)).subscribe((value) => {
+      if (value) {
+        this.cartTypes.forEach((x) => {
+          if (x.expressions[0].pattern.test(value)) {
+            this.cardImage = x.image;
+          }
+        });
+      }
+    });
+  }
 }

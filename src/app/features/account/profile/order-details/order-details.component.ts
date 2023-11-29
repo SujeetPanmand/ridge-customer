@@ -142,7 +142,7 @@ export class OrderDetailsComponent {
   navigateToSecondPayment() {
     this.router.navigate([
       `shop/order-payment/
-    ${this.selectedOrder?.id}`,
+    ${this.selectedOrder?.id.trim()}`,
     ]);
   }
 }

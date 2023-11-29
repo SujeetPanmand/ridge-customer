@@ -5,8 +5,8 @@
       <h1 class="sub-title pt-3">Order Payment</h1>
       <div class="row pt-4">
         <div class="col-md-6 mx-auto bg-white p-4">
-          <h5 class="text-title">Order Id: {{ orderId }}</h5>
-          <h5 class="text-title">Amount: 0.0</h5>
+          <!-- <h5 class="text-title">Order Id: {{ orderId }}</h5> -->
+          <h5 class="text-title">Amount: {{ orderPaymentDetails?.payment }}</h5>
           <hr class="border" />
 
           <h4 class="text-title">Payment Method</h4>
@@ -33,17 +33,17 @@
                     class="form-control"
                     placeholder="XXX XXX XXXX 9817"
                     formControlName="cardNumber"
-                    pattern="^\d{16}$"
                     [class.is-invalid]="isFieldValid(paymentForm, 'cardNumber')"
-                    (input)="onCardNumberInput($event)"
-                    maxlength="16"
+                    (ngModelChange)="this.checkCardType.next($event)"
                   />
                   <a>
                     <i
-                      [class]="cardIconClass + ' times-icon'"
+                      *ngIf="!cardImage"
+                      class="fas fa-credit-card times-icon"
                       aria-hidden="true"
                     ></i>
                   </a>
+                  <img class="card_c" *ngIf="cardImage" [src]="cardImage" />
                 </div>
                 <span
                   class="text-danger"
