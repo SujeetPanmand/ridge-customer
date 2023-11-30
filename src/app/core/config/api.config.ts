@@ -169,7 +169,7 @@ const homeEndPoints = [
   {
     name: 'PROMOTION_DETAILS',
     method: 'GET',
-    url: environment.baseUrl + '/api/promotion/get',
+    url: environment.baseUrl + '/api/promotion/customer-promotion',
   },
 ];
 const orderCreateEndPoints = [

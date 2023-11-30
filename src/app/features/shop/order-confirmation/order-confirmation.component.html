@@ -13,11 +13,11 @@
             Print
           </button>
         </div>
-        <div *ngIf="!isStandardCut && isGoogleLinkShow" class="py-2">
+        <div *ngIf="!isStandardCut" class="py-2">
           <span class="fw-bold">Note:</span> For Custom Cut, kindly complete the
           Google Form
         </div>
-        <div>
+        <div *ngIf="!isStandardCut">
           <a
             class="text-orange fw-bold"
             href="https://docs.google.com/forms/d/e/1FAIpQLSdOuwOSuawMOIri4gf9XD_IfK-jwB26HdyNlqBpRTafemwYQA/viewform?vc=0&c=0&w=1&flr=0"
@@ -29,7 +29,13 @@
           </a>
         </div>
 
-        <div class="py-5">
+        <div *ngIf="orderDetails?.isSelfPickup" class="py-5">
+          <div style="font-weight: bolder" class="small-title mb-2">
+            Self Pickup Address:
+          </div>
+          <span>San Gabriel River In Liberty Hill, Austin, Texas -73301</span>
+        </div>
+        <div *ngIf="!orderDetails?.isSelfPickup" class="py-5">
           <div class="small-title">Shipping Address</div>
           <hr class="border" />
           <div class="d-flex flex-column">
@@ -66,6 +72,7 @@
                   <th>ORDER ID</th>
                   <th>ORDER ON</th>
                   <th>ORDERED ITEMS</th>
+
                   <th>PRICE</th>
                 </tr>
               </thead>
@@ -74,7 +81,11 @@
                   <td>{{ orderDetails?.orderId }}</td>
                   <td>{{ orderOn }}</td>
                   <td>
-                    {{ product.name }} <span>{{ product.quantity }}</span>
+                    {{ product.name
+                    }}<span>
+                      *
+                      {{ product.quantity }}</span
+                    >
                   </td>
                   <td>${{ product.price * product.quantity }}</td>
                 </tr>

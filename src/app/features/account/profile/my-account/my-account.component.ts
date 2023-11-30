@@ -42,8 +42,6 @@ export class MyAccountComponent implements OnInit {
     this.myAccountForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      emailAddress: ['', Validators.required],
-      phone: ['', Validators.required],
     });
   }
 
@@ -75,8 +73,6 @@ export class MyAccountComponent implements OnInit {
       data: {
         firstName: this.firstName,
         lastName: this.lastName,
-        email: this.emailAddress,
-        phoneNumber: this.phone,
       },
     };
     this.apiService
@@ -106,8 +102,6 @@ export class MyAccountComponent implements OnInit {
     this.myAccountForm.patchValue({
       firstName: this.userDetails.userDetails.firstName,
       lastName: this.userDetails.userDetails.lastName,
-      emailAddress: this.userDetails.userDetails.email,
-      phone: this.userDetails.userDetails.phoneNumber,
     });
   }
   onSelectFile = (event) => {

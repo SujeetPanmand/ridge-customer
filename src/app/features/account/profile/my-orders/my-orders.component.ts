@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { myOrderLinks } from '../profile.config';
 import { ApiService } from 'src/app/shared/services/api.service';
@@ -8,13 +8,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-my-orders',
   templateUrl: './my-orders.component.html',
   styleUrls: ['./my-orders.component.css'],
 })
-export class MyOrdersComponent implements OnInit {
+export class MyOrdersComponent implements OnInit, AfterViewInit {
   links: BreadCrumbLinks[] = myOrderLinks;
   orderDetails: MyOrders[] = [];
   reason = '';
@@ -22,6 +23,9 @@ export class MyOrdersComponent implements OnInit {
   cancelReasonFormSubmitAttempt: boolean = false;
   cancelReason: string = '';
   selectedOrderId: string = '';
+  isLoading = false;
+  dtOptions: any = {};
+  dtTrigger: Subject<any> = new Subject<any>();
   constructor(
     private apiService: ApiService,
     private modalService: NgbModal,
@@ -30,8 +34,22 @@ export class MyOrdersComponent implements OnInit {
     public commonService: CommonService,
     private router: Router
   ) {}
+  ngAfterViewInit(): void {
+    this.dtTrigger.next(this.orderDetails);
+  }
 
   ngOnInit() {
+    this.dtOptions = {
+      paging: true,
+      fixedColumns: true,
+      order: [[1, 'asc']],
+      autoWidth: true,
+
+      select: false,
+      responsive: true,
+      pagingType: 'full_numbers',
+      pageLength: 10,
+    };
     this.myOrderDetails();
     this.saveCancelReasonForm();
   }
@@ -56,15 +74,15 @@ export class MyOrdersComponent implements OnInit {
       : false;
 
   myOrderDetails() {
-    this.apiService.request('MY_ORDERS', { params: {} }).subscribe(
-      (res) => {
-        console.log(res);
-        if (res && res.statusCode == 200) {
-          this.orderDetails = res.allUserOrdersDetails;
-        }
-      },
-      (error) => {}
-    );
+    this.isLoading = true;
+    this.apiService.request('MY_ORDERS', { params: {} }).subscribe((res) => {
+      console.log(res);
+      this.isLoading = false;
+      if (res && res.statusCode == 200) {
+        this.orderDetails = res.allUserOrdersDetails;
+        // this.dtTrigger.next(this.orderDetails);
+      }
+    });
   }
 
   navigateToDetails(orderId: any) {

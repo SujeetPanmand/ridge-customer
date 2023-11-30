@@ -24,7 +24,7 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
   orderDetails: OrderDetails;
   orderOn: any;
   isPreorder = false;
-  isGoogleLinkShow = true;
+  // isGoogleLinkShow = true;
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute,

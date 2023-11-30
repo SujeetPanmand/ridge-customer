@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 export class HeaderComponent implements OnInit {
   addedProducts = [];
   cartValue = 0;
-  isLogginShow = true;
+  isLogginShow = false;
   userId = '';
   profilePictureUrl = 'assets/em_user.png';
   constructor(private router: Router, public commonService: CommonService) {}

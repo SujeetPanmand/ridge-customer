@@ -21,7 +21,7 @@
 
               <p>
                 {{ orderAddress["address1"] }}
-                {{ orderAddress["address1"] ? orderAddress["address1"] : "" }}
+                {{ orderAddress["address2"] ? orderAddress["address2"] : "" }}
                 in {{ orderAddress["city"] }}, {{ orderAddress["state"] }},{{
                   orderAddress["country"]
                 }},{{ orderAddress["zipCode"] }}
@@ -34,12 +34,12 @@
           <form [formGroup]="paymentForm">
             <div class="d-flex">
               <div class="form-check">
-                <input
+                <!-- <input
                   class="form-check-input"
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault1"
-                />
+                /> -->
                 <i class="bi bi-credit-card"></i>
                 <span class="px-1"> Credit Card </span>
               </div>

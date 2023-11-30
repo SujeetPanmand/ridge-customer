@@ -72,21 +72,24 @@
           </div>
         </div>
         <div class="col-md-6">
-          <div class="mb-2">
-            <label>Shipping Address : </label>
-            <span>
-              {{
-                selectedOrder?.address1 +
-                  " " +
-                  selectedOrder?.address2 +
-                  " " +
-                  selectedOrder?.city +
-                  " " +
-                  selectedOrder?.state +
-                  " " +
-                  selectedOrder?.country
-              }}
-            </span>
+          <div class="py-5">
+            <div style="font-weight: bolder" class="small-title">
+              Self Pickup Address:
+            </div>
+            <span>San Gabriel River In Liberty Hill, Austin, Texas -73301</span>
+          </div>
+          <div *ngIf="!selectedOrder?.isSelfPickup">
+            <div class="small-title">Shipping Address</div>
+            <hr class="border" />
+            <div class="d-flex flex-column">
+              <span>
+                {{ selectedOrder ? selectedOrder["address1"] : "" }} in
+                {{ selectedOrder ? selectedOrder["city"] : "" }},
+                {{ selectedOrder ? selectedOrder["state"] : "" }},{{
+                  selectedOrder ? selectedOrder["country"] : ""
+                }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
