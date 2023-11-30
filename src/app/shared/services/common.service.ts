@@ -3,6 +3,7 @@ import { ApiService } from './api.service';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../interfaces/user/user-details';
 import { environment } from 'src/environments/environment';
+import { AllCartItemDetail } from '../interfaces/all-cart-item-details';
 
 export interface PaymentStatus {
   status: string;
@@ -13,10 +14,12 @@ export interface PaymentStatus {
 })
 export class CommonService {
   cartProducts = 0;
+  cartItems: AllCartItemDetail[] = [];
   isLogginShow = false;
   profilePictureUrl = 'assets/em_user.png';
   userDetails: User;
   @Output() cartProductValue = new EventEmitter<number>();
+  @Output() cartItemsEvent = new EventEmitter<AllCartItemDetail[]>();
   @Output() islogginButtonShow = new EventEmitter<boolean>();
   @Output() newProfileImageEmitter = new EventEmitter<boolean>();
   constructor(
@@ -24,14 +27,15 @@ export class CommonService {
     private toastrService: ToastrService
   ) {
     this.getUserDetails();
-    this.setGlobalCartCount();
   }
   addProducts(value) {
     this.cartProducts = value;
-    // this.cartProductValue.emit(this.cartProducts);
     this.cartProductValue.emit(value);
   }
-
+  setCartItems(items: AllCartItemDetail[]) {
+    this.cartItems = items;
+    this.cartItemsEvent.emit(items);
+  }
   gotoTop() {
     window.scroll({
       top: 0,
@@ -39,37 +43,59 @@ export class CommonService {
       behavior: 'smooth',
     });
   }
-
-  setGlobalCartCount() {
-    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-      (res) => {
-        if (res && res.statusCode == 200) {
-          this.cartProductValue.emit(res.allCartItemDetails.length);
-        }
-      },
-      (error) => {}
-    );
+  getCartItemsApi() {
+    return new Promise<any>(async (resolve, reject) => {
+      await this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+        (res) => {
+          if (res && res.statusCode == 200) {
+            resolve(res.allCartItemDetails);
+          }
+        },
+        (error) => {}
+      );
+    });
+  }
+  async setGlobalCartCount() {
+    let cartItems: AllCartItemDetail[] = [];
+    if (!this.isLogginShow) {
+      cartItems = await this.getCartItemsApi();
+    } else {
+      cartItems = this.getLocalCartItems();
+    }
+    this.setCartItems(cartItems);
+    this.addProducts(cartItems.length);
   }
 
   getUserDetails(): Promise<User> {
     return new Promise<User>((resolve, reject) => {
-      this.apiService.request('GET_USER_DETAILS', { params: {} }).subscribe(
-        (res) => {
-          if (res && res.statusCode == 200) {
-            this.isLogginShow = false;
+      if (this.userDetails && this.userDetails.userDetails) {
+        this.islogginButtonShow.emit(this.isLogginShow);
+        this.setProfilePic(this.userDetails.userDetails.id);
+        this.setGlobalCartCount();
+        resolve(this.userDetails);
+      } else {
+        this.apiService.request('GET_USER_DETAILS', { params: {} }).subscribe(
+          (res) => {
+            if (res && res.statusCode == 200) {
+              this.isLogginShow = false;
+              this.islogginButtonShow.emit(this.isLogginShow);
+              this.userDetails = res;
+              this.setProfilePic(res.userDetails.id);
+              resolve(res);
+              this.setGlobalCartCount();
+              localStorage.setItem('userFullName', res.userDetails.fullName);
+            } else {
+              resolve(null);
+            }
+          },
+          (error) => {
+            reject(error);
+            this.isLogginShow = true;
             this.islogginButtonShow.emit(this.isLogginShow);
-            this.userDetails = res.userDetails;
-            this.setProfilePic(res.userDetails.id);
-            resolve(res);
-            localStorage.setItem('userFullName', res.userDetails.fullName);
+            this.setGlobalCartCount();
           }
-        },
-        (error) => {
-          reject(error);
-          this.isLogginShow = true;
-          this.islogginButtonShow.emit(this.isLogginShow);
-        }
-      );
+        );
+      }
     });
   }
   setProfilePic(userId) {
@@ -127,5 +153,102 @@ export class CommonService {
       default:
         return { status: 'Unknown', color: 'badge badge-bg-gray' };
     }
+  }
+
+  getLocalCartItems() {
+    let cartItems = JSON.parse(localStorage.getItem('ridgeOfflineCartItems'));
+    if (cartItems === null) {
+      cartItems = [];
+    }
+    return cartItems;
+  }
+
+  addLocalCartItem(quantity, product, productId) {
+    interface productCartData {
+      productId: string;
+      name: string;
+      cutInfo: string;
+      quantity: string;
+      price: string;
+      totalPrice: string;
+      description: string;
+    }
+
+    let ridgeOfflineCartItems = JSON.parse(
+      localStorage.getItem('ridgeOfflineCartItems')
+    );
+    if (ridgeOfflineCartItems === null) {
+      ridgeOfflineCartItems = [];
+      let productCart: productCartData = {
+        productId: productId,
+        name: product?.name,
+        cutInfo: product?.cutInfo,
+        quantity: quantity,
+        price: product?.price,
+        totalPrice: product?.price,
+        description: product?.description,
+      };
+      ridgeOfflineCartItems.push(productCart);
+    } else {
+      let cartItemExists = false;
+      let cartItemIndex = 0;
+      ridgeOfflineCartItems.forEach(function (cartItem: any, index) {
+        if (cartItem?.productId === productId) {
+          cartItemExists = true;
+          cartItem['quantity'] = quantity;
+          cartItem['totalPrice'] = quantity * product?.price;
+          cartItemIndex = index;
+        }
+      });
+      if (quantity === 0) {
+        ridgeOfflineCartItems.splice(cartItemIndex, 1);
+      } else if (!cartItemExists) {
+        let productCart: productCartData = {
+          productId: productId,
+          name: product?.name,
+          cutInfo: product?.cutInfo,
+          quantity: quantity,
+          price: product?.price,
+          totalPrice: product?.price,
+          description: product?.description,
+        };
+        ridgeOfflineCartItems.push(productCart);
+      }
+    }
+    this.setCartItems(ridgeOfflineCartItems);
+    this.addProducts(ridgeOfflineCartItems.length);
+    localStorage.setItem(
+      'ridgeOfflineCartItems',
+      JSON.stringify(ridgeOfflineCartItems)
+    );
+  }
+
+  removeLocalCartItem(productId) {
+    let ridgeOfflineCartItems = JSON.parse(
+      localStorage.getItem('ridgeOfflineCartItems')
+    );
+    let cartItemIndex = 0;
+    ridgeOfflineCartItems.forEach(function (cartItem: any, index) {
+      if (cartItem?.productId === productId) {
+        cartItemIndex = index;
+      }
+    });
+    ridgeOfflineCartItems.splice(cartItemIndex, 1);
+    this.setCartItems(ridgeOfflineCartItems);
+    this.addProducts(ridgeOfflineCartItems.length);
+    localStorage.setItem(
+      'ridgeOfflineCartItems',
+      JSON.stringify(ridgeOfflineCartItems)
+    );
+  }
+  logOut() {
+    localStorage.clear();
+    this.userDetails = null;
+    this.isLogginShow = true;
+    this.cartItems = [];
+    this.cartProducts = 0;
+    this.cartItemsEvent.emit([]);
+    this.cartProductValue.emit(0);
+    this.islogginButtonShow.emit(this.isLogginShow);
   }
 }

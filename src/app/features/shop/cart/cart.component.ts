@@ -32,6 +32,7 @@ export class CartComponent implements OnInit {
   links: BreadCrumbLinks[] = cartLinks;
   cartItems: AllCartItemDetail[] = [];
   isLoading = false;
+  isLoggedIn = 0;
   constructor(
     private router: Router,
     private modalService: NgbModal,
@@ -39,34 +40,27 @@ export class CartComponent implements OnInit {
     private route: ActivatedRoute,
     private apiService: ApiService,
     private toastrService: ToastrService
-  ) {}
-
-  ngOnInit() {
-    this.getProductCart();
-    this.defaultSetting();
+  ) {
+    this.subscribeToCartItems();
   }
 
-  getProductCart() {
-    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-      (res) => {
-        if (res && res.statusCode == 200) {
-          this.cartItems = res.allCartItemDetails;
-          this.addedProducts = this.cartItems;
-          this.commonService.cartProductValue.emit(this.cartItems.length ?? 0);
-          this.calculateOrderTotal();
-        }
-      },
-      (error) => {}
-    );
+  ngOnInit() {
+    this.commonService.getUserDetails().then((x) => {
+      if (x) this.isLoggedIn = 1;
+    });
+
+    this.defaultSetting();
+  }
+  subscribeToCartItems() {
+    this.commonService.cartItemsEvent.subscribe((items) => {
+      this.cartItems = items;
+      this.addedProducts = this.cartItems;
+      this.calculateOrderTotal();
+    });
   }
 
   defaultSetting() {
-    // this.addedProducts = JSON.parse(localStorage.getItem('cart'))
-    //   ? JSON.parse(localStorage.getItem('cart'))
-    //   : [];
-    // this.addedProducts = this.addedProducts.filter((x) => x.count !== 0);
     this.calculateOrderTotal();
-    // this.setGlobalCartCount();
   }
 
   calculateOrderTotal() {
@@ -86,39 +80,40 @@ export class CartComponent implements OnInit {
     let index = this.addedProducts.findIndex((x) => x.id === item.id);
     if (str == 'minus') {
       item.quantity = item.quantity - 1;
-      // this.setItemsToLocalStorage();
       if (item.quantity == 0) {
         this.removeCartItem(item.productId);
         this.addedProducts.splice(index, 1);
-        // this.commonSection(item);
       } else {
-        this.updateCartItem(item.productId, item.quantity);
+        this.updateCartItem(item, item.quantity);
       }
     } else {
       item.quantity = item.quantity + 1;
-      this.updateCartItem(item.productId, item.quantity);
-      // this.setItemsToLocalStorage();
+      this.updateCartItem(item, item.quantity);
     }
     this.calculateOrderTotal();
-    this.setGlobalCartCount();
+    this.commonService.setGlobalCartCount();
   }
 
-  updateCartItem(productId, quantity) {
-    const apiRequest = {
-      data: {
-        productId: productId,
-        quantity: quantity,
-      },
-    };
-    this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
-      if (res && res.statusCode == 200) {
-        console.log(res);
-        this.getProductCart();
-        this.calculateOrderTotal();
-      } else {
-        this.toastrService.error(res.message);
-      }
-    });
+  updateCartItem(product, quantity) {
+    if (this.isLoggedIn == 1) {
+      const apiRequest = {
+        data: {
+          productId: product.productId,
+          quantity: quantity,
+        },
+      };
+      this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
+        if (res && res.statusCode == 200) {
+          console.log(res);
+          this.commonService.setGlobalCartCount();
+          this.calculateOrderTotal();
+        } else {
+          this.toastrService.error(res.message);
+        }
+      });
+    } else {
+      this.commonService.addLocalCartItem(quantity, product, product.productId);
+    }
   }
 
   confirmBeforeRemoval(item) {
@@ -138,50 +133,28 @@ export class CartComponent implements OnInit {
       const itemToRemove = this.addedProducts[index];
       this.addedProducts.splice(index, 1);
       this.removeCartItem(itemToRemove.productId);
-      // this.commonSection(item);
       this.calculateOrderTotal();
-      this.setGlobalCartCount();
+      this.commonService.setGlobalCartCount();
     }
   }
 
   removeCartItem(productId) {
-    this.apiService
-      .request('DELETE_CART_ITEMS', { params: { id: productId } })
-      .subscribe((res) => {
-        if (res && res.statusCode == 200) {
+    if (this.isLoggedIn == 1) {
+      this.apiService
+        .request('DELETE_CART_ITEMS', { params: { id: productId } })
+        .subscribe((res) => {
+          if (res && res.statusCode == 200) {
+            this.toastrService.success('Cart Item Deleted Successfully.');
+            this.commonService.setGlobalCartCount();
+          }
           this.isLoading = false;
-          this.toastrService.success('Cart Item Deleted Successfully.');
-        }
-        this.getProductCart();
-      });
+        });
+    } else {
+      this.commonService.removeLocalCartItem(productId);
+      this.isLoading = false;
+    }
   }
 
-  // commonSection(item) {
-  //   let list = JSON.parse(localStorage.getItem('cart'))
-  //     ? JSON.parse(localStorage.getItem('cart'))
-  //     : [];
-  //   let pointer = list.findIndex((x) => x.id === item.id);
-  //   list.splice(pointer, 1);
-  //   // localStorage.setItem('cart', JSON.stringify(list));
-  // }
-
-  setGlobalCartCount() {
-    let count = 0;
-    this.cartItems.forEach((x) => {
-      count = count + x.quantity;
-    });
-    this.commonService.addProducts(count);
-  }
-
-  // setItemsToLocalStorage() {
-  //   let list = JSON.parse(localStorage.getItem('cart'))
-  //     ? JSON.parse(localStorage.getItem('cart'))
-  //     : [];
-  //   this.addedProducts.forEach((x) => {
-  //     list.find((item) => item.id == x.id).count = x.count;
-  //   });
-  //   // localStorage.setItem('cart', JSON.stringify(list));
-  // }
   setProductPic(id) {
     let date = new Date().getTime();
     this.productPicUrl = '';

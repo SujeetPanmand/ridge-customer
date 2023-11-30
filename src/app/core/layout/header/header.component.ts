@@ -14,10 +14,11 @@ export class HeaderComponent implements OnInit {
   isLogginShow = false;
   userId = '';
   profilePictureUrl = 'assets/em_user.png';
-  constructor(private router: Router, public commonService: CommonService) {}
+  constructor(private router: Router, public commonService: CommonService) {
+    this.subscribeTo();
+  }
 
   ngOnInit(): void {
-    this.subscribeTo();
     this.userId = localStorage.getItem('userId')
       ? localStorage.getItem('userId')
       : '';
@@ -36,10 +37,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['login']);
   }
   onLogout() {
-    localStorage.clear();
-    this.commonService.cartProductValue.emit(0);
+    this.commonService.logOut();
     this.router.navigate(['/account/login']);
-    this.commonService.getUserDetails();
   }
 
   subscribeTo() {

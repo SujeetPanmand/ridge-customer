@@ -142,6 +142,7 @@
                       class="content-overlay"
                     ></div>
                     <img
+                      *ngIf="product"
                       (click)="navigateToProductDetail(product)"
                       [src]="setProductPic(product.id)"
                       height="200px"
