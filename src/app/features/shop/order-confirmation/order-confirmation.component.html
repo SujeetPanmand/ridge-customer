@@ -13,11 +13,11 @@
             Print
           </button>
         </div>
-        <div *ngIf="!isStandardCut && isGoogleLinkShow" class="py-2">
+        <div *ngIf="!isStandardCut" class="py-2">
           <span class="fw-bold">Note:</span> For Custom Cut, kindly complete the
           Google Form
         </div>
-        <div>
+        <div *ngIf="!isStandardCut">
           <a
             class="text-orange fw-bold"
             href="https://docs.google.com/forms/d/e/1FAIpQLSdOuwOSuawMOIri4gf9XD_IfK-jwB26HdyNlqBpRTafemwYQA/viewform?vc=0&c=0&w=1&flr=0"
@@ -77,8 +77,8 @@
                   <td>
                     {{ product.name
                     }}<span>
-                      {{ product.quantity >= 2 ? "*" : "" }}
-                      {{ product.quantity >= 2 ? product.quantity : "" }}</span
+                      *
+                      {{ product.quantity }}</span
                     >
                   </td>
                   <td>${{ product.price * product.quantity }}</td>
