@@ -149,7 +149,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       (res) => {
         if (res && res.statusCode == 200) {
           this.addedProducts = res.allCartItemDetails;
-          // console.log(this.cartItems);
           this.commonService.cartProductValue.emit(
             this.addedProducts.length ?? 0
           );
@@ -162,9 +161,9 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
 
   defaultSetting() {
-    this.loginUserId = localStorage.getItem('userId')
-      ? localStorage.getItem('userId')
-      : '';
+    // this.loginUserId = localStorage.getItem('userId')
+    //   ? localStorage.getItem('userId')
+    //   : '';
     // this.addedProducts = JSON.parse(localStorage.getItem('cart'))
     //   ? JSON.parse(localStorage.getItem('cart'))
     //   : [];
@@ -172,7 +171,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       (x) => x.productId == this.route.snapshot.params['productId']
     );
     this.addMultipe = index >= 0 ? this.addedProducts[index].quantity : 0;
-    this.setGlobalCartCount(this.addedProducts);
+    // this.setGlobalCartCount(this.addedProducts);
   }
 
   async getProductDetails() {
@@ -215,7 +214,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       } else if (currentSelectedProduct.quantity == 0) {
         this.removeCartItem(currentSelectedProduct.productId);
       }
-    } else {
     }
     // let index = this.addedProducts.findIndex(
     //   (x) => x.id == this.route.snapshot.params['productId']
@@ -229,7 +227,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
 
     // console.log(this.addedProducts);
     // localStorage.setItem('cart', JSON.stringify(this.addedProducts));
-    this.setGlobalCartCount(this.addedProducts);
+    //this.setGlobalCartCount(this.addedProducts);
   }
 
   removeCartItem(productId) {
