@@ -25,12 +25,14 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
   cardImage = '';
   checkCardType = new Subject<string>();
   cartTypes = cartTypes;
+  years = [];
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private apiService: ApiService,
     private toastrService: ToastrService
   ) {
+    this.getYearList();
     this.subscribeToCreditType();
     this.orderId = this.route.snapshot.params['orderId'];
     this.links[1].link = `/account/order-details/${this.orderId}`;
@@ -54,7 +56,8 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
           Validators.minLength(15),
         ],
       ],
-      expiryDate: ['', Validators.required],
+      expiryMonth: ['', Validators.required],
+      expiryYear: ['', Validators.required],
       cvv: ['', Validators.required],
       cardHolderName: ['', Validators.required],
     });
@@ -95,9 +98,12 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
       data: this.isSelfPickUp
         ? {
             cardNumber: Number(this.paymentForm.controls['cardNumber'].value),
-            expiryDate: new Date(
-              this.paymentForm.controls['expiryDate'].value
-            ).toISOString(),
+            expiryMonth: new Date(
+              this.paymentForm.controls['expiryMonth'].value
+            ).toString(),
+            expiryYear: new Date(
+              this.paymentForm.controls['expiryYear'].value
+            ).toString(),
             cvv: Number(this.paymentForm.controls['cvv'].value),
             cardHolderName: this.paymentForm.controls['cardHolderName'].value,
             totalAmount: this.orderPaymentDetails.payment,
@@ -105,9 +111,12 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
           }
         : {
             cardNumber: Number(this.paymentForm.controls['cardNumber'].value),
-            expiryDate: new Date(
-              this.paymentForm.controls['expiryDate'].value
-            ).toISOString(),
+            expiryMonth: new Date(
+              this.paymentForm.controls['expiryMonth'].value
+            ).toString(),
+            expiryYear: new Date(
+              this.paymentForm.controls['expiryYear'].value
+            ).toString(),
             cvv: Number(this.paymentForm.controls['cvv'].value),
             cardHolderName: this.paymentForm.controls['cardHolderName'].value,
             totalAmount: '1000',
@@ -150,5 +159,13 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
         });
       }
     });
+  }
+
+  getYearList() {
+    const d = new Date();
+    let year = d.getFullYear();
+    for (let i = year; i <= year + 50; i++) {
+      this.years.push({ id: i, year: i });
+    }
   }
 }

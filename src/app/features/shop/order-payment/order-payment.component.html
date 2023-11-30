@@ -66,20 +66,61 @@
                 </span>
               </div>
               <div class="row">
-                <div class="mb-3 col-md-8">
-                  <label for="exp" class="form-label">Expiry Date</label>
-                  <input
-                    type="date"
-                    id="exp"
-                    name="exp "
-                    class="form-control"
-                    formControlName="expiryDate"
-                    [class.is-invalid]="isFieldValid(paymentForm, 'expiryDate')"
-                  />
+                <div class="mb-3 col-md-4">
+                  <label for="exp" class="form-label">Expiry Month</label>
+                  <select
+                    formControlName="expiryMonth"
+                    id="expiryMonth"
+                    name="expiryMonth"
+                    class="form-select"
+                    [class.is-invalid]="
+                      isFieldValid(paymentForm, 'expiryMonth')
+                    "
+                  >
+                    <option value="">Select Month</option>
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+
+                    <!-- <option *ngFor="let unit of months" [value]="unit.id">
+                      {{ unit.month }}
+                    </option> -->
+                  </select>
+
                   <span
                     class="text-danger"
-                    *ngIf="hasError(paymentForm, 'expiryDate', 'required')"
-                    >Please enter a expiry date.
+                    *ngIf="hasError(paymentForm, 'expiryMonth', 'required')"
+                    >Please select expiry month.
+                  </span>
+                </div>
+                <div class="mb-3 col-md-4">
+                  <label for="exp" class="form-label">Expiry Year</label>
+                  <select
+                    formControlName="expiryYear"
+                    id="expiryYear"
+                    name="expiryYear"
+                    class="form-select"
+                    [class.is-invalid]="isFieldValid(paymentForm, 'expiryYear')"
+                  >
+                    <option value="">Select Year</option>
+                    <option *ngFor="let unit of years" [value]="unit.id">
+                      {{ unit.year }}
+                    </option>
+                  </select>
+
+                  <span
+                    class="text-danger"
+                    *ngIf="hasError(paymentForm, 'expiryYear', 'required')"
+                    >Please select expiry year.
                   </span>
                 </div>
                 <div class="mb-3 col-md-4">
