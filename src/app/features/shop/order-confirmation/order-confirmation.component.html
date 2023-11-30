@@ -29,7 +29,13 @@
           </a>
         </div>
 
-        <div class="py-5">
+        <div *ngIf="orderDetails?.isSelfPickup" class="py-5">
+          <div style="font-weight: bolder" class="small-title mb-2">
+            Self Pickup Address:
+          </div>
+          <span>San Gabriel River In Liberty Hill, Austin, Texas -73301</span>
+        </div>
+        <div *ngIf="!orderDetails?.isSelfPickup" class="py-5">
           <div class="small-title">Shipping Address</div>
           <hr class="border" />
           <div class="d-flex flex-column">
