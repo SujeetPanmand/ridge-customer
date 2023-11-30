@@ -158,7 +158,9 @@ export class HomeComponent implements OnInit {
       .request('PROMOTION_DETAILS', { params: {} })
       .subscribe(async (res) => {
         if (res) {
-          this.promotionList = res.allPromotionDetails;
+          this.promotionList = res.allPromotionDetails.filter(
+            (x) => x.isActive
+          );
         }
       });
   }
