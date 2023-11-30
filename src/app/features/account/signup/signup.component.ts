@@ -40,7 +40,12 @@ export class SignupComponent implements OnInit {
   }
 
   onKeyPress(event) {
-    if (this.zipCode.toString().length >= 5) {
+    console.log(event.keyCode);
+    if (
+      this.zipCode &&
+      this.zipCode.toString().length >= 5 &&
+      !(event.keyCode == 8)
+    ) {
       event.preventDefault();
     }
   }
@@ -100,8 +105,8 @@ export class SignupComponent implements OnInit {
         firstName: this.firstName,
         lastName: this.lastName,
         address: this.address,
-        zipCode: this.zipCode,
-        phoneNumber: this.phoneNumber,
+        zipCode: this.zipCode.toString(),
+        phoneNumber: this.phoneNumber.toString(),
         state: this.state,
         city: this.city,
         country: this.country,
@@ -110,7 +115,7 @@ export class SignupComponent implements OnInit {
 
     this.apiService.request('USER_SIGN_UP', apiRequest).subscribe((res) => {
       this.formSubmitAttempt = false;
-      if (res && res.statusCode == 201) {
+      if (res && res.statusCode == 200) {
         this.toastrService.success('User Created Successfully.');
         this.router.navigate(['account/login']);
       } else {
