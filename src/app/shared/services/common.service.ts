@@ -41,14 +41,19 @@ export class CommonService {
   }
 
   setGlobalCartCount() {
-    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-      (res) => {
-        if (res && res.statusCode == 200) {
-          this.cartProductValue.emit(res.allCartItemDetails.length);
-        }
-      },
-      (error) => {}
-    );
+    if (this.isLogginShow) {
+      this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+        (res) => {
+          if (res && res.statusCode == 200) {
+            this.cartProductValue.emit(res.allCartItemDetails.length);
+          }
+        },
+        (error) => {}
+      );
+    } else {
+      let cartItems = this.getLocalCartItems();
+      this.cartProductValue.emit(cartItems.length);
+    }
   }
 
   getUserDetails(): Promise<User> {
@@ -128,4 +133,79 @@ export class CommonService {
         return { status: 'Unknown', color: 'badge badge-bg-gray' };
     }
   }
+
+  getLocalCartItems() {
+    let cartItems = JSON.parse(localStorage.getItem("ridgeOfflineCartItems"));
+    if(cartItems === null) {
+      cartItems = [];
+    }
+    return cartItems;
+  }
+
+  addLocalCartItem(quantity, product, productId) {
+    interface productCartData {
+      productId: string,
+      name: string,
+      cutInfo: string,
+      quantity: string,
+      price: string,
+      totalPrice: string,
+      description: string,
+    };
+ 
+    let ridgeOfflineCartItems = JSON.parse(localStorage.getItem("ridgeOfflineCartItems"));
+      if (ridgeOfflineCartItems === null) {
+        ridgeOfflineCartItems = [];
+        let productCart: productCartData = {
+          productId: productId,
+          name: product?.name,
+          cutInfo: product?.cutInfo,
+          quantity: quantity,
+          price: product?.price,
+          totalPrice: product?.price,
+          description: product?.description
+        }
+        ridgeOfflineCartItems.push(productCart);
+      } else {
+        let cartItemExists = false;
+        let cartItemIndex = 0;
+        ridgeOfflineCartItems.forEach(function (cartItem: any, index) {
+          if (cartItem?.productId === productId) {
+            cartItemExists = true;
+            cartItem['quantity'] = quantity;
+            cartItem['totalPrice'] = quantity * product?.price;
+            cartItemIndex = index;
+          }
+        });
+        if (quantity === 0) {
+          ridgeOfflineCartItems.splice(cartItemIndex, 1);
+        } else if (!cartItemExists) {
+          let productCart: productCartData = {
+            productId: productId,
+            name: product?.name,
+            cutInfo: product?.cutInfo,
+            quantity: quantity,
+            price: product?.price,
+            totalPrice: product?.price,
+            description: product?.description
+          }
+          ridgeOfflineCartItems.push(productCart);
+        }
+      }
+ 
+      localStorage.setItem("ridgeOfflineCartItems", JSON.stringify(ridgeOfflineCartItems));
+  }
+ 
+  removeLocalCartItem(productId) {
+    let ridgeOfflineCartItems = JSON.parse(localStorage.getItem("ridgeOfflineCartItems"));
+      let cartItemIndex = 0;
+      ridgeOfflineCartItems.forEach(function (cartItem: any, index) {
+        if (cartItem?.productId === productId) {
+          cartItemIndex = index;
+        }
+      });
+      ridgeOfflineCartItems.splice(cartItemIndex, 1);
+      localStorage.setItem("ridgeOfflineCartItems", JSON.stringify(ridgeOfflineCartItems));
+  }
+
 }

@@ -42,6 +42,8 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   cardImage = '';
   cartTypes = cartTypes;
   years = [];
+  isLoggedIn = 0;
+
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute,
@@ -140,24 +142,30 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   }
 
   getCartItems() {
-    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-      (res) => {
-        if (res && res.statusCode == 200) {
-          this.setGlobalCartCount(res.allCartItemDetails.length);
-          if (this.isStandardCut && !this.isPreorder) {
+    if (this.isLoggedIn == 1) {
+      this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+        (res) => {
+          if (res && res.statusCode == 200) {
             this.finalOrderProducts = res.allCartItemDetails;
-            this.finalOrderProducts.forEach((x) => {
-              this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
-            });
-            this.orderTotal =
-              this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-          } else {
-            this.showPreorderProductOrCustomProducts();
           }
-        }
-      },
-      (error) => {}
-    );
+        },
+        (error) => {}
+      );
+    } else {
+      this.finalOrderProducts = this.commonService.getLocalCartItems();
+    }
+
+    this.setGlobalCartCount(this.finalOrderProducts.length);
+    if (this.isStandardCut && !this.isPreorder) {
+      
+      this.finalOrderProducts.forEach((x) => {
+        this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+      });
+      this.orderTotal =
+        this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+    } else {
+      this.showPreorderProductOrCustomProducts();
+    }
   }
 
   showPreorderProductOrCustomProducts() {

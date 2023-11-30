@@ -55,6 +55,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   phoneNumber: any = '';
   country: string = '';
   state: string = '';
+  isLoggedIn = 0;
+
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
@@ -198,19 +200,24 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   getCartItems() {
-    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-      (res) => {
-        if (res && res.statusCode == 200) {
-          this.finalOrderProducts = res.allCartItemDetails;
-          this.finalOrderProducts.forEach((x) => {
-            this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
-          });
-          this.orderTotal =
-            this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-        }
-      },
-      (error) => {}
-    );
+    if (this.isLoggedIn == 1) {
+      this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+        (res) => {
+          if (res && res.statusCode == 200) {
+            this.finalOrderProducts = res.allCartItemDetails;
+          }
+        },
+        (error) => {}
+      );
+    } else {
+      this.finalOrderProducts = this.commonService.getLocalCartItems();
+    }
+
+    this.finalOrderProducts.forEach((x) => {
+      this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+    });
+    this.orderTotal =
+      this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
   }
 
   showPreorderProductOrCustomProducts() {

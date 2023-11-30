@@ -181,10 +181,7 @@ export class ShopComponent implements OnInit {
         (error) => { }
       );
     }else{
-      this.cartItems = JSON.parse(localStorage.getItem("ridgeOfflineCartItems"));
-      if(this.cartItems === null) {
-        this.cartItems = [];
-      }
+      this.cartItems = this.commonService.getLocalCartItems();
     }
     
     this.commonService.cartProductValue.emit(this.cartItems != null ? this.cartItems.length : 0);
@@ -261,7 +258,6 @@ export class ShopComponent implements OnInit {
 
   updateItemCartQuantity(quantity, product) {
     if (this.isLoggedIn == 1) {
-
       const apiRequest = {
         data: {
           productId: product.id,
@@ -278,7 +274,7 @@ export class ShopComponent implements OnInit {
       });
 
     } else {
-      this.commonService.addLocalCartItem(quantity, product);
+      this.commonService.addLocalCartItem(quantity, product, product.id);
       this.getProductCart();
     }
 

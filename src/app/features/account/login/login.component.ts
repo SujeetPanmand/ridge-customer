@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
         this.toastrService.success('User Logged In Successfully!');
         this.router.navigate(['home']);
         this.commonService.getUserDetails();
+        localStorage.setItem("ridgeOfflineCartItems", JSON.stringify([]));
       } else {
         this.toastrService.error(res.message);
       }

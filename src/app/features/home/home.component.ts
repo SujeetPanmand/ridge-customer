@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   promotionPicUrl = '';
   emailSubscribe = '';
   formSubmitAttempt: boolean = false;
+  isLoggedIn = 0;
 
   constructor(
     private router: Router,
@@ -48,16 +49,23 @@ export class HomeComponent implements OnInit {
   }
 
   getProductCart() {
-    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-      (res) => {
-        if (res && res.statusCode == 200) {
-          this.commonService.cartProductValue.emit(
-            res.allCartItemDetails.length ?? 0
-          );
-        }
-      },
-      (error) => {}
-    );
+    if (this.isLoggedIn == 1) {
+      this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+        (res) => {
+          if (res && res.statusCode == 200) {
+            this.commonService.cartProductValue.emit(
+              res.allCartItemDetails.length ?? 0
+            );
+          }
+        },
+        (error) => {}
+      );
+    } else {
+      let cartItems = this.commonService.getLocalCartItems();
+      this.commonService.cartProductValue.emit(
+        cartItems.length ?? 0
+      );
+    }
   }
 
   navigateToHome() {

@@ -32,6 +32,7 @@ export class CartComponent implements OnInit {
   links: BreadCrumbLinks[] = cartLinks;
   cartItems: AllCartItemDetail[] = [];
   isLoading = false;
+  isLoggedIn = 0;
   constructor(
     private router: Router,
     private modalService: NgbModal,
@@ -42,22 +43,29 @@ export class CartComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.commonService.getUserDetails().then((x) => {
+      this.isLoggedIn = 1;
+    });
     this.getProductCart();
     this.defaultSetting();
   }
 
   getProductCart() {
-    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-      (res) => {
-        if (res && res.statusCode == 200) {
-          this.cartItems = res.allCartItemDetails;
-          this.addedProducts = this.cartItems;
-          this.commonService.cartProductValue.emit(this.cartItems.length ?? 0);
-          this.calculateOrderTotal();
-        }
-      },
-      (error) => {}
-    );
+    if (this.isLoggedIn == 1) {
+      this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+        (res) => {
+          if (res && res.statusCode == 200) {
+            this.cartItems = res.allCartItemDetails;
+          }
+        },
+        (error) => {}
+      );
+    } else {
+      this.cartItems = this.commonService.getLocalCartItems();      
+    }
+    this.addedProducts = this.cartItems;
+    this.commonService.cartProductValue.emit(this.cartItems.length ?? 0);
+    this.calculateOrderTotal();
   }
 
   defaultSetting() {
@@ -92,33 +100,38 @@ export class CartComponent implements OnInit {
         this.addedProducts.splice(index, 1);
         // this.commonSection(item);
       } else {
-        this.updateCartItem(item.productId, item.quantity);
+        this.updateCartItem(item, item.quantity);
       }
     } else {
       item.quantity = item.quantity + 1;
-      this.updateCartItem(item.productId, item.quantity);
+      this.updateCartItem(item, item.quantity);
       // this.setItemsToLocalStorage();
     }
     this.calculateOrderTotal();
     this.setGlobalCartCount();
   }
 
-  updateCartItem(productId, quantity) {
-    const apiRequest = {
-      data: {
-        productId: productId,
-        quantity: quantity,
-      },
-    };
-    this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
-      if (res && res.statusCode == 200) {
-        console.log(res);
-        this.getProductCart();
-        this.calculateOrderTotal();
-      } else {
-        this.toastrService.error(res.message);
-      }
-    });
+  updateCartItem(product, quantity) {
+    if (this.isLoggedIn == 1) {
+      const apiRequest = {
+        data: {
+          productId: product.productId,
+          quantity: quantity,
+        },
+      };
+      this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
+        if (res && res.statusCode == 200) {
+          console.log(res);
+          this.getProductCart();
+          this.calculateOrderTotal();
+        } else {
+          this.toastrService.error(res.message);
+        }
+      });
+    } else {
+      this.commonService.addLocalCartItem(quantity, product, product.productId);
+      this.getProductCart();
+    }
   }
 
   confirmBeforeRemoval(item) {
@@ -145,15 +158,21 @@ export class CartComponent implements OnInit {
   }
 
   removeCartItem(productId) {
-    this.apiService
-      .request('DELETE_CART_ITEMS', { params: { id: productId } })
-      .subscribe((res) => {
-        if (res && res.statusCode == 200) {
+    if (this.isLoggedIn == 1) {
+      this.apiService
+        .request('DELETE_CART_ITEMS', { params: { id: productId } })
+        .subscribe((res) => {
+          if (res && res.statusCode == 200) {
+            this.toastrService.success('Cart Item Deleted Successfully.');
+            this.getProductCart();
+          }
           this.isLoading = false;
-          this.toastrService.success('Cart Item Deleted Successfully.');
-        }
-        this.getProductCart();
-      });
+        });
+    } else {
+      this.commonService.removeLocalCartItem(productId);
+      this.getProductCart();
+      this.isLoading = false;
+    }
   }
 
   // commonSection(item) {

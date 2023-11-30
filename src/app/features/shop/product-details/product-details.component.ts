@@ -55,6 +55,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   cutForm: FormGroup;
   cartItems: AllCartItemDetail[] = [];
   isLoggedInButtonShow = true;
+  isLoggedIn = 0;
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
@@ -74,6 +75,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.commonService.getUserDetails().then((res) => {
       this.isLoggedInButtonShow = res ? false : true;
+      this.isLoggedIn = 1;
     });
     this.getProductCart();
     this.getProductDetails();
@@ -117,18 +119,23 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
 
   setProductCart(selectedProduct: any) {
-    const apiRequest = {
-      data: {
-        productId: selectedProduct.id,
-        quantity: 1,
-      },
-    };
-    this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
-      if (res && res.statusCode == 200) {
-        console.log(res);
-        this.getProductCart();
-      }
-    });
+    if (this.isLoggedIn == 1) {
+      const apiRequest = {
+        data: {
+          productId: selectedProduct.id,
+          quantity: 1,
+        },
+      };
+      this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
+        if (res && res.statusCode == 200) {
+          console.log(res);
+          this.getProductCart();
+        }
+      });
+    } else {
+      this.commonService.addLocalCartItem(1, selectedProduct, selectedProduct.id);
+      this.getProductCart();
+    }
   }
 
   generateCutForm() {
@@ -145,19 +152,24 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
 
   getProductCart() {
-    this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-      (res) => {
-        if (res && res.statusCode == 200) {
-          this.addedProducts = res.allCartItemDetails;
-          this.commonService.cartProductValue.emit(
-            this.addedProducts.length ?? 0
-          );
-          this.defaultSetting();
-          this.getProductDetails();
-        }
-      },
-      (error) => {}
+    if (this.isLoggedIn == 1) {
+      this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
+        (res) => {
+          if (res && res.statusCode == 200) {
+            this.addedProducts = res.allCartItemDetails;
+          }
+        },
+        (error) => {}
+      );
+    } else {
+      this.addedProducts = this.commonService.getLocalCartItems();
+    }
+
+    this.commonService.cartProductValue.emit(
+      this.addedProducts.length ?? 0
     );
+    this.defaultSetting();
+    this.getProductDetails();
   }
 
   defaultSetting() {
@@ -209,7 +221,8 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       if (currentSelectedProduct.quantity > 0) {
         this.updateItemCartQuantity(
           currentSelectedProduct.quantity,
-          currentSelectedProduct.productId
+          currentSelectedProduct.productId,
+          currentSelectedProduct
         );
       } else if (currentSelectedProduct.quantity == 0) {
         this.removeCartItem(currentSelectedProduct.productId);
@@ -231,21 +244,26 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
 
   removeCartItem(productId) {
-    this.apiService
-      .request('DELETE_CART_ITEMS', { params: { id: productId } })
-      .subscribe((res) => {
-        if (res && res.statusCode == 200) {
-          this.toastrService.success('Cart Item Deleted Successfully.');
-        }
-        this.getProductCart();
-      });
+    if (this.isLoggedIn == 1) {
+      this.apiService
+        .request('DELETE_CART_ITEMS', { params: { id: productId } })
+        .subscribe((res) => {
+          if (res && res.statusCode == 200) {
+            this.toastrService.success('Cart Item Deleted Successfully.');
+            this.getProductCart();
+          }
+        });
+    } else {
+      this.commonService.removeLocalCartItem(productId);
+      this.getProductCart();
+    }
   }
 
   selectCut(event, content, product) {
     this.selectedProduct = product;
     event.stopPropagation();
     product.isSample
-      ? this.updateItemCartQuantity(1, product.id)
+      ? this.updateItemCartQuantity(1, product.id, product)
       : this.modalService.open(content, {
           size: 'lg',
           centered: true,
@@ -253,21 +271,26 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
         });
   }
 
-  updateItemCartQuantity(quantity, productId) {
-    const apiRequest = {
-      data: {
-        productId: productId,
-        quantity: quantity,
-      },
-    };
-    this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
-      if (res && res.statusCode == 200) {
-        console.log(res);
-        this.getProductCart();
-      } else {
-        this.toastrService.error(res.message);
-      }
-    });
+  updateItemCartQuantity(quantity, productId, product) {
+    if (this.isLoggedIn == 1) {
+      const apiRequest = {
+        data: {
+          productId: productId,
+          quantity: quantity,
+        },
+      };
+      this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
+        if (res && res.statusCode == 200) {
+          console.log(res);
+          this.getProductCart();
+        } else {
+          this.toastrService.error(res.message);
+        }
+      });
+    } else {
+      this.commonService.addLocalCartItem(quantity, product, productId);
+      this.getProductCart();
+    }
   }
 
   setGlobalCartCount(addedProducts) {
