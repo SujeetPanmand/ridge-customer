@@ -199,12 +199,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       data: this.isSelfPickUp
         ? {
             cardNumber: Number(this.paymentForm.controls['cardNumber'].value),
-            expiryMonth: new Date(
-              this.paymentForm.controls['expiryMonth'].value
-            ).toString(),
-            expiryYear: new Date(
-              this.paymentForm.controls['expiryYear'].value
-            ).toString(),
+            expiryMonth:
+              this.paymentForm.controls['expiryMonth'].value.toString(),
+            expiryYear:
+              this.paymentForm.controls['expiryYear'].value.toString(),
             cvv: Number(this.paymentForm.controls['cvv'].value),
             cardHolderName: this.paymentForm.controls['cardHolderName'].value,
             isSelfPickup: this.isSelfPickUp,
@@ -236,12 +234,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
           }
         : {
             cardNumber: Number(this.paymentForm.controls['cardNumber'].value),
-            expiryMonth: new Date(
-              this.paymentForm.controls['expiryMonth'].value
-            ).toString(),
-            expiryYear: new Date(
-              this.paymentForm.controls['expiryYear'].value
-            ).toString(),
+            expiryMonth:
+              this.paymentForm.controls['expiryMonth'].value.toString(),
+            expiryYear:
+              this.paymentForm.controls['expiryYear'].value.toString(),
             cvv: Number(this.paymentForm.controls['cvv'].value),
             cardHolderName: this.paymentForm.controls['cardHolderName'].value,
             isSelfPickup: this.isSelfPickUp,
