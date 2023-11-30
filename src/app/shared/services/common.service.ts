@@ -104,7 +104,16 @@ export class CommonService {
         return '';
     }
   }
-
+  getCustomType(num) {
+    switch (num) {
+      case 1:
+        return 'Standard';
+      case 2:
+        return 'Custom';
+      default:
+        return '';
+    }
+  }
   getPaymentStatus(num): PaymentStatus | { status: string; color: string } {
     switch (num) {
       case 1:

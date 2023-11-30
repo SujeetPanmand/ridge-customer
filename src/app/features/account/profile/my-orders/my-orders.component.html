@@ -11,13 +11,19 @@
       <h2 class="fw-bold sub-title py-2">My Orders</h2>
 
       <div class="table-responsive pt-3">
-        <table datatable *ngIf="orderDetails.length != 0">
+        <table
+          datatable
+          *ngIf="orderDetails.length"
+          class="border shadow-sm bg-white row-border hover"
+        >
           <thead>
             <tr>
               <th>ORDER ID</th>
               <th>ORDER DATE</th>
               <th>PRICE</th>
               <th>STATUS</th>
+              <th>Custom Type</th>
+              <th>Order Type</th>
             </tr>
           </thead>
           <tbody>
@@ -42,9 +48,15 @@
                   }}</span>
                 </span>
               </td>
+              <td>{{ commonService.getCustomType(order.cutType) }}</td>
+              <td>{{ commonService.getOrderType(order.orderType) }}</td>
+              <td></td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="text center" *ngIf="!orderDetails.length">
+        No Orders Found.
       </div>
     </div>
   </div>
