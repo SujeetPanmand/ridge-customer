@@ -1,7 +1,7 @@
 <section class="pt-5 mt-4 pt-xl-0 mt-xl-0">
   <div class="container-fluid p-0">
     <div
-      *ngIf="promotionList.length > 0"
+      *ngIf="promotionList.length"
       id="carouselExampleCaptions"
       class="carousel slide"
       data-bs-ride="carousel"
@@ -49,7 +49,7 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-    <div *ngIf="promotionList.length === 0">
+    <div *ngIf="!promotionList.length">
       <div class="section py-5">
         <div class="container">
           <div class="row text-white py-5">

@@ -158,7 +158,6 @@ export class HomeComponent implements OnInit {
       .request('PROMOTION_DETAILS', { params: {} })
       .subscribe(async (res) => {
         if (res) {
-          console.log(res);
           this.promotionList = res.allPromotionDetails;
         }
       });
