@@ -41,6 +41,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   checkCardType = new Subject<string>();
   cardImage = '';
   cartTypes = cartTypes;
+  years = [];
   constructor(
     private commonService: CommonService,
     private route: ActivatedRoute,
@@ -49,6 +50,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private toastrService: ToastrService
   ) {
+    this.getYearList();
     this.subscribeToCreditType();
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
@@ -59,6 +61,14 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       : 'isStandardCut=false';
     let preSubstr = this.isPreorder ? 'isPreorder=true' : 'isPreorder=false';
     this.links[2].link = `/shop/payment?${substr}&${preSubstr}`;
+  }
+
+  getYearList() {
+    const d = new Date();
+    let year = d.getFullYear();
+    for (let i = year; i <= year + 50; i++) {
+      this.years.push({ id: i, year: i });
+    }
   }
   ngAfterViewInit(): void {
     let substr = this.isStandardCut
@@ -82,7 +92,8 @@ export class PaymentComponent implements OnInit, AfterViewInit {
           Validators.maxLength(19),
         ],
       ],
-      expiryDate: ['', Validators.required],
+      expiryMonth: ['', Validators.required],
+      expiryYear: ['', Validators.required],
       cvv: ['', Validators.required],
       cardHolderName: ['', Validators.required],
     });
@@ -188,9 +199,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       data: this.isSelfPickUp
         ? {
             cardNumber: Number(this.paymentForm.controls['cardNumber'].value),
-            expiryDate: new Date(
-              this.paymentForm.controls['expiryDate'].value
-            ).toISOString(),
+            expiryMonth:
+              this.paymentForm.controls['expiryMonth'].value.toString(),
+            expiryYear:
+              this.paymentForm.controls['expiryYear'].value.toString(),
             cvv: Number(this.paymentForm.controls['cvv'].value),
             cardHolderName: this.paymentForm.controls['cardHolderName'].value,
             isSelfPickup: this.isSelfPickUp,
@@ -222,9 +234,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
           }
         : {
             cardNumber: Number(this.paymentForm.controls['cardNumber'].value),
-            expiryDate: new Date(
-              this.paymentForm.controls['expiryDate'].value
-            ).toISOString(),
+            expiryMonth:
+              this.paymentForm.controls['expiryMonth'].value.toString(),
+            expiryYear:
+              this.paymentForm.controls['expiryYear'].value.toString(),
             cvv: Number(this.paymentForm.controls['cvv'].value),
             cardHolderName: this.paymentForm.controls['cardHolderName'].value,
             isSelfPickup: this.isSelfPickUp,
