@@ -36,36 +36,17 @@ export class HomeComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
   ngOnInit(): void {
-    this.getProductCart();
+    this.commonService.getUserDetails().then((x) => {
+      if (x) {
+        this.isLoggedIn = 1;
+        this.emailSubscribe = x.userDetails.email;
+        const input = document.querySelector('input');
+        input.setAttribute('disabled', 'true');
+      }
+    });
     this.commonService.gotoTop();
     this.getAllProducts();
     this.getAllPromotions();
-
-    this.commonService.getUserDetails().then((x) => {
-      this.emailSubscribe = x.userDetails.email;
-      const input = document.querySelector('input');
-      input.setAttribute('disabled', 'true');
-    });
-  }
-
-  getProductCart() {
-    if (this.isLoggedIn == 1) {
-      this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-        (res) => {
-          if (res && res.statusCode == 200) {
-            this.commonService.cartProductValue.emit(
-              res.allCartItemDetails.length ?? 0
-            );
-          }
-        },
-        (error) => {}
-      );
-    } else {
-      let cartItems = this.commonService.getLocalCartItems();
-      this.commonService.cartProductValue.emit(
-        cartItems.length ?? 0
-      );
-    }
   }
 
   navigateToHome() {

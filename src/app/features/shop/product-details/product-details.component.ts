@@ -30,7 +30,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   reletedProductsList = [];
   allProductReviews: Rating[] = [];
   unFilterdallProductReviews: Rating[] = [];
-  addedProducts = [];
   rating = '';
   avg = 0;
   allRating = [];
@@ -67,20 +66,24 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   ) {
     this.links[2].link = `/shop/product-details/${this.route.snapshot.params['productId']}`;
     this.subscribeMethod();
+    this.subscribeToCartItems();
   }
-  ngAfterViewInit(): void {
-    this.links[2].link = `/shop/product-details/${this.route.snapshot.params['productId']}`;
+  ngAfterViewInit(): void {}
+  subscribeToCartItems() {
+    this.commonService.cartItemsEvent.subscribe((items) => {
+      this.cartItems = items;
+      this.defaultSetting();
+    });
   }
-
   ngOnInit() {
     this.commonService.getUserDetails().then((res) => {
+      if (res) {
+        this.isLoggedIn = 1;
+      }
       this.isLoggedInButtonShow = res ? false : true;
-      this.isLoggedIn = 1;
     });
-    this.getProductCart();
-    this.getProductDetails();
-    // this.defaultSetting();
     this.getReviewInfo();
+    this.getProductDetails();
     this.generateReviewForm();
     this.commonService.gotoTop();
     this.generateCutForm();
@@ -128,13 +131,15 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       };
       this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
         if (res && res.statusCode == 200) {
-          console.log(res);
-          this.getProductCart();
+          this.commonService.setGlobalCartCount();
         }
       });
     } else {
-      this.commonService.addLocalCartItem(1, selectedProduct, selectedProduct.id);
-      this.getProductCart();
+      this.commonService.addLocalCartItem(
+        1,
+        selectedProduct,
+        selectedProduct.id
+      );
     }
   }
 
@@ -151,67 +156,36 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getProductCart() {
-    if (this.isLoggedIn == 1) {
-      this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-        (res) => {
-          if (res && res.statusCode == 200) {
-            this.addedProducts = res.allCartItemDetails;
-          }
-        },
-        (error) => {}
-      );
-    } else {
-      this.addedProducts = this.commonService.getLocalCartItems();
-    }
-
-    this.commonService.cartProductValue.emit(
-      this.addedProducts.length ?? 0
-    );
-    this.defaultSetting();
-    this.getProductDetails();
-  }
-
   defaultSetting() {
-    // this.loginUserId = localStorage.getItem('userId')
-    //   ? localStorage.getItem('userId')
-    //   : '';
-    // this.addedProducts = JSON.parse(localStorage.getItem('cart'))
-    //   ? JSON.parse(localStorage.getItem('cart'))
-    //   : [];
-    let index = this.addedProducts.findIndex(
+    let index = this.cartItems.findIndex(
       (x) => x.productId == this.route.snapshot.params['productId']
     );
-    this.addMultipe = index >= 0 ? this.addedProducts[index].quantity : 0;
-    // this.setGlobalCartCount(this.addedProducts);
+    this.addMultipe = index >= 0 ? this.cartItems[index].quantity : 0;
+    this.selctedProduct.count = this.addMultipe;
   }
 
-  async getProductDetails() {
-    await this.apiService
+  getProductDetails() {
+    this.apiService
       .request('GET_PRODUCT_DETAILS', {
         params: { id: this.route.snapshot.params['productId'] },
       })
       .subscribe((res) => {
         if (res) {
           this.selctedProduct = res.productDetails;
-          if (this.addedProducts.length > 0) {
-            this.addedProducts.forEach((area) => {
-              if (area.productId == this.selctedProduct.id) {
-                this.selctedProduct.count = area.quantity;
-              } else {
-                this.selctedProduct.count = 0;
-              }
-            });
+          if (this.cartItems.length > 0) {
+            this.defaultSetting();
+          } else if (this.commonService.cartItems) {
+            this.cartItems = this.commonService.cartItems;
+            this.defaultSetting();
           } else {
-            this.selctedProduct.count = 0;
+            this.commonService.setGlobalCartCount();
           }
-          console.log(this.selctedProduct);
         }
       });
   }
 
   addMoreToCart(flag, selectedProduct) {
-    let currentSelectedProduct = this.addedProducts.find(
+    let currentSelectedProduct = this.cartItems.find(
       (area) => area.productId == selectedProduct.id
     );
     if (currentSelectedProduct) {
@@ -228,19 +202,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
         this.removeCartItem(currentSelectedProduct.productId);
       }
     }
-    // let index = this.addedProducts.findIndex(
-    //   (x) => x.id == this.route.snapshot.params['productId']
-    // );
-    // if (index >= 0) {
-    //   this.updateItemCartQuantity(this.addMultipe,selectedProduct);
-    // } else {
-    //   this.selctedProduct['count'] = 1;
-    //   this.addedProducts.push(this.selctedProduct);
-    // }
-
-    // console.log(this.addedProducts);
-    // localStorage.setItem('cart', JSON.stringify(this.addedProducts));
-    //this.setGlobalCartCount(this.addedProducts);
   }
 
   removeCartItem(productId) {
@@ -250,12 +211,11 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
         .subscribe((res) => {
           if (res && res.statusCode == 200) {
             this.toastrService.success('Cart Item Deleted Successfully.');
-            this.getProductCart();
+            this.commonService.setGlobalCartCount();
           }
         });
     } else {
       this.commonService.removeLocalCartItem(productId);
-      this.getProductCart();
     }
   }
 
@@ -282,23 +242,14 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
         if (res && res.statusCode == 200) {
           console.log(res);
-          this.getProductCart();
+          this.commonService.setGlobalCartCount();
         } else {
           this.toastrService.error(res.message);
         }
       });
     } else {
       this.commonService.addLocalCartItem(quantity, product, productId);
-      this.getProductCart();
     }
-  }
-
-  setGlobalCartCount(addedProducts) {
-    let count = 0;
-    addedProducts.forEach((x) => {
-      count = count + x.count;
-    });
-    this.commonService.addProducts(count);
   }
 
   onNavigateToCart() {

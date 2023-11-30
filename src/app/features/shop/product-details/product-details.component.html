@@ -9,6 +9,7 @@
         <div class="row pt-4">
           <div class="col-xl-6 mb-4">
             <img
+              *ngIf="selctedProduct"
               [src]="setProductPic(selctedProduct?.id)"
               class="img-fluid h-100 d-block mx-auto"
               alt="culinary-inspiration"

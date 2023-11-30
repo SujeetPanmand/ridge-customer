@@ -6,9 +6,14 @@ import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BreadCrumbComponent } from './component/bread-crumb/bread-crumb.component';
 import { ConfirmationPopUpComponent } from './component/confirmation-pop-up/confirmation-pop-up.component';
 import { DataTablesModule } from 'angular-datatables';
+import { LoaderComponent } from './component/loader/loader.component';
 
 @NgModule({
-  declarations: [BreadCrumbComponent, ConfirmationPopUpComponent],
+  declarations: [
+    BreadCrumbComponent,
+    ConfirmationPopUpComponent,
+    LoaderComponent,
+  ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -25,6 +30,7 @@ import { DataTablesModule } from 'angular-datatables';
     NgbModule,
     BreadCrumbComponent,
     DataTablesModule,
+    LoaderComponent,
   ],
   providers: [ToastrService, NgbActiveModal],
 })

@@ -37,14 +37,24 @@ export class ShopComponent implements OnInit {
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private toastrService: ToastrService
-  ) { }
+  ) {
+    this.subscribeToCartItems();
+  }
+  subscribeToCartItems() {
+    this.commonService.cartItemsEvent.subscribe((items) => {
+      this.cartItems = items;
+      if (this.cartItems != null) {
+        this.updateProductListCount(this.cartItems);
+      }
+    });
+  }
   ngOnInit() {
     this.commonService.getUserDetails().then((x) => {
-      this.isLoggedIn = 1;
+      if (x) {
+        this.isLoggedIn = 1;
+      }
     });
-
     this.getAllProducts();
-    this.getProductCart();
     this.generateCutForm();
     this.commonService.gotoTop();
   }
@@ -52,17 +62,6 @@ export class ShopComponent implements OnInit {
     this.cutForm = this.formBuilder.group({
       searchCheckOption: ['standard'],
     });
-  }
-
-  defaultSetting() {
-    // let list = JSON.parse(localStorage.getItem('cart'))
-    //   ? JSON.parse(localStorage.getItem('cart'))
-    //   : [];
-    this.cartItems.forEach((x) => {
-      this.productList.find((item) => item.id == x.productId).count =
-        x.quantity;
-    });
-    this.setGlobalCartCount(this.cartItems);
   }
 
   async getAllProducts() {
@@ -73,9 +72,13 @@ export class ShopComponent implements OnInit {
           this.productList = await this.formatRecords(
             res.allProductDetails
           ).filter((x) => x.isActive);
-          console.log(this.productList);
-          // this.defaultSetting();
-          this.getProductCart();
+          if (this.cartItems.length) {
+            this.updateProductListCount(this.cartItems);
+          } else if (this.commonService.cartItems.length) {
+            this.updateProductListCount(this.cartItems);
+          } else {
+            this.commonService.setGlobalCartCount();
+          }
         }
       },
       (error) => {
@@ -112,10 +115,8 @@ export class ShopComponent implements OnInit {
             this.cartItems.push(this.selectedProduct);
           }
         }
-        
+
         this.updateItemCartQuantity(1, this.selectedProduct);
-        // localStorage.setItem('cart', JSON.stringify(this.productList));
-        // this.setGlobalCartCount(this.cartItems);
       } else {
         this.apllyPreOrder();
       }
@@ -131,11 +132,11 @@ export class ShopComponent implements OnInit {
       localStorage.setItem('directOrderProduct', JSON.stringify(arr));
       this.selectedProduct.outOfStock
         ? this.router.navigateByUrl(
-          'shop/checkout?isStandardCut=false&isPreorder=true'
-        )
+            'shop/checkout?isStandardCut=false&isPreorder=true'
+          )
         : this.router.navigateByUrl(
-          'shop/checkout?isStandardCut=false&isPreorder=false'
-        );
+            'shop/checkout?isStandardCut=false&isPreorder=false'
+          );
     }
     this.modalService.dismissAll();
   }
@@ -155,40 +156,6 @@ export class ShopComponent implements OnInit {
     );
   }
 
-  // setProductCart(selectedProduct: any) {
-  //   const apiRequest = {
-  //     data: {
-  //       productId: selectedProduct.id,
-  //       quantity: 1,
-  //     },
-  //   };
-  //   this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
-  //     if (res && res.statusCode == 200) {
-  //       console.log(res);
-  //       this.getProductCart();
-  //     }
-  //   });
-  // }
-
-  getProductCart() {
-    if (this.isLoggedIn == 1) {
-      this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-        (res) => {
-          if (res && res.statusCode == 200) {
-            this.cartItems = res.allCartItemDetails;      
-          }
-        },
-        (error) => { }
-      );
-    }else{
-      this.cartItems = this.commonService.getLocalCartItems();
-    }
-    
-    this.commonService.cartProductValue.emit(this.cartItems != null ? this.cartItems.length : 0);
-    if(this.cartItems != null) {
-      this.updateProductListCount(this.cartItems);
-    }    
-  }
   updateProductListCount(data) {
     data.forEach((x) => {
       // let index = this.productList.findIndex(p=> p.id == x.productId);
@@ -199,15 +166,6 @@ export class ShopComponent implements OnInit {
         }
       });
     });
-    console.log(this.productList);
-  }
-
-  setGlobalCartCount(data) {
-    let count = 0;
-    data.forEach((x) => {
-      count = count + x.quantity;
-    });
-    this.commonService.addProducts(count);
   }
 
   selectCut(event, content, product) {
@@ -218,13 +176,13 @@ export class ShopComponent implements OnInit {
       ? product.isSample
         ? this.apllyPreOrder()
         : this.modalService.open(content, {
-          size: 'lg',
-          centered: true,
-          backdrop: false,
-        })
+            size: 'lg',
+            centered: true,
+            backdrop: false,
+          })
       : product.isSample
-        ? this.updateItemCartQuantity(1, product)
-        : this.modalService.open(content, {
+      ? this.updateItemCartQuantity(1, product)
+      : this.modalService.open(content, {
           size: 'lg',
           centered: true,
           backdrop: false,
@@ -267,20 +225,14 @@ export class ShopComponent implements OnInit {
       this.apiService.request('ADD_CART_ITEM', apiRequest).subscribe((res) => {
         if (res && res.statusCode == 200) {
           console.log(res);
-          this.getProductCart();
+          this.commonService.setGlobalCartCount();
         } else {
           this.toastrService.error(res.message);
         }
       });
-
     } else {
       this.commonService.addLocalCartItem(quantity, product, product.id);
-      this.getProductCart();
     }
-
-
-
-
   }
 
   removeCartItem(productId) {
@@ -289,12 +241,11 @@ export class ShopComponent implements OnInit {
         .request('DELETE_CART_ITEMS', { params: { id: productId } })
         .subscribe((res) => {
           if (res && res.statusCode == 200) {
-            this.getProductCart();
-          }          
+            this.commonService.setGlobalCartCount();
+          }
         });
     } else {
       this.commonService.removeLocalCartItem(productId);
-      this.getProductCart();
     }
   }
 }

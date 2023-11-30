@@ -1,12 +1,12 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { ShopComponent } from './shop.component';
-import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { OrderPaymentComponent } from './order-payment/order-payment.component';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   {
