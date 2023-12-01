@@ -73,7 +73,11 @@
         </div>
         <div class="col-md-6">
           <div class="py-5">
-            <div style="font-weight: bolder" class="small-title">
+            <div
+              *ngIf="selectedOrder?.isSelfPickup"
+              style="font-weight: bolder"
+              class="small-title"
+            >
               Self Pickup Address:
             </div>
             <span>San Gabriel River In Liberty Hill, Austin, Texas -73301</span>

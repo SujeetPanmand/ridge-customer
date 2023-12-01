@@ -124,8 +124,8 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     this.apiService
       .request('COMPLETE_ORDER_PAYMENT', apiRequest)
       .subscribe((res) => {
+        this.isLoading = false;
         if (res && res.statusCode == 200) {
-          this.isLoading = false;
           this.toastrService.success(
             'Your remaining payment done succesfully. '
           );

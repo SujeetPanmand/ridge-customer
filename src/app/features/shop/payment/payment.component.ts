@@ -152,6 +152,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   subscribeToCartItems() {
     this.commonService.cartItemsEvent.subscribe((items) => {
       this.finalOrderProducts = items;
+      debugger;
       this.finalOrderProducts.forEach((x) => {
         this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
       });
@@ -263,8 +264,8 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     };
 
     this.apiService.request('CREATE_ORDER', apiRequest).subscribe((res) => {
+      this.isLoading = false;
       if (res && res.statusCode == 200) {
-        this.isLoading = false;
         this.removLocalItems();
         this.commonService.onOrderConfirm();
         this.router.navigateByUrl(
@@ -274,7 +275,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
         );
         this.toastrService.success('Your order has been placed.');
       } else {
-        this.isLoading = false;
         this.toastrService.error(res.message);
       }
     });
