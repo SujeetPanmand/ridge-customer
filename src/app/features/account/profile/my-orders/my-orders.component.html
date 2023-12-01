@@ -34,7 +34,7 @@
               (click)="navigateToDetails(order.id)"
             >
               <td>{{ order.orderId }}</td>
-              <td>{{ order.expectedDeliveryDate | date : "MM/dd/yyyy" }}</td>
+              <td>{{ order.createdAt | date : "MM/dd/yyyy" }}</td>
               <td>${{ order.totalAmount }}</td>
               <td>
                 <span
