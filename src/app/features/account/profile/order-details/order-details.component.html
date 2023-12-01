@@ -83,8 +83,9 @@
             <span>San Gabriel River In Liberty Hill, Austin, Texas -73301</span>
           </div>
           <div *ngIf="!selectedOrder?.isSelfPickup">
-            <div class="small-title">Shipping Address</div>
-            <hr class="border" />
+            <div style="font-weight: bolder" class="small-title">
+              Shipping Address:
+            </div>
             <div class="d-flex flex-column">
               <span>
                 {{ selectedOrder ? selectedOrder["address1"] : "" }} in
