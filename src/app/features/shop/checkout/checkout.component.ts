@@ -387,7 +387,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     });
     if (this.router.url.includes('isEdit')) {
       this.singleSlotId = JSON.parse(localStorage.getItem('slotId'));
-      // this.onChangeSlot();
+      //this.onChangeSlot();
     }
 
     this.allFilteredSlots = this.allAvailableSlot.filter(
@@ -438,6 +438,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     );
     this.returnFromEditDate = JSON.parse(localStorage.getItem('orderDate'));
     this.getCurrentDay();
+    this.onChangeSlot();
   }
 
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>
