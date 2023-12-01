@@ -316,6 +316,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     localStorage.removeItem('cart');
     localStorage.removeItem('orderDate');
     localStorage.removeItem('selfPickUp');
+    localStorage.removeItem('ridgeOfflineCartItems');
   }
 
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>
