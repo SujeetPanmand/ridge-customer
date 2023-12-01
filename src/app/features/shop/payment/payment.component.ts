@@ -236,7 +236,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             subTotalAmount: this.orderSubTotal,
             tax: this.TAX_AMOUNT + this.SHIPPING_AMOUNT,
             totalAmount: this.orderTotal,
-            orderType: this.isPreorder ? 1 : 2,
+            orderType: this.isPreorder ? 2 : 1,
             cutType: this.isStandardCut ? 1 : 2,
 
             pickupSlotId: this.slotId,

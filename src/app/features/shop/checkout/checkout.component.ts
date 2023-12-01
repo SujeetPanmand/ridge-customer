@@ -82,9 +82,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.defaultSetting();
     this.generateUserDetailsForm();
     this.patchUserDetailsForm();
-    if (this.router.url.includes('isEdit')) {
-      this.returnFromPaymentSetData();
-    }
   }
 
   ngAfterViewInit(): void {
@@ -147,6 +144,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
           );
           console.log('___', this.allAvailableSlot);
           this.heighLightSlotDay();
+          if (this.router.url.includes('isEdit')) {
+            this.returnFromPaymentSetData();
+          }
         }
       });
   }
@@ -232,7 +232,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     let standardList = JSON.parse(localStorage.getItem('directOrderProduct'))
       ? JSON.parse(localStorage.getItem('directOrderProduct'))
       : [];
-    debugger;
     standardList.forEach((item) => {
       item.quantity = item.count;
       item.productId = item.id;
@@ -388,6 +387,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     });
     if (this.router.url.includes('isEdit')) {
       this.singleSlotId = JSON.parse(localStorage.getItem('slotId'));
+      // this.onChangeSlot();
     }
 
     this.allFilteredSlots = this.allAvailableSlot.filter(
