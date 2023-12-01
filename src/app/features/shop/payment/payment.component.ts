@@ -86,12 +86,20 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.getCartItemsToShow();
     this.defaultSetting();
     this.generatePaymentForm();
     if (this.isPreorder || !this.isStandardCut) {
       this.showPreorderProductOrCustomProducts();
     }
-    this.commonService.setGlobalCartCount();
+  }
+
+  getCartItemsToShow() {
+    if (this.commonService.cartItems.length) {
+      this.finalOrderProducts = this.commonService.cartItems;
+    } else {
+      this.commonService.setGlobalCartCount();
+    }
   }
   generatePaymentForm() {
     this.paymentForm = this.formBuilder.group({
@@ -301,6 +309,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     return this.productPicUrl;
   }
   formatRecord(data) {
+    debugger
     return data.map((x) => {
       return {
         productId: x.productId,

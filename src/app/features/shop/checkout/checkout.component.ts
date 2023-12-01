@@ -83,11 +83,13 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.getCartItemsToShow();
     this.getAvailableSlot();
     this.commonService.gotoTop();
     if (this.isPreorder || !this.isStandardCut) {
       this.showPreorderProductOrCustomProducts();
     }
+
     this.defaultSetting();
     this.generateUserDetailsForm();
     this.patchUserDetailsForm();
@@ -144,6 +146,14 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
           this.heighLightSlotDay();
         }
       });
+  }
+
+  getCartItemsToShow() {
+    if (this.commonService.cartItems.length) {
+      this.finalOrderProducts = this.commonService.cartItems;
+    } else {
+      this.commonService.setGlobalCartCount();
+    }
   }
 
   heighLightSlotDay() {
@@ -281,9 +291,12 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   async onRedirectToPayment() {
     this.formSubmitAttempt = true;
-    if (this.userDetailsForm.invalid) {
-      return;
+    if (!this.isSelfPickUp) {
+      if (this.userDetailsForm.invalid) {
+        return;
+      }
     }
+
     localStorage.setItem('orderSlot', JSON.stringify(this.singleSlot));
     localStorage.setItem('slotId', JSON.stringify(this.singleSlotId));
     this.isSelfPickUp
@@ -293,7 +306,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       this.toastrService.error('Please choose date and time slot.');
       return;
     }
-    console.log(this.userDetailsForm.value);
     localStorage.setItem(
       'orderAddress',
       JSON.stringify(this.userDetailsForm.value)
