@@ -97,6 +97,11 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   getCartItemsToShow() {
     if (this.commonService.cartItems.length) {
       this.finalOrderProducts = this.commonService.cartItems;
+      this.finalOrderProducts.forEach((x) => {
+        this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+      });
+      this.orderTotal =
+        this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
     } else {
       this.commonService.setGlobalCartCount();
     }
@@ -309,7 +314,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     return this.productPicUrl;
   }
   formatRecord(data) {
-    debugger
+    debugger;
     return data.map((x) => {
       return {
         productId: x.productId,
