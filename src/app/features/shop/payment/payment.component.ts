@@ -152,7 +152,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   subscribeToCartItems() {
     this.commonService.cartItemsEvent.subscribe((items) => {
       this.finalOrderProducts = items;
-      debugger;
       this.finalOrderProducts.forEach((x) => {
         this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
       });
@@ -205,7 +204,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             isSelfPickup: this.isSelfPickUp,
 
             country: this.orderAddress['country'],
-            zipCode: this.orderAddress['zipCode'],
+            zipCode: this.orderAddress['zipCode'].toString(),
             state: this.orderAddress['state'],
             city: this.orderAddress['city'],
             address1: this.orderAddress['address1'],
@@ -214,7 +213,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             lastName: this.orderAddress['lastName'],
 
             emailAddress: this.orderAddress['emailAddress'],
-            phoneNumber: this.orderAddress['phoneNumber'],
+            phoneNumber: this.orderAddress['phoneNumber'].toString(),
             company: this.orderAddress['company'],
             address2: this.orderAddress['address2'],
             subTotalAmount: this.orderSubTotal,
@@ -239,14 +238,14 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             cardHolderName: this.paymentForm.controls['cardHolderName'].value,
             isSelfPickup: this.isSelfPickUp,
             country: this.orderAddress['country'],
-            zipCode: this.orderAddress['zipCode'],
+            zipCode: this.orderAddress['zipCode'].toString(),
             state: this.orderAddress['state'],
             city: this.orderAddress['city'],
             address1: this.orderAddress['address1'],
             firstName: this.orderAddress['firstName'],
             lastName: this.orderAddress['lastName'],
             emailAddress: this.orderAddress['emailAddress'],
-            phoneNumber: this.orderAddress['phoneNumber'],
+            phoneNumber: this.orderAddress['phoneNumber'].toString(),
             company: this.orderAddress['company'],
             address2: this.orderAddress['address2'],
             subTotalAmount: this.orderSubTotal,
@@ -263,21 +262,26 @@ export class PaymentComponent implements OnInit, AfterViewInit {
           },
     };
 
-    this.apiService.request('CREATE_ORDER', apiRequest).subscribe((res) => {
-      this.isLoading = false;
-      if (res && res.statusCode == 200) {
-        this.removLocalItems();
-        this.commonService.onOrderConfirm();
-        this.router.navigateByUrl(
-          `shop/order-confirmation/${res.message}?isStandardCut=${
-            this.isStandardCut ? 'true' : 'false'
-          }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
-        );
-        this.toastrService.success('Your order has been placed.');
-      } else {
-        this.toastrService.error(res.message);
+    this.apiService.request('CREATE_ORDER', apiRequest).subscribe(
+      (res) => {
+        this.isLoading = false;
+        if (res && res.statusCode == 200) {
+          this.removLocalItems();
+          this.commonService.onOrderConfirm();
+          this.router.navigateByUrl(
+            `shop/order-confirmation/${res.message}?isStandardCut=${
+              this.isStandardCut ? 'true' : 'false'
+            }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
+          );
+          this.toastrService.success('Your order has been placed.');
+        } else {
+          this.toastrService.error(res.message);
+        }
+      },
+      (error) => {
+        this.isLoading = false;
       }
-    });
+    );
   }
 
   goBack() {
