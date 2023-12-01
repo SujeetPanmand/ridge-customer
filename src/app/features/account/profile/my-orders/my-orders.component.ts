@@ -35,7 +35,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit {
     private router: Router
   ) {}
   ngAfterViewInit(): void {
-    this.dtTrigger.next(this.orderDetails);
+    // this.dtTrigger.next(this.orderDetails);
   }
 
   ngOnInit() {
@@ -80,7 +80,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit {
       this.isLoading = false;
       if (res && res.statusCode == 200) {
         this.orderDetails = res.allUserOrdersDetails;
-        // this.dtTrigger.next(this.orderDetails);
+        this.dtTrigger.next(this.orderDetails);
       }
     });
   }
@@ -118,5 +118,9 @@ export class MyOrdersComponent implements OnInit, AfterViewInit {
         this.toastrService.error('Something went wrong.');
       }
     });
+  }
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
 }

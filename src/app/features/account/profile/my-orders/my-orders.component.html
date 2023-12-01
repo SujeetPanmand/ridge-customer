@@ -14,6 +14,7 @@
         <table
           datatable
           [dtOptions]="dtOptions"
+          [dtTrigger]="dtTrigger"
           class="border shadow-sm bg-white row-border hover"
         >
           <thead>
@@ -50,7 +51,6 @@
               </td>
               <td>{{ commonService.getCustomType(order.cutType) }}</td>
               <td>{{ commonService.getOrderType(order.orderType) }}</td>
-              <td></td>
             </tr>
           </tbody>
         </table>
