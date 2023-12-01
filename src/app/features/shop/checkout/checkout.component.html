@@ -22,281 +22,265 @@
               </label>
             </div>
 
-            <div *ngIf="!isSelfPickUp" id="shippingAddress">
+            <div id="shippingAddress">
               <form [formGroup]="userDetailsForm">
-                <h2 class="text-title">Shipping Address</h2>
-                <hr class="border" />
-
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <label for="firstName" class="form-label"
-                      >First Name <span class="text-orange">*</span></label
-                    >
-                    <input
-                      formControlName="firstName"
-                      type="text"
-                      class="form-control"
-                      id="firstName"
-                      name="firstName"
-                      [(ngModel)]="firstName"
-                      [class.is-invalid]="
-                        isFieldValid(userDetailsForm, 'firstName')
-                      "
-                    />
-                    <span
-                      class="text-orange"
-                      *ngIf="hasError(userDetailsForm, 'firstName', 'required')"
-                      >Please enter a first name.
-                    </span>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="lastName" class="form-label"
-                      >Last Name
-                      <span class="text-orange">*</span>
-                    </label>
-                    <input
-                      formControlName="lastName"
-                      type="text"
-                      class="form-control"
-                      id="lastName"
-                      name="lastName"
-                      [(ngModel)]="lastName"
-                      [class.is-invalid]="
-                        isFieldValid(userDetailsForm, 'lastName')
-                      "
-                    />
-                    <span
-                      class="text-orange"
-                      *ngIf="hasError(userDetailsForm, 'lastName', 'required')"
-                      >Please enter a last name.
-                    </span>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label"
-                    >Email Address
-                    <span class="text-orange">*</span>
-                  </label>
-                  <input
-                    formControlName="emailAddress"
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    [(ngModel)]="emailAddress"
-                    [class.is-invalid]="
-                      isFieldValid(userDetailsForm, 'emailAddress')
-                    "
-                  />
-                  <span
-                    class="text-orange"
-                    *ngIf="
-                      hasError(userDetailsForm, 'emailAddress', 'required')
-                    "
-                    >Please enter an email address.
-                  </span>
-                </div>
-
-                <div class="mb-3">
-                  <label for="phone" class="form-label"
-                    >Phone Number
-                    <span class="text-orange">*</span>
-                  </label>
-                  <input
-                    formControlName="phoneNumber"
-                    type="number"
-                    class="form-control"
-                    id="phone"
-                    name="phone"
-                    placeholder=""
-                    [(ngModel)]="phoneNumber"
-                    [class.is-invalid]="
-                      isFieldValid(userDetailsForm, 'phoneNumber')
-                    "
-                  />
-                  <span
-                    class="text-orange"
-                    *ngIf="hasError(userDetailsForm, 'phoneNumber', 'required')"
-                    >Please enter the phone number.
-                  </span>
-                </div>
-
-                <div class="mb-3">
-                  <label for="company" class="form-label"
-                    >Company(Optional)</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="company"
-                    name="company"
-                    placeholder=""
-                    formControlName="company"
-                  />
-                </div>
-
-                <div class="mb-3">
-                  <label for="country" class="form-label"
-                    >Country/ Region
-                    <span class="text-orange">*</span>
-                  </label>
-
-                  <select
-                    class="form-select form-select mb-3"
-                    id="country"
-                    name="country"
-                    formControlName="country"
-                    formControlName="country"
-                    [(ngModel)]="country"
-                    [class.is-invalid]="
-                      isFieldValid(userDetailsForm, 'country')
-                    "
-                    aria-label=".form-select-lg example"
-                  >
-                    <option value="US">USA</option>
-                    <option value="India">India</option>
-                    <option value="UK">UK</option>
-                  </select>
-                  <span
-                    class="text-orange"
-                    *ngIf="hasError(userDetailsForm, 'country', 'required')"
-                    >Please select the country.
-                  </span>
-                </div>
-
-                <div class="mb-3">
-                  <label for="address" class="form-label"
-                    >Address <span class="text-orange">*</span></label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="address1"
-                    name="address"
-                    formControlName="address1"
-                    placeholder="House name and street name"
-                    [(ngModel)]="address1"
-                    [class.is-invalid]="
-                      isFieldValid(userDetailsForm, 'address1')
-                    "
-                  />
-                  <span
-                    class="text-orange"
-                    *ngIf="hasError(userDetailsForm, 'address1', 'required')"
-                    >Please enter the address.
-                  </span>
-                  <input
-                    type="text"
-                    class="form-control mt-4"
-                    id="address2"
-                    name="address2"
-                    formControlName="address2"
-                    placeholder="Appartment,suit ,unit,etc.(Optional)"
-                  />
-                </div>
-
-                <div class="mb-3">
-                  <label for="city" class="form-label"
-                    >Town / City
-                    <span class="text-orange">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="city"
-                    name="city"
-                    formControlName="city"
-                    [(ngModel)]="city"
-                    [class.is-invalid]="isFieldValid(userDetailsForm, 'city')"
-                  />
-                  <span
-                    class="text-orange"
-                    *ngIf="hasError(userDetailsForm, 'city', 'required')"
-                    >Please enter the city.
-                  </span>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="state" class="form-label"
-                        >State
-                        <span class="text-orange">*</span>
-                      </label>
-                      <select
-                        id="state"
-                        name="state"
-                        formControlName="state"
-                        class="form-select"
-                        for="state"
-                        [(ngModel)]="state"
-                        [class.is-invalid]="
-                          isFieldValid(userDetailsForm, 'state')
-                        "
+                <div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="firstName" class="form-label"
+                        >First Name <span class="text-orange">*</span></label
                       >
-                        <option value="California">California</option>
-                        <option value="Alaska">Alaska</option>
-                        <option value="Colorado">Colorado</option>
-                      </select>
-                      <span
-                        class="text-orange"
-                        *ngIf="hasError(userDetailsForm, 'state', 'required')"
-                        >Please select the state.
-                      </span>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="zip" class="form-label"
-                        >Zip Code
-                        <span class="text-orange">*</span>
-                      </label>
                       <input
-                        type="number"
+                        formControlName="firstName"
+                        type="text"
                         class="form-control"
-                        id="zip"
-                        name="zip"
-                        formControlName="zipCode"
-                        [(ngModel)]="zipCode"
+                        id="firstName"
+                        name="firstName"
+                        [(ngModel)]="firstName"
                         [class.is-invalid]="
-                          isFieldValid(userDetailsForm, 'zipCode')
+                          isFieldValid(userDetailsForm, 'firstName')
                         "
                       />
                       <span
                         class="text-orange"
-                        *ngIf="hasError(userDetailsForm, 'zipCode', 'required')"
-                        >Please enter the zip code.
+                        *ngIf="
+                          hasError(userDetailsForm, 'firstName', 'required')
+                        "
+                        >Please enter a first name.
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="lastName" class="form-label"
+                        >Last Name
+                        <span class="text-orange">*</span>
+                      </label>
+                      <input
+                        formControlName="lastName"
+                        type="text"
+                        class="form-control"
+                        id="lastName"
+                        name="lastName"
+                        [(ngModel)]="lastName"
+                        [class.is-invalid]="
+                          isFieldValid(userDetailsForm, 'lastName')
+                        "
+                      />
+                      <span
+                        class="text-orange"
+                        *ngIf="
+                          hasError(userDetailsForm, 'lastName', 'required')
+                        "
+                        >Please enter a last name.
                       </span>
                     </div>
                   </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label"
+                      >Email Address
+                      <span class="text-orange">*</span>
+                    </label>
+                    <input
+                      formControlName="emailAddress"
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      [(ngModel)]="emailAddress"
+                      [class.is-invalid]="
+                        isFieldValid(userDetailsForm, 'emailAddress')
+                      "
+                    />
+                    <span
+                      class="text-orange"
+                      *ngIf="
+                        hasError(userDetailsForm, 'emailAddress', 'required')
+                      "
+                      >Please enter an email address.
+                    </span>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="phone" class="form-label"
+                      >Phone Number
+                      <span class="text-orange">*</span>
+                    </label>
+                    <input
+                      formControlName="phoneNumber"
+                      type="number"
+                      class="form-control"
+                      id="phone"
+                      name="phone"
+                      placeholder=""
+                      [(ngModel)]="phoneNumber"
+                      [class.is-invalid]="
+                        isFieldValid(userDetailsForm, 'phoneNumber')
+                      "
+                    />
+                    <span
+                      class="text-orange"
+                      *ngIf="
+                        hasError(userDetailsForm, 'phoneNumber', 'required')
+                      "
+                      >Please enter the phone number.
+                    </span>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="company" class="form-label"
+                      >Company(Optional)</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="company"
+                      name="company"
+                      placeholder=""
+                      formControlName="company"
+                    />
+                  </div>
                 </div>
-                <!-- <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="saveAddress"
-                    formControlName="defaultFlag"
-                  />
-                  <label class="form-check-label" for="saveAddress">
-                    Save this address as my default
-                  </label>
+                <div *ngIf="!isSelfPickUp">
+                  <h2 class="text-title">Shipping Address</h2>
+                  <hr class="border" />
                 </div>
-                <div class="pt-4">
-                  <h1 class="text-title">Billing Address</h1>
+                <div *ngIf="!isSelfPickUp">
+                  <div class="mb-3">
+                    <label for="country" class="form-label"
+                      >Country/ Region
+                      <span class="text-orange">*</span>
+                    </label>
+
+                    <select
+                      class="form-select form-select mb-3"
+                      id="country"
+                      name="country"
+                      formControlName="country"
+                      formControlName="country"
+                      [(ngModel)]="country"
+                      [class.is-invalid]="
+                        isFieldValid(userDetailsForm, 'country')
+                      "
+                      aria-label=".form-select-lg example"
+                    >
+                      <option value="US">USA</option>
+                      <option value="India">India</option>
+                      <option value="UK">UK</option>
+                    </select>
+                    <span
+                      class="text-orange"
+                      *ngIf="hasError(userDetailsForm, 'country', 'required')"
+                      >Please select the country.
+                    </span>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="address" class="form-label"
+                      >Address <span class="text-orange">*</span></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="address1"
+                      name="address"
+                      formControlName="address1"
+                      placeholder="House name and street name"
+                      [(ngModel)]="address1"
+                      [class.is-invalid]="
+                        isFieldValid(userDetailsForm, 'address1')
+                      "
+                    />
+                    <span
+                      class="text-orange"
+                      *ngIf="hasError(userDetailsForm, 'address1', 'required')"
+                      >Please enter the address.
+                    </span>
+                    <input
+                      type="text"
+                      class="form-control mt-4"
+                      id="address2"
+                      name="address2"
+                      formControlName="address2"
+                      placeholder="Appartment,suit ,unit,etc.(Optional)"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="city" class="form-label"
+                      >Town / City
+                      <span class="text-orange">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="city"
+                      name="city"
+                      formControlName="city"
+                      [(ngModel)]="city"
+                      [class.is-invalid]="isFieldValid(userDetailsForm, 'city')"
+                    />
+                    <span
+                      class="text-orange"
+                      *ngIf="hasError(userDetailsForm, 'city', 'required')"
+                      >Please enter the city.
+                    </span>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="state" class="form-label"
+                          >State
+                          <span class="text-orange">*</span>
+                        </label>
+                        <select
+                          id="state"
+                          name="state"
+                          formControlName="state"
+                          class="form-select"
+                          for="state"
+                          [(ngModel)]="state"
+                          [class.is-invalid]="
+                            isFieldValid(userDetailsForm, 'state')
+                          "
+                        >
+                          <option value="California">California</option>
+                          <option value="Alaska">Alaska</option>
+                          <option value="Colorado">Colorado</option>
+                        </select>
+                        <span
+                          class="text-orange"
+                          *ngIf="hasError(userDetailsForm, 'state', 'required')"
+                          >Please select the state.
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="zip" class="form-label"
+                          >Zip Code
+                          <span class="text-orange">*</span>
+                        </label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="zip"
+                          name="zip"
+                          formControlName="zipCode"
+                          [(ngModel)]="zipCode"
+                          [class.is-invalid]="
+                            isFieldValid(userDetailsForm, 'zipCode')
+                          "
+                        />
+                        <span
+                          class="text-orange"
+                          *ngIf="
+                            hasError(userDetailsForm, 'zipCode', 'required')
+                          "
+                          >Please enter the zip code.
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <hr class="border" />
-                <div class="form-check mb-3">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="myBilling"
-                    formControlName="billFlag"
-                  />
-                  <label class="form-check-label" for="myBilling">
-                    My billing address is same as shipping address
-                  </label>
-                </div> -->
               </form>
             </div>
             <div *ngIf="isSelfPickUp" class="mb-3">

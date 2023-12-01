@@ -291,10 +291,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   async onRedirectToPayment() {
     this.formSubmitAttempt = true;
-    if (!this.isSelfPickUp) {
-      if (this.userDetailsForm.invalid) {
-        return;
-      }
+    this.removeValidatorOnSelfPickUp();
+
+    if (this.userDetailsForm.invalid) {
+      return;
     }
 
     localStorage.setItem('orderSlot', JSON.stringify(this.singleSlot));
@@ -315,6 +315,23 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
         this.isStandardCut ? 'true' : 'false'
       }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
     );
+  }
+
+  removeValidatorOnSelfPickUp() {
+    this.userDetailsForm.get('country').clearValidators();
+    this.userDetailsForm.get('country').updateValueAndValidity();
+
+    this.userDetailsForm.get('zipCode').clearValidators();
+    this.userDetailsForm.get('zipCode').updateValueAndValidity();
+
+    this.userDetailsForm.get('state').clearValidators();
+    this.userDetailsForm.get('state').updateValueAndValidity();
+
+    this.userDetailsForm.get('city').clearValidators();
+    this.userDetailsForm.get('city').updateValueAndValidity();
+
+    this.userDetailsForm.get('address1').clearValidators();
+    this.userDetailsForm.get('address1').updateValueAndValidity();
   }
 
   generateUserDetailsForm() {
