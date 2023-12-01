@@ -169,9 +169,8 @@ export class ShopComponent implements OnInit {
   }
 
   selectCut(event, content, product) {
-    event.stopPropagation();
     this.selectedProduct = product;
-
+    event.stopPropagation();
     product.outOfStock
       ? product.isSample
         ? this.apllyPreOrder()
