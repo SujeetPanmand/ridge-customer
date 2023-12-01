@@ -24,12 +24,12 @@ export class ResetpasswordComponent implements OnInit {
   ngOnInit() {
     this.resetPassword();
     this.resetPasswordUrl = this.router.url;
-    this.active_route.paramMap.subscribe((params) => {
+    this.active_route.queryParams.subscribe((queryParams) => {
       if (
-        params.get('rt') &&
-        this.resetPasswordUrl.includes('reset-password')
+        queryParams['token'] &&
+        this.resetPasswordUrl.includes('resetpassword')
       ) {
-        this.resetPasswordToken = params.get('rt');
+        this.resetPasswordToken = queryParams['token'];
       }
     });
   }
@@ -54,6 +54,7 @@ export class ResetpasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    debugger;
     if (this.resetPasswordForm.valid && this.resetPasswordToken != '') {
       const apiRequest = {
         data: {

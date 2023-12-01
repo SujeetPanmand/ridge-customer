@@ -17,8 +17,8 @@ const authEndPoint = [
   },
   {
     name: 'RESET_PASSWORD',
-    method: 'POST',
-    url: environment.baseUrl + '/api/auth/reset-password',
+    method: 'PUT',
+    url: environment.baseUrl + '/api/auth/customer-reset-password',
   },
   {
     name: 'GET_USER_DETAILS',
