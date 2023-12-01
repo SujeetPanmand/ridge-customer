@@ -56,7 +56,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   country: string = '';
   state: string = '';
   isLoggedIn = 0;
-
+  isAccordionOpen: boolean[] = [];
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
@@ -68,18 +68,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     private modalService: NgbModal
   ) {
     this.subscribeToCartItems();
-    this.isStandardCut =
-      this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
-    this.todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-    this.isStandardCut =
-      this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
-    this.isPreorder =
-      this.route.snapshot.queryParams['isPreorder'] == 'true' ? true : false;
-    let substr = this.isStandardCut
-      ? 'isStandardCut=true'
-      : 'isStandardCut=false';
-    let preSubstr = this.isPreorder ? 'isPreorder=true' : 'isPreorder=false';
-    this.links[2].link = `/shop/checkout?${substr}&${preSubstr}`;
+    this.getRouterParams();
   }
 
   ngOnInit() {
@@ -98,7 +87,29 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     }
   }
 
-  isAccordionOpen: boolean[] = [];
+  ngAfterViewInit(): void {
+    let substr = this.isStandardCut
+      ? 'isStandardCut=true'
+      : 'isStandardCut=false';
+    let preSubstr = this.isPreorder ? 'isPreorder=true' : 'isPreorder=false';
+    this.links[2].link = `/shop/checkout?${substr}&${preSubstr}`;
+  }
+
+  getRouterParams() {
+    this.isStandardCut =
+      this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
+    this.todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.isStandardCut =
+      this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
+    this.isPreorder =
+      this.route.snapshot.queryParams['isPreorder'] == 'true' ? true : false;
+    let substr = this.isStandardCut
+      ? 'isStandardCut=true'
+      : 'isStandardCut=false';
+    let preSubstr = this.isPreorder ? 'isPreorder=true' : 'isPreorder=false';
+    this.links[2].link = `/shop/checkout?${substr}&${preSubstr}`;
+  }
+
   toggleAccordion(index: number) {
     // Toggle the clicked accordion
     this.isAccordionOpen[index] = !this.isAccordionOpen[index];
@@ -109,14 +120,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
         this.isAccordionOpen[i] = false;
       }
     }
-  }
-
-  ngAfterViewInit(): void {
-    let substr = this.isStandardCut
-      ? 'isStandardCut=true'
-      : 'isStandardCut=false';
-    let preSubstr = this.isPreorder ? 'isPreorder=true' : 'isPreorder=false';
-    this.links[2].link = `/shop/checkout?${substr}&${preSubstr}`;
   }
 
   showPageExitAlert() {
@@ -149,10 +152,12 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   getCartItemsToShow() {
-    if (this.commonService.cartItems.length) {
-      this.finalOrderProducts = this.commonService.cartItems;
-    } else {
-      this.commonService.setGlobalCartCount();
+    if (this.isStandardCut || this.isPreorder) {
+      if (this.commonService.cartItems.length) {
+        this.finalOrderProducts = this.commonService.cartItems;
+      } else {
+        this.commonService.setGlobalCartCount();
+      }
     }
   }
 
@@ -211,20 +216,23 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   subscribeToCartItems() {
-    this.commonService.cartItemsEvent.subscribe((items) => {
-      this.finalOrderProducts = items;
-      this.finalOrderProducts.forEach((x) => {
-        this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+    if (this.isStandardCut || this.isPreorder) {
+      this.commonService.cartItemsEvent.subscribe((items) => {
+        this.finalOrderProducts = items;
+        this.finalOrderProducts.forEach((x) => {
+          this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+        });
+        this.orderTotal =
+          this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
       });
-      this.orderTotal =
-        this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-    });
+    }
   }
 
   showPreorderProductOrCustomProducts() {
     let standardList = JSON.parse(localStorage.getItem('directOrderProduct'))
       ? JSON.parse(localStorage.getItem('directOrderProduct'))
       : [];
+    debugger;
     standardList.forEach((item) => {
       item.quantity = item.count;
       item.productId = item.id;
