@@ -251,4 +251,10 @@ export class CommonService {
     this.cartProductValue.emit(0);
     this.islogginButtonShow.emit(this.isLogginShow);
   }
+  onOrderConfirm() {
+    this.cartItems = [];
+    this.cartProducts = 0;
+    this.cartItemsEvent.emit([]);
+    this.cartProductValue.emit(0);
+  }
 }

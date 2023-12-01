@@ -32,6 +32,10 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
     private apiService: ApiService,
     private datePipe: DatePipe
   ) {
+    this.getRouterParams();
+  }
+
+  getRouterParams() {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
     this.isPreorder =
@@ -59,6 +63,9 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
         }
       }
     });
+    if (this.isPreorder || !this.isStandardCut) {
+      this.showPreorderProductOrCustomProducts();
+    }
     this.defaultSetting();
   }
 
@@ -111,24 +118,15 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
     // }
   }
   getCartItems(res) {
-    // this.setGlobalCartCount(res.orderItemDetails.length);
-    if (this.isStandardCut && !this.isPreorder) {
-      this.finalOrderProducts = res.orderItemDetails;
-      // this.finalOrderProducts.forEach((x) => {
-      //   if (x.isSample) {
-      //     this.isGoogleLinkShow = false;
-      //   }
-      // });
-      this.finalOrderProducts.forEach((x) => {
-        this.orderSubTotal = this.orderSubTotal + x.unitPrice * x.quantity;
-        x['price'] = x.unitPrice;
-      });
-      this.orderTotal =
-        this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-    } else {
-      this.showPreorderProductOrCustomProducts();
-    }
+    this.finalOrderProducts = res.orderItemDetails;
+    this.finalOrderProducts.forEach((x) => {
+      this.orderSubTotal = this.orderSubTotal + x.unitPrice * x.quantity;
+      x['price'] = x.unitPrice;
+    });
+    this.orderTotal =
+      this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
   }
+
   showPreorderProductOrCustomProducts() {
     let standardList = JSON.parse(localStorage.getItem('directOrderProduct'))
       ? JSON.parse(localStorage.getItem('directOrderProduct'))

@@ -67,6 +67,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     private toastrService: ToastrService,
     private modalService: NgbModal
   ) {
+    this.subscribeToCartItems();
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
     this.todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
@@ -84,9 +85,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getAvailableSlot();
     this.commonService.gotoTop();
-    this.isStandardCut && !this.isPreorder
-      ? this.getCartItems()
-      : this.showPreorderProductOrCustomProducts();
+    if (this.isPreorder || !this.isStandardCut) {
+      this.showPreorderProductOrCustomProducts();
+    }
     this.defaultSetting();
     this.generateUserDetailsForm();
     this.patchUserDetailsForm();
@@ -199,25 +200,15 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.isSundaySlot = false;
   }
 
-  getCartItems() {
-    if (this.isLoggedIn == 1) {
-      this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-        (res) => {
-          if (res && res.statusCode == 200) {
-            this.finalOrderProducts = res.allCartItemDetails;
-          }
-        },
-        (error) => {}
-      );
-    } else {
-      this.finalOrderProducts = this.commonService.getLocalCartItems();
-    }
-
-    this.finalOrderProducts.forEach((x) => {
-      this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+  subscribeToCartItems() {
+    this.commonService.cartItemsEvent.subscribe((items) => {
+      this.finalOrderProducts = items;
+      this.finalOrderProducts.forEach((x) => {
+        this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+      });
+      this.orderTotal =
+        this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
     });
-    this.orderTotal =
-      this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
   }
 
   showPreorderProductOrCustomProducts() {

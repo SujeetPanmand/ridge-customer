@@ -45,15 +45,20 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   isLoggedIn = 0;
 
   constructor(
-    private commonService: CommonService,
+    public commonService: CommonService,
     private route: ActivatedRoute,
     private router: Router,
     private apiService: ApiService,
     private formBuilder: FormBuilder,
     private toastrService: ToastrService
   ) {
+    this.subscribeToCartItems();
     this.getYearList();
     this.subscribeToCreditType();
+    this.getRouterParams();
+  }
+
+  getRouterParams() {
     this.isStandardCut =
       this.route.snapshot.queryParams['isStandardCut'] == 'true' ? true : false;
     this.isPreorder =
@@ -83,6 +88,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.defaultSetting();
     this.generatePaymentForm();
+    if (this.isPreorder || !this.isStandardCut) {
+      this.showPreorderProductOrCustomProducts();
+    }
+    this.commonService.setGlobalCartCount();
   }
   generatePaymentForm() {
     this.paymentForm = this.formBuilder.group({
@@ -138,34 +147,17 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     this.slotId = JSON.parse(localStorage.getItem('slotId'))
       ? JSON.parse(localStorage.getItem('slotId'))
       : [];
-    this.getCartItems();
   }
 
-  getCartItems() {
-    if (this.isLoggedIn == 1) {
-      this.apiService.request('GET_CART_ITEMS', { params: {} }).subscribe(
-        (res) => {
-          if (res && res.statusCode == 200) {
-            this.finalOrderProducts = res.allCartItemDetails;
-          }
-        },
-        (error) => {}
-      );
-    } else {
-      this.finalOrderProducts = this.commonService.getLocalCartItems();
-    }
-
-    this.setGlobalCartCount(this.finalOrderProducts.length);
-    if (this.isStandardCut && !this.isPreorder) {
-      
+  subscribeToCartItems() {
+    this.commonService.cartItemsEvent.subscribe((items) => {
+      this.finalOrderProducts = items;
       this.finalOrderProducts.forEach((x) => {
         this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
       });
       this.orderTotal =
         this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-    } else {
-      this.showPreorderProductOrCustomProducts();
-    }
+    });
   }
 
   showPreorderProductOrCustomProducts() {
@@ -193,10 +185,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
   }
 
-  setGlobalCartCount(count) {
-    this.commonService.addProducts(count);
-    //this.commonService.cartProductValue.emit(count);
-  }
   createOrder() {
     this.formSubmitAttempt = true;
     if (this.paymentForm.invalid) {
@@ -278,7 +266,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       if (res && res.statusCode == 200) {
         this.isLoading = false;
         this.removLocalItems();
-        this.getCartItems();
+        this.commonService.onOrderConfirm();
         this.router.navigateByUrl(
           `shop/order-confirmation/${res.message}?isStandardCut=${
             this.isStandardCut ? 'true' : 'false'
@@ -291,6 +279,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
   goBack() {
     this.router.navigateByUrl(
       `shop/checkout?isStandardCut=${
