@@ -22,17 +22,13 @@
               <th>ORDER DATE</th>
               <th>PRICE</th>
               <th>STATUS</th>
-              <th>Custom Type</th>
+              <th>Cut Type</th>
               <th>Order Type</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr
-              class="p-2 cursor"
-              *ngFor="let order of orderDetails"
-            
-            >
+            <tr class="p-2 cursor" *ngFor="let order of orderDetails">
               <td>{{ order.orderId }}</td>
               <td>{{ order.createdAt | date : "MM/dd/yyyy" }}</td>
               <td>${{ order.totalAmount }}</td>
@@ -51,7 +47,9 @@
               </td>
               <td>{{ commonService.getCustomType(order.cutType) }}</td>
               <td>{{ commonService.getOrderType(order.orderType) }}</td>
-              <td><i class="fa fa-eye"   (click)="navigateToDetails(order.id)"></i></td>
+              <td>
+                <i class="fa fa-eye" (click)="navigateToDetails(order.id)"></i>
+              </td>
             </tr>
           </tbody>
         </table>
