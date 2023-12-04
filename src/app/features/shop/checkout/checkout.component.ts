@@ -156,7 +156,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   getCartItemsToShow() {
-    if (this.isStandardCut || this.isPreorder) {
+    if (this.isStandardCut && !this.isPreorder) {
       if (this.commonService.cartItems.length) {
         this.finalOrderProducts = this.commonService.cartItems;
       } else {
@@ -220,16 +220,16 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   subscribeToCartItems() {
-    if (this.isStandardCut || this.isPreorder) {
-      this.commonService.cartItemsEvent.subscribe((items) => {
+    this.commonService.cartItemsEvent.subscribe((items) => {
+      if (this.isStandardCut && !this.isPreorder) {
         this.finalOrderProducts = items;
         this.finalOrderProducts.forEach((x) => {
           this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
         });
         this.orderTotal =
           this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-      });
-    }
+      }
+    });
   }
 
   showPreorderProductOrCustomProducts() {
