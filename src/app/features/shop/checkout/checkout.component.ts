@@ -124,6 +124,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   getAvailableSlot() {
+    if (this.router.url.includes('isEdit')) {
+      let item = localStorage.getItem('selfPickUp');
+      this.isSelfPickUp = item == '0' ? false : true;
+    }
     this.resetDay();
     this.apiService
       .request(this.isSelfPickUp ? 'GET_PICKUP_SLOTS' : 'GET_DELIVERY_SLOTS', {
