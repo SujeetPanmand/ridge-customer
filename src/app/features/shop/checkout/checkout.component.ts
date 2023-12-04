@@ -380,7 +380,33 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getCurrentDay() {
+  getCurrentDay(isFromView) {
+    if (isFromView && !this.isStandardCut) {
+      var date1 = new Date();
+      var date2 = new Date(this.selectedDate);
+
+      var Difference_In_Time = date2.getTime() - date1.getTime();
+      var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      if (Difference_In_Days < 10) {
+        this.toastrService.error(
+          `please select date after ${this.finalOrderProducts[0].customCutAvailabilityDays} days.`
+        );
+        return;
+      }
+    }
+    if (isFromView && this.isStandardCut && this.isPreorder) {
+      let date = new Date(this.finalOrderProducts[0].expectedAvailabilityDate);
+      let date1 = new Date(this.selectedDate);
+      if (date > date1) {
+        this.toastrService.error(
+          `please select date after ${this.datePipe.transform(
+            new Date(this.finalOrderProducts[0].expectedAvailabilityDate),
+            'MM/dd/yyyy'
+          )}`
+        );
+        return;
+      }
+    }
     this.singleSlotId = '';
     let date = this.router.url.includes('isEdit')
       ? this.returnFromEditDate
@@ -441,7 +467,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       'yyyy-MM-dd'
     );
     this.returnFromEditDate = JSON.parse(localStorage.getItem('orderDate'));
-    this.getCurrentDay();
+    this.getCurrentDay(false);
     this.onChangeSlot();
   }
 
