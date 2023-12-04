@@ -1,16 +1,13 @@
-<section class="py-5 mt-5" #print>
-  <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-xl-center">
-      <h2 class="mb-0 hide">
-        <i
-          routerLink="/account/profile/my-orders"
-          class="bi-arrow-left cursor"
-        ></i>
-        <span> Order Details</span>
-      </h2>
+<section class="py-5 mt-5 bg-light-gray" #print>
+  <div class="container">
+    <div class="d-flex justify-content-between mb-4 align-items-xl-center">
+    
+      <h2  class="fw-bold sub-title hide">  <i
+        routerLink="/account/profile/my-orders"
+        class="bi-arrow-left cursor"
+      ></i> <span> Order Details</span> </h2>
       <div
-        id="hide"
-        class="text-orange text-decoration-underline fw-bold cursor print"
+        class="text-orange text-decoration-underline fw-bold cursor hide"
         (click)="printInvoice()"
       >
         Print<span class="mx-1"><i class="bi bi-printer text-orange"></i></span>
@@ -22,7 +19,7 @@
           src="/assets/ridge-logo.png"
           width="5%"
           alt=""
-          class="img-fluid logo"
+          class="img-fluid logo d-none d-md-block"
         />
         <h3 class="text-center fw-bold text-center w-100">Invoice</h3>
       </div>
@@ -35,6 +32,14 @@
         <div class="mb-2">
           <label>Order Date : </label>
           <span> {{ selectedOrder?.createdAt | date : "MM/dd/yyyy" }}</span>
+        </div>
+        <div class="mb-2">
+          <label>Order Type : </label>
+          <span> {{ commonService.getOrderType(selectedOrder.orderType) }} </span>
+        </div>
+        <div class="mb-2">
+          <label>Cut Type : </label>
+          <span> {{ commonService.getCustomType(selectedOrder.cutType) }} </span>
         </div>
         <div
           class="text-danger"
@@ -71,30 +76,24 @@
             <span> {{ selectedOrder?.user.phoneNumber }}</span>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="py-5">
-            <div
-              *ngIf="selectedOrder?.isSelfPickup"
-              style="font-weight: bolder"
-              class="small-title"
-            >
+        <div class="col-md-6 pt-3">
+          <div  *ngIf="selectedOrder?.isSelfPickup">
+            <div class="fw-bold">
               Self Pickup Address:
             </div>
-            <span>San Gabriel River In Liberty Hill, Austin, Texas -73301</span>
+            <p>San Gabriel River In Liberty Hill, Austin, Texas -73301</p>
           </div>
           <div *ngIf="!selectedOrder?.isSelfPickup">
-            <div style="font-weight: bolder" class="small-title">
+            <div class="fw-bold">
               Shipping Address:
             </div>
-            <div class="d-flex flex-column">
-              <span>
+              <p>
                 {{ selectedOrder ? selectedOrder["address1"] : "" }} in
                 {{ selectedOrder ? selectedOrder["city"] : "" }},
                 {{ selectedOrder ? selectedOrder["state"] : "" }},{{
                   selectedOrder ? selectedOrder["country"] : ""
                 }}
-              </span>
-            </div>
+              </p>
           </div>
         </div>
       </div>
@@ -114,7 +113,7 @@
               <tr *ngFor="let item of selectedOrder?.orderItemDetails">
                 <td>{{ item.name }}</td>
                 <td>{{ item.quantity }}</td>
-                <td>${{ item.unitPrice }}</td>
+                <td>${{ item.quantity * item.unitPrice }}</td>
               </tr>
               <tr class="border-top">
                 <td colspan="1"></td>
