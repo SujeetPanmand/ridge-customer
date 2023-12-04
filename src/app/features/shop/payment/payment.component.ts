@@ -243,6 +243,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             expectedDeliveryDate: new Date(this.orderDate).toISOString(),
             sameAsBillingAddress: true,
             isSaveAddress: true,
+            shippingCharges: 0,
             orderItemsModel: this.formatRecord(this.finalOrderProducts),
           }
         : {
@@ -275,6 +276,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             expectedDeliveryDate: new Date(this.orderDate).toISOString(),
             sameAsBillingAddress: true,
             isSaveAddress: true,
+            shippingCharges: this.SHIPPING_AMOUNT,
             orderItemsModel: this.formatRecord(this.finalOrderProducts),
           },
     };
