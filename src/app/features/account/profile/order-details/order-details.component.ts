@@ -23,6 +23,7 @@ export class OrderDetailsComponent {
   cancelReasonFormSubmitAttempt: boolean = false;
   expectedDeliveryDate = '';
   orderId = '';
+  isLoggedIn=0;
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
@@ -33,6 +34,10 @@ export class OrderDetailsComponent {
     private router: Router // private datePipe: DatePipe
   ) {}
   ngOnInit() {
+    this.commonService.getUserDetails().then((x) => {
+      if (x) this.isLoggedIn = 1;
+    });
+
     this.orderId = this.route.snapshot.params['orderId'];
 
     if (this.orderId != '') {

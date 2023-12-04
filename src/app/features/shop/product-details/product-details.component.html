@@ -262,86 +262,85 @@
             <div *ngIf="allProductReviews.length" class="review-box">
               <div *ngFor="let item of allProductReviews">
                 <div class="row">
-                  <div class="col-md-9">
-                    <div class="d-flex align-items-start pt-3">
-                      <img
-                        [src]="getProfileImage(item.userDetails.id)"
-                        class="mr-3 img-fluid rounded-circle profileImg"
-                        alt="..."
-                      />
-                      <div class="ps-3">
-                        <h5 class="mt-0">
-                          {{ item.userDetails.firstName }}
-                          {{ item.userDetails.lastName }}
-                        </h5>
-                        <div>
-                          <span
-                            [ngClass]="getStarClass(1, item.rating)"
-                            class="fa fa-star"
-                          ></span>
-                          <span
-                            [ngClass]="getStarClass(2, item.rating)"
-                            class="fa fa-star"
-                          ></span>
-                          <span
-                            [ngClass]="getStarClass(3, item.rating)"
-                            class="fa fa-star"
-                          ></span>
-                          <span
-                            [ngClass]="getStarClass(4, item.rating)"
-                            class="fa fa-star"
-                          ></span>
-                          <span
-                            [ngClass]="getStarClass(5, item.rating)"
-                            class="fa fa-star"
-                          ></span>
-                        </div>
-                        <div class="reviewFont">
-                          Reviewed On {{ item.createdAt }}
-                        </div>
-                        <h6 class="fw-bolder pt-3">{{ item.title }}</h6>
-                        <p>
-                          {{ item.review }}
-                        </p>
-                        <div class="gy-2">
-                          <span>Was this review helpful?</span>
-                          <span class="ps-md-2"
-                            ><i
-                              (click)="onAddReview(item, 'up')"
-                              class="bi bi-hand-thumbs-up-fill text-orange cursor"
-                            ></i
-                          ></span>
-                          <span class="px-md-1">{{ item.likeCount }}</span>
-                          <span
-                            ><i
-                              (click)="onAddReview(item, 'down')"
-                              class="bi bi-hand-thumbs-down-fill cursor"
-                            ></i
-                          ></span>
-                          <span class="px-md-1">{{ item.disLikeCount }}</span>
+                  <div class="col-md-12">
+                    <div class="d-flex justify-content-between pt-3">
+                      <div class="d-flex">
+                        <img
+                          [src]="getProfileImage(item.userDetails.id)"
+                          class="mr-3 img-fluid rounded-circle profileImg"
+                          alt="..."
+                        />
+                        <div class="ps-3">
+                          <h5 class="mt-0">
+                            {{ item.userDetails.firstName }}
+                            {{ item.userDetails.lastName }}
+                          </h5>
+                          <div>
+                            <span
+                              [ngClass]="getStarClass(1, item.rating)"
+                              class="fa fa-star"
+                            ></span>
+                            <span
+                              [ngClass]="getStarClass(2, item.rating)"
+                              class="fa fa-star"
+                            ></span>
+                            <span
+                              [ngClass]="getStarClass(3, item.rating)"
+                              class="fa fa-star"
+                            ></span>
+                            <span
+                              [ngClass]="getStarClass(4, item.rating)"
+                              class="fa fa-star"
+                            ></span>
+                            <span
+                              [ngClass]="getStarClass(5, item.rating)"
+                              class="fa fa-star"
+                            ></span>
+                          </div>
+                          <div class="reviewFont">
+                            Reviewed On {{ item.createdAt }}
+                          </div>
+                          <h6 class="fw-bolder pt-3">{{ item.title }}</h6>
+                          <p>
+                            {{ item.review }}
+                          </p>
+                          <div class="gy-2">
+                            <span>Was this review helpful?</span>
+                            <span class="ps-md-2"
+                              ><i
+                                (click)="onAddReview(item, 'up')"
+                                class="bi bi-hand-thumbs-up-fill text-orange cursor"
+                              ></i
+                            ></span>
+                            <span class="px-md-1">{{ item.likeCount }}</span>
+                            <span
+                              ><i
+                                (click)="onAddReview(item, 'down')"
+                                class="bi bi-hand-thumbs-down-fill cursor"
+                              ></i
+                            ></span>
+                            <span class="px-md-1">{{ item.disLikeCount }}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div
-                      *ngIf="item.userDetails.id == loginUserId"
-                      class="me-2 mt-4"
-                    >
-                      <div class="d-flex justify-content-end">
-                        <div class="d-flex">
-                          <button
-                            (click)="onEditReview(addReviewTemplate, item)"
-                            class="btn btn-outline-primary me-1"
-                          >
-                            <i class="color-ff" class="fas fa-pen"></i>
-                          </button>
-                          <button
-                            (click)="onDeleteReview(item)"
-                            class="btn btn-outline-danger"
-                          >
-                            <i class="color-ff" class="fas fa-trash"></i>
-                          </button>
+
+                      <div
+                        *ngIf="item.userDetails.id == loginUserId"
+                        class="me-2"
+                      >
+                        <div class="d-flex justify-content-end">
+                            <button
+                              (click)="onEditReview(addReviewTemplate, item)"
+                              class="btn btn-outline-primary me-1"
+                            >
+                              <i class="color-ff" class="fas fa-pen"></i>
+                            </button>
+                            <button
+                              (click)="onDeleteReview(item)"
+                              class="btn btn-outline-danger"
+                            >
+                              <i class="color-ff" class="fas fa-trash"></i>
+                            </button>
                         </div>
                       </div>
                     </div>
