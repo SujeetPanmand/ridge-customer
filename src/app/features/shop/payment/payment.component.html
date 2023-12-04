@@ -6,7 +6,9 @@
       <div class="row pt-4">
         <div class="col-md-6">
           <div class="d-flex">
-            <h2 class="text-title">Shipping Address</h2>
+            <h2 class="text-title">
+              {{ isSelfPickUp ? "Pickup" : "Shipping" }} Address
+            </h2>
             <div (click)="goBack()" class="text-orange cursor ps-4">Edit</div>
           </div>
           <hr class="border" />
