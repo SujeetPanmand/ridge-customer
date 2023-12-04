@@ -76,24 +76,26 @@ export class EditAddressComponent implements OnInit {
         stateAbbreviation: this.zipCodeDetails.zipCodeDetails.stateAbbreviation,
         latitude: this.zipCodeDetails.zipCodeDetails.latitude,
         longitude: this.zipCodeDetails.zipCodeDetails.longitude,
-        county:this.zipCodeDetails.zipCodeDetails.county
+        county: this.zipCodeDetails.zipCodeDetails.county,
       },
     };
     this.apiService.request('UPDATE_ADDRESS', apiRequest).subscribe((res) => {
       this.editAddressFormSubmitAttempt = false;
       if (res && res.statusCode == 200) {
         this.toastrService.success('Updated Successfully!');
+        this.commonService.userDetails = null;
+        this.commonService.getUserDetails();
       }
     });
   }
 
-  checkZipCode(){
-    if(this.zipCode.length >= 5){
+  checkZipCode() {
+    if (this.zipCode.length >= 5) {
       this.fetchZipCodeDetails(this.zipCode);
     }
   }
 
-  async fetchZipCodeDetails(zipcode){
+  async fetchZipCodeDetails(zipcode) {
     await this.apiService
       .request('GET_ZIPCODE_DETAILS', {
         params: { zipcode: zipcode },
@@ -104,18 +106,18 @@ export class EditAddressComponent implements OnInit {
           console.log(this.zipCodeDetails.zipCodeDetails.zipcode);
           this.setZipCodeDetails(this.zipCodeDetails);
         } else {
-          this.toastrService.error(res.message)
+          this.toastrService.error(res.message);
         }
       });
   }
 
-  setZipCodeDetails(zipCodeDetails: ZipCodeDetails){
+  setZipCodeDetails(zipCodeDetails: ZipCodeDetails) {
     this.editAddressForm.patchValue({
       zipCode: zipCodeDetails.zipCodeDetails.zipcode,
       townCity: zipCodeDetails.zipCodeDetails.city,
       state: zipCodeDetails.zipCodeDetails.state,
-      countryRegion: zipCodeDetails.zipCodeDetails.country
-    })
+      countryRegion: zipCodeDetails.zipCodeDetails.country,
+    });
   }
 
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>
