@@ -49,6 +49,9 @@ export class MyOrdersComponent implements OnInit, AfterViewInit {
       responsive: true,
       pagingType: 'full_numbers',
       pageLength: 10,
+      scrollX:false,
+      scrollbars:false,
+      scrollY:false,
     };
     this.myOrderDetails();
     this.saveCancelReasonForm();

@@ -1,5 +1,5 @@
 <div
-  class="tab-pane fade rounded bg-white show p-5"
+  class="tab-pane fade rounded bg-white show p-4"
   id="my-orders"
   role="tabpanel"
   aria-labelledby="myOrders"
@@ -24,13 +24,14 @@
               <th>STATUS</th>
               <th>Custom Type</th>
               <th>Order Type</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr
               class="p-2 cursor"
               *ngFor="let order of orderDetails"
-              (click)="navigateToDetails(order.id)"
+            
             >
               <td>{{ order.orderId }}</td>
               <td>{{ order.createdAt | date : "MM/dd/yyyy" }}</td>
@@ -50,6 +51,7 @@
               </td>
               <td>{{ commonService.getCustomType(order.cutType) }}</td>
               <td>{{ commonService.getOrderType(order.orderType) }}</td>
+              <td><i class="fa fa-eye"   (click)="navigateToDetails(order.id)"></i></td>
             </tr>
           </tbody>
         </table>
