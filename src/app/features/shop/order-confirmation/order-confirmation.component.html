@@ -87,14 +87,20 @@
                       {{ product.quantity }}</span
                     >
                   </td>
-                  <td>${{ product.price * product.quantity }}</td>
+                  <td *ngIf="isStandardCut && !isPreorder">
+                    ${{ product.unitPrice * product.quantity }}
+                  </td>
+                  <td *ngIf="!isStandardCut || isPreorder">
+                    ${{ orderSubTotal }}
+                  </td>
                 </tr>
 
-                <tr>
+                <tr *ngIf="isStandardCut && !isPreorder">
                   <td colspan="2"></td>
-                  <td>Subtotal</td>
-                  <td>${{ orderSubTotal }}</td>
+                  <td class="line-top fw-semibold">Subtotal</td>
+                  <td class="line-top fw-semibold">${{ orderSubTotal }}</td>
                 </tr>
+
                 <tr>
                   <td colspan="2"></td>
                   <td>Shipping</td>

@@ -23,7 +23,9 @@ export class OrderDetailsComponent {
   cancelReasonFormSubmitAttempt: boolean = false;
   expectedDeliveryDate = '';
   orderId = '';
-  isLoggedIn=0;
+  isLoggedIn = 0;
+  subTotal = 0;
+  orderTotal = 0;
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
@@ -52,6 +54,7 @@ export class OrderDetailsComponent {
       .subscribe((res) => {
         if (res && res.statusCode == 200) {
           this.selectedOrder = res.orderDetails;
+          this.getTotalAndSubTotal(this.selectedOrder);
           // this.expectedDeliveryDate = this.datePipe.transform(
           //   new Date(this.selectedOrder.expectedDeliveryDate),
           //   'YYYY-MM-dd'
@@ -149,5 +152,9 @@ export class OrderDetailsComponent {
       `shop/order-payment/
     ${this.selectedOrder?.id.trim()}`,
     ]);
+  }
+  getTotalAndSubTotal(order) {
+    this.subTotal = order.subTotalAmount;
+    this.orderTotal = order.totalAmount;
   }
 }

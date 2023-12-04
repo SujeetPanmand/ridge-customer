@@ -1,11 +1,14 @@
 <section class="py-5 mt-5 bg-light-gray" #print>
   <div class="container">
     <div class="d-flex justify-content-between mb-4 align-items-xl-center">
-      <h2 class="fw-bold sub-title hide">  
-        <i *ngIf="isLoggedIn"
-        routerLink="/account/profile/my-orders"
-        class="bi-arrow-left cursor"
-      ></i> <span> Order Details</span> </h2>
+      <h2 class="fw-bold sub-title hide">
+        <i
+          *ngIf="isLoggedIn"
+          routerLink="/account/profile/my-orders"
+          class="bi-arrow-left cursor"
+        ></i>
+        <span> Order Details</span>
+      </h2>
       <div
         class="text-orange text-decoration-underline fw-bold cursor hide"
         (click)="printInvoice()"
@@ -35,11 +38,15 @@
         </div>
         <div class="mb-2">
           <label>Order Type : </label>
-          <span> {{ commonService.getOrderType(selectedOrder.orderType) }} </span>
+          <span>
+            {{ commonService.getOrderType(selectedOrder.orderType) }}
+          </span>
         </div>
         <div class="mb-2">
           <label>Cut Type : </label>
-          <span> {{ commonService.getCustomType(selectedOrder.cutType) }} </span>
+          <span>
+            {{ commonService.getCustomType(selectedOrder.cutType) }}
+          </span>
         </div>
         <div
           class="text-danger"
@@ -77,23 +84,19 @@
           </div>
         </div>
         <div class="col-md-6 pt-3">
-          <div  *ngIf="selectedOrder?.isSelfPickup">
-            <div class="fw-bold">
-              Self Pickup Address:
-            </div>
+          <div *ngIf="selectedOrder?.isSelfPickup">
+            <div class="fw-bold">Self Pickup Address:</div>
             <p>San Gabriel River In Liberty Hill, Austin, Texas -73301</p>
           </div>
           <div *ngIf="!selectedOrder?.isSelfPickup">
-            <div class="fw-bold">
-              Shipping Address:
-            </div>
-              <p>
-                {{ selectedOrder ? selectedOrder["address1"] : "" }} in
-                {{ selectedOrder ? selectedOrder["city"] : "" }},
-                {{ selectedOrder ? selectedOrder["state"] : "" }},{{
-                  selectedOrder ? selectedOrder["country"] : ""
-                }}
-              </p>
+            <div class="fw-bold">Shipping Address:</div>
+            <p>
+              {{ selectedOrder ? selectedOrder["address1"] : "" }} in
+              {{ selectedOrder ? selectedOrder["city"] : "" }},
+              {{ selectedOrder ? selectedOrder["state"] : "" }},{{
+                selectedOrder ? selectedOrder["country"] : ""
+              }}
+            </p>
           </div>
         </div>
       </div>
@@ -113,19 +116,49 @@
               <tr *ngFor="let item of selectedOrder?.orderItemDetails">
                 <td>{{ item.name }}</td>
                 <td>{{ item.quantity }}</td>
-                <td>${{ item.quantity * item.unitPrice }}</td>
+
+                <td
+                  *ngIf="
+                    selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1
+                  "
+                >
+                  ${{ item.quantity * item.unitPrice }}
+                </td>
+                <td
+                  *ngIf="
+                    selectedOrder?.cutType == 2 || selectedOrder?.orderType == 2
+                  "
+                >
+                  ${{ subTotal }}
+                </td>
               </tr>
-              <tr class="border-top">
+              <!-- <tr class="border-top">
                 <td colspan="1"></td>
                 <td class="text-end text-nowrap">
                   <label>Sub Total : </label>
                 </td>
                 <td>${{ selectedOrder?.subTotalAmount }}</td>
+              </tr> -->
+              <tr
+                *ngIf="
+                  selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1
+                "
+              >
+                <td colspan="1"></td>
+                <td class="text-end text-nowrap"><label>Subtotal: </label></td>
+                <td class="line-top fw-semibold">${{ subTotal }}</td>
               </tr>
               <tr>
                 <td colspan="1"></td>
                 <td class="text-end text-nowrap"><label>Tax : </label></td>
                 <td>${{ selectedOrder?.tax }}</td>
+              </tr>
+              <tr>
+                <td colspan="1"></td>
+                <td class="text-end text-nowrap">
+                  <label>Shipping Charge : </label>
+                </td>
+                <td>${{ selectedOrder?.shippingCharge }}</td>
               </tr>
               <tr class="align-baseline border-top">
                 <td colspan="1"></td>

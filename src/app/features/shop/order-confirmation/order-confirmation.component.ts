@@ -119,12 +119,14 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
   }
   getCartItems(res) {
     this.finalOrderProducts = res.orderItemDetails;
-    this.finalOrderProducts.forEach((x) => {
-      this.orderSubTotal = this.orderSubTotal + x.unitPrice * x.quantity;
-      x['price'] = x.unitPrice;
-    });
-    this.orderTotal =
-      this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+    // this.finalOrderProducts.forEach((x) => {
+    //   this.orderSubTotal = this.orderSubTotal + x.unitPrice * x.quantity;
+    //   x['price'] = x.unitPrice;
+    // });
+    // this.orderTotal =
+    //   this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+    this.orderSubTotal = res.subTotalAmount;
+    this.orderTotal = res.totalAmount;
   }
 
   showPreorderProductOrCustomProducts() {
