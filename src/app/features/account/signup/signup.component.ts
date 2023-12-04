@@ -115,7 +115,7 @@ export class SignupComponent implements OnInit {
 
     this.apiService.request('USER_SIGN_UP', apiRequest).subscribe((res) => {
       this.formSubmitAttempt = false;
-      if (res && res.statusCode == 200) {
+      if (res && res.statusCode == 201) {
         this.toastrService.success('User Created Successfully.');
         this.router.navigate(['account/login']);
       } else {

@@ -49,12 +49,16 @@ export class MyAccountComponent implements OnInit {
     this.userId = localStorage.getItem('userId')
       ? localStorage.getItem('userId')
       : '';
+
+    this.getUserDetails();
+    this.setUserPicture();
+  }
+  getUserDetails() {
     this.commonService.getUserDetails().then((res) => {
       this.userDetails = res;
       console.log('___', this.userDetails);
       this.patchUserDetails();
     });
-    this.setUserPicture();
   }
   setUserPicture() {
     this.profilePictureUrl =
@@ -81,6 +85,8 @@ export class MyAccountComponent implements OnInit {
         this.myAccountFormSubmitAttempt = false;
         if (res && res.statusCode == 200) {
           this.toastrService.success('Updated Successfully!');
+          this.commonService.userDetails = null;
+          this.commonService.getUserDetails();
         }
       });
   }
