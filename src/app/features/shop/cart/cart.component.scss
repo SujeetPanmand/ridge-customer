@@ -54,3 +54,10 @@
   font-family: "Muli";
   padding: 11px 32px;
 }
+
+@media (max-width: 992px) { 
+  .table-img {
+    height: auto;
+    width: auto;
+  }
+ }

@@ -33,6 +33,7 @@ export class CartComponent implements OnInit {
   cartItems: AllCartItemDetail[] = [];
   isLoading = false;
   isLoggedIn = 0;
+  isAccordionOpen: boolean[] = [];
   constructor(
     private router: Router,
     private modalService: NgbModal,
@@ -57,6 +58,18 @@ export class CartComponent implements OnInit {
       this.addedProducts = this.cartItems;
       this.calculateOrderTotal();
     });
+  }
+
+  toggleAccordion(index: number) {
+    // Toggle the clicked accordion
+    this.isAccordionOpen[index] = !this.isAccordionOpen[index];
+
+    // Close all other accordions
+    for (let i = 0; i < this.isAccordionOpen.length; i++) {
+      if (i !== index) {
+        this.isAccordionOpen[i] = false;
+      }
+    }
   }
 
   defaultSetting() {
