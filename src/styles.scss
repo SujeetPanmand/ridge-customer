@@ -36,16 +36,6 @@ label {
   opacity: 1;
 }
 
-@media (max-width: 767.98px) {
-  .sub-title {
-    font: normal normal bold 25px/29px Georgia;
-  }
-
-  .main-title {
-    font: normal normal bold 42px/44px Georgia;
-  }
-}
-
 h4 {
   font: normal normal bold 24px Georgia;
 }
@@ -55,6 +45,27 @@ h5 {
   letter-spacing: 0px;
   color: #180800;
   opacity: 1;
+}
+
+@media (max-width: 767.98px) {
+  .sub-title {
+    font: normal normal bold 25px/29px Georgia;
+  }
+
+  .main-title {
+    font: normal normal bold 42px/44px Georgia;
+  }
+  h4 {
+    font: normal normal bold 20px Georgia;
+}
+h5 {
+  font: normal normal bold 14px Georgia;
+}
+}
+@media (max-width: 576px) { 
+  th {
+    font-size: 14px;
+  } 
 }
 
 .button-orange {
