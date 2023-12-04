@@ -1,8 +1,8 @@
 <section class="py-5 mt-5 bg-light-gray" #print>
   <div class="container">
     <div class="d-flex justify-content-between mb-4 align-items-xl-center">
-    
-      <h2  class="fw-bold sub-title hide">  <i
+      <h2 class="fw-bold sub-title hide">  
+        <i *ngIf="isLoggedIn"
         routerLink="/account/profile/my-orders"
         class="bi-arrow-left cursor"
       ></i> <span> Order Details</span> </h2>
