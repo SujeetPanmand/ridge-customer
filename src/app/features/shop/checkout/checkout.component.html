@@ -520,10 +520,10 @@
                     *ngFor="let item of allFilteredSlots"
                     [value]="item.id"
                   >
-                    {{ item.startTimeHour }}:{{ item.startTimeMinut
-                    }}{{ item.startTimeUnit }} To {{ item.endTimeHour }}:{{
-                      item.endTimeMinut
-                    }}{{ item.endTimeUnit }}
+                    {{ (item.startTimeHour < 10) ?  '0'+item.startTimeHour : item.startTimeHour }}:{{ (item.startTimeMinut < 10) ? '0'+item.startTimeMinut : item.startTimeMinut
+                    }}{{ ' '+item.startTimeUnit }} To {{ (item.endTimeHour < 10) ? '0'+item.endTimeHour : item.endTimeHour }}:{{
+                      (item.endTimeMinut<10) ? '0'+item.endTimeMinut : item.endTimeMinut
+                    }}{{ ' '+item.endTimeUnit }}
                   </option>
                 </select>
               </div>
