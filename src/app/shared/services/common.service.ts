@@ -172,6 +172,7 @@ export class CommonService {
       price: string;
       totalPrice: string;
       description: string;
+      productName: string;
     }
 
     let ridgeOfflineCartItems = JSON.parse(
@@ -187,6 +188,7 @@ export class CommonService {
         price: product?.price,
         totalPrice: product?.price,
         description: product?.description,
+        productName: product?.name,
       };
       ridgeOfflineCartItems.push(productCart);
     } else {
@@ -211,6 +213,7 @@ export class CommonService {
           price: product?.price,
           totalPrice: product?.price,
           description: product?.description,
+          productName: product?.name,
         };
         ridgeOfflineCartItems.push(productCart);
       }
