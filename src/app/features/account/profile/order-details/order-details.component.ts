@@ -26,6 +26,7 @@ export class OrderDetailsComponent {
   isLoggedIn = 0;
   subTotal = 0;
   orderTotal = 0;
+  remainingAmount = 0;
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
@@ -156,5 +157,6 @@ export class OrderDetailsComponent {
   getTotalAndSubTotal(order) {
     this.subTotal = order.subTotalAmount;
     this.orderTotal = order.totalAmount;
+    this.remainingAmount = order.secondPayment;
   }
 }

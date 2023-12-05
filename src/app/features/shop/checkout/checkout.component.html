@@ -383,7 +383,7 @@
 
             <div class="mb-3 shadow-sm border p-4">
               <div class="text-title pb-2">
-                {{ isSelfPickUp ? "Pickup" : "Delivery" }} Date &Time
+                {{ isSelfPickUp ? "Pickup" : "Delivery" }} Date & Time
               </div>
               <div class="mb-3 fw-semibold">
                 Please select the delivary date for this order
@@ -392,9 +392,7 @@
                 >
                 <label *ngIf="!isStandardCut" class="text-danger small"
                   >Custom Cut Note: Please select date after
-                  {{
-                    finalOrderProducts[0]?.customCutAvailabilityDays
-                  }}
+                  {{ finalOrderProducts[0]?.customCutAvailabilityDays }}
                   days.</label
                 >
                 <label

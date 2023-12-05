@@ -24,6 +24,7 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
   orderDetails: OrderDetails;
   orderOn: any;
   isPreorder = false;
+  remainingAmount = 0;
   // isGoogleLinkShow = true;
   constructor(
     private commonService: CommonService,
@@ -127,6 +128,7 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
     //   this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
     this.orderSubTotal = res.subTotalAmount;
     this.orderTotal = res.totalAmount;
+    this.remainingAmount = res.secondPayment;
   }
 
   showPreorderProductOrCustomProducts() {
