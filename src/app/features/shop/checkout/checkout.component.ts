@@ -387,7 +387,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
       var Difference_In_Time = date2.getTime() - date1.getTime();
       var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      if (Difference_In_Days < 10) {
+      if (
+        Difference_In_Days <
+        this.finalOrderProducts[0].customCutAvailabilityDays
+      ) {
         this.toastrService.error(
           `please select date after ${this.finalOrderProducts[0].customCutAvailabilityDays} days.`
         );
