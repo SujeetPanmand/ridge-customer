@@ -91,7 +91,7 @@
                     ${{ product.unitPrice * product.quantity }}
                   </td>
                   <td *ngIf="!isStandardCut || isPreorder">
-                    ${{ orderSubTotal + remainingAmount }}
+                    ${{ orderSubTotal }}
                   </td>
                 </tr>
 
