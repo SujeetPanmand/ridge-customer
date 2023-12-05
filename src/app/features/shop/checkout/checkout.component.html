@@ -150,7 +150,21 @@
                       <span class="text-orange">*</span>
                     </label>
 
-                    <select
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="country"
+                      name="country"
+                      formControlName="country"
+                      formControlName="country"
+                      [(ngModel)]="country"
+                      [class.is-invalid]="
+                        isFieldValid(userDetailsForm, 'country')
+                      "
+                      aria-label=".form-select-lg example"
+                    />
+
+                    <!-- <select
                       class="form-select form-select mb-3"
                       id="country"
                       name="country"
@@ -165,7 +179,7 @@
                       <option value="US">USA</option>
                       <option value="India">India</option>
                       <option value="UK">UK</option>
-                    </select>
+                    </select> -->
                     <span
                       class="text-orange"
                       *ngIf="hasError(userDetailsForm, 'country', 'required')"
@@ -231,7 +245,19 @@
                           >State
                           <span class="text-orange">*</span>
                         </label>
-                        <select
+
+                        <input
+                          type="text"
+                          name="state"
+                          formControlName="state"
+                          class="form-control"
+                          for="state"
+                          [(ngModel)]="state"
+                          [class.is-invalid]="
+                            isFieldValid(userDetailsForm, 'state')
+                          "
+                        />
+                        <!-- <select
                           id="state"
                           name="state"
                           formControlName="state"
@@ -245,7 +271,7 @@
                           <option value="California">California</option>
                           <option value="Alaska">Alaska</option>
                           <option value="Colorado">Colorado</option>
-                        </select>
+                        </select> -->
                         <span
                           class="text-orange"
                           *ngIf="hasError(userDetailsForm, 'state', 'required')"

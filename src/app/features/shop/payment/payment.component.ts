@@ -14,6 +14,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationPopUpComponent } from 'src/app/shared/component/confirmation-pop-up/confirmation-pop-up.component';
 
 @Component({
   selector: 'app-payment',
@@ -50,7 +52,8 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     private router: Router,
     private apiService: ApiService,
     private formBuilder: FormBuilder,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private modalService: NgbModal
   ) {
     this.subscribeToCartItems();
     this.getYearList();
@@ -202,6 +205,66 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
   }
 
+  goBack() {
+    this.router.navigateByUrl(
+      `shop/checkout?isStandardCut=${
+        this.isStandardCut ? 'true' : 'false'
+      }&isEdit=true&${this.isPreorder ? 'isPreorder=true' : 'isPreorder=false'}`
+    );
+  }
+  setProductPic(id) {
+    let date = new Date().getTime();
+    this.productPicUrl = '';
+    let url = environment.baseUrl + '/api/product/image/' + id;
+    this.productPicUrl = url
+      ? url + '?' + date
+      : 'assets/product/wholeBeef.png';
+    return this.productPicUrl;
+  }
+  formatRecord(data) {
+    debugger;
+    return data.map((x) => {
+      return {
+        productId: x.productId,
+        quantity: x.quantity,
+      };
+    });
+  }
+
+  removLocalItems() {
+    localStorage.removeItem('orderAddress');
+    localStorage.removeItem('orderSlot');
+    localStorage.removeItem('slotId');
+    localStorage.removeItem('cart');
+    localStorage.removeItem('orderDate');
+    localStorage.removeItem('selfPickUp');
+    localStorage.removeItem('ridgeOfflineCartItems');
+  }
+
+  isFieldValid = (formGroup: FormGroup, field: string): boolean =>
+    formGroup.get(field).invalid &&
+    (this.formSubmitAttempt || formGroup.get(field).touched);
+
+  hasError = (
+    formGroup: FormGroup,
+    field: string,
+    errorName: string
+  ): boolean =>
+    formGroup.get(field).errors && formGroup.get(field).touched
+      ? formGroup.get(field).errors[errorName]
+      : false;
+
+  subscribeToCreditType() {
+    this.checkCardType.pipe(debounceTime(1000)).subscribe((value) => {
+      if (value) {
+        this.cartTypes.forEach((x) => {
+          if (x.expressions[0].pattern.test(value)) {
+            this.cardImage = x.image;
+          }
+        });
+      }
+    });
+  }
   createOrder() {
     this.formSubmitAttempt = true;
     if (this.paymentForm.invalid) {
@@ -281,85 +344,39 @@ export class PaymentComponent implements OnInit, AfterViewInit {
           },
     };
 
-    this.apiService.request('CREATE_ORDER', apiRequest).subscribe(
-      (res) => {
-        this.isLoading = false;
-        if (res && res.statusCode == 200) {
-          this.removLocalItems();
-          this.commonService.onOrderConfirm();
-          this.router.navigateByUrl(
-            `shop/order-confirmation/${res.message}?isStandardCut=${
-              this.isStandardCut ? 'true' : 'false'
-            }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
-          );
-          this.toastrService.success('Your order has been placed.');
-        } else {
-          this.toastrService.error(res.message);
-        }
-      },
-      (error) => {
-        this.isLoading = false;
-      }
-    );
-  }
-
-  goBack() {
-    this.router.navigateByUrl(
-      `shop/checkout?isStandardCut=${
-        this.isStandardCut ? 'true' : 'false'
-      }&isEdit=true&${this.isPreorder ? 'isPreorder=true' : 'isPreorder=false'}`
-    );
-  }
-  setProductPic(id) {
-    let date = new Date().getTime();
-    this.productPicUrl = '';
-    let url = environment.baseUrl + '/api/product/image/' + id;
-    this.productPicUrl = url
-      ? url + '?' + date
-      : 'assets/product/wholeBeef.png';
-    return this.productPicUrl;
-  }
-  formatRecord(data) {
-    debugger;
-    return data.map((x) => {
-      return {
-        productId: x.productId,
-        quantity: x.quantity,
-      };
+    let data = {
+      action_button_name: 'Yes',
+      title_text: 'Confirmation',
+      text: `Do you really want to make a payment.`,
+    };
+    let modelRef = this.modalService.open(ConfirmationPopUpComponent, {
+      size: 'md',
+      centered: true,
     });
-  }
+    modelRef.componentInstance.data = data;
 
-  removLocalItems() {
-    localStorage.removeItem('orderAddress');
-    localStorage.removeItem('orderSlot');
-    localStorage.removeItem('slotId');
-    localStorage.removeItem('cart');
-    localStorage.removeItem('orderDate');
-    localStorage.removeItem('selfPickUp');
-    localStorage.removeItem('ridgeOfflineCartItems');
-  }
-
-  isFieldValid = (formGroup: FormGroup, field: string): boolean =>
-    formGroup.get(field).invalid &&
-    (this.formSubmitAttempt || formGroup.get(field).touched);
-
-  hasError = (
-    formGroup: FormGroup,
-    field: string,
-    errorName: string
-  ): boolean =>
-    formGroup.get(field).errors && formGroup.get(field).touched
-      ? formGroup.get(field).errors[errorName]
-      : false;
-
-  subscribeToCreditType() {
-    this.checkCardType.pipe(debounceTime(1000)).subscribe((value) => {
-      if (value) {
-        this.cartTypes.forEach((x) => {
-          if (x.expressions[0].pattern.test(value)) {
-            this.cardImage = x.image;
+    modelRef.result.then((res) => {
+      if (res) {
+        this.apiService.request('CREATE_ORDER', apiRequest).subscribe(
+          (res) => {
+            this.isLoading = false;
+            if (res && res.statusCode == 200) {
+              this.removLocalItems();
+              this.commonService.onOrderConfirm();
+              this.router.navigateByUrl(
+                `shop/order-confirmation/${res.message}?isStandardCut=${
+                  this.isStandardCut ? 'true' : 'false'
+                }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
+              );
+              this.toastrService.success('Your order has been placed.');
+            } else {
+              this.toastrService.error(res.message);
+            }
+          },
+          (error) => {
+            this.isLoading = false;
           }
-        });
+        );
       }
     });
   }
