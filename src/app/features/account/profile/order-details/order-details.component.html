@@ -171,6 +171,13 @@
           </table>
         </div>
 
+        <div *ngIf="selectedOrder?.secondPayment" class="mb-2">
+          <label>Remaining Amount To Pay : </label>
+          <span class="ms-2">
+            {{ selectedOrder?.secondPayment }}
+          </span>
+        </div>
+
         <div class="mb-2">
           <label>Payment Status : </label>
           <span
