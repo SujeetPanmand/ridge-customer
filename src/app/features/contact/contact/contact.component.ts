@@ -55,7 +55,7 @@ export class ContactComponent implements OnInit {
     this.apiService.request('CONTACT_US', apiRequest).subscribe((res) => {
       this.formSubmitAttempt = false;
       if (res && res.statusCode == 200) {
-        this.toastrService.success('Contact Added Successfully!');
+        this.toastrService.success(res.message);
         this.router.navigate(['home']);
       } else {
         this.toastrService.error(res.message);

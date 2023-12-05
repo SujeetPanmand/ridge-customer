@@ -42,7 +42,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit {
     this.dtOptions = {
       paging: true,
       fixedColumns: true,
-      order: [[1, 'asc']],
+      order: [[1,'desc']],
       autoWidth: true,
 
       select: false,
