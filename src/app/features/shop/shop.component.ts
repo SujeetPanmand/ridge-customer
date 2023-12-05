@@ -69,9 +69,11 @@ export class ShopComponent implements OnInit {
       async (res) => {
         if (res) {
           console.log(res);
-          this.productList = await this.formatRecords(
-            res.allProductDetails
-          ).filter((x) => x.isActive);
+          this.productList = await this.formatRecords(res.allProductDetails)
+            .filter((x) => x.isActive)
+            .map((e) => {
+              return { ...e, url: this.setProductPic(e.id) };
+            });
           if (this.cartItems.length) {
             this.updateProductListCount(this.cartItems);
           } else if (this.commonService.cartItems.length) {
@@ -193,13 +195,9 @@ export class ShopComponent implements OnInit {
     this.modalService.open(content, { size: 'xl', centered: true });
   }
   setProductPic(id) {
-    let date = new Date().getTime();
-    this.productPicUrl = '';
-    let url = environment.baseUrl + '/api/product/image/' + id;
-    this.productPicUrl = url
-      ? url + '?' + date
+    return id
+      ? environment.baseUrl + '/api/product/image/' + id
       : 'assets/product/wholeBeef.png';
-    return this.productPicUrl;
   }
 
   addMoreToCart(flag, selectedProduct) {

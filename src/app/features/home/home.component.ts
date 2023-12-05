@@ -21,9 +21,7 @@ import { environment } from 'src/environments/environment';
 })
 export class HomeComponent implements OnInit {
   productList = [];
-  productPicUrl = '';
   promotionList = [];
-  promotionPicUrl = '';
   emailSubscribe = '';
   formSubmitAttempt: boolean = false;
   isLoggedIn = 0;
@@ -126,20 +124,19 @@ export class HomeComponent implements OnInit {
       .subscribe(async (res) => {
         if (res) {
           // console.log(res);
-          this.productList = res.allProductDetails.filter((x) => x.isActive);
+          this.productList = res.allProductDetails
+            .filter((x) => x.isActive)
+            .map((e) => {
+              return { ...e, url: this.setProductPic(e.id) };
+            });
         }
       });
   }
 
   setProductPic(id) {
-    let date = new Date().getTime();
-    this.productPicUrl = '';
     let url = environment.baseUrl + '/api/product/image/' + id;
-    this.productPicUrl = url
-      ? url + '?' + date
-      : 'assets/product/wholeBeef.png';
 
-    return this.productPicUrl;
+    return url ? url : 'assets/product/wholeBeef.png';
   }
 
   getAllPromotions() {
@@ -147,21 +144,18 @@ export class HomeComponent implements OnInit {
       .request('PROMOTION_DETAILS', { params: {} })
       .subscribe(async (res) => {
         if (res) {
-          this.promotionList = res.allPromotionDetails.filter(
-            (x) => x.isActive
-          );
+          this.promotionList = res.allPromotionDetails
+            .filter((x) => x.isActive)
+            .map((e) => {
+              return { ...e, url: this.setPromotionPics(e.id) };
+            });
         }
       });
   }
 
   setPromotionPics(id) {
-    let date = new Date().getTime();
-    this.promotionPicUrl = '';
-    let url = environment.baseUrl + '/api/promotion/image/' + id;
-    this.promotionPicUrl = url
-      ? url + '?' + date
+    return id
+      ? environment.baseUrl + '/api/promotion/image/' + id
       : 'assets/home/homepagebanner.png';
-
-    return this.promotionPicUrl;
   }
 }

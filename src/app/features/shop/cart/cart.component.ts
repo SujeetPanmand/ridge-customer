@@ -169,12 +169,8 @@ export class CartComponent implements OnInit {
   }
 
   setProductPic(id) {
-    let date = new Date().getTime();
-    this.productPicUrl = '';
-    let url = environment.baseUrl + '/api/product/image/' + id;
-    this.productPicUrl = url
-      ? url + '?' + date
+    return id
+      ? environment.baseUrl + '/api/product/image/' + id
       : 'assets/product/wholeBeef.png';
-    return this.productPicUrl;
   }
 }

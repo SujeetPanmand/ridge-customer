@@ -24,7 +24,6 @@ import { AllCartItemDetail } from 'src/app/shared/interfaces/all-cart-item-detai
   styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit, AfterViewInit {
-  selctedProduct;
   selectedProduct;
   addMultipe: number = 0;
   reletedProductsList = [];
@@ -161,7 +160,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       (x) => x.productId == this.route.snapshot.params['productId']
     );
     this.addMultipe = index >= 0 ? this.cartItems[index].quantity : 0;
-    this.selctedProduct.count = this.addMultipe;
+    this.selectedProduct.count = this.addMultipe;
   }
 
   getProductDetails() {
@@ -171,7 +170,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       })
       .subscribe((res) => {
         if (res) {
-          this.selctedProduct = res.productDetails;
+          this.selectedProduct = res.productDetails;
           if (this.cartItems.length > 0) {
             this.defaultSetting();
           } else if (this.commonService.cartItems) {
@@ -541,13 +540,9 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     return image ? image : 'assets/em_user.png';
   }
   setProductPic(id) {
-    let date = new Date().getTime();
-    this.productPicUrl = '';
-    let url = environment.baseUrl + '/api/product/image/' + id;
-    this.productPicUrl = url
-      ? url + '?' + date
+    return id
+      ? environment.baseUrl + '/api/product/image/' + id
       : 'assets/product/wholeBeef.png';
-    return this.productPicUrl;
   }
   subscribeMethod() {
     console.log('before', this.isLoggedInButtonShow);

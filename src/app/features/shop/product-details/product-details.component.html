@@ -4,19 +4,19 @@
       <div class="shadow-sm bg-white p-md-4 p-3">
         <app-bread-crumb [links]="links"></app-bread-crumb>
 
-        <h2 class="fw-bold sub-title pt-2">{{ selctedProduct?.name }}</h2>
+        <h2 class="fw-bold sub-title pt-2">{{ selectedProduct?.name }}</h2>
 
         <div class="row pt-4">
           <div class="col-xl-6 mb-4">
             <img
-              *ngIf="selctedProduct"
-              [src]="setProductPic(selctedProduct?.id)"
+              *ngIf="selectedProduct"
+              [src]="setProductPic(selectedProduct?.id)"
               class="img-fluid h-100 d-block mx-auto"
               alt="culinary-inspiration"
             />
           </div>
           <div class="col-xl-6">
-            <h4>{{ selctedProduct?.name }}</h4>
+            <h4>{{ selectedProduct?.name }}</h4>
             <div class="d-flex">
               <div>
                 <span
@@ -50,22 +50,24 @@
               </div>
             </div>
             <div class="pt-2">
-              <span class="text-orange fs-3">${{ selctedProduct?.price }}</span>
+              <span class="text-orange fs-3"
+                >${{ selectedProduct?.price }}</span
+              >
             </div>
             <hr class="border" />
             <p>
-              {{ selctedProduct?.description }}
+              {{ selectedProduct?.description }}
             </p>
 
             <div class="d-flex">
               <div
-                *ngIf="selctedProduct?.count != 0"
+                *ngIf="selectedProduct?.count != 0"
                 class="number d-flex justify-content-evenly align-items-center col-4 bg-pink"
               >
                 <span
                   [ngClass]="{ pointer: addMultipe == 0 }"
                   class="minus cursor"
-                  (click)="addMoreToCart(false, selctedProduct)"
+                  (click)="addMoreToCart(false, selectedProduct)"
                   >-</span
                 >
                 <input
@@ -75,15 +77,15 @@
                   disabled
                 />
                 <span
-                  (click)="addMoreToCart(true, selctedProduct)"
+                  (click)="addMoreToCart(true, selectedProduct)"
                   class="plus cursor"
                   >+</span
                 >
               </div>
               <button
-                *ngIf="selctedProduct?.count == 0"
+                *ngIf="selectedProduct?.count == 0"
                 class="btn bg-pink px-4"
-                (click)="selectCut($event, selectCutTemplate, selctedProduct)"
+                (click)="selectCut($event, selectCutTemplate, selectedProduct)"
               >
                 Add
               </button>
@@ -94,7 +96,7 @@
         <div class="bg-light-gray mt-5 p-4">
           <h4 class="text-orange">Product Infomation</h4>
           <hr class="border" />
-          <p [innerHTML]="selctedProduct?.cutInfo"></p>
+          <p [innerHTML]="selectedProduct?.cutInfo"></p>
         </div>
 
         <div class="row pt-5">
@@ -329,18 +331,18 @@
                         class="me-2"
                       >
                         <div class="d-flex justify-content-end">
-                            <button
-                              (click)="onEditReview(addReviewTemplate, item)"
-                              class="btn btn-outline-primary me-1"
-                            >
-                              <i class="color-ff" class="fas fa-pen"></i>
-                            </button>
-                            <button
-                              (click)="onDeleteReview(item)"
-                              class="btn btn-outline-danger"
-                            >
-                              <i class="color-ff" class="fas fa-trash"></i>
-                            </button>
+                          <button
+                            (click)="onEditReview(addReviewTemplate, item)"
+                            class="btn btn-outline-primary me-1"
+                          >
+                            <i class="color-ff" class="fas fa-pen"></i>
+                          </button>
+                          <button
+                            (click)="onDeleteReview(item)"
+                            class="btn btn-outline-danger"
+                          >
+                            <i class="color-ff" class="fas fa-trash"></i>
+                          </button>
                         </div>
                       </div>
                     </div>

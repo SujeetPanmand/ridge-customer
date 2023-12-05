@@ -24,7 +24,7 @@
         >
           <img
             [id]="promotion.id"
-            [src]="setPromotionPics(promotion.id)"
+            [src]="promotion?.url"
             class="d-block w-100 height"
             alt="..."
           />
@@ -105,8 +105,8 @@
                   <div class="content-overlay"></div>
                   <img
                     [id]="product.id"
-                    height="200px"
-                    [src]="setProductPic(product.id)"
+                    style="height: 200px"
+                    [src]="product?.url"
                   />
                   <div class="d-flex mb-0 p-2">
                     <h5 class="fw-bold hide-name">{{ product.name }}</h5>

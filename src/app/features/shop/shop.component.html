@@ -144,7 +144,7 @@
                     <img
                       *ngIf="product"
                       (click)="navigateToProductDetail(product)"
-                      [src]="setProductPic(product.id)"
+                      [src]="product?.url"
                       height="200px"
                       alt=""
                     />
