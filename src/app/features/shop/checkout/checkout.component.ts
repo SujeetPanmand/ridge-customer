@@ -37,7 +37,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   links: BreadCrumbLinks[] = checkoutLinks;
   productPicUrl = '';
   isPreorder = false;
-  returnFromEditDate = '';
+  //returnFromEditDate = '';
   allAvailableSlot = [];
   isSundaySlot: boolean = false;
   isMondaySlot: boolean = false;
@@ -60,6 +60,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   isAccordionOpen: boolean[] = [];
   zipCodeDetails: ZipCodeDetails;
   zipCodeChanged = new Subject<string>();
+  slotForm: FormGroup;
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
@@ -73,6 +74,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.subscribeToCartItems();
     this.getRouterParams();
     this.onZipCodeChanged();
+    this.generateSlotForm();
   }
 
   ngOnInit() {
@@ -86,6 +88,12 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.defaultSetting();
     this.generateUserDetailsForm();
     this.patchUserDetailsForm();
+  }
+
+  generateSlotForm() {
+    this.slotForm = this.formBuilder.group({
+      selectSlotType: ['delivery'],
+    });
   }
 
   ngAfterViewInit(): void {
@@ -150,7 +158,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
           this.allAvailableSlot = this.allAvailableSlot.filter(
             (x) => x.isActive
           );
-          console.log('___', this.allAvailableSlot);
           this.heighLightSlotDay();
           if (this.router.url.includes('isEdit')) {
             this.returnFromPaymentSetData();
@@ -296,8 +303,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.commonService.addProducts(count);
   }
 
-  onChangeType(str) {
-    this.isSelfPickUp = str=='pickup'? true: false;
+  onChangeType() {
+    this.isSelfPickUp =
+      this.slotForm.controls['selectSlotType'].value == 'selfPickup'
+        ? true
+        : false;
     this.isSelfPickUp
       ? localStorage.setItem('selfPickUp', '1')
       : localStorage.setItem('selfPickUp', '0');
@@ -454,9 +464,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       }
     }
     this.singleSlotId = '';
-    let date = this.router.url.includes('isEdit')
-      ? this.returnFromEditDate
-      : this.selectedDate;
+    let date = this.selectedDate;
     var today = new Date(date).getDay() + 1;
     this.dayList.forEach((x) => {
       if (x.key == today) this.selectedDay = x.key;
@@ -520,11 +528,15 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   async returnFromPaymentSetData() {
     let item = localStorage.getItem('selfPickUp');
     this.isSelfPickUp = item == '0' ? false : true;
+    this.isSelfPickUp
+      ? this.slotForm.controls['selectSlotType'].setValue('selfPickup')
+      : this.slotForm.controls['selectSlotType'].setValue('delivery');
+
     this.selectedDate = await this.datePipe.transform(
       new Date(JSON.parse(localStorage.getItem('orderDate'))),
       'yyyy-MM-dd'
     );
-    this.returnFromEditDate = JSON.parse(localStorage.getItem('orderDate'));
+    //  this.returnFromEditDate = JSON.parse(localStorage.getItem('orderDate'));
     this.getCurrentDay(false);
     this.onChangeSlot();
   }

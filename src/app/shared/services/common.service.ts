@@ -143,13 +143,13 @@ export class CommonService {
   getPaymentStatus(num): PaymentStatus | { status: string; color: string } {
     switch (num) {
       case 1:
-        return { status: 'Pending', color: 'badge  badge-bg-red' };
+        return { status: 'Unpaid', color: 'badge  badge-bg-red' };
       case 2:
-        return { status: 'Completed', color: 'badge  badge-bg-gr' };
+        return { status: 'Paid', color: 'badge  badge-bg-gr' };
       case 3:
         return { status: 'Failed', color: 'badge  badge-bg-red' };
       case 4:
-        return { status: 'Partially Paid', color: 'badge  badge-bg-red' };
+        return { status: 'Partial Payment', color: 'badge  badge-bg-red' };
       default:
         return { status: 'Unknown', color: 'badge badge-bg-gray' };
     }
