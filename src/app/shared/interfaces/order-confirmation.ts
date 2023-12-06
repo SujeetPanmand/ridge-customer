@@ -4,10 +4,12 @@ export interface OrderDetails {
   address1?: string;
   address2?: string;
   subTotalAmount?: number;
+  secondPayment?:number;
   tax?: number;
   shippingCharge?: number;
   totalAmount?: number;
   paymentStatus?: number;
+  paymentDate?:Date;
   slot?: Slot;
   pickupSlot?: null;
   orderStatus?: number;

@@ -10,7 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { environment } from 'src/environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { ZipCodeDetails } from 'src/app/shared/interfaces/zipcode/zipcode-details';
+import { Subject, debounceTime } from 'rxjs';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -57,6 +58,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   state: string = '';
   isLoggedIn = 0;
   isAccordionOpen: boolean[] = [];
+  zipCodeDetails: ZipCodeDetails;
+  zipCodeChanged = new Subject<string>();
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
@@ -69,6 +72,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   ) {
     this.subscribeToCartItems();
     this.getRouterParams();
+    this.onZipCodeChanged();
   }
 
   ngOnInit() {
@@ -292,8 +296,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.commonService.addProducts(count);
   }
 
-  onChangeType(flag) {
-    this.isSelfPickUp = flag;
+  onChangeType(str) {
+    this.isSelfPickUp = str=='pickup'? true: false;
     this.isSelfPickUp
       ? localStorage.setItem('selfPickUp', '1')
       : localStorage.setItem('selfPickUp', '0');
@@ -343,6 +347,45 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
     this.userDetailsForm.get('address1').clearValidators();
     this.userDetailsForm.get('address1').updateValueAndValidity();
+  }
+
+  onKeyPress(event) {
+    console.log(event.keyCode);
+    if (
+      this.zipCode &&
+      this.zipCode.toString().length >= 5 &&
+      !(event.keyCode == 8)
+    ) {
+      event.preventDefault();
+    }
+  }
+
+  onZipCodeChanged() {
+    this.zipCodeChanged.pipe(debounceTime(1000)).subscribe((value) => {
+      if (value) {
+        this.apiService
+          .request('GET_ZIPCODE_DETAILS', {
+            params: { zipcode: value },
+          })
+          .subscribe((res) => {
+            if (res && res.statusCode == 200) {
+              this.zipCodeDetails = res;
+              console.log(this.zipCodeDetails.zipCodeDetails.zipcode);
+              this.patchDataFromZipCode(this.zipCodeDetails);
+            } else {
+              this.toastrService.error('Please enter a correct zipcode.');
+            }
+          });
+      }
+    });
+  }
+
+  patchDataFromZipCode(zipCodeDetails: ZipCodeDetails) {
+    this.userDetailsForm.patchValue({
+      city: zipCodeDetails.zipCodeDetails.city,
+      state: zipCodeDetails.zipCodeDetails.state,
+      country: zipCodeDetails.zipCodeDetails.country,
+    });
   }
 
   generateUserDetailsForm() {

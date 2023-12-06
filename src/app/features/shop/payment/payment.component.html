@@ -16,10 +16,9 @@
             San Gabriel River In Liberty Hill, Austin, Texas -73301
           </span>
           <span class="d-flex" *ngIf="!isSelfPickUp" class="pt-3">
-            <div>
-              <p>
+              <h5 class="text-capitalize">
                 {{ orderAddress["firstName"] }} {{ orderAddress["lastName"] }}
-              </p>
+              </h5>
 
               <p>
                 {{ orderAddress["address1"] }}
@@ -28,7 +27,6 @@
                   orderAddress["country"]
                 }},{{ orderAddress["zipCode"] }}
               </p>
-            </div>
           </span>
 
           <h3 class="pt-4 text-title">Payment Method</h3>

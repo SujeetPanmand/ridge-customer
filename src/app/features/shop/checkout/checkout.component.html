@@ -6,9 +6,9 @@
       <h1 class="sub-title">Checkout</h1>
 
       <form>
-        <div class="row pt-4">
+        <div class="row pt-3">
           <div class="col-md-6">
-            <div class="form-check mb-4">
+            <!-- <div class="form-check mb-3">
               <input
                 [(ngModel)]="isSelfPickUp"
                 [ngModelOptions]="{ standalone: true }"
@@ -20,13 +20,27 @@
               <label class="form-check-label" for="selfPickup">
                 Self Pickup
               </label>
+            </div> -->
+            <div class="border p-3 mb-4">
+            <div class="form-check form-check-inline">
+              <input  selected class="form-check-input"   (change)="onChangeType('delivery')"  type="radio" name="exampleRadios" id="delivery" value="option1" checked>
+              <label class="form-check-label" for="delivery">
+                Delivery
+              </label>
             </div>
+        
+            <div class="form-check form-check-inline ms-2">
+              <input  (change)="onChangeType('pickup')" class="form-check-input" type="radio" name="exampleRadios" id="selfPickup" value="option2">
+              <label class="form-check-label" for="selfPickup">Self Pickup</label>
+            </div>
+          </div>
+
 
             <div id="shippingAddress">
               <form [formGroup]="userDetailsForm">
                 <div>
-                  <div class="row mb-3">
-                    <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
                       <label for="firstName" class="form-label"
                         >First Name <span class="text-orange">*</span></label
                       >
@@ -49,7 +63,7 @@
                         >Please enter a first name.
                       </span>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                       <label for="lastName" class="form-label"
                         >Last Name
                         <span class="text-orange">*</span>
@@ -144,31 +158,7 @@
                   <hr class="border" />
                 </div>
                 <div *ngIf="!isSelfPickUp">
-                  <div class="mb-3">
-                    <label for="country" class="form-label"
-                      >Country/ Region
-                      <span class="text-orange">*</span>
-                    </label>
-
-                    <input
-                      class="form-control"
-                      type="text"
-                      id="country"
-                      name="country"
-                      formControlName="country"
-                      formControlName="country"
-                      [(ngModel)]="country"
-                      [class.is-invalid]="
-                        isFieldValid(userDetailsForm, 'country')
-                      "
-                      aria-label=".form-select-lg example"
-                    />
-                    <span
-                      class="text-orange"
-                      *ngIf="hasError(userDetailsForm, 'country', 'required')"
-                      >Please select the country.
-                    </span>
-                  </div>
+                  
 
                   <div class="mb-3">
                     <label for="address" class="form-label"
@@ -200,30 +190,59 @@
                       placeholder="Appartment,suit ,unit,etc.(Optional)"
                     />
                   </div>
-
-                  <div class="mb-3">
-                    <label for="city" class="form-label"
-                      >Town / City
-                      <span class="text-orange">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="city"
-                      name="city"
-                      formControlName="city"
-                      [(ngModel)]="city"
-                      [class.is-invalid]="isFieldValid(userDetailsForm, 'city')"
-                    />
-                    <span
-                      class="text-orange"
-                      *ngIf="hasError(userDetailsForm, 'city', 'required')"
-                      >Please enter the city.
-                    </span>
-                  </div>
                   <div class="row">
-                    <div class="col-md-6">
-                      <div class="mb-3">
+                    <div class="col-md-6 mb-3">
+                        <label for="zip" class="form-label"
+                          >Zip Code
+                          <span class="text-orange">*</span>
+                        </label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="zip"
+                          name="zip"
+                          formControlName="zipCode"
+                          [(ngModel)]="zipCode"
+                          [class.is-invalid]="
+                            isFieldValid(userDetailsForm, 'zipCode')"
+                          (keydown)="onKeyPress($event)"
+                          (ngModelChange)="this.zipCodeChanged.next($event)"
+                        />
+                        <span
+                          class="text-orange"
+                          *ngIf="
+                            hasError(userDetailsForm, 'zipCode', 'required')
+                          "
+                          >Please enter the zip code.
+                        </span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="country" class="form-label"
+                        >Country/ Region
+                        <span class="text-orange">*</span>
+                      </label>
+  
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="country"
+                        name="country"
+                        formControlName="country"
+                        formControlName="country"
+                        [(ngModel)]="country"
+                        [class.is-invalid]="
+                          isFieldValid(userDetailsForm, 'country')
+                        "
+                        aria-label=".form-select-lg example"
+                      />
+  
+                      <span
+                        class="text-orange"
+                        *ngIf="hasError(userDetailsForm, 'country', 'required')"
+                        >Please select the country.
+                      </span>
+                    </div>
+                    <div class="col-md-6 mb-3">
                         <label for="state" class="form-label"
                           >State
                           <span class="text-orange">*</span>
@@ -240,41 +259,40 @@
                             isFieldValid(userDetailsForm, 'state')
                           "
                         />
-
                         <span
                           class="text-orange"
                           *ngIf="hasError(userDetailsForm, 'state', 'required')"
                           >Please select the state.
                         </span>
-                      </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="mb-3">
-                        <label for="zip" class="form-label"
-                          >Zip Code
+
+                      <div class="mb-3 col-md-6">
+                        <label for="city" class="form-label"
+                          >Town / City
                           <span class="text-orange">*</span>
                         </label>
                         <input
-                          type="number"
+                          type="text"
                           class="form-control"
-                          id="zip"
-                          name="zip"
-                          formControlName="zipCode"
-                          [(ngModel)]="zipCode"
-                          [class.is-invalid]="
-                            isFieldValid(userDetailsForm, 'zipCode')
-                          "
+                          id="city"
+                          name="city"
+                          formControlName="city"
+                          [(ngModel)]="city"
+                          [class.is-invalid]="isFieldValid(userDetailsForm, 'city')"
                         />
                         <span
                           class="text-orange"
-                          *ngIf="
-                            hasError(userDetailsForm, 'zipCode', 'required')
-                          "
-                          >Please enter the zip code.
+                          *ngIf="hasError(userDetailsForm, 'city', 'required')"
+                          >Please enter the city.
                         </span>
                       </div>
-                    </div>
+                  
                   </div>
+
+                  
+
+                
+                 
                 </div>
               </form>
             </div>
@@ -381,24 +399,20 @@
                 {{ isSelfPickUp ? "Pickup" : "Delivery" }} Date & Time
               </div>
               <div class="mb-3 fw-semibold">
-                Please select the delivery date for this order
-                <label class="text-danger small"
-                  >Note: Available slots days are highlighted here</label
-                >
-                <label *ngIf="!isStandardCut" class="text-danger small"
+                <p class="mb-1">Please select the delivery date for this order</p>
+                <p class="text-danger small">Note : Available slots days are highlighted here</p>
+                <p *ngIf="!isStandardCut" class="text-danger small"
                   >Custom Cut Note: Please select date after
                   {{ finalOrderProducts[0]?.customCutAvailabilityDays }}
-                  days.</label
-                >
-                <label
+                  days.</p>
+                <p
                   *ngIf="isStandardCut && isPreorder"
                   class="text-danger small"
                   >Pre Order Standerd Cut Note: Please select date after
                   {{
                     finalOrderProducts[0]?.expectedAvailabilityDate
                       | date : "MM/dd/yyyy"
-                  }}</label
-                >
+                  }}</p>
               </div>
 
               <div class="d-flex flex-wrap justify-content-md-between">

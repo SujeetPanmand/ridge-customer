@@ -153,22 +153,22 @@
                 </span>
               </div>
               <div class="mb-4">
-                <label for="city" class="form-label"
-                  >Town / City <span class="text-orange">*</span></label
+                <label for="country" class="form-label"
+                  >Country / Region <span class="text-orange">*</span></label
                 >
                 <input
                   type="text"
-                  formControlName="city"
+                  formControlName="country"
                   class="form-control"
-                  id="city"
-                  name="city"
-                  [(ngModel)]="city"
-                  [class.is-invalid]="isFieldValid(signUpForm, 'city')"
+                  id="country"
+                  name="country"
+                  [(ngModel)]="country"
+                  [class.is-invalid]="isFieldValid(signUpForm, 'country')"
                 />
                 <span
                   class="text-orange"
-                  *ngIf="hasError(signUpForm, 'city', 'required')"
-                  >Please enter Town / City
+                  *ngIf="hasError(signUpForm, 'country', 'required')"
+                  >Please enter Country / Region
                 </span>
               </div>
               <div class="col-md mb-4">
@@ -191,25 +191,25 @@
                 </span>
               </div>
               <div class="mb-4">
-                <label for="country" class="form-label"
-                  >Country / Region <span class="text-orange">*</span></label
+                <label for="city" class="form-label"
+                  >Town / City <span class="text-orange">*</span></label
                 >
                 <input
                   type="text"
-                  formControlName="country"
+                  formControlName="city"
                   class="form-control"
-                  id="country"
-                  name="country"
-                  [(ngModel)]="country"
-                  [class.is-invalid]="isFieldValid(signUpForm, 'country')"
+                  id="city"
+                  name="city"
+                  [(ngModel)]="city"
+                  [class.is-invalid]="isFieldValid(signUpForm, 'city')"
                 />
                 <span
                   class="text-orange"
-                  *ngIf="hasError(signUpForm, 'country', 'required')"
-                  >Please enter Country / Region
+                  *ngIf="hasError(signUpForm, 'city', 'required')"
+                  >Please enter Town / City
                 </span>
               </div>
-
+            
               <button
                 type="submit"
                 class="btn rounded-0 text-light button-orange mt-3 py-2"

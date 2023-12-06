@@ -215,8 +215,7 @@
     <div class="d-flex justify-content-end pt-4 flex-column flex-md-row">
       <button
         *ngIf="
-          selectedOrder?.orderStatus !== 1 && selectedOrder?.orderStatus !== 2
-        "
+          selectedOrder?.orderStatus !== 1 && selectedOrder?.orderStatus !== 2 &&  isLoggedIn"
         type="button"
         class="btn hide button-orange rounded-0 mx-3 text-light mb-3"
         (click)="openCancelDialog(true)"

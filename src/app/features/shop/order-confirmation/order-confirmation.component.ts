@@ -27,7 +27,7 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
   remainingAmount = 0;
   // isGoogleLinkShow = true;
   constructor(
-    private commonService: CommonService,
+    public commonService: CommonService,
     private route: ActivatedRoute,
     private router: Router,
     private apiService: ApiService,

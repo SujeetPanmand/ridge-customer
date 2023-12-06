@@ -8,7 +8,7 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { myAddressLinks } from '../profile.config';
 import { ZipCodeDetails } from 'src/app/shared/interfaces/zipcode/zipcode-details';
-
+import { Subject, debounceTime } from 'rxjs';
 @Component({
   selector: 'app-edit-address',
   templateUrl: './edit-address.component.html',
@@ -26,17 +26,56 @@ export class EditAddressComponent implements OnInit {
   zipCodeDetails: ZipCodeDetails;
   state: string = '';
   links: BreadCrumbLinks[] = myAddressLinks;
+  zipCodeChanged = new Subject<string>();
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private toastrService: ToastrService,
     private apiService: ApiService,
     private commonService: CommonService
-  ) {}
+  ) {this.onZipCodeChanged();}
 
   ngOnInit() {
     this.saveEditAddressForm();
     this.defaultSetting();
+  }
+
+  onKeyPress(event) {
+    if (
+      this.zipCode &&
+      this.zipCode.toString().length >= 5 &&
+      !(event.keyCode == 8)
+    ) {
+      event.preventDefault();
+    }
+  }
+
+  onZipCodeChanged() {
+    this.zipCodeChanged.pipe(debounceTime(1000)).subscribe((value) => {
+      if (value) {
+        this.apiService
+          .request('GET_ZIPCODE_DETAILS', {
+            params: { zipcode: value },
+          })
+          .subscribe((res) => {
+            if (res && res.statusCode == 200) {
+              this.zipCodeDetails = res;
+              console.log(this.zipCodeDetails.zipCodeDetails.zipcode);
+              this.patchDataFromZipCode(this.zipCodeDetails);
+            } else {
+              this.toastrService.error('Please enter a correct zipcode.');
+            }
+          });
+      }
+    });
+  }
+
+  patchDataFromZipCode(zipCodeDetails: ZipCodeDetails) {
+    this.editAddressForm.patchValue({
+      city: zipCodeDetails.zipCodeDetails.city,
+      state: zipCodeDetails.zipCodeDetails.state,
+      country: zipCodeDetails.zipCodeDetails.country,
+    });
   }
 
   saveEditAddressForm() {
