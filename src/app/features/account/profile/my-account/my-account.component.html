@@ -8,9 +8,9 @@
     <div class="col-md-10">
       <app-bread-crumb [links]="links"></app-bread-crumb>
       <h2 class="fw-bold sub-title pt-2">My Account</h2>
-      <div class="pt-4">
+      <div class="pt-3">
         <form [formGroup]="myAccountForm">
-          <div class="mb-4">
+          <div class="mb-3">
             <label for="firstName" class="form-label"
               >First Name <span class="text-orange">*</span>
             </label>
@@ -29,7 +29,7 @@
               >Please enter a first name.
             </span>
           </div>
-          <div class="mb-4">
+          <div class="mb-3">
             <label for="lastName" class="form-label"
               >Last Name <span class="text-orange">*</span></label
             >
@@ -48,44 +48,6 @@
               >Please enter a last name.
             </span>
           </div>
-          <!-- <div class="mb-4">
-            <label for="emailAddress" class="form-label"
-              >Email address <span class="text-orange">*</span></label
-            >
-            <input
-              type="email"
-              formControlName="emailAddress"
-              class="form-control"
-              id="emailAddress"
-              name="emailAddress"
-              [(ngModel)]="emailAddress"
-              [class.is-invalid]="isFieldValid(myAccountForm, 'emailAddress')"
-            />
-            <span
-              class="text-orange"
-              *ngIf="hasError(myAccountForm, 'emailAddress', 'required')"
-              >Please enter a email.
-            </span>
-          </div>
-          <div class="mb-4">
-            <label for="phone" class="form-label"
-              >Phone <span class="text-orange">*</span></label
-            >
-            <input
-              type="number"
-              formControlName="phone"
-              class="form-control"
-              id="phone"
-              name="phone"
-              [(ngModel)]="phone"
-              [class.is-invalid]="isFieldValid(myAccountForm, 'phone')"
-            />
-            <span
-              class="text-orange"
-              *ngIf="hasError(myAccountForm, 'phone', 'required')"
-              >Please enter a phone number.
-            </span>
-          </div> -->
 
           <button
             type="submit"

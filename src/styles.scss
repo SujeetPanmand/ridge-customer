@@ -61,6 +61,9 @@ h5 {
 h5 {
   font: normal normal bold 14px Georgia;
 }
+label {
+  font: normal normal 600 14px/14px Muli;
+}
 }
 @media (max-width: 576px) { 
   th {
@@ -192,11 +195,8 @@ h5 {
     padding-left: calc(var(--bs-gutter-x) * 0.5);
   }
 
-  .fixed-top {
-    display: none;
-  }
 
-  .bg-footer {
+  .bg-footer, .sub-title,  .fixed-top, .hide {
     display: none;
   }
 
@@ -204,14 +204,14 @@ h5 {
     box-shadow: unset !important;
   }
 
+  img {
+    display: block;
+  }
+
   .mt-5 {
     margin: unset !important;
     padding: unset !important;
   }
-
-  // .button-orange {
-  //   display: none !important;
-  // }
 
   .bread-crumb {
     display: none;

@@ -9,30 +9,9 @@
       <app-bread-crumb [links]="links"></app-bread-crumb>
 
       <h2 class="fw-bold sub-title pt-2">Edit Address</h2>
-      <div class="pt-4">
+      <div class="pt-2">
         <form [formGroup]="editAddressForm">
-          <div class="mb-4">
-            <label for="country" class="form-label"
-              >Country / Region <span class="text-orange">*</span></label
-            >
-            <input
-              type="text"
-              formControlName="countryRegion"
-              class="form-control"
-              id="country"
-              name="country"
-              [(ngModel)]="countryRegion"
-              [class.is-invalid]="
-                isFieldValid(editAddressForm, 'countryRegion')
-              "
-            />
-            <span
-              class="text-orange"
-              *ngIf="hasError(editAddressForm, 'countryRegion', 'required')"
-              >Please enter Country / Region
-            </span>
-          </div>
-          <div class="mb-4">
+          <div class="mb-3">
             <label for="address" class="form-label"
               >Address <span class="text-orange">*</span></label
             >
@@ -66,7 +45,7 @@
             </span>
           </div>
           <div class="row">
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6 mb-3">
               <label for="zipCode" class="form-label"
                 >ZIP Code <span class="text-orange">*</span></label
               >
@@ -79,6 +58,8 @@
                 [(ngModel)]="zipCode"
                 [class.is-invalid]="isFieldValid(editAddressForm, 'zipCode')"
                 (keyup)="checkZipCode()"
+                (keydown)="onKeyPress($event)"
+                (ngModelChange)="this.zipCodeChanged.next($event)"
               />
               <span
                 class="text-orange"
@@ -86,7 +67,28 @@
                 >Please enter ZIP Code
               </span>
             </div>
-            <div class="col-md-6 mb-4">
+            <div class="mb-3 col-md-6">
+              <label for="country" class="form-label"
+                >Country / Region <span class="text-orange">*</span></label
+              >
+              <input
+                type="text"
+                formControlName="countryRegion"
+                class="form-control"
+                id="country"
+                name="country"
+                [(ngModel)]="countryRegion"
+                [class.is-invalid]="
+                  isFieldValid(editAddressForm, 'countryRegion')
+                "
+              />
+              <span
+                class="text-orange"
+                *ngIf="hasError(editAddressForm, 'countryRegion', 'required')"
+                >Please enter Country / Region
+              </span>
+            </div>
+            <div class="col-md-6 mb-3">
               <label for="state" class="form-label"
                 >State <span class="text-orange">*</span></label
               >
@@ -105,28 +107,26 @@
                 >Please enter state
               </span>
             </div>
-            
+            <div class="mb-3 col-md-6">
+              <label for="city" class="form-label"
+                >Town / City <span class="text-orange">*</span></label
+              >
+              <input
+                type="text"
+                formControlName="townCity"
+                class="form-control"
+                id="city"
+                name="city"
+                [(ngModel)]="townCity"
+                [class.is-invalid]="isFieldValid(editAddressForm, 'townCity')"
+              />
+              <span
+                class="text-orange"
+                *ngIf="hasError(editAddressForm, 'townCity', 'required')"
+                >Please enter Town / City
+              </span>
+            </div>
           </div>
-          <div class="mb-4">
-            <label for="city" class="form-label"
-              >Town / City <span class="text-orange">*</span></label
-            >
-            <input
-              type="text"
-              formControlName="townCity"
-              class="form-control"
-              id="city"
-              name="city"
-              [(ngModel)]="townCity"
-              [class.is-invalid]="isFieldValid(editAddressForm, 'townCity')"
-            />
-            <span
-              class="text-orange"
-              *ngIf="hasError(editAddressForm, 'townCity', 'required')"
-              >Please enter Town / City
-            </span>
-          </div>
-          
 
           <button
             type="submit"

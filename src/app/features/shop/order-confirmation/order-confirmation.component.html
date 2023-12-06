@@ -1,30 +1,29 @@
 <section #print class="mt-5 py-5 bg-light-gray">
   <div class="container">
     <div class="row m-4">
-      <div class="col-md-12 p-5 shadow-sm bg-white">
-        <app-bread-crumb [links]="links" class="bread-crumb"></app-bread-crumb>
-        <div class="d-flex flex-column flex-md-row py-2">
-          <span class="sub-title">Order Confirmation</span>
-          <button
-            type="button"
-            class="btn button-orange rounded-0 text-white ms-auto py-2"
-            (click)="printInvoice()"
-          >
-            Print
-          </button>
+      <app-bread-crumb [links]="links" class="bread-crumb"></app-bread-crumb>
+      <div class="d-flex flex-column flex-md-row py-2 mb-2">
+        <span class="sub-title">Order Confirmation</span>
+        <button type="button" class="btn button-orange rounded-0 text-white ms-auto py-2 hide" (click)="printInvoice()">
+          Print
+        </button>
+      </div>
+      <div class="col-md-12 px-5 py-4 shadow-sm bg-white">
+        <div class="d-flex align-items-center">
+          <img src="/assets/ridge-logo.png" width="5%" alt="logo"
+            class="img-fluid logo d-none d-md-block">
+          <h3 class="text-center fw-bold text-center w-100">Invoice</h3>
         </div>
+        <hr class="border my-1" />
+
         <div *ngIf="!isStandardCut" class="py-2">
           <span class="fw-bold">Note:</span> For Custom Cut, kindly complete the
           Google Form
         </div>
         <div *ngIf="!isStandardCut">
-          <a
-            class="text-orange fw-bold"
+          <a class="text-orange fw-bold"
             href="https://docs.google.com/forms/d/e/1FAIpQLSdOuwOSuawMOIri4gf9XD_IfK-jwB26HdyNlqBpRTafemwYQA/viewform?vc=0&c=0&w=1&flr=0"
-            data-bs-toggle=""
-            data-bs-target=""
-            target="_blank"
-          >
+            data-bs-toggle="" data-bs-target="" target="_blank">
             Google Form
           </a>
         </div>
@@ -35,21 +34,19 @@
           </div>
           <span>San Gabriel River In Liberty Hill, Austin, Texas -73301</span>
         </div>
-        <div *ngIf="!orderDetails?.isSelfPickup" class="py-5">
+        <div *ngIf="!orderDetails?.isSelfPickup" class="pb-5 pt-4">
           <div class="small-title">Shipping Address</div>
           <hr class="border" />
           <div class="d-flex flex-column">
-            <label class="pt-2"
-              >{{ orderDetails?.user?.firstName }}
-              {{ orderDetails?.user?.lastName }}</label
-            >
-            <span>
+            <h5 class="pt-2 text-capitalize">{{ orderDetails?.user?.firstName }}
+              {{ orderDetails?.user?.lastName }}</h5>
+            <p class="mb-0">
               {{ orderDetails ? orderDetails["address1"] : "" }} in
               {{ orderDetails ? orderDetails["city"] : "" }},
               {{ orderDetails ? orderDetails["state"] : "" }},{{
-                orderDetails ? orderDetails["country"] : ""
+              orderDetails ? orderDetails["country"] : ""
               }}
-            </span>
+            </p>
           </div>
         </div>
 
@@ -62,12 +59,12 @@
           <div>Visa card ending 8112</div>
         </div> -->
 
-        <div class="pt-2">
+        <div class="">
           <div class="small-title">Order Details</div>
           <hr class="border" />
           <div class="table-responsive">
-            <table class="table align-middle table-borderless">
-              <thead>
+            <table class="table align-middle table-borderless border">
+              <thead class="border-bottom">
                 <tr>
                   <th>ORDER ID</th>
                   <th>ORDER ON</th>
@@ -84,8 +81,7 @@
                     {{ product.name
                     }}<span>
                       *
-                      {{ product.quantity }}</span
-                    >
+                      {{ product.quantity }}</span>
                   </td>
                   <td *ngIf="isStandardCut && !isPreorder">
                     ${{ product.unitPrice * product.quantity }}
@@ -97,8 +93,8 @@
 
                 <tr *ngIf="isStandardCut && !isPreorder">
                   <td colspan="2"></td>
-                  <td class="line-top fw-semibold">Subtotal</td>
-                  <td class="line-top fw-semibold">${{ orderSubTotal }}</td>
+                  <td class="border-top">Subtotal</td>
+                  <td class="border-top">${{ orderSubTotal }}</td>
                 </tr>
 
                 <tr>
@@ -121,36 +117,66 @@
             </table>
           </div>
         </div>
+        <div class="mb-2">
+          <label>Delivery Date : </label>
+          <span>
+            {{
+              orderDetails?.expectedDeliveryDate
+                ? (orderDetails.expectedDeliveryDate | date : "MM/dd/yyyy")
+                : "--"
+            }}
+          </span>
+        </div>
+        <div *ngIf="orderDetails?.secondPayment" class="mb-2">
+          <label>Remaining Amount To Pay : </label>
+          <span class="ms-2">
+            {{ orderDetails?.secondPayment }}
+          </span>
+        </div>
+
+        <div class="mb-2">
+          <label>Payment Status : </label>
+          <span
+            class="ms-2 {{
+              commonService.getPaymentStatus(orderDetails?.paymentStatus)
+                ?.color
+            }}"
+          >
+            {{
+              commonService.getPaymentStatus(orderDetails?.paymentStatus)
+                ?.status
+                ? commonService.getPaymentStatus(orderDetails?.paymentStatus)
+                    ?.status
+                : "--"
+            }}
+          </span>
+        </div>
+        <div class="mb-2">
+          <label>Payment Date : </label>
+          <span>
+            {{
+              orderDetails?.paymentDate
+                ? (orderDetails.paymentDate | date : "MM/dd/yyyy")
+                : "--"
+            }}
+          </span>
+        </div>
+
       </div>
     </div>
   </div>
 </section>
 
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="staticBackdrop"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1
-          class="modal-title fs-5 text-orange fw-semibold"
-          id="staticBackdropLabel"
-        >
+        <h1 class="modal-title fs-5 text-orange fw-semibold" id="staticBackdropLabel">
           Custom Cut Selection Reminder
         </h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <p class="mb-0 py-2">
@@ -159,10 +185,7 @@
         </p>
       </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn button-orange rounded-0 text-white mx-auto py-2"
-        >
+        <button type="button" class="btn button-orange rounded-0 text-white mx-auto py-2">
           Google Form
         </button>
       </div>
