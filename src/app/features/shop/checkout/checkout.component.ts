@@ -436,18 +436,34 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   onChangeSlot() {
     let element = [];
     element = this.allFilteredSlots.filter((x) => x.id == this.singleSlotId);
+    let startHour =
+      element[0].startTimeHour < 10
+        ? `0${element[0].startTimeHour}`
+        : element[0].startTimeHour;
+    let startMintes =
+      element[0].startTimeMinut < 10
+        ? `0${element[0].startTimeMinut}`
+        : element[0].startTimeMinut;
+    let endHour =
+      element[0].endTimeHour < 10
+        ? `0${element[0].endTimeHour}`
+        : element[0].endTimeHour;
+    let endMinutes =
+      element[0].endTimeMinut < 10
+        ? `0${element[0].endTimeMinut}`
+        : element[0].endTimeMinut;
     this.singleSlot =
-      element[0].startTimeHour +
+      startHour +
       ':' +
-      element[0].startTimeMinut +
+      startMintes +
       ' ' +
       element[0].startTimeUnit +
       ' ' +
       'TO' +
       ' ' +
-      element[0].endTimeHour +
+      endHour +
       ':' +
-      element[0].endTimeMinut +
+      endMinutes +
       ' ' +
       element[0].endTimeUnit;
   }
