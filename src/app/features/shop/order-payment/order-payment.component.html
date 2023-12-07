@@ -1,12 +1,13 @@
 <section class="py-5 mt-5 bg-light-gray">
   <div class="container">
     <div class=" ">
-      <app-bread-crumb [links]="links"></app-bread-crumb>
+      <app-bread-crumb [links]="links" *ngIf="isLoggedIn"></app-bread-crumb>
+  
       <h1 class="sub-title pt-3">Order Payment <span class="h4">({{ orderPaymentDetails?.orderId }})</span></h1>
       <div class="row pt-4">
         <div class="col-md-6 mx-auto bg-white p-4">
-          <h5  class="text-title">
-            Remaining Amount To Pay: {{ orderPaymentDetails?.payment }}
+          <h5 class="text-title">
+            Remaining Amount To Pay: ${{ orderPaymentDetails?.payment }}
           </h5>
           <hr class="border" />
 
@@ -30,54 +31,32 @@
                 <label for="cardNumber" class="form-label"> Card Number</label>
 
                 <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="XXX XXX XXXX 9817"
-                    formControlName="cardNumber"
+                  <input type="text" class="form-control" placeholder="XXX XXX XXXX 9817" formControlName="cardNumber"
                     [class.is-invalid]="isFieldValid(paymentForm, 'cardNumber')"
-                    (ngModelChange)="this.checkCardType.next($event)"
-                  />
-                  <span
-                    class="input-group-text eye-inside bg-transparent border-start-0"
-                  >
+                    (ngModelChange)="this.checkCardType.next($event)" />
+                  <span class="input-group-text eye-inside bg-transparent border-start-0">
                     <a>
-                      <i
-                        *ngIf="!cardImage"
-                        class="fas fa-credit-card"
-                        aria-hidden="true"
-                      ></i>
+                      <i *ngIf="!cardImage" class="fas fa-credit-card" aria-hidden="true"></i>
                     </a>
                     <img class="card_c" *ngIf="cardImage" [src]="cardImage" />
                   </span>
                 </div>
-                <span
-                  class="text-danger"
-                  *ngIf="hasError(paymentForm, 'cardNumber', 'required')"
-                >
+                <span class="text-danger" *ngIf="hasError(paymentForm, 'cardNumber', 'required')">
                   Please enter a card number.
                 </span>
-                <span
-                  class="text-danger"
-                  *ngIf="
+                <span class="text-danger" *ngIf="
                     hasError(paymentForm, 'cardNumber', 'invalidCardNumber')
-                  "
-                >
+                  ">
                   Please enter a valid 16-digit card number.
                 </span>
               </div>
               <div class="row">
                 <div class="mb-3 col-md-4">
                   <label for="exp" class="form-label">Expiry Month</label>
-                  <select
-                    formControlName="expiryMonth"
-                    id="expiryMonth"
-                    name="expiryMonth"
-                    class="form-select"
+                  <select formControlName="expiryMonth" id="expiryMonth" name="expiryMonth" class="form-select"
                     [class.is-invalid]="
                       isFieldValid(paymentForm, 'expiryMonth')
-                    "
-                  >
+                    ">
                     <option value="">Select Month</option>
                     <option value="01">January</option>
                     <option value="02">February</option>
@@ -97,77 +76,43 @@
                     </option> -->
                   </select>
 
-                  <span
-                    class="text-danger"
-                    *ngIf="hasError(paymentForm, 'expiryMonth', 'required')"
-                    >Please select expiry month.
+                  <span class="text-danger" *ngIf="hasError(paymentForm, 'expiryMonth', 'required')">Please select
+                    expiry month.
                   </span>
                 </div>
                 <div class="mb-3 col-md-4">
                   <label for="exp" class="form-label">Expiry Year</label>
-                  <select
-                    formControlName="expiryYear"
-                    id="expiryYear"
-                    name="expiryYear"
-                    class="form-select"
-                    [class.is-invalid]="isFieldValid(paymentForm, 'expiryYear')"
-                  >
+                  <select formControlName="expiryYear" id="expiryYear" name="expiryYear" class="form-select"
+                    [class.is-invalid]="isFieldValid(paymentForm, 'expiryYear')">
                     <option value="">Select Year</option>
                     <option *ngFor="let unit of years" [value]="unit.id">
                       {{ unit.year }}
                     </option>
                   </select>
 
-                  <span
-                    class="text-danger"
-                    *ngIf="hasError(paymentForm, 'expiryYear', 'required')"
-                    >Please select expiry year.
+                  <span class="text-danger" *ngIf="hasError(paymentForm, 'expiryYear', 'required')">Please select expiry
+                    year.
                   </span>
                 </div>
                 <div class="mb-3 col-md-4">
                   <label for="cvv" class="form-label">CVV</label>
-                  <input
-                    type="text"
-                    id="cvv"
-                    name="cvv"
-                    class="form-control"
-                    placeholder="---"
-                    formControlName="cvv"
-                    [class.is-invalid]="isFieldValid(paymentForm, 'cvv')"
-                  />
+                  <input type="text" id="cvv" name="cvv" class="form-control" placeholder="---" formControlName="cvv"
+                    [class.is-invalid]="isFieldValid(paymentForm, 'cvv')" />
                 </div>
-                <span
-                  class="text-danger"
-                  *ngIf="hasError(paymentForm, 'cvv', 'required')"
-                  >Please enter a cvv.
+                <span class="text-danger" *ngIf="hasError(paymentForm, 'cvv', 'required')">Please enter a cvv.
                 </span>
               </div>
               <div class="mb-3">
-                <label for="cardHoldNumber" class="form-label"
-                  >Cardholder Name</label
-                >
-                <input
-                  type="text"
-                  id="cardHolderName"
-                  name="cardHolderName"
-                  class="form-control"
-                  placeholder="Enter cardholder's full name"
-                  formControlName="cardHolderName"
-                  [class.is-invalid]="
+                <label for="cardHoldNumber" class="form-label">Cardholder Name</label>
+                <input type="text" id="cardHolderName" name="cardHolderName" class="form-control"
+                  placeholder="Enter cardholder's full name" formControlName="cardHolderName" [class.is-invalid]="
                     isFieldValid(paymentForm, 'cardHolderName')
-                  "
-                />
-                <span
-                  class="text-danger"
-                  *ngIf="hasError(paymentForm, 'cardHolderName', 'required')"
-                  >Please enter a cardholder name.
+                  " />
+                <span class="text-danger" *ngIf="hasError(paymentForm, 'cardHolderName', 'required')">Please enter a
+                  cardholder name.
                 </span>
               </div>
-              <button
-                (click)="createOrder()"
-                class="btn button-orange w-100 mt-4"
-                type="button"
-              >
+              <button (click)="createOrder()" class="btn button-orange w-100 mt-4" type="button">
                 Make Payment
                 <!-- <div
                   *ngIf="isLoading"

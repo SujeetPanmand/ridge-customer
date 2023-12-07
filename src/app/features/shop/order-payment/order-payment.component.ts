@@ -30,6 +30,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
   checkCardType = new Subject<string>();
   cartTypes = cartTypes;
   years = [];
+  isLoggedIn = 0;
  
   constructor(
     private route: ActivatedRoute,
@@ -49,6 +50,9 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     // throw new Error('Method not implemented.');
+    this.commonService.getUserDetails().then((x) => {
+      if (x) this.isLoggedIn = 1;
+    });
     this.defaultSetting();
     this.generatePaymentForm();
     this.getOrderPaymentDetailsById();
