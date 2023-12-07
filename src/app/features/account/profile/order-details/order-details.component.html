@@ -175,7 +175,7 @@
           </table>
         </div>
         <div class="mb-2">
-          <label>Delivery Date : </label>
+          <label> {{ selectedOrder?.isSelfPickUp ? "Pickup" : "Delivery" }} Date & Time : </label>
           <span>
             {{
               selectedOrder?.expectedDeliveryDate
@@ -184,32 +184,15 @@
             }}
           </span>
           <span
-            >&nbsp;(
-            {{
-              selectedOrder?.slot.startTimeHour < 10
-                ? "0" + selectedOrder?.slot.startTimeHour
-                : selectedOrder?.slot.startTimeHour
-            }}:{{
-              selectedOrder?.slot.startTimeMinut < 10
-                ? "0" + selectedOrder?.slot.startTimeMinut
-                : selectedOrder?.slot.startTimeMinut
-            }}{{ " " + selectedOrder?.slot.startTimeUnit }} To
-            {{
-              selectedOrder?.slot.endTimeHour < 10
-                ? "0" + selectedOrder?.slot.endTimeHour
-                : selectedOrder?.slot.endTimeHour
-            }}:{{
-              selectedOrder?.slot.endTimeMinut < 10
-                ? "0" + selectedOrder?.slot.endTimeMinut
-                : selectedOrder?.slot.endTimeMinut
-            }}{{ " " + selectedOrder?.slot.endTimeUnit }})
+            >&nbsp; {{ selectedOrder && !selectedOrder.isSelfPickUp ? '(' + formatTime(selectedOrder.slot) + ')' : '(' + formatTime(selectedOrder.pickupSlot) + ')' }}
+            
           </span>
         </div>
 
-        <div *ngIf="selectedOrder?.paymentStatus === 4" class="mb-2">
+        <div *ngIf="selectedOrder?.paymentStatus === 4" class="mb-2"> 
           <label>Remaining Amount To Pay : </label>
           <span class="ms-2">
-            {{ selectedOrder?.secondPayment }}
+            ${{ selectedOrder?.secondPayment }}
           </span>
         </div>
 

@@ -66,6 +66,15 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
     });
   }
 
+  formatTime(timeSlot: any): string {
+    const startTimeHour = timeSlot.startTimeHour < 10 ? "0" + timeSlot.startTimeHour : timeSlot.startTimeHour;
+    const startTimeMinut = timeSlot.startTimeMinut < 10 ? "0" + timeSlot.startTimeMinut : timeSlot.startTimeMinut;
+    const endTimeHour = timeSlot.endTimeHour < 10 ? "0" + timeSlot.endTimeHour : timeSlot.endTimeHour;
+    const endTimeMinut = timeSlot.endTimeMinut < 10 ? "0" + timeSlot.endTimeMinut : timeSlot.endTimeMinut;
+
+    return `${startTimeHour}:${startTimeMinut} ${timeSlot.startTimeUnit} To ${endTimeHour}:${endTimeMinut} ${timeSlot.endTimeUnit}`;
+  }
+
   getOrderInvoiceId() {
     this.apiService
       .request('GET_INVOICE', {
