@@ -127,7 +127,7 @@
             }}
           </span>
         </div>
-        <div *ngIf="orderDetails?.secondPayment" class="mb-2">
+        <div *ngIf="orderDetails?.paymentStatus == 4" class="mb-2">
           <label>Remaining Amount To Pay : </label>
           <span class="ms-2">
             {{ orderDetails?.secondPayment }}

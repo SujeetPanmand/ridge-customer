@@ -6,6 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, debounceTime } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommonService } from 'src/app/shared/services/common.service';
+import { ConfirmationPopUpComponent } from 'src/app/shared/component/confirmation-pop-up/confirmation-pop-up.component';
+import { OrderDetails } from 'src/app/shared/interfaces/order-confirmation';
 
 @Component({
   selector: 'app-order-payment',
@@ -26,12 +30,15 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
   checkCardType = new Subject<string>();
   cartTypes = cartTypes;
   years = [];
+ 
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private apiService: ApiService,
     private toastrService: ToastrService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal,
+    public commonService: CommonService,
   ) {
     this.getYearList();
     this.subscribeToCreditType();
@@ -121,18 +128,54 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
           },
     };
 
-    this.apiService
-      .request('COMPLETE_ORDER_PAYMENT', apiRequest)
-      .subscribe((res) => {
-        this.isLoading = false;
-        if (res && res.statusCode == 200) {
-          this.toastrService.success(
-            'Your remaining payment done succesfully. '
-          );
-          this.router.navigate(['account/profile/my-orders']);
-        }
-      });
+    // this.apiService
+    //   .request('COMPLETE_ORDER_PAYMENT', apiRequest)
+    //   .subscribe((res) => {
+    //     this.isLoading = false;
+    //     if (res && res.statusCode == 200) {
+    //       this.toastrService.success(
+    //         'Your remaining payment done succesfully. '
+    //       );
+    //       this.router.navigate(['account/profile/my-orders']);
+    //     }
+    //   });
+
+      
+    let data = {
+      action_button_name: 'Yes',
+      title_text: 'Confirmation',
+      text: `Do you really want to make a payment.`,
+    };
+    let modelRef = this.modalService.open(ConfirmationPopUpComponent, {
+      size: 'md',
+      centered: true,
+    });
+    modelRef.componentInstance.data = data;
+
+    modelRef.result.then((res) => {
+      if (res) {
+        this.apiService.request('COMPLETE_ORDER_PAYMENT', apiRequest).subscribe(
+          (res) => {
+            this.isLoading = false;
+            if (res && res.statusCode == 200) {
+            
+              this.router.navigateByUrl(
+                `account/order-details/${this.route.snapshot.params['orderId'].trim()}`
+              );
+              this.toastrService.success(res.message);
+            } else {
+              this.toastrService.error(res.message);
+            }
+          },
+          (error) => {
+            this.isLoading = false;
+          }
+        );
+      }
+    });
   }
+
+
 
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>
     formGroup.get(field).invalid &&

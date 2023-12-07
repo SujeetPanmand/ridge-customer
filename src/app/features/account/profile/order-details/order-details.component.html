@@ -171,14 +171,14 @@
           </table>
         </div>
 
-        <div *ngIf="selectedOrder?.secondPayment" class="mb-2">
+        <div *ngIf="selectedOrder?.paymentStatus === 4" class="mb-2">
           <label>Remaining Amount To Pay : </label>
           <span class="ms-2">
             {{ selectedOrder?.secondPayment }}
           </span>
         </div>
 
-        <div class="mb-2">
+        <div>
           <label>Payment Status : </label>
           <span
             class="ms-2 {{
@@ -215,7 +215,7 @@
     <div class="d-flex justify-content-end pt-4 flex-column flex-md-row">
       <button
         *ngIf="
-          selectedOrder?.orderStatus !== 1 && selectedOrder?.orderStatus !== 2 &&  isLoggedIn"
+          selectedOrder?.orderStatus !== 1 && selectedOrder?.orderStatus !== 2  &&  isLoggedIn"
         type="button"
         class="btn hide button-orange rounded-0 mx-3 text-light mb-3"
         (click)="openCancelDialog(true)"

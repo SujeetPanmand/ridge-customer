@@ -149,9 +149,9 @@ export class OrderDetailsComponent {
   }
 
   navigateToSecondPayment() {
+    let url = `shop/order-payment/${this.selectedOrder?.id.trim()}`;
     this.router.navigate([
-      `shop/order-payment/
-    ${this.selectedOrder?.id.trim()}`,
+      url,
     ]);
   }
   getTotalAndSubTotal(order) {
