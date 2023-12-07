@@ -47,7 +47,7 @@
         <div class="pt-3">
           <div class="col-md-10">
             <div [innerHTML]="blogDetails?.content" class=""></div>
-
+          <!-- <div *ngIf="comments.length > 0"> -->
             <div class="py-4 comment">Comments</div>
             <div
               class="border border-bottom-0 p-4"
@@ -115,6 +115,7 @@
                 class="input-group-text eye-inside bg-transparent border-start-0"
                 ><i (click)="addComment()" class="fas fa-arrow-right cursor"></i
               ></span>
+                <!-- </div> -->
             </div>
           </div>
         </div>
@@ -127,7 +128,7 @@
         >
           <img
             [src]="setTopArticalPic(articals.id)"
-            class="img-fluid mx-auto d-flex"
+            class="img-fluid mx-auto d-flex shadow-sm"
           />
 
           <p class="text-light position-absolute bottom-0 px-4 mx-5 mx-md-0">
