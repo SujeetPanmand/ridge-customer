@@ -8,6 +8,7 @@ export interface MyOrders {
   totalAmount?: number;
   paymentStatus?: number;
   slot?: SlotOrder[];
+  secondPayment?:number;
   orderStatus?: number;
   orderType?: string;
   orderItemDetails?: OrderItemDetail[];
