@@ -17,8 +17,8 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-10">
-        <div class="fw-semibold">TAGS</div>
-        <div class="pt-3">
+        <div class="" *ngIf="allBlogList.length">
+           <div class="fw-semibold mb-3">TAGS</div>
           <button
             (click)="onTagChange('all')"
             [ngClass]="{ 'tag-highlighter': selectedTag === 'all' }"
