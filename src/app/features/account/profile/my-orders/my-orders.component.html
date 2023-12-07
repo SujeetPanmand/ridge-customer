@@ -24,6 +24,7 @@
               <th>STATUS</th>
               <th>Cut Type</th>
               <th>Order Type</th>
+              <th>Balance Amount</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -47,6 +48,7 @@
               </td>
               <td>{{ commonService.getCustomType(order.cutType) }}</td>
               <td>{{ commonService.getOrderType(order.orderType) }}</td>
+              <td> <span *ngIf="order.orderStatus === 0">{{ order.secondPayment }}</span><span *ngIf="order.orderStatus !== 0">--</span></td>
               <td>
                 <i class="fa fa-eye" (click)="navigateToDetails(order.id)"></i>
               </td>
