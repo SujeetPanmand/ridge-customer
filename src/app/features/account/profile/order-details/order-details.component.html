@@ -39,13 +39,13 @@
         <div class="mb-2">
           <label>Order Type : </label>
           <span>
-            {{ commonService.getOrderType(selectedOrder.orderType) }}
+            {{ commonService.getOrderType(selectedOrder?.orderType) }}
           </span>
         </div>
         <div class="mb-2">
           <label>Cut Type : </label>
           <span>
-            {{ commonService.getCustomType(selectedOrder.cutType) }}
+            {{ commonService.getCustomType(selectedOrder?.cutType) }}
           </span>
         </div>
         <div
@@ -126,19 +126,23 @@
                 </td>
                 <td
                   *ngIf="
-                    selectedOrder?.cutType == 2 || selectedOrder?.orderType == 2
+                    (selectedOrder?.cutType == 2 ||
+                      selectedOrder?.orderType == 2) &&
+                    selectedOrder?.paymentStatus === 4
                   "
                 >
                   ${{ subTotal }}
                 </td>
-              </tr>
-              <!-- <tr class="border-top">
-                <td colspan="1"></td>
-                <td class="text-end text-nowrap">
-                  <label>Sub Total : </label>
+                <td
+                  *ngIf="
+                    (selectedOrder?.cutType == 2 ||
+                      selectedOrder?.orderType == 2) &&
+                    selectedOrder?.paymentStatus === 2
+                  "
+                >
+                  ${{ subTotal + remainingAmount }}
                 </td>
-                <td>${{ selectedOrder?.subTotalAmount }}</td>
-              </tr> -->
+              </tr>
               <tr
                 *ngIf="
                   selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1
@@ -153,7 +157,7 @@
                 <td class="text-end text-nowrap"><label>Tax : </label></td>
                 <td>${{ selectedOrder?.tax }}</td>
               </tr>
-              <tr>
+              <tr *ngIf="!selectedOrder?.isSelfPickup">
                 <td colspan="1"></td>
                 <td class="text-end text-nowrap">
                   <label>Shipping Charge : </label>
@@ -170,6 +174,37 @@
             </tbody>
           </table>
         </div>
+        <div class="mb-2">
+          <label>Delivery Date : </label>
+          <span>
+            {{
+              selectedOrder?.expectedDeliveryDate
+                ? (selectedOrder.expectedDeliveryDate | date : "MM/dd/yyyy")
+                : "--"
+            }}
+          </span>
+          <span
+            >&nbsp;(
+            {{
+              selectedOrder?.slot.startTimeHour < 10
+                ? "0" + selectedOrder?.slot.startTimeHour
+                : selectedOrder?.slot.startTimeHour
+            }}:{{
+              selectedOrder?.slot.startTimeMinut < 10
+                ? "0" + selectedOrder?.slot.startTimeMinut
+                : selectedOrder?.slot.startTimeMinut
+            }}{{ " " + selectedOrder?.slot.startTimeUnit }} To
+            {{
+              selectedOrder?.slot.endTimeHour < 10
+                ? "0" + selectedOrder?.slot.endTimeHour
+                : selectedOrder?.slot.endTimeHour
+            }}:{{
+              selectedOrder?.slot.endTimeMinut < 10
+                ? "0" + selectedOrder?.slot.endTimeMinut
+                : selectedOrder?.slot.endTimeMinut
+            }}{{ " " + selectedOrder?.slot.endTimeUnit }})
+          </span>
+        </div>
 
         <div *ngIf="selectedOrder?.paymentStatus === 4" class="mb-2">
           <label>Remaining Amount To Pay : </label>
@@ -178,7 +213,7 @@
           </span>
         </div>
 
-        <div>
+        <div class="mb-2">
           <label>Payment Status : </label>
           <span
             class="ms-2 {{
@@ -215,7 +250,10 @@
     <div class="d-flex justify-content-end pt-4 flex-column flex-md-row">
       <button
         *ngIf="
-          selectedOrder?.orderStatus !== 1 && selectedOrder?.orderStatus !== 2  &&  isLoggedIn"
+          selectedOrder?.orderStatus !== 1 &&
+          selectedOrder?.orderStatus !== 2 &&
+          isLoggedIn
+        "
         type="button"
         class="btn hide button-orange rounded-0 mx-3 text-light mb-3"
         (click)="openCancelDialog(true)"

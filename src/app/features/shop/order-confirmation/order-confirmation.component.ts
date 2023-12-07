@@ -64,10 +64,6 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
         }
       }
     });
-    if (this.isPreorder || !this.isStandardCut) {
-      this.showPreorderProductOrCustomProducts();
-    }
-    this.defaultSetting();
   }
 
   getOrderInvoiceId() {
@@ -79,7 +75,7 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
         if (res && res.statusCode == 200) {
           console.log(res);
           this.orderDetails = res.orderDetails;
-          this.getCartItems(this.orderDetails);
+          this.getOrderedItem(this.orderDetails);
           this.orderOn = this.datePipe.transform(
             new Date(this.orderDetails.createdAt),
             'MM/dd/yyyy'
@@ -92,67 +88,10 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
     window.print();
   }
 
-  defaultSetting() {
-    // let list = [];
-    // if (this.isStandardCut) {
-    //   list = JSON.parse(localStorage.getItem('cart'))
-    //     ? JSON.parse(localStorage.getItem('cart'))
-    //     : [];
-    // } else {
-    //   list = JSON.parse(localStorage.getItem('directOrderProduct'))
-    //     ? JSON.parse(localStorage.getItem('directOrderProduct'))
-    //     : [];
-    // }
-    // this.finalOrderProducts = list.filter((x) => x.quantity !== 0);
-    // this.finalOrderProducts.forEach((x) => {
-    //   this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
-    // });
-    // this.orderTotal =
-    //   this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
-    // if (this.isStandardCut) {
-    //   this.setGlobalCartCount(this.finalOrderProducts);
-    // } else {
-    //   let standardList = JSON.parse(localStorage.getItem('cart'))
-    //     ? JSON.parse(localStorage.getItem('cart'))
-    //     : [];
-    //   this.setGlobalCartCount(standardList);
-    // }
-  }
-  getCartItems(res) {
+  getOrderedItem(res) {
     this.finalOrderProducts = res.orderItemDetails;
-    // this.finalOrderProducts.forEach((x) => {
-    //   this.orderSubTotal = this.orderSubTotal + x.unitPrice * x.quantity;
-    //   x['price'] = x.unitPrice;
-    // });
-    // this.orderTotal =
-    //   this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
     this.orderSubTotal = res.subTotalAmount;
     this.orderTotal = res.totalAmount;
     this.remainingAmount = res.secondPayment;
-  }
-
-  showPreorderProductOrCustomProducts() {
-    let standardList = JSON.parse(localStorage.getItem('directOrderProduct'))
-      ? JSON.parse(localStorage.getItem('directOrderProduct'))
-      : [];
-    standardList.forEach((item) => {
-      item.quantity = item.count;
-      item.productId = item.id;
-      item.productName = item.name;
-    });
-    this.finalOrderProducts = standardList;
-    this.orderSubTotal = this.isPreorder
-      ? this.isStandardCut
-        ? (this.finalOrderProducts[0].price *
-            this.finalOrderProducts[0].preorderAmountPercentage) /
-          100
-        : (this.finalOrderProducts[0].price *
-            this.finalOrderProducts[0].customCutPercentage) /
-          100
-      : (this.finalOrderProducts[0].price *
-          this.finalOrderProducts[0].customCutPercentage) /
-        100;
-    this.orderTotal =
-      this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
   }
 }

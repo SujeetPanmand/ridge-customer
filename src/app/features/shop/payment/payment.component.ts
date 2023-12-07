@@ -104,8 +104,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
         this.finalOrderProducts.forEach((x) => {
           this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
         });
-        this.orderTotal =
-          this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+
+        this.orderTotal = !this.isSelfPickUp
+          ? this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT
+          : this.orderSubTotal + this.TAX_AMOUNT;
       } else {
         this.commonService.setGlobalCartCount();
       }
@@ -174,8 +176,11 @@ export class PaymentComponent implements OnInit, AfterViewInit {
         this.finalOrderProducts.forEach((x) => {
           this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
         });
-        this.orderTotal =
-          this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+        this.isSelfPickUp =
+          JSON.parse(localStorage.getItem('selfPickUp')) == '0' ? false : true;
+        this.orderTotal = !this.isSelfPickUp
+          ? this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT
+          : this.orderSubTotal + this.TAX_AMOUNT;
       }
     });
   }
@@ -201,8 +206,9 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       : (this.finalOrderProducts[0].price *
           this.finalOrderProducts[0].customCutPercentage) /
         100;
-    this.orderTotal =
-      this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+    this.orderTotal = !this.isSelfPickUp
+      ? this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT
+      : this.orderSubTotal + this.TAX_AMOUNT;
   }
 
   goBack() {
@@ -218,7 +224,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       : 'assets/product/wholeBeef.png';
   }
   formatRecord(data) {
-    debugger;
     return data.map((x) => {
       return {
         productId: x.productId,

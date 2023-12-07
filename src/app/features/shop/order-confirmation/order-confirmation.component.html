@@ -4,14 +4,22 @@
       <app-bread-crumb [links]="links" class="bread-crumb"></app-bread-crumb>
       <div class="d-flex flex-column flex-md-row py-2 mb-2">
         <span class="sub-title">Order Confirmation</span>
-        <button type="button" class="btn button-orange rounded-0 text-white ms-auto py-2 hide" (click)="printInvoice()">
+        <button
+          type="button"
+          class="btn button-orange rounded-0 text-white ms-auto py-2 hide"
+          (click)="printInvoice()"
+        >
           Print
         </button>
       </div>
       <div class="col-md-12 px-5 py-4 shadow-sm bg-white">
         <div class="d-flex align-items-center">
-          <img src="/assets/ridge-logo.png" width="5%" alt="logo"
-            class="img-fluid logo d-none d-md-block">
+          <img
+            src="/assets/ridge-logo.png"
+            width="5%"
+            alt="logo"
+            class="img-fluid logo d-none d-md-block"
+          />
           <h3 class="text-center fw-bold text-center w-100">Invoice</h3>
         </div>
         <hr class="border my-1" />
@@ -21,9 +29,13 @@
           Google Form
         </div>
         <div *ngIf="!isStandardCut">
-          <a class="text-orange fw-bold"
+          <a
+            class="text-orange fw-bold"
             href="https://docs.google.com/forms/d/e/1FAIpQLSdOuwOSuawMOIri4gf9XD_IfK-jwB26HdyNlqBpRTafemwYQA/viewform?vc=0&c=0&w=1&flr=0"
-            data-bs-toggle="" data-bs-target="" target="_blank">
+            data-bs-toggle=""
+            data-bs-target=""
+            target="_blank"
+          >
             Google Form
           </a>
         </div>
@@ -38,13 +50,15 @@
           <div class="small-title">Shipping Address</div>
           <hr class="border" />
           <div class="d-flex flex-column">
-            <h5 class="pt-2 text-capitalize">{{ orderDetails?.user?.firstName }}
-              {{ orderDetails?.user?.lastName }}</h5>
+            <h5 class="pt-2 text-capitalize">
+              {{ orderDetails?.user?.firstName }}
+              {{ orderDetails?.user?.lastName }}
+            </h5>
             <p class="mb-0">
               {{ orderDetails ? orderDetails["address1"] : "" }} in
               {{ orderDetails ? orderDetails["city"] : "" }},
               {{ orderDetails ? orderDetails["state"] : "" }},{{
-              orderDetails ? orderDetails["country"] : ""
+                orderDetails ? orderDetails["country"] : ""
               }}
             </p>
           </div>
@@ -81,7 +95,8 @@
                     {{ product.name
                     }}<span>
                       *
-                      {{ product.quantity }}</span>
+                      {{ product.quantity }}</span
+                    >
                   </td>
                   <td *ngIf="isStandardCut && !isPreorder">
                     ${{ product.unitPrice * product.quantity }}
@@ -97,7 +112,7 @@
                   <td class="border-top">${{ orderSubTotal }}</td>
                 </tr>
 
-                <tr>
+                <tr *ngIf="!orderDetails?.isSelfPickup">
                   <td colspan="2"></td>
                   <td>Shipping</td>
                   <td>${{ SHIPPING_AMOUNT }}</td>
@@ -138,8 +153,7 @@
           <label>Payment Status : </label>
           <span
             class="ms-2 {{
-              commonService.getPaymentStatus(orderDetails?.paymentStatus)
-                ?.color
+              commonService.getPaymentStatus(orderDetails?.paymentStatus)?.color
             }}"
           >
             {{
@@ -161,22 +175,36 @@
             }}
           </span>
         </div>
-
       </div>
     </div>
   </div>
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5 text-orange fw-semibold" id="staticBackdropLabel">
+        <h1
+          class="modal-title fs-5 text-orange fw-semibold"
+          id="staticBackdropLabel"
+        >
           Custom Cut Selection Reminder
         </h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         <p class="mb-0 py-2">
@@ -185,7 +213,10 @@
         </p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn button-orange rounded-0 text-white mx-auto py-2">
+        <button
+          type="button"
+          class="btn button-orange rounded-0 text-white mx-auto py-2"
+        >
           Google Form
         </button>
       </div>
