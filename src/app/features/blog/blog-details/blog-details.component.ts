@@ -23,6 +23,7 @@ export class BlogDetailsComponent implements OnInit {
   allBlogList: AllBlogsDetailsList[] = [];
   allComments: any = [];
   isLoading = false;
+  isLoggedIn = 0;
   constructor(
     private commonService: CommonService,
     private apiService: ApiService,
@@ -30,6 +31,9 @@ export class BlogDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.commonService.getUserDetails().then((x) => {
+      if (x) this.isLoggedIn = 1;
+    });
     this.getAllBlogs();
     this.getBlogById();
     this.commonService.gotoTop();

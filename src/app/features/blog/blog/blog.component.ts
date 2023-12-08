@@ -17,17 +17,22 @@ export class BlogComponent implements OnInit {
   allTagsDetailsList = [];
   unFilteredBlogs: AllBlogsDetailsList[] = [];
   selectedTag = 'all';
+  isLoggedIn = 0;
+  isShowNoRecordText = false;
   constructor(
     private apiService: ApiService,
     private commonService: CommonService,
     private router: Router
   ) {}
   ngOnInit(): void {
+    this.commonService.getUserDetails().then((x) => {
+      if (x) this.isLoggedIn = 1;
+    });
     this.getAllBlogs();
     this.getAllTags();
     this.commonService.gotoTop();
   }
-
+  
   checkLength(commentDetails:any){
     let count = 0;
     for(let d of commentDetails){
@@ -43,6 +48,8 @@ export class BlogComponent implements OnInit {
           console.log(res);
           this.allBlogList = res.allBlogsDetailsList;
           this.unFilteredBlogs = res.allBlogsDetailsList;
+          this.isShowNoRecordText = this.unFilteredBlogs.length ? false : true;
+
         }
       });
   }
