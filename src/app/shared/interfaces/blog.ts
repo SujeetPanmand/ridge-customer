@@ -14,7 +14,7 @@ createdAt: any;
   author?: string;
   content?: string;
   isActive?: boolean;
-  commentDetails?: CommentDetail;
+  commentDetails?: CommentDetail[];
 }
 
 export interface CommentDetail {

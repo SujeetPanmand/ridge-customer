@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   AllBlogsDetailsList,
   BlogsDetails,
 } from 'src/app/shared/interfaces/blog';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { CommonService } from 'src/app/shared/services/common.service';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
@@ -19,10 +19,12 @@ export class BlogComponent implements OnInit {
   selectedTag = 'all';
   isLoggedIn = 0;
   isShowNoRecordText = false;
+  blogPictureUrl = '';
   constructor(
     private apiService: ApiService,
     private commonService: CommonService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
     this.commonService.getUserDetails().then((x) => {
@@ -34,11 +36,8 @@ export class BlogComponent implements OnInit {
   }
   
   checkLength(commentDetails:any){
-    let count = 0;
-    for(let d of commentDetails){
-      count +=1;
-    }
-    return count;
+    let content = commentDetails ? commentDetails.split('</div>')[0]:'';
+   return content;
   }
   getAllBlogs() {
     this.apiService
@@ -72,5 +71,10 @@ export class BlogComponent implements OnInit {
       this.selectedTag !== 'all'
         ? this.unFilteredBlogs.filter((x) => x.tagId === tag.id)
         : (this.allBlogList = this.unFilteredBlogs);
+  }
+
+  setProductPic(id) {
+    return id ?  environment.baseUrl +
+    '/api/blog/image/' + id:'';
   }
 }

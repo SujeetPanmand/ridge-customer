@@ -48,3 +48,13 @@
 .tag-highlighter {
   background-color: antiquewhite !important;
 }
+.elipse-blog {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* padding: 20px; */
+  /* font-size: 1.3rem; */
+  line-height: 1;
+  margin: 0;
+  background: white;
+}
