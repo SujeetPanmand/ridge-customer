@@ -469,21 +469,19 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     if (isFromView && !this.isStandardCut) {
       var date1 = new Date();
       var date2 = new Date(this.selectedDate);
-      let Difference_In_Days = 0;
-      Difference_In_Days = date2.getDate() - date1.getDate();
-      if (Difference_In_Days <= 0) {
-        Difference_In_Days = date1.getDate() - date2.getDate();
-      }
-      if (date2.getMonth() == date1.getMonth()) {
-        if (
-          Difference_In_Days <
-          this.finalOrderProducts[0].customCutAvailabilityDays
-        ) {
-          this.toastrService.error(
-            `please select date after ${this.finalOrderProducts[0].customCutAvailabilityDays} days.`
-          );
-          return;
-        }
+
+      var Difference_In_Time = date2.getTime() - date1.getTime();
+      var Difference_In_Days = Math.ceil(
+        Difference_In_Time / (1000 * 3600 * 24)
+      );
+      if (
+        Difference_In_Days <
+        this.finalOrderProducts[0].customCutAvailabilityDays
+      ) {
+        this.toastrService.error(
+          `please select date after ${this.finalOrderProducts[0].customCutAvailabilityDays} days.`
+        );
+        return;
       }
     }
     if (isFromView && this.isStandardCut && this.isPreorder) {
