@@ -416,15 +416,16 @@
                   Note : Available slots days are highlighted here
                 </p>
                 <p *ngIf="!isStandardCut" class="text-danger small">
-                  Custom Cut Note: Please select date after
+                  Custom Cut Note: Custom cut order will be available in minimum
                   {{ finalOrderProducts[0]?.customCutAvailabilityDays }}
-                  days from current date.
+                  days.
                 </p>
                 <p
                   *ngIf="isStandardCut && isPreorder"
                   class="text-danger small"
                 >
-                  Pre Order Standerd Cut Note: Please select date after
+                  Pre Order Note: Required preorder may become available on or
+                  after
                   {{
                     finalOrderProducts[0]?.expectedAvailabilityDate
                       | date : "MM/dd/yyyy"

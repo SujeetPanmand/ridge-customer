@@ -479,7 +479,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
         this.finalOrderProducts[0].customCutAvailabilityDays
       ) {
         this.toastrService.error(
-          `please select date after ${this.finalOrderProducts[0].customCutAvailabilityDays} days.`
+          `Custom cut order will be available in minimum ${this.finalOrderProducts[0].customCutAvailabilityDays} days.`
         );
         return;
       }
@@ -487,9 +487,15 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     if (isFromView && this.isStandardCut && this.isPreorder) {
       let date = new Date(this.finalOrderProducts[0].expectedAvailabilityDate);
       let date1 = new Date(this.selectedDate);
-      if (date > date1) {
+      if (
+        date1 < date &&
+        !(
+          this.datePipe.transform(new Date(date1), 'MM/dd/yyyy') ==
+          this.datePipe.transform(new Date(date), 'MM/dd/yyyy')
+        )
+      ) {
         this.toastrService.error(
-          `please select date after ${this.datePipe.transform(
+          `Required preorder may become available on or after ${this.datePipe.transform(
             new Date(this.finalOrderProducts[0].expectedAvailabilityDate),
             'MM/dd/yyyy'
           )}`
