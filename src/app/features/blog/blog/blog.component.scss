@@ -52,9 +52,16 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* padding: 20px; */
-  /* font-size: 1.3rem; */
   line-height: 1;
   margin: 0;
   background: white;
+  position: relative; /* Add position: relative for positioning the ::after pseudo-element */
+}
+
+.elipse-blog::after {
+  content: ".... "; /* Add the dot after the ellipsis */
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: white; /* Set the background color to match the container */
 }
