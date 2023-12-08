@@ -49,6 +49,9 @@ export class OrderDetailsComponent {
     }
   }
   formatTime(timeSlot: any): string {
+    if (!timeSlot) {
+      return "--"; 
+    }
     const startTimeHour = timeSlot.startTimeHour < 10 ? "0" + timeSlot.startTimeHour : timeSlot.startTimeHour;
     const startTimeMinut = timeSlot.startTimeMinut < 10 ? "0" + timeSlot.startTimeMinut : timeSlot.startTimeMinut;
     const endTimeHour = timeSlot.endTimeHour < 10 ? "0" + timeSlot.endTimeHour : timeSlot.endTimeHour;

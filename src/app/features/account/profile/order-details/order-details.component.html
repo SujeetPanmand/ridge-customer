@@ -184,7 +184,7 @@
             }}
           </span>
           <span
-            >&nbsp; {{ selectedOrder && !selectedOrder.isSelfPickUp ? '(' + formatTime(selectedOrder.slot) + ')' : '(' + formatTime(selectedOrder.pickupSlot) + ')' }}
+            >&nbsp; {{ selectedOrder && !selectedOrder?.isSelfPickUp ? '(' + formatTime(selectedOrder?.slot) + ')' : '(' + formatTime(selectedOrder?.pickupSlot) + ')' }}
             
           </span>
         </div>
