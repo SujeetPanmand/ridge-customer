@@ -61,6 +61,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   zipCodeDetails: ZipCodeDetails;
   zipCodeChanged = new Subject<string>();
   slotForm: FormGroup;
+  isEdit = false;
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
@@ -78,6 +79,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.isEdit = this.router.url.includes('isEdit') ? true : false;
+    if (this.isEdit) {
+      let item = localStorage.getItem('selfPickUp');
+      this.isSelfPickUp = item == '0' ? false : true;
+    }
     this.getCartItemsToShow();
     this.getAvailableSlot();
     this.commonService.gotoTop();
@@ -136,10 +142,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   getAvailableSlot() {
-    if (this.router.url.includes('isEdit')) {
-      let item = localStorage.getItem('selfPickUp');
-      this.isSelfPickUp = item == '0' ? false : true;
-    }
     this.resetDay();
     this.apiService
       .request(this.isSelfPickUp ? 'GET_PICKUP_SLOTS' : 'GET_DELIVERY_SLOTS', {
@@ -159,7 +161,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
             (x) => x.isActive
           );
           this.heighLightSlotDay();
-          if (this.router.url.includes('isEdit')) {
+          if (this.isEdit) {
             this.returnFromPaymentSetData();
           }
         }
@@ -304,19 +306,32 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   onChangeType() {
+    this.isEdit = false;
+    this.allFilteredSlots = [];
+    this.singleSlotId = '';
     this.isSelfPickUp =
       this.slotForm.controls['selectSlotType'].value == 'selfPickup'
         ? true
         : false;
     this.isSelfPickUp
+      ? this.removeValidatorOnSelfPickUp()
+      : this.addValidatorToFormControl();
+
+    setTimeout(() => {
+      this.patchUserDetailsForm();
+    }, 1000);
+    this.isSelfPickUp
       ? localStorage.setItem('selfPickUp', '1')
       : localStorage.setItem('selfPickUp', '0');
+
     this.getAvailableSlot();
   }
 
   async onRedirectToPayment() {
     this.formSubmitAttempt = true;
-    this.removeValidatorOnSelfPickUp();
+    this.isSelfPickUp
+      ? this.removeValidatorOnSelfPickUp()
+      : this.addValidatorToFormControl();
 
     if (this.userDetailsForm.invalid) {
       return;
@@ -356,6 +371,23 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.userDetailsForm.get('city').updateValueAndValidity();
 
     this.userDetailsForm.get('address1').clearValidators();
+    this.userDetailsForm.get('address1').updateValueAndValidity();
+  }
+
+  addValidatorToFormControl() {
+    this.userDetailsForm.get('country').addValidators(Validators.required);
+    this.userDetailsForm.get('country').updateValueAndValidity();
+
+    this.userDetailsForm.get('zipCode').addValidators(Validators.required);
+    this.userDetailsForm.get('zipCode').updateValueAndValidity();
+
+    this.userDetailsForm.get('state').addValidators(Validators.required);
+    this.userDetailsForm.get('state').updateValueAndValidity();
+
+    this.userDetailsForm.get('city').addValidators(Validators.required);
+    this.userDetailsForm.get('city').updateValueAndValidity();
+
+    this.userDetailsForm.get('address1').addValidators(Validators.required);
     this.userDetailsForm.get('address1').updateValueAndValidity();
   }
 
@@ -473,7 +505,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.dayList.forEach((x) => {
       if (x.key == today) this.selectedDay = x.key;
     });
-    if (this.router.url.includes('isEdit')) {
+    if (this.isEdit) {
       this.singleSlotId = JSON.parse(localStorage.getItem('slotId'));
       //this.onChangeSlot();
     }
@@ -530,8 +562,6 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   async returnFromPaymentSetData() {
-    let item = localStorage.getItem('selfPickUp');
-    this.isSelfPickUp = item == '0' ? false : true;
     this.isSelfPickUp
       ? this.slotForm.controls['selectSlotType'].setValue('selfPickup')
       : this.slotForm.controls['selectSlotType'].setValue('delivery');

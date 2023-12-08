@@ -16,17 +16,17 @@
             San Gabriel River In Liberty Hill, Austin, Texas -73301
           </span>
           <span class="d-flex" *ngIf="!isSelfPickUp" class="pt-3">
-              <h5 class="text-capitalize">
-                {{ orderAddress["firstName"] }} {{ orderAddress["lastName"] }}
-              </h5>
+            <h5 class="text-capitalize">
+              {{ orderAddress["firstName"] }} {{ orderAddress["lastName"] }}
+            </h5>
 
-              <p>
-                {{ orderAddress["address1"] }}
-                {{ orderAddress["address2"] ? orderAddress["address2"] : "" }}
-                in {{ orderAddress["city"] }}, {{ orderAddress["state"] }},{{
-                  orderAddress["country"]
-                }},{{ orderAddress["zipCode"] }}
-              </p>
+            <p>
+              {{ orderAddress["address1"] }}
+              {{ orderAddress["address2"] ? orderAddress["address2"] : "" }}
+              in {{ orderAddress["city"] }}, {{ orderAddress["state"] }},{{
+                orderAddress["country"]
+              }},{{ orderAddress["zipCode"] }}
+            </p>
           </span>
 
           <h3 class="pt-4 text-title">Payment Method</h3>
@@ -299,9 +299,8 @@
           </div>
           <button
             (click)="createOrder()"
-            class="btn button-orange w-100"
+            class="btn button-orange w-100 mb-2"
             type="button"
-         
           >
             Make Payment
             <!-- <div
@@ -317,6 +316,13 @@
               class="fas fa-paper-plane ml-2"
               aria-hidden="true"
             ></i> -->
+          </button>
+          <button
+            (click)="goBack()"
+            class="btn btn-secondary w-100"
+            type="button"
+          >
+            Back
           </button>
         </div>
       </div>
