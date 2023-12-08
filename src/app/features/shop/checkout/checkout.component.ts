@@ -328,6 +328,29 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   async onRedirectToPayment() {
+    this.validateOncheckout();
+  }
+
+  validateOncheckout() {
+    const apiRequest = {
+      params: {
+        id: this.singleSlotId,
+        Date: new Date(this.selectedDate).toISOString(),
+      },
+    };
+    this.apiService.request('VALIDATE_SLOT', apiRequest).subscribe((res) => {
+      if (res && res.statusCode == 200) {
+        this.validateUserDetailsAndSlotDetails();
+      }
+      if (res && res.statusCode == 400) {
+        this.toastrService.error(
+          'Slot capacity is over please select other slot.'
+        );
+      }
+    });
+  }
+
+  validateUserDetailsAndSlotDetails() {
     this.formSubmitAttempt = true;
     this.isSelfPickUp
       ? this.removeValidatorOnSelfPickUp()
