@@ -455,7 +455,7 @@
           />
           <label class="form-check-label" for="standard">Standard Cut</label>
         </div>
-        <div class="form-check ml-0 form-check-inline">
+        <div class="form-check ml-0 form-check-inline" *ngIf="selectedProduct.isCustomCut == true">
           <input
             formControlName="searchCheckOption"
             name="searchCheckOption"
