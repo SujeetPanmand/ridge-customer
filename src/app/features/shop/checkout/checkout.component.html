@@ -22,6 +22,10 @@
               </label>
             </div> -->
             <div [formGroup]="slotForm" class="border p-3 mb-4">
+              <div>
+                <h2 class="text-title">Mode</h2>
+                <hr class="border" />
+              </div>
               <div class="form-check form-check-inline">
                 <input
                   formControlName="selectSlotType"
@@ -33,7 +37,7 @@
                   value="delivery"
                 />
                 <label class="form-check-label" for="delivery">
-                  Delivery
+                 <b>Delivery</b> 
                 </label>
               </div>
 
@@ -48,7 +52,7 @@
                   value="selfPickup"
                 />
                 <label class="form-check-label" for="selfPickup"
-                  >Self Pickup</label
+                  ><b>Self Pickup</b></label
                 >
               </div>
             </div>

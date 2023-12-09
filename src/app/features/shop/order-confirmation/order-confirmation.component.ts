@@ -85,7 +85,7 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit {
       })
       .subscribe((res) => {
         if (res && res.statusCode == 200) {
-          console.log(res);
+          // console.log(res);
           this.orderDetails = res.orderDetails;
           this.getOrderedItem(this.orderDetails);
           this.orderOn = this.datePipe.transform(
