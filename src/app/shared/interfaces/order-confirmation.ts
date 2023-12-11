@@ -33,6 +33,8 @@ export interface OrderItemDetail {
   name?: string;
   quantity?: number;
   unitPrice?: number;
+  customCutPercentage?:number;
+  preorderAmountPercentage?:number;
 }
 
 export interface Slot {

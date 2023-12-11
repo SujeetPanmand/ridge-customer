@@ -137,13 +137,23 @@
               <tbody>
                <tr *ngIf="!isStandardCut || isPreorder" class="border-bottom">
                 <td></td>
-                <td colspan="1" class="text-end text-nowrap">{{ 'Booking Amount ( % ) of Product price' }}  </td>
-                <td class="text-center">${{ orderDetails.subTotalAmount }} </td>
+                <td colspan="1" class="text-end text-nowrap">{{ 'Booking amount ' +'( '+ (orderDetails.cutType == 2 ? orderDetails?.orderItemDetails[0].customCutPercentage : orderDetails?.orderItemDetails[0].preorderAmountPercentage) + '% payment of product price ) :' }} </td>
+                <td class="text-center ps-5">${{ orderDetails.subTotalAmount }} </td>
                </tr>
                 <tr *ngIf="!isStandardCut || isPreorder">
                   <td></td>
-                  <td class="fw-semibold text-end" colspan="1" width="70%">Total Booking Amount</td>
-                  <td class="fw-semibold text-center">${{ orderDetails.subTotalAmount }}</td>
+                  <td class="fw-semibold text-end" colspan="1" width="70%">Total Booking Amount </td>
+                  <td class="fw-semibold text-end">${{ orderDetails.subTotalAmount }}
+                    <span *ngIf="orderDetails.paymentStatus == 4 "
+                    class="fs-6 ms-2 {{
+                      commonService.getPaymentStatus(2)?.color 
+                    }}"
+                  >
+                    {{
+                          commonService.getPaymentStatus(2)?.status
+                     }}
+                  </span>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -153,23 +163,34 @@
                 <tr *ngIf="!isStandardCut || isPreorder">
                   <td></td>
                   <td colspan="2" width="70%" class="text-end text-nowrap">Balance Due</td>
-                  <td class="text-center">${{ orderDetails.secondPayment }}</td>
+                  <td class="text-center ps-5">${{ orderDetails.secondPayment }}</td>
                 </tr>
                 <tr *ngIf="!isStandardCut || isPreorder">
                   <td></td>
                   <td colspan="2" width="70%" class="text-end text-nowrap">Shipping</td>
-                  <td class="text-center">${{ SHIPPING_AMOUNT }}</td>
+                  <td class="text-center ps-5">${{ SHIPPING_AMOUNT }}</td>
                 </tr>
                 <tr *ngIf="!isStandardCut || isPreorder" class="border-bottom">
                   <td></td>
                   <td colspan="2" width="70%" class="text-end text-nowrap">Tax</td>
-                  <td class="text-center">${{ TAX_AMOUNT }}</td>
+                  <td class="text-center ps-5">${{ TAX_AMOUNT }}</td>
                 </tr>
 
                 <tr *ngIf="!isStandardCut || isPreorder">
                   <td ></td>
                   <td colspan="2"  class="fw-semibold text-end text-nowrap" >Total Balance Due</td>
-                  <td class="fw-semibold text-center">${{orderDetails.secondPayment + SHIPPING_AMOUNT + TAX_AMOUNT }}</td>
+                  <td class="fw-semibold text-end">${{orderDetails.secondPayment + SHIPPING_AMOUNT + TAX_AMOUNT }}
+                    <span *ngIf="orderDetails.paymentStatus == 4 "
+                      class="fs-6 ms-2 {{
+                        commonService.getPaymentStatus(orderDetails?.paymentStatus)
+                          ?.color
+                      }}"
+                    >
+                      {{
+                      commonService.getPaymentStatus(1)?.status
+                      }}
+                  </span>
+                  </td>
                 </tr>
               </tbody>
             </table>

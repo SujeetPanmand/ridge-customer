@@ -116,7 +116,7 @@
               <tr *ngFor="let item of selectedOrder?.orderItemDetails">
                 <td>{{ item.name }}</td>
                 <td>{{ item.quantity }}</td>
-                <td>{{ item.unitPrice }}</td>
+                <td>${{ item.unitPrice * item.quantity }}</td>
                 
                 <td
                   *ngIf="
@@ -167,7 +167,7 @@
             <tbody>
               <tr>
                 <td ></td>
-                <td colspan="1" width="70%" class="text-end text-nowrap"><label> {{ 'Booking Amount (%) of Product Price :' }} </label></td>
+                <td colspan="1" width="70%" class="text-end text-nowrap"><label> {{ 'Booking amount ' +'( '+ (selectedOrder.cutType == 2 ? selectedOrder?.orderItemDetails[0].customCutPercentage : selectedOrder?.orderItemDetails[0].preorderAmountPercentage) + '% payment of product price ) :' }} </label></td>
                 <td>${{ selectedOrder?.subTotalAmount }}</td>
               </tr>
               <tr class="align-baseline border-top">
@@ -175,7 +175,17 @@
                 <td class="text-end text-nowrap">
                   <label class="fs-5">Total Booking Amount : </label>
                 </td>
-                <td class="fs-5">${{ selectedOrder?.subTotalAmount }}</td>
+                <td class="fs-5">${{ selectedOrder?.subTotalAmount }}
+                  <span *ngIf="selectedOrder.paymentStatus == 4 "
+                  class="fs-6 ms-2 {{
+                    commonService.getPaymentStatus(2)?.color 
+                  }}"
+                >
+                  {{
+                        commonService.getPaymentStatus(2)?.status
+                   }}
+                </span>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -183,8 +193,8 @@
           <table class="table table-borderless border" *ngIf="selectedOrder.orderType == 2 || selectedOrder.cutType == 2">
             <tbody>
               <tr>
-                <td colspan="1"></td>
-                <td class="text-end text-nowrap"><label>Balance Due : </label></td>
+                <td ></td>
+                <td colspan="1" width="70%" class="text-end text-nowrap"><label>Balance Due : </label></td>
                 <td>${{ selectedOrder?.secondPayment }}</td>
               </tr>
               <tr>
@@ -204,7 +214,18 @@
                 <td class="text-end text-nowrap">
                   <label class="fs-5">Total Balance Due : </label>
                 </td>
-                <td class="fs-5">${{ selectedOrder?.secondPayment + selectedOrder?.tax + selectedOrder?.shippingCharge }}</td>
+                <td class="fs-5">${{ selectedOrder?.secondPayment + selectedOrder?.tax + selectedOrder?.shippingCharge }}
+                  <span *ngIf="selectedOrder.paymentStatus == 4 "
+                  class="fs-6 ms-2 {{
+                    commonService.getPaymentStatus(selectedOrder?.paymentStatus)
+                      ?.color
+                  }}"
+                >
+                  {{
+                  commonService.getPaymentStatus(1)?.status
+                  }}
+              </span>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -213,10 +234,10 @@
             <tbody>
               <tr class="align-baseline border-top">
                 <td ></td>
-                <td colspan="1" width="72%" class="text-end text-nowrap">
+                <td colspan="1" width="67%" class="text-end text-nowrap">
                   <label class="fs-5">Grand Total (Total Booking Amount + Total Balance Due) : </label>
                 </td>
-                <td class="fs-5">${{ selectedOrder?.totalAmount }}</td>
+                <td class="fs-5">${{ selectedOrder?.totalAmount }} </td>
               </tr>
             </tbody>
           </table>

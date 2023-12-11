@@ -264,15 +264,15 @@
             <div class="table-responsive mt-3 border-top">
               <table class="table align-middle table-borderless">
                 <tbody>
-                  <tr *ngIf="!isStandardCut || isPreorder" class="pt-3 fw-bold">
-                    <span class="text-danger fs-6"> ( Note: You need to pay booking amount now ) </span>
-                  </tr>
+            
                   <tr *ngIf="!isStandardCut || isPreorder" class="pt-3 fw-bold">
                     <td>{{ 'Booking Amount ( '+ (!isStandardCut && !isPreorder ? finalOrderProducts[0].customCutPercentage : finalOrderProducts[0].preorderAmountPercentage) + '% of product price )'}} </td>
                     <td></td>
                     <td class="text-end">${{ orderSubTotal }}</td>
                   </tr>
-                  
+                  <tr *ngIf="!isStandardCut || isPreorder" class=" fw-bold">
+                    <td> <span class="text-danger fs-6"> ( Note: You need to pay booking amount now ) </span></td>
+                   </tr>
                   <tr *ngIf="!isStandardCut || isPreorder" class="border-top">
                     <td>Balance Due</td>
                     <td></td>
@@ -298,6 +298,9 @@
                     <td></td>
                     <td class="fw-bold text-end">${{ totalBalanceDue }}</td>
                   </tr>
+                  <tr *ngIf="!isStandardCut || isPreorder" class=" fw-bold">
+                    <td> <span class="text-danger fs-6"> ( Note: When your order becomes available, you must pay the Total Balance Due.) </span></td>
+                   </tr>
                   <tr *ngIf="isStandardCut && !isPreorder" class="border-top">
                     <td class="fw-bold">Total</td>
                     <td></td>
