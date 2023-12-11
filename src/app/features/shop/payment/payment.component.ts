@@ -45,6 +45,9 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   cartTypes = cartTypes;
   years = [];
   isLoggedIn = 0;
+  balanceDue = 0;
+  totalBalanceDue = 0;
+  grandTotal = 0;
 
   constructor(
     public commonService: CommonService,
@@ -108,6 +111,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
         this.orderTotal = !this.isSelfPickUp
           ? this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT
           : this.orderSubTotal + this.TAX_AMOUNT;
+
       } else {
         this.commonService.setGlobalCartCount();
       }
@@ -206,6 +210,9 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       : (this.finalOrderProducts[0].price *
           this.finalOrderProducts[0].customCutPercentage) /
         100;
+    this.balanceDue = this.finalOrderProducts[0].price - this.orderSubTotal;
+    this.totalBalanceDue = this.balanceDue + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;    
+    this.grandTotal = this.totalBalanceDue + this.orderSubTotal ;    
     this.orderTotal = !this.isSelfPickUp
       ? this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT
       : this.orderSubTotal + this.TAX_AMOUNT;

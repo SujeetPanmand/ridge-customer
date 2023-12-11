@@ -62,6 +62,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   zipCodeChanged = new Subject<string>();
   slotForm: FormGroup;
   isEdit = false;
+  balanceDue = 0;
+  totalBalanceDue = 0;
+  grandTotal = 0;
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
@@ -94,6 +97,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.defaultSetting();
     this.generateUserDetailsForm();
     this.patchUserDetailsForm();
+    this.isSelfPickUp ? this.SHIPPING_AMOUNT = 0 : this.SHIPPING_AMOUNT = 40;
   }
 
   generateSlotForm() {
@@ -236,6 +240,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.commonService.cartItemsEvent.subscribe((items) => {
       if (this.isStandardCut && !this.isPreorder) {
         this.finalOrderProducts = items;
+        this.orderSubTotal = 0;
         this.finalOrderProducts.forEach((x) => {
           this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
         });
@@ -267,7 +272,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       : (this.finalOrderProducts[0].price *
           this.finalOrderProducts[0].customCutPercentage) /
         100;
-
+    this.balanceDue = this.finalOrderProducts[0].price - this.orderSubTotal;
+    this.totalBalanceDue = this.balanceDue + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;    
+    this.grandTotal = this.totalBalanceDue + this.orderSubTotal ;
     this.orderTotal =
       this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
   }
@@ -323,6 +330,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.isSelfPickUp
       ? localStorage.setItem('selfPickUp', '1')
       : localStorage.setItem('selfPickUp', '0');
+
+    this.isSelfPickUp ? this.SHIPPING_AMOUNT = 0 : this.SHIPPING_AMOUNT = 40;
 
     this.getAvailableSlot();
   }
