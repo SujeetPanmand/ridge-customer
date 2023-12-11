@@ -26,6 +26,7 @@ export interface MyOrders {
   cutType?: string;
   createdAt?: string;
   orderId?: string;
+  shippingCharge?:number;
 }
 export interface UserOrder {
   id?: string;
