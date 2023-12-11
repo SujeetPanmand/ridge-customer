@@ -77,7 +77,7 @@
           <div class="small-title">Order Details</div>
           <hr class="border" />
           <div class="table-responsive">
-            <table class="table align-middle table-borderless border">
+            <table class="table table-borderless border">
               <thead class="border-bottom">
                 <tr>
                   <th>ORDER ID</th>
@@ -102,34 +102,89 @@
                     ${{ product.unitPrice * product.quantity }}
                   </td>
                   <td *ngIf="!isStandardCut || isPreorder">
-                    ${{ orderSubTotal }}
+                    ${{ product.unitPrice }}
                   </td>
                 </tr>
 
-                <tr *ngIf="isStandardCut && !isPreorder">
+                <tr class="border-top" *ngIf="isStandardCut && !isPreorder">
                   <td colspan="2"></td>
                   <td class="border-top">Subtotal</td>
                   <td class="border-top">${{ orderSubTotal }}</td>
                 </tr>
 
-                <tr *ngIf="!orderDetails?.isSelfPickup">
+                <tr *ngIf="isStandardCut && !isPreorder">
                   <td colspan="2"></td>
                   <td>Shipping</td>
                   <td>${{ SHIPPING_AMOUNT }}</td>
-                </tr>
-                <tr>
+                </tr> 
+                <tr *ngIf="isStandardCut && !isPreorder">
                   <td colspan="2"></td>
                   <td class="pb-4">Tax</td>
                   <td class="pb-4">${{ TAX_AMOUNT }}</td>
                 </tr>
 
-                <tr>
+                 <tr *ngIf="isStandardCut && !isPreorder">
                   <td colspan="2"></td>
                   <td class="line-top fw-semibold">Total</td>
                   <td class="line-top fw-semibold">${{ orderTotal }}</td>
                 </tr>
               </tbody>
             </table>
+
+            <div *ngIf="!isStandardCut || isPreorder" class="small-title">Payment Details</div>
+            <hr *ngIf="!isStandardCut || isPreorder" class="border" />
+            <table class="table table-borderless border">
+              <tbody>
+               <tr *ngIf="!isStandardCut || isPreorder" class="border-bottom">
+                <td></td>
+                <td colspan="1" class="text-end text-nowrap">{{ 'Booking Amount ( % ) of Product price' }}  </td>
+                <td class="text-center">${{ orderDetails.subTotalAmount }} </td>
+               </tr>
+                <tr *ngIf="!isStandardCut || isPreorder">
+                  <td></td>
+                  <td class="fw-semibold text-end" colspan="1" width="70%">Total Booking Amount</td>
+                  <td class="fw-semibold text-center">${{ orderDetails.subTotalAmount }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="table table-borderless border">
+              <tbody>
+                <tr *ngIf="!isStandardCut || isPreorder">
+                  <td></td>
+                  <td colspan="2" width="70%" class="text-end text-nowrap">Balance Due</td>
+                  <td class="text-center">${{ orderDetails.secondPayment }}</td>
+                </tr>
+                <tr *ngIf="!isStandardCut || isPreorder">
+                  <td></td>
+                  <td colspan="2" width="70%" class="text-end text-nowrap">Shipping</td>
+                  <td class="text-center">${{ SHIPPING_AMOUNT }}</td>
+                </tr>
+                <tr *ngIf="!isStandardCut || isPreorder" class="border-bottom">
+                  <td></td>
+                  <td colspan="2" width="70%" class="text-end text-nowrap">Tax</td>
+                  <td class="text-center">${{ TAX_AMOUNT }}</td>
+                </tr>
+
+                <tr *ngIf="!isStandardCut || isPreorder">
+                  <td ></td>
+                  <td colspan="2"  class="fw-semibold text-end text-nowrap" >Total Balance Due</td>
+                  <td class="fw-semibold text-center">${{orderDetails.secondPayment + SHIPPING_AMOUNT + TAX_AMOUNT }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="table table-borderless border">
+              <tbody>
+                <tr class="border-bottom" *ngIf="!isStandardCut || isPreorder">
+                  <td></td>
+                  <td colspan="2" width="70%" class="fw-bold text-end text-nowrap">Grand Total</td>
+                  <td class="text-center fw-bold">${{ orderDetails.totalAmount }}</td>
+                </tr>
+                
+              </tbody>
+            </table>
+           
           </div>
         </div>
         <div class="mb-2">
@@ -145,12 +200,12 @@
             >&nbsp;{{ orderDetails && !orderDetails.isSelfPickup ? '(' + formatTime(orderDetails.slot) + ')' : '(' + formatTime(orderDetails.pickupSlot) + ')' }}
           </span>
         </div>
-        <div *ngIf="orderDetails?.paymentStatus == 4" class="mb-2">
+        <!-- <div *ngIf="orderDetails?.paymentStatus == 4" class="mb-2">
           <label>Remaining Amount To Pay : </label>
           <span class="ms-2">
             ${{ orderDetails?.secondPayment }}
           </span>
-        </div>
+        </div> -->
 
         <div class="mb-2">
           <label>Payment Status : </label>

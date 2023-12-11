@@ -116,23 +116,8 @@
               <tr *ngFor="let item of selectedOrder?.orderItemDetails">
                 <td>{{ item.name }}</td>
                 <td>{{ item.quantity }}</td>
-
-                <td
-                  *ngIf="
-                    selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1
-                  "
-                >
-                  ${{ item.quantity * item.unitPrice }}
-                </td>
-                <td
-                  *ngIf="
-                    (selectedOrder?.cutType == 2 ||
-                      selectedOrder?.orderType == 2) &&
-                    selectedOrder?.paymentStatus === 4
-                  "
-                >
-                  ${{ subTotal }}
-                </td>
+                <td>{{ item.unitPrice }}</td>
+                
                 <td
                   *ngIf="
                     (selectedOrder?.cutType == 2 ||
@@ -143,7 +128,7 @@
                   ${{ subTotal + remainingAmount }}
                 </td>
               </tr>
-              <tr
+              <tr class="border-top"
                 *ngIf="
                   selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1
                 "
@@ -151,6 +136,56 @@
                 <td colspan="1"></td>
                 <td class="text-end text-nowrap"><label>Subtotal: </label></td>
                 <td class="line-top fw-semibold">${{ subTotal }}</td>
+              </tr>
+              <tr *ngIf="
+              selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1">
+                <td colspan="1"></td>
+                <td class="text-end text-nowrap"><label>Tax : </label></td>
+                <td>${{ selectedOrder?.tax }}</td>
+              </tr>
+              <tr *ngIf="
+              selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1">
+                <td colspan="1"></td>
+                <td class="text-end text-nowrap">
+                  <label>Shipping Charge : </label>
+                </td>
+                <td>${{ selectedOrder?.shippingCharge }}</td>
+              </tr>
+              <tr *ngIf="
+              selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1" class="align-baseline border-top">
+                <td colspan="1"></td>
+                <td class="text-end text-nowrap">
+                  <label class="fs-4">Total : </label>
+                </td>
+                <td class="fs-4">${{ selectedOrder?.totalAmount }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <h4>Payment Summary</h4>
+          <hr class="border" />
+          <table class="table table-borderless border" *ngIf="selectedOrder.orderType == 2 || selectedOrder.cutType == 2">
+            <tbody>
+              <tr>
+                <td ></td>
+                <td colspan="1" width="70%" class="text-end text-nowrap"><label> {{ 'Booking Amount (%) of Product Price :' }} </label></td>
+                <td>${{ selectedOrder?.subTotalAmount }}</td>
+              </tr>
+              <tr class="align-baseline border-top">
+                <td colspan="1"></td>
+                <td class="text-end text-nowrap">
+                  <label class="fs-5">Total Booking Amount : </label>
+                </td>
+                <td class="fs-5">${{ selectedOrder?.subTotalAmount }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="table table-borderless border" *ngIf="selectedOrder.orderType == 2 || selectedOrder.cutType == 2">
+            <tbody>
+              <tr>
+                <td colspan="1"></td>
+                <td class="text-end text-nowrap"><label>Balance Due : </label></td>
+                <td>${{ selectedOrder?.secondPayment }}</td>
               </tr>
               <tr>
                 <td colspan="1"></td>
@@ -167,9 +202,21 @@
               <tr class="align-baseline border-top">
                 <td colspan="1"></td>
                 <td class="text-end text-nowrap">
-                  <label class="fs-4">Total : </label>
+                  <label class="fs-5">Total Balance Due : </label>
                 </td>
-                <td class="fs-4">${{ selectedOrder?.totalAmount }}</td>
+                <td class="fs-5">${{ selectedOrder?.secondPayment + selectedOrder?.tax + selectedOrder?.shippingCharge }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+           <table class="table table-borderless border" *ngIf="selectedOrder.orderType == 2 || selectedOrder.cutType == 2">
+            <tbody>
+              <tr class="align-baseline border-top">
+                <td ></td>
+                <td colspan="1" width="72%" class="text-end text-nowrap">
+                  <label class="fs-5">Grand Total (Total Booking Amount + Total Balance Due) : </label>
+                </td>
+                <td class="fs-5">${{ selectedOrder?.totalAmount }}</td>
               </tr>
             </tbody>
           </table>
@@ -189,12 +236,12 @@
           </span>
         </div>
 
-        <div *ngIf="selectedOrder?.paymentStatus === 4" class="mb-2"> 
+        <!-- <div *ngIf="selectedOrder?.paymentStatus === 4" class="mb-2"> 
           <label>Remaining Amount To Pay : </label>
           <span class="ms-2">
             ${{ selectedOrder?.secondPayment }}
           </span>
-        </div>
+        </div> -->
 
         <div class="mb-2">
           <label>Payment Status : </label>
