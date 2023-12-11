@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { environment } from 'src/environments/environment';
@@ -80,4 +80,9 @@ export class HeaderComponent implements OnInit {
         : 'assets/em_user.png';
     this.commonService.profilePictureUrl = this.profilePictureUrl;
   }
+
+  // @HostListener('window:unload', ['$event'])
+  // unloadHandler(event) {
+  //   localStorage.removeItem('ridgeOfflineCartItems');
+  // }
 }

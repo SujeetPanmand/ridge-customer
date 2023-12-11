@@ -328,7 +328,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   async onRedirectToPayment() {
-    this.validateOncheckout();
+    !this.isSelfPickUp
+      ? this.validateOncheckout()
+      : this.validateUserDetailsAndSlotDetails();
   }
 
   validateOncheckout() {
