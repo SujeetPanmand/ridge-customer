@@ -92,7 +92,8 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.getCartItemsToShow();
+    //this.getCartItemsToShow();
+    this.commonService.setGlobalCartCount();
     this.defaultSetting();
     this.generatePaymentForm();
     if (this.isPreorder || !this.isStandardCut) {
@@ -100,23 +101,22 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getCartItemsToShow() {
-    if (this.isStandardCut && !this.isPreorder) {
-      if (this.commonService.cartItems.length) {
-        this.finalOrderProducts = this.commonService.cartItems;
-        this.finalOrderProducts.forEach((x) => {
-          this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
-        });
+  // getCartItemsToShow() {
+  //   if (this.isStandardCut && !this.isPreorder) {
+  //     if (this.commonService.cartItems.length) {
+  //       this.finalOrderProducts = this.commonService.cartItems;
+  //       this.finalOrderProducts.forEach((x) => {
+  //         this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
+  //       });
 
-        this.orderTotal = !this.isSelfPickUp
-          ? this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT
-          : this.orderSubTotal + this.TAX_AMOUNT;
-
-      } else {
-        this.commonService.setGlobalCartCount();
-      }
-    }
-  }
+  //       this.orderTotal = !this.isSelfPickUp
+  //         ? this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT
+  //         : this.orderSubTotal + this.TAX_AMOUNT;
+  //     } else {
+  //       this.commonService.setGlobalCartCount();
+  //     }
+  //   }
+  // }
   generatePaymentForm() {
     this.paymentForm = this.formBuilder.group({
       cardNumber: [
@@ -177,9 +177,12 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     this.commonService.cartItemsEvent.subscribe((items) => {
       if (this.isStandardCut && !this.isPreorder) {
         this.finalOrderProducts = items;
+        this.orderSubTotal = 0;
+        this.orderTotal = 0;
         this.finalOrderProducts.forEach((x) => {
           this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
         });
+
         this.isSelfPickUp =
           JSON.parse(localStorage.getItem('selfPickUp')) == '0' ? false : true;
         this.orderTotal = !this.isSelfPickUp
@@ -211,8 +214,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
           this.finalOrderProducts[0].customCutPercentage) /
         100;
     this.balanceDue = this.finalOrderProducts[0].price - this.orderSubTotal;
-    this.totalBalanceDue = this.balanceDue + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;    
-    this.grandTotal = this.totalBalanceDue + this.orderSubTotal ;    
+    this.totalBalanceDue = !this.isSelfPickUp
+      ? this.balanceDue + this.TAX_AMOUNT + this.SHIPPING_AMOUNT
+      : this.balanceDue + this.TAX_AMOUNT;
+    this.grandTotal = this.totalBalanceDue + this.orderSubTotal;
     this.orderTotal = !this.isSelfPickUp
       ? this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT
       : this.orderSubTotal + this.TAX_AMOUNT;

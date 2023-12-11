@@ -87,7 +87,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       let item = localStorage.getItem('selfPickUp');
       this.isSelfPickUp = item == '0' ? false : true;
     }
-    this.getCartItemsToShow();
+    //this.commonService.setGlobalCartCount();
     this.getAvailableSlot();
     this.commonService.gotoTop();
     if (this.isPreorder || !this.isStandardCut) {
@@ -97,7 +97,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.defaultSetting();
     this.generateUserDetailsForm();
     this.patchUserDetailsForm();
-    this.isSelfPickUp ? this.SHIPPING_AMOUNT = 0 : this.SHIPPING_AMOUNT = 40;
+    this.isSelfPickUp
+      ? (this.SHIPPING_AMOUNT = 0)
+      : (this.SHIPPING_AMOUNT = 40);
   }
 
   generateSlotForm() {
@@ -172,15 +174,15 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       });
   }
 
-  getCartItemsToShow() {
-    if (this.isStandardCut && !this.isPreorder) {
-      if (this.commonService.cartItems.length) {
-        this.finalOrderProducts = this.commonService.cartItems;
-      } else {
-        this.commonService.setGlobalCartCount();
-      }
-    }
-  }
+  // getCartItemsToShow() {
+  //   if (this.isStandardCut && !this.isPreorder) {
+  //     if (this.commonService.cartItems.length) {
+  //       this.finalOrderProducts = this.commonService.cartItems;
+  //     } else {
+  //       this.commonService.setGlobalCartCount();
+  //     }
+  //   }
+  // }
 
   heighLightSlotDay() {
     this.allAvailableSlot.forEach((element) => {
@@ -241,6 +243,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       if (this.isStandardCut && !this.isPreorder) {
         this.finalOrderProducts = items;
         this.orderSubTotal = 0;
+        this.orderTotal = 0;
         this.finalOrderProducts.forEach((x) => {
           this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
         });
@@ -273,8 +276,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
           this.finalOrderProducts[0].customCutPercentage) /
         100;
     this.balanceDue = this.finalOrderProducts[0].price - this.orderSubTotal;
-    this.totalBalanceDue = this.balanceDue + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;    
-    this.grandTotal = this.totalBalanceDue + this.orderSubTotal ;
+
+    this.totalBalanceDue = !this.isSelfPickUp
+      ? this.balanceDue + this.TAX_AMOUNT + this.SHIPPING_AMOUNT
+      : this.balanceDue + this.TAX_AMOUNT;
+    this.grandTotal = this.totalBalanceDue + this.orderSubTotal;
     this.orderTotal =
       this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
   }
@@ -304,13 +310,13 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     // }
   }
 
-  setGlobalCartCount(addedProducts) {
-    let count = 0;
-    addedProducts.forEach((x) => {
-      count = count + x.count;
-    });
-    this.commonService.addProducts(count);
-  }
+  // setGlobalCartCount(addedProducts) {
+  //   let count = 0;
+  //   addedProducts.forEach((x) => {
+  //     count = count + x.count;
+  //   });
+  //   this.commonService.addProducts(count);
+  // }
 
   onChangeType() {
     this.isEdit = false;
@@ -331,8 +337,12 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       ? localStorage.setItem('selfPickUp', '1')
       : localStorage.setItem('selfPickUp', '0');
 
-    this.isSelfPickUp ? this.SHIPPING_AMOUNT = 0 : this.SHIPPING_AMOUNT = 40;
-
+    this.isSelfPickUp
+      ? (this.SHIPPING_AMOUNT = 0)
+      : (this.SHIPPING_AMOUNT = 40);
+    if (!this.isStandardCut || this.isPreorder) {
+      this.showPreorderProductOrCustomProducts();
+    }
     this.getAvailableSlot();
   }
 

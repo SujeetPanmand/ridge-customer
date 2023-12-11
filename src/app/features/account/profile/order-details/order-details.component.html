@@ -117,7 +117,7 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>${{ item.unitPrice * item.quantity }}</td>
-                
+
                 <td
                   *ngIf="
                     (selectedOrder?.cutType == 2 ||
@@ -128,7 +128,8 @@
                   ${{ subTotal + remainingAmount }}
                 </td>
               </tr>
-              <tr class="border-top"
+              <tr
+                class="border-top"
                 *ngIf="
                   selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1
                 "
@@ -137,22 +138,32 @@
                 <td class="text-end text-nowrap"><label>Subtotal: </label></td>
                 <td class="line-top fw-semibold">${{ subTotal }}</td>
               </tr>
-              <tr *ngIf="
-              selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1">
+              <tr
+                *ngIf="
+                  selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1
+                "
+              >
                 <td colspan="1"></td>
                 <td class="text-end text-nowrap"><label>Tax : </label></td>
                 <td>${{ selectedOrder?.tax }}</td>
               </tr>
-              <tr *ngIf="
-              selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1">
+              <tr
+                *ngIf="
+                  selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1
+                "
+              >
                 <td colspan="1"></td>
                 <td class="text-end text-nowrap">
                   <label>Shipping Charge : </label>
                 </td>
                 <td>${{ selectedOrder?.shippingCharge }}</td>
               </tr>
-              <tr *ngIf="
-              selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1" class="align-baseline border-top">
+              <tr
+                *ngIf="
+                  selectedOrder?.cutType == 1 && selectedOrder?.orderType == 1
+                "
+                class="align-baseline border-top"
+              >
                 <td colspan="1"></td>
                 <td class="text-end text-nowrap">
                   <label class="fs-4">Total : </label>
@@ -163,11 +174,27 @@
           </table>
           <h4>Payment Summary</h4>
           <hr class="border" />
-          <table class="table table-borderless border" *ngIf="selectedOrder.orderType == 2 || selectedOrder.cutType == 2">
+          <table
+            class="table table-borderless border"
+            *ngIf="selectedOrder.orderType == 2 || selectedOrder.cutType == 2"
+          >
             <tbody>
               <tr>
-                <td ></td>
-                <td colspan="1" width="70%" class="text-end text-nowrap"><label> {{ 'Booking amount ' +'( '+ (selectedOrder.cutType == 2 ? selectedOrder?.orderItemDetails[0].customCutPercentage : selectedOrder?.orderItemDetails[0].preorderAmountPercentage) + '% payment of product price ) :' }} </label></td>
+                <td></td>
+                <td colspan="1" width="70%" class="text-end text-nowrap">
+                  <label>
+                    {{
+                      "Booking amount " +
+                        "( " +
+                        (selectedOrder.cutType == 2
+                          ? selectedOrder?.orderItemDetails[0]
+                              .customCutPercentage
+                          : selectedOrder?.orderItemDetails[0]
+                              .preorderAmountPercentage) +
+                        "% payment of product price ) :"
+                    }}
+                  </label>
+                </td>
                 <td>${{ selectedOrder?.subTotalAmount }}</td>
               </tr>
               <tr class="align-baseline border-top">
@@ -175,26 +202,31 @@
                 <td class="text-end text-nowrap">
                   <label class="fs-5">Total Booking Amount : </label>
                 </td>
-                <td class="fs-5">${{ selectedOrder?.subTotalAmount }}
-                  <span *ngIf="selectedOrder.paymentStatus == 4 "
-                  class="fs-6 ms-2 {{
-                    commonService.getPaymentStatus(2)?.color 
-                  }}"
-                >
-                  {{
-                        commonService.getPaymentStatus(2)?.status
-                   }}
-                </span>
+                <td class="fs-5">
+                  ${{ selectedOrder?.subTotalAmount }}
+                  <span
+                    *ngIf="selectedOrder.paymentStatus == 4"
+                    class="fs-6 ms-2 {{
+                      commonService.getPaymentStatus(2)?.color
+                    }}"
+                  >
+                    {{ commonService.getPaymentStatus(2)?.status }}
+                  </span>
                 </td>
               </tr>
             </tbody>
           </table>
 
-          <table class="table table-borderless border" *ngIf="selectedOrder.orderType == 2 || selectedOrder.cutType == 2">
+          <table
+            class="table table-borderless border"
+            *ngIf="selectedOrder.orderType == 2 || selectedOrder.cutType == 2"
+          >
             <tbody>
               <tr>
-                <td ></td>
-                <td colspan="1" width="70%" class="text-end text-nowrap"><label>Balance Due : </label></td>
+                <td></td>
+                <td colspan="1" width="70%" class="text-end text-nowrap">
+                  <label>Balance Due : </label>
+                </td>
                 <td>${{ selectedOrder?.secondPayment }}</td>
               </tr>
               <tr>
@@ -202,48 +234,69 @@
                 <td class="text-end text-nowrap"><label>Tax : </label></td>
                 <td>${{ selectedOrder?.tax }}</td>
               </tr>
-              <tr *ngIf="!selectedOrder?.isSelfPickup">
+              <tr>
                 <td colspan="1"></td>
                 <td class="text-end text-nowrap">
                   <label>Shipping Charge : </label>
                 </td>
-                <td>${{ selectedOrder?.shippingCharge }}</td>
+                <td>
+                  ${{
+                    selectedOrder?.isSelfPickup
+                      ? 0
+                      : selectedOrder?.shippingCharge
+                  }}
+                </td>
               </tr>
               <tr class="align-baseline border-top">
                 <td colspan="1"></td>
                 <td class="text-end text-nowrap">
                   <label class="fs-5">Total Balance Due : </label>
                 </td>
-                <td class="fs-5">${{ selectedOrder?.secondPayment + selectedOrder?.tax + selectedOrder?.shippingCharge }}
-                  <span *ngIf="selectedOrder.paymentStatus == 4 "
-                  class="fs-6 ms-2 {{
-                    commonService.getPaymentStatus(selectedOrder?.paymentStatus)
-                      ?.color
-                  }}"
-                >
-                  {{
-                  commonService.getPaymentStatus(1)?.status
+                <td class="fs-5">
+                  ${{
+                    selectedOrder?.isSelfPickup
+                      ? selectedOrder.secondPayment + selectedOrder?.tax
+                      : selectedOrder.secondPayment +
+                        selectedOrder?.shippingCharge +
+                        selectedOrder?.tax
                   }}
-              </span>
+                  <span
+                    *ngIf="selectedOrder.paymentStatus == 4"
+                    class="fs-6 ms-2 {{
+                      commonService.getPaymentStatus(
+                        selectedOrder?.paymentStatus
+                      )?.color
+                    }}"
+                  >
+                    {{ commonService.getPaymentStatus(1)?.status }}
+                  </span>
                 </td>
               </tr>
             </tbody>
           </table>
 
-           <table class="table table-borderless border" *ngIf="selectedOrder.orderType == 2 || selectedOrder.cutType == 2">
+          <table
+            class="table table-borderless border"
+            *ngIf="selectedOrder.orderType == 2 || selectedOrder.cutType == 2"
+          >
             <tbody>
               <tr class="align-baseline border-top">
-                <td ></td>
+                <td></td>
                 <td colspan="1" width="67%" class="text-end text-nowrap">
-                  <label class="fs-5">Grand Total (Total Booking Amount + Total Balance Due) : </label>
+                  <label class="fs-5"
+                    >Grand Total (Total Booking Amount + Total Balance Due) :
+                  </label>
                 </td>
-                <td class="fs-5">${{ selectedOrder?.totalAmount }} </td>
+                <td class="fs-5">${{ selectedOrder?.totalAmount }}</td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="mb-2">
-          <label> {{ selectedOrder?.isSelfPickUp ? "Pickup" : "Delivery" }} Date & Time : </label>
+          <label>
+            {{ selectedOrder?.isSelfPickUp ? "Pickup" : "Delivery" }} Date &
+            Time :
+          </label>
           <span>
             {{
               selectedOrder?.expectedDeliveryDate
@@ -252,12 +305,16 @@
             }}
           </span>
           <span
-            >&nbsp; {{ selectedOrder && !selectedOrder?.isSelfPickUp ? '(' + formatTime(selectedOrder?.slot) + ')' : '(' + formatTime(selectedOrder?.pickupSlot) + ')' }}
-            
+            >&nbsp;
+            {{
+              selectedOrder && !selectedOrder?.isSelfPickUp
+                ? "(" + formatTime(selectedOrder?.slot) + ")"
+                : "(" + formatTime(selectedOrder?.pickupSlot) + ")"
+            }}
           </span>
         </div>
 
-        <!-- <div *ngIf="selectedOrder?.paymentStatus === 4" class="mb-2"> 
+        <!-- <div *ngIf="selectedOrder?.paymentStatus === 4" class="mb-2">
           <label>Remaining Amount To Pay : </label>
           <span class="ms-2">
             ${{ selectedOrder?.secondPayment }}
@@ -332,22 +389,14 @@
   </div>
   <form [formGroup]="cancelReasonForm">
     <div class="modal-body px-2">
-      <div class="mb-1">
-        <b>Note</b> : For refund contact to admin.
+      <div class="mb-1"><b>Note</b> : For refund contact to admin.</div>
+      <div class="mb-1 row">
+        <div class="col-md-1"></div>
+        <div class="col-md-11">&nbsp;Email : sales@ridgeatloafersglory.com</div>
       </div>
       <div class="mb-1 row">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-11">
-           &nbsp;Email : sales@ridgeatloafersglory.com
-        </div>
-      </div>
-      <div class="mb-1 row">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-11">
-          &nbsp;Phone No. : 512-910-7159
-        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-11">&nbsp;Phone No. : 512-910-7159</div>
       </div>
       <div class="mb-1 mt-4">
         Please specify the reason for cancellation to proceed

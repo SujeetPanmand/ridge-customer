@@ -160,17 +160,26 @@
                     [class.is-invalid]="isFieldValid(paymentForm, 'cvv')"
                   />
                   <span
-                  class="text-danger"
-                  *ngIf="hasError(paymentForm, 'cvv', 'required')"
-                  >Please enter a cvv.
-                </span>
-            
-                <span  class="text-danger" *ngIf="paymentForm.get('cvv').hasError('minlength') || paymentForm.get('cvv').hasError('maxlength')">
-                  CVV must be a 3-digit number.
-                </span>
-                <span  class="text-danger" *ngIf="paymentForm.get('cvv').hasError('pattern')">
-                  CVV must contain only numeric characters.
-                </span> 
+                    class="text-danger"
+                    *ngIf="hasError(paymentForm, 'cvv', 'required')"
+                    >Please enter a cvv.
+                  </span>
+
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      paymentForm.get('cvv').hasError('minlength') ||
+                      paymentForm.get('cvv').hasError('maxlength')
+                    "
+                  >
+                    CVV must be a 3-digit number.
+                  </span>
+                  <span
+                    class="text-danger"
+                    *ngIf="paymentForm.get('cvv').hasError('pattern')"
+                  >
+                    CVV must contain only numeric characters.
+                  </span>
                 </div>
               </div>
               <div class="mb-3">
@@ -271,29 +280,48 @@
             <div class="table-responsive mt-3 border-top">
               <table class="table align-middle table-borderless">
                 <tbody>
-            
                   <tr *ngIf="!isStandardCut || isPreorder" class="pt-3 fw-bold">
-                    <td>{{ 'Booking Amount ( '+ (!isStandardCut && !isPreorder ? finalOrderProducts[0].customCutPercentage : finalOrderProducts[0].preorderAmountPercentage) + '% of product price )'}} </td>
+                    <td>
+                      {{
+                        "Booking Amount ( " +
+                          (!isStandardCut && !isPreorder
+                            ? finalOrderProducts[0].customCutPercentage
+                            : finalOrderProducts[0].preorderAmountPercentage) +
+                          "% of product price )"
+                      }}
+                    </td>
                     <td></td>
                     <td class="text-end">${{ orderSubTotal }}</td>
                   </tr>
-                  <tr *ngIf="!isStandardCut || isPreorder" class=" fw-bold">
-                    <td> <span class="text-danger fs-6"> ( Note: You need to pay booking amount now ) </span></td>
-                   </tr>
+                  <tr *ngIf="!isStandardCut || isPreorder" class="fw-bold">
+                    <td>
+                      <span class="text-danger fs-6">
+                        ( Note: You need to pay booking amount now )
+                      </span>
+                    </td>
+                  </tr>
                   <tr *ngIf="!isStandardCut || isPreorder" class="border-top">
                     <td>Balance Due</td>
                     <td></td>
                     <td class="text-end">{{ balanceDue }}</td>
                   </tr>
-                  <tr *ngIf="isStandardCut && !isPreorder" class="pt-3 border-top">
-                    <td> Sub Total </td>
+                  <tr
+                    *ngIf="isStandardCut && !isPreorder"
+                    class="pt-3 border-top"
+                  >
+                    <td>Sub Total</td>
                     <td class="text-end"></td>
-                    <td class="text-end" >${{ orderSubTotal }} </td>
+                    <td class="text-end">${{ orderSubTotal }}</td>
                   </tr>
-                  <tr>
+                  <tr *ngIf="!isSelfPickUp">
                     <td>Shipping</td>
                     <td></td>
                     <td class="text-end">${{ SHIPPING_AMOUNT }}</td>
+                  </tr>
+                  <tr *ngIf="isSelfPickUp">
+                    <td>Shipping</td>
+                    <td></td>
+                    <td class="text-end">${{ 0 }}</td>
                   </tr>
                   <tr>
                     <td>Tax</td>
@@ -305,9 +333,14 @@
                     <td></td>
                     <td class="fw-bold text-end">${{ totalBalanceDue }}</td>
                   </tr>
-                  <tr *ngIf="!isStandardCut || isPreorder" class=" fw-bold">
-                    <td> <span class="text-danger fs-6"> ( Note: When your order becomes available, you must pay the Total Balance Due.) </span></td>
-                   </tr>
+                  <tr *ngIf="!isStandardCut || isPreorder" class="fw-bold">
+                    <td>
+                      <span class="text-danger fs-6">
+                        ( Note: When your order becomes available, you must pay
+                        the Total Balance Due.)
+                      </span>
+                    </td>
+                  </tr>
                   <tr *ngIf="isStandardCut && !isPreorder" class="border-top">
                     <td class="fw-bold">Total</td>
                     <td></td>
@@ -331,12 +364,13 @@
               {{ orderDate | date : "MM/dd/yyyy" }} and {{ orderSlot }}
             </div>
           </div>
-          <button *ngIf="!isStandardCut || isPreorder"
+          <button
+            *ngIf="!isStandardCut || isPreorder"
             (click)="createOrder()"
             class="btn button-orange w-100 mb-2"
             type="button"
           >
-            {{ 'Pay Booking Amount of $'+ orderSubTotal }} 
+            {{ "Pay Booking Amount of $" + orderSubTotal }}
             <!-- <div
               *ngIf="isLoading"
               class="ml-2 spinner-border spinner-border-sm text-light"
@@ -351,7 +385,8 @@
               aria-hidden="true"
             ></i> -->
           </button>
-          <button *ngIf="isStandardCut && !isPreorder"
+          <button
+            *ngIf="isStandardCut && !isPreorder"
             (click)="createOrder()"
             class="btn button-orange w-100 mb-2"
             type="button"

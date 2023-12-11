@@ -60,10 +60,10 @@ export class CommonService {
     if (!this.isLogginShow) {
       cartItems = await this.getCartItemsApi();
     } else {
-      cartItems = this.getLocalCartItems();
+      cartItems = await this.getLocalCartItems();
     }
-    this.setCartItems(cartItems);
-    this.addProducts(cartItems.length);
+    await this.setCartItems(cartItems);
+    await this.addProducts(cartItems.length);
   }
 
   getUserDetails(): Promise<User> {
@@ -98,12 +98,14 @@ export class CommonService {
       }
     });
   }
+
   setProfilePic(userId) {
     this.profilePictureUrl =
       userId != null && userId != ''
         ? environment.baseUrl + '/api/user/image/' + userId
         : 'assets/em_user.png';
   }
+
   getOrderStatus(num) {
     switch (num) {
       case 0:
@@ -120,6 +122,7 @@ export class CommonService {
         return { status: '', color: '' };
     }
   }
+
   getOrderType(num) {
     switch (num) {
       case 1:
@@ -130,6 +133,7 @@ export class CommonService {
         return '';
     }
   }
+
   getCustomType(num) {
     switch (num) {
       case 1:
@@ -140,6 +144,7 @@ export class CommonService {
         return '';
     }
   }
+
   getPaymentStatus(num): PaymentStatus | { status: string; color: string } {
     switch (num) {
       case 1:
