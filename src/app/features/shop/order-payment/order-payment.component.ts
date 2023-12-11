@@ -70,7 +70,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
       ],
       expiryMonth: ['', Validators.required],
       expiryYear: ['', Validators.required],
-      cvv: ['', Validators.required],
+      cvv: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3), Validators.pattern('^[0-9]*$')]],
       cardHolderName: ['', Validators.required],
     });
   }
