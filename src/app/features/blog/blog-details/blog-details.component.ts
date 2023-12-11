@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   AllBlogsDetailsList,
   BlogsDetails,
@@ -27,7 +27,8 @@ export class BlogDetailsComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private apiService: ApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -38,6 +39,11 @@ export class BlogDetailsComponent implements OnInit {
     this.getBlogById();
     this.commonService.gotoTop();
     this.getAllComment();
+  }
+
+  navigateToBlogView(blog: AllBlogsDetailsList) {
+    debugger;
+    this.router.navigate([`/blog/blog-details/${blog.id}`]);
   }
 
   getAllBlogs() {

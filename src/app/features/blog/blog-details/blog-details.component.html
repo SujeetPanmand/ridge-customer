@@ -116,7 +116,7 @@
         <div class="fw-semibold">TOP ARTICLES</div>
         <div
           *ngFor="let articals of allComments"
-          class="pt-3 position-relative"
+          class="pt-3 position-relative cursor"  (click)="navigateToBlogView(articals)"
         >
           <img
             [src]="setTopArticalPic(articals.id)"
