@@ -159,12 +159,19 @@
                     formControlName="cvv"
                     [class.is-invalid]="isFieldValid(paymentForm, 'cvv')"
                   />
-                </div>
-                <span
+                  <span
                   class="text-danger"
                   *ngIf="hasError(paymentForm, 'cvv', 'required')"
                   >Please enter a cvv.
                 </span>
+            
+                <span  class="text-danger" *ngIf="paymentForm.get('cvv').hasError('minlength') || paymentForm.get('cvv').hasError('maxlength')">
+                  CVV must be a 3-digit number.
+                </span>
+                <span  class="text-danger" *ngIf="paymentForm.get('cvv').hasError('pattern')">
+                  CVV must contain only numeric characters.
+                </span> 
+                </div>
               </div>
               <div class="mb-3">
                 <label for="cardHoldNumber" class="form-label"
