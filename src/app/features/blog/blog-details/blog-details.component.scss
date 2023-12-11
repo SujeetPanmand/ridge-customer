@@ -53,3 +53,35 @@
   overflow-y: auto; 
   overflow-x: hidden;
 }
+
+.h-500{
+  height: 500px
+}
+.h-250 {
+  height: 200px;
+}
+
+.title-position {
+  background: #808080e0;
+  display: block;
+  width: 100%;
+  padding: 6px;
+  bottom: -16px;
+
+  white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+@media (max-width: 991px) {
+  .h-500{
+    height: auto;
+  }
+  .h-250 {
+    height: auto;
+  }
+  .commentBox {
+    height: 30vh;
+  }
+}

@@ -65,3 +65,12 @@
   right: 0;
   background: white; /* Set the background color to match the container */
 }
+.h-500{
+  height: 500px
+}
+
+@media (max-width: 767.98px) {
+  .h-500{
+    height: auto;
+  }
+}
