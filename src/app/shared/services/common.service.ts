@@ -149,7 +149,7 @@ export class CommonService {
       case 3:
         return { status: 'Failed', color: 'badge  badge-bg-red' };
       case 4:
-        return { status: 'Partial Payment', color: 'badge  badge-bg-red' };
+        return { status: 'Partially Paid', color: 'badge  badge-bg-red' };
       default:
         return { status: 'Unknown', color: 'badge badge-bg-gray' };
     }
