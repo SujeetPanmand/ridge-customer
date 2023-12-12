@@ -21,9 +21,10 @@
             </h5>
 
             <p>
-              {{
+              <!-- {{
                 orderAddress["company"] ? orderAddress["company"] + "," : ""
-              }}&nbsp; {{ orderAddress["address1"] }},&nbsp;
+              }}&nbsp; -->
+               {{ orderAddress["address1"] }},&nbsp;
 
               {{
                 orderAddress["address2"] ? orderAddress["address2"] : ""
@@ -34,6 +35,12 @@
             </p>
           </span>
 
+          <h6 class="fw-bold" *ngIf="orderAddress['company']">
+            Company Name:
+            <span class="fw-light">{{ orderAddress['company'] }}</span>
+          </h6>
+          
+       
           <h3 class="pt-4 text-title">Payment Method</h3>
           <hr class="border" />
           <form [formGroup]="paymentForm">
