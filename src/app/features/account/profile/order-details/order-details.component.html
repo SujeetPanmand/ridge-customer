@@ -51,7 +51,7 @@
         <div
           class="text-danger"
           *ngIf="
-            selectedOrder?.cutType === 2 && selectedOrder?.paymentStatus == 1
+            selectedOrder?.cutType === 2 && selectedOrder?.paymentStatus !== 1
           "
         >
           <label for=""
@@ -90,7 +90,11 @@
           </div>
           <div *ngIf="!selectedOrder?.isSelfPickup">
             <div class="fw-bold">Shipping Address:</div>
-            <p>
+            <p *ngIf="selectedOrder">
+              {{
+                selectedOrder["company"] ? selectedOrder["company"] + "," : ""
+              }}&nbsp;
+              {{ selectedOrder ? selectedOrder["address1"] : "" }},&nbsp;
               {{ selectedOrder ? selectedOrder["address1"] : "" }} in
               {{ selectedOrder ? selectedOrder["city"] : "" }},
               {{ selectedOrder ? selectedOrder["state"] : "" }},{{
@@ -176,7 +180,7 @@
           <hr class="border" />
           <table
             class="table table-borderless border"
-            *ngIf="selectedOrder.orderType == 2 || selectedOrder.cutType == 2"
+            *ngIf="selectedOrder?.orderType == 2 || selectedOrder?.cutType == 2"
           >
             <tbody>
               <tr>
@@ -186,7 +190,7 @@
                     {{
                       "Booking amount " +
                         "( " +
-                        (selectedOrder.cutType == 2
+                        (selectedOrder?.cutType == 2
                           ? selectedOrder?.orderItemDetails[0]
                               .customCutPercentage
                           : selectedOrder?.orderItemDetails[0]
@@ -205,7 +209,7 @@
                 <td class="fs-5">
                   ${{ selectedOrder?.subTotalAmount }}
                   <span
-                    *ngIf="selectedOrder.paymentStatus == 4"
+                    *ngIf="selectedOrder?.paymentStatus == 4"
                     class="fs-6 ms-2 {{
                       commonService.getPaymentStatus(2)?.color
                     }}"
@@ -219,7 +223,7 @@
 
           <table
             class="table table-borderless border"
-            *ngIf="selectedOrder.orderType == 2 || selectedOrder.cutType == 2"
+            *ngIf="selectedOrder?.orderType == 2 || selectedOrder?.cutType == 2"
           >
             <tbody>
               <tr>
@@ -255,13 +259,13 @@
                 <td class="fs-5">
                   ${{
                     selectedOrder?.isSelfPickup
-                      ? selectedOrder.secondPayment + selectedOrder?.tax
-                      : selectedOrder.secondPayment +
+                      ? selectedOrder?.secondPayment + selectedOrder?.tax
+                      : selectedOrder?.secondPayment +
                         selectedOrder?.shippingCharge +
                         selectedOrder?.tax
                   }}
                   <span
-                    *ngIf="selectedOrder.paymentStatus == 4"
+                    *ngIf="selectedOrder?.paymentStatus == 4"
                     class="fs-6 ms-2 {{
                       commonService.getPaymentStatus(
                         selectedOrder?.paymentStatus
@@ -277,7 +281,7 @@
 
           <table
             class="table table-borderless border"
-            *ngIf="selectedOrder.orderType == 2 || selectedOrder.cutType == 2"
+            *ngIf="selectedOrder?.orderType == 2 || selectedOrder?.cutType == 2"
           >
             <tbody>
               <tr class="align-baseline border-top">
@@ -300,7 +304,7 @@
           <span>
             {{
               selectedOrder?.expectedDeliveryDate
-                ? (selectedOrder.expectedDeliveryDate | date : "MM/dd/yyyy")
+                ? (selectedOrder?.expectedDeliveryDate | date : "MM/dd/yyyy")
                 : "--"
             }}
           </span>

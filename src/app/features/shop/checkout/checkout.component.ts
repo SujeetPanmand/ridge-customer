@@ -318,7 +318,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   //   this.commonService.addProducts(count);
   // }
 
-  onChangeType() {
+  async onChangeType() {
     this.isEdit = false;
     this.allFilteredSlots = [];
     this.singleSlotId = '';
@@ -330,9 +330,10 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       ? this.removeValidatorOnSelfPickUp()
       : this.addValidatorToFormControl();
 
-    setTimeout(() => {
-      this.patchUserDetailsForm();
-    }, 1000);
+    // setTimeout(() => {
+    //   this.patchUserDetailsForm();
+    // }, 1000);
+    await this.patchUserDetailsForm();
     this.isSelfPickUp
       ? localStorage.setItem('selfPickUp', '1')
       : localStorage.setItem('selfPickUp', '0');
@@ -491,22 +492,41 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   async patchUserDetailsForm() {
-    await this.commonService.getUserDetails().then((res) => {
-      this.userDetails = res;
-      console.log('___', this.userDetails);
-    });
-    this.userDetailsForm.patchValue({
-      firstName: this.userDetails.userDetails.firstName,
-      lastName: this.userDetails.userDetails.lastName,
-      emailAddress: this.userDetails.userDetails.email,
-      phoneNumber: this.userDetails.userDetails.phoneNumber,
-      address1: this.userDetails.userDetails.addressList[0]['address1'],
-      address2: this.userDetails.userDetails.addressList[0]['address2'],
-      city: this.userDetails.userDetails.addressList[0].city,
-      country: this.userDetails.userDetails.addressList[0].country,
-      zipCode: this.userDetails.userDetails.addressList[0].postalCode,
-      state: this.userDetails.userDetails.addressList[0].state,
-    });
+    this.userDetailsForm.reset();
+    let isEdit = this.router.url.includes('isEdit') ? true : false;
+    if (!isEdit) {
+      await this.commonService.getUserDetails().then((res) => {
+        this.userDetails = res;
+        console.log('___', this.userDetails);
+        this.userDetailsForm.patchValue({
+          firstName: this.userDetails.userDetails.firstName,
+          lastName: this.userDetails.userDetails.lastName,
+          emailAddress: this.userDetails.userDetails.email,
+          phoneNumber: this.userDetails.userDetails.phoneNumber,
+          address1: this.userDetails.userDetails.addressList[0]['address1'],
+          address2: this.userDetails.userDetails.addressList[0]['address2'],
+          city: this.userDetails.userDetails.addressList[0].city,
+          country: this.userDetails.userDetails.addressList[0].country,
+          zipCode: this.userDetails.userDetails.addressList[0].postalCode,
+          state: this.userDetails.userDetails.addressList[0].state,
+        });
+      });
+    } else {
+      let userDetails = await JSON.parse(localStorage.getItem('orderAddress'));
+      await this.userDetailsForm.patchValue({
+        firstName: userDetails.firstName,
+        lastName: userDetails.lastName,
+        emailAddress: userDetails.emailAddress,
+        phoneNumber: userDetails.phoneNumber,
+        address1: userDetails.address1,
+        address2: userDetails.address2,
+        city: userDetails.city,
+        company: userDetails.company,
+        country: userDetails.country,
+        zipCode: userDetails.zipCode,
+        state: userDetails.state,
+      });
+    }
   }
 
   getCurrentDay(isFromView) {
