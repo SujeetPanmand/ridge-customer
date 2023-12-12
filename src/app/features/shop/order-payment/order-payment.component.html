@@ -9,20 +9,45 @@
       </h1>
       <div class="row pt-4">
         <div class="col-md-6 mx-auto bg-white p-4">
-          <h5 *ngIf="!orderPaymentDetails?.isSelfPickUp" class="text-title">
-            Remaining Amount To Pay: ${{
-              orderPaymentDetails?.payment +
-                orderPaymentDetails?.shippingCharge +
-                orderPaymentDetails?.tax
-            }}
-          </h5>
-          <h5 *ngIf="orderPaymentDetails?.isSelfPickUp" class="text-title">
-            Remaining Amount To Pay: ${{
-              orderPaymentDetails?.payment + orderPaymentDetails?.tax
-            }}
-          </h5>
-          <hr class="border" />
-
+          <h4>Remaining Payment Summary:</h4>
+          <table class="table table-borderless border">
+            <tbody>
+              <tr>
+                <td>Balance Due</td>
+                <td></td>
+                <td class="text-end">${{ orderPaymentDetails?.payment }}</td>
+              </tr>
+              <tr>
+                <td>Shipping</td>
+                <td></td>
+                <td class="text-end">
+                  ${{
+                    orderPaymentDetails?.isSelfPickUp
+                      ? 0
+                      : orderPaymentDetails?.shippingCharge
+                  }}
+                </td>
+              </tr>
+              <tr class="border-bottom">
+                <td>Tax</td>
+                <td></td>
+                <td class="text-end">${{ orderPaymentDetails?.tax }}</td>
+              </tr>
+              <tr class="border-bottom">
+                <td>Total Balance Due</td>
+                <td></td>
+                <td class="text-end">
+                  ${{
+                    !orderPaymentDetails?.isSelfPickUp
+                      ? orderPaymentDetails?.payment +
+                        orderPaymentDetails?.shippingCharge +
+                        orderPaymentDetails?.tax
+                      : orderPaymentDetails?.payment + orderPaymentDetails?.tax
+                  }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
           <h4 class="text-title">Payment Method</h4>
           <hr class="border" />
           <form [formGroup]="paymentForm">
@@ -196,7 +221,13 @@
                 class="btn button-orange w-100 mt-4"
                 type="button"
               >
-                Make Payment
+                Make Payment of ${{
+                  !orderPaymentDetails?.isSelfPickUp
+                    ? orderPaymentDetails?.payment +
+                      orderPaymentDetails?.shippingCharge +
+                      orderPaymentDetails?.tax
+                    : orderPaymentDetails?.payment + orderPaymentDetails?.tax
+                }}
                 <!-- <div
                   *ngIf="isLoading"
                   class="ml-2 spinner-border spinner-border-sm text-light"
