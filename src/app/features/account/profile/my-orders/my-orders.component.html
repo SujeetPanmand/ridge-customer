@@ -21,10 +21,10 @@
               <th>ORDER ID</th>
               <th>ORDER DATE</th>
               <th>PRICE</th>
-              <th>STATUS</th>
+              <th>Balance Amount</th>
               <th>Cut Type</th>
               <th>Order Type</th>
-              <th>Balance Amount</th>
+              <th>STATUS</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -33,7 +33,7 @@
               <td>{{ order.orderId }}</td>
               <td>{{ order.createdAt | date : "MM/dd/yyyy" }}</td>
               <td>${{ order.totalAmount }}</td>
-              <td> <span *ngIf="order.orderStatus === 0">${{ order.secondPayment + order.shippingCharge +  order.tax}}</span><span *ngIf="order.orderStatus !== 0">--</span></td>
+              <td> <span *ngIf="order.paymentStatus != 2">${{ (order.secondPayment + order.shippingCharge +  order.tax) }}</span><span *ngIf="order.orderStatus !== 0">$0</span></td>
             
               <td>{{ commonService.getCustomType(order.cutType) }}</td>
               <td>{{ commonService.getOrderType(order.orderType) }}</td>
