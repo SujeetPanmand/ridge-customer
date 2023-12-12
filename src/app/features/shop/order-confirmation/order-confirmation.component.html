@@ -67,8 +67,8 @@
         </div>
 
         <div *ngIf="orderDetails?.company" class="mb-2">
-          <label>Company Name :  </label> 
-          <span class="text-capitalize"> {{ orderDetails?.company}}</span>
+          <label>Company Name : </label>
+          <span class="text-capitalize"> {{ orderDetails?.company }}</span>
         </div>
 
         <!-- <div>
@@ -122,7 +122,9 @@
                 <tr *ngIf="isStandardCut && !isPreorder">
                   <td colspan="2"></td>
                   <td>Shipping</td>
-                  <td>${{ SHIPPING_AMOUNT }}</td>
+                  <td>
+                    ${{ orderDetails?.isSelfPickup ? 0 : SHIPPING_AMOUNT }}
+                  </td>
                 </tr>
                 <tr *ngIf="isStandardCut && !isPreorder">
                   <td colspan="2"></td>

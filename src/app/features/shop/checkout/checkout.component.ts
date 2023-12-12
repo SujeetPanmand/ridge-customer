@@ -87,7 +87,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       let item = localStorage.getItem('selfPickUp');
       this.isSelfPickUp = item == '0' ? false : true;
     }
-    //this.commonService.setGlobalCartCount();
+    this.commonService.setGlobalCartCount();
     this.getAvailableSlot();
     this.commonService.gotoTop();
     if (this.isPreorder || !this.isStandardCut) {
