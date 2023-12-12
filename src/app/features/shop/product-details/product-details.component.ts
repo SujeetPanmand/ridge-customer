@@ -66,6 +66,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     this.links[2].link = `/shop/product-details/${this.route.snapshot.params['productId']}`;
     this.subscribeMethod();
     this.subscribeToCartItems();
+    this.loginUserId = localStorage.getItem('userId');
   }
   ngAfterViewInit(): void {}
   subscribeToCartItems() {
