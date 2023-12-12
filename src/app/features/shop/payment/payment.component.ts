@@ -134,26 +134,41 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     });
   }
 
-  get cardIconClass(): string {
-    const numericCardNumber = this.paymentForm
-      .get('cardNumber')
-      .value.replace(/\D/g, '');
+  // get cardIconClass(): string {
+  //   const numericCardNumber = this.paymentForm
+  //     .get('cardNumber')
+  //     .value.replace(/\D/g, '');
 
-    if (numericCardNumber.startsWith('4')) {
-      return 'fab fa-cc-visa';
-    } else if (numericCardNumber.startsWith('5')) {
-      return 'fab fa-cc-mastercard';
-    } else {
-      return 'fas fa-credit-card';
+  //   if (numericCardNumber.startsWith('4')) {
+  //     return 'fab fa-cc-visa';
+  //   } else if (numericCardNumber.startsWith('5')) {
+  //     return 'fab fa-cc-mastercard';
+  //   } else {
+  //     return 'fas fa-credit-card';
+  //   }
+  // }
+
+  // onCardNumberInput(event: any): void {
+  //   // Remove non-numeric characters from the input value
+  //   const numericValue = event.target.value.replace(/\D/g, '');
+
+  //   // Limit the input to 16 characters
+  //   this.paymentForm.get('cardNumber').setValue(numericValue.slice(0, 16));
+  // }
+
+  formatCardNumber(event: any): void {
+    const inputElement = event.target;
+    let inputValue = inputElement.value.replace(/[-\s]/g, ''); // Remove existing spaces and dashes
+    let formattedValue = inputValue.replace(/(\d{4})/g, '$1-'); // Add dashes every 4 digits
+  
+    // Remove the last dash if it exists
+    const lastDashIndex = formattedValue.lastIndexOf('-');
+    if (lastDashIndex === formattedValue.length - 1) {
+      formattedValue = formattedValue.substring(0, lastDashIndex);
     }
-  }
-
-  onCardNumberInput(event: any): void {
-    // Remove non-numeric characters from the input value
-    const numericValue = event.target.value.replace(/\D/g, '');
-
-    // Limit the input to 16 characters
-    this.paymentForm.get('cardNumber').setValue(numericValue.slice(0, 16));
+  
+    // Update the input value
+    this.paymentForm.get('cardNumber').setValue(formattedValue);
   }
 
   defaultSetting() {
@@ -269,6 +284,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
   subscribeToCreditType() {
     this.checkCardType.pipe(debounceTime(1000)).subscribe((value) => {
+      value = value.replace(/-/g, "");
       if (value) {
         this.cartTypes.forEach((x) => {
           if (x.expressions[0].pattern.test(value)) {
@@ -287,7 +303,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     const apiRequest = {
       data: this.isSelfPickUp
         ? {
-            cardNumber: Number(this.paymentForm.controls['cardNumber'].value),
+            cardNumber: Number(this.paymentForm.controls['cardNumber'].value.replace(/-/g, "")),
             expiryMonth:
               this.paymentForm.controls['expiryMonth'].value.toString(),
             expiryYear:
@@ -323,7 +339,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             orderItemsModel: this.formatRecord(this.finalOrderProducts),
           }
         : {
-            cardNumber: Number(this.paymentForm.controls['cardNumber'].value),
+            cardNumber: Number(this.paymentForm.controls['cardNumber'].value.replace(/-/g, "")),
             expiryMonth:
               this.paymentForm.controls['expiryMonth'].value.toString(),
             expiryYear:

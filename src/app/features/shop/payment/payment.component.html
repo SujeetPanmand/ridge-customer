@@ -66,10 +66,11 @@
                   <input
                     type="text"
                     class="form-control"
-                    placeholder="XXX XXX XXXX 9817"
+                    placeholder="XXXX-XXXX-XXXX-9817"
                     formControlName="cardNumber"
                     [class.is-invalid]="isFieldValid(paymentForm, 'cardNumber')"
                     (ngModelChange)="this.checkCardType.next($event)"
+                    (input)="formatCardNumber($event)"
                   />
                   <a>
                     <i
