@@ -12,26 +12,26 @@
     </div>
   </div>
 </section>
-<section class="py-xl-5 py-3 ">
+<section class="py-xl-5 py-3">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12 pt-2">
         <div class="pt-3 d-flex align-items-center">
-         <i class="fa fa-arrow-left fa-2x pe-3 text-orange cursor" routerLink="/blog"></i>
-         <h1 class="sub-title text-orange pe-2">{{ blogDetails?.title }} </h1>
+          <i
+            class="fa fa-arrow-left fa-2x pe-3 text-orange cursor"
+            routerLink="/blog"
+          ></i>
+          <h1 class="sub-title text-orange pe-2">{{ blogDetails?.title }}</h1>
           <button
-          type="button"
-          class="btn border text-orange rounded-pill mx-1 mb-2"
-        >
-          {{ blogDetails?.tag.blogTag }}
-        </button>
+            type="button"
+            class="btn border text-orange rounded-pill mx-1 mb-2"
+          >
+            {{ blogDetails?.tag.blogTag }}
+          </button>
         </div>
 
         <div class="py-3">
-          <img
-            class="img-fluid w-100 h-500"
-            [src]="setProductPic()"
-          />
+          <img class="img-fluid w-100 h-500" [src]="setBlogDetailsPicture()" />
         </div>
       </div>
     </div>
@@ -46,10 +46,15 @@
         </div>
         <div class="pt-3">
           <div class="col-md-10">
-            <div [innerHTML]="blogDetails?.content" ></div>
-        
+            <div [innerHTML]="blogDetails?.content"></div>
+
             <div class="py-4 comment">Comments</div>
-            <div  [ngClass]="{'border p-4 commentBox': comments.length, 'text-center': !comments.length}"  >
+            <div
+              [ngClass]="{
+                'border p-4 commentBox': comments.length,
+                'text-center': !comments.length
+              }"
+            >
               <div *ngFor="let comment of comments" class="d-flex pb-3">
                 <div class="flex-shrink-0 mb-3">
                   <img
@@ -94,7 +99,7 @@
                 <h5>No Comments</h5>
               </div>
             </div>
-          
+
             <div class="input-group" *ngIf="isLoggedIn">
               <input
                 [(ngModel)]="comment"
@@ -107,7 +112,6 @@
                 class="input-group-text eye-inside bg-transparent border-start-0"
                 ><i (click)="addComment()" class="fas fa-arrow-right cursor"></i
               ></span>
-              
             </div>
           </div>
         </div>
@@ -115,12 +119,13 @@
       <div class="col-md-3 py-4 py-md-0">
         <div class="fw-semibold">TOP ARTICLES</div>
         <div
-          *ngFor="let articals of allComments"
-          class="pt-3 position-relative cursor"  (click)="navigateToBlogView(articals)"
+          *ngFor="let articals of allArticles"
+          class="pt-3 position-relative cursor"
+          (click)="navigateToBlogView(articals)"
         >
           <img
             [src]="setTopArticalPic(articals.id)"
-            class="img-fluid mx-auto d-flex shadow-sm w-100 h-250" 
+            class="img-fluid mx-auto d-flex shadow-sm w-100 h-250"
           />
 
           <p class="text-light position-absolute px-4 mx-md-0 title-position">

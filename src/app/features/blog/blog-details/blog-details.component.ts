@@ -21,7 +21,7 @@ export class BlogDetailsComponent implements OnInit {
   comments: CommentList[] = [];
   comment = '';
   allBlogList: AllBlogsDetailsList[] = [];
-  allComments: any = [];
+  allArticles: any = [];
   isLoading = false;
   isLoggedIn = 0;
   constructor(
@@ -74,27 +74,38 @@ export class BlogDetailsComponent implements OnInit {
   }
 
   sortTopArticals() {
-    this.allBlogList.forEach((element) => {
-      var obj = {
-        title: element.title,
-        id: element.id,
-        commentCount: element.commentDetails,
-      };
-      this.allComments.push(obj);
-    });
-    this.allComments.forEach((element) => {
-      element.commentCount = element.commentCount.length;
-    });
-    this.allComments
-      .sort((a, b) => {
-        if (a.commentCount !== b.commentCount) {
-          return a.commentCount - b.commentCount;
-        } else {
-          return b.commentCount.localeCompare(a.commentCount);
-        }
-      })
-      .reverse();
-    this.allComments = this.allComments.slice(0, 3);
+    this.allArticles = this.allBlogList
+      .filter((x) => x.id !== this.route.snapshot.params['blogId'])
+      .map((y) => {
+        return {
+          title: y.title,
+          id: y.id,
+          commentCount: y.commentDetails,
+        };
+      });
+
+    this.allArticles = this.allArticles.slice(0, 3);
+    // this.allBlogList.forEach((element) => {
+    //   var obj = {
+    //     title: element.title,
+    //     id: element.id,
+    //     commentCount: element.commentDetails,
+    //   };
+    //   this.allComments.push(obj);
+    // });
+    // this.allComments.forEach((element) => {
+    //   element.commentCount = element.commentCount.length;
+    // });
+    // this.allComments
+    //   .sort((a, b) => {
+    //     if (a.commentCount !== b.commentCount) {
+    //       return a.commentCount - b.commentCount;
+    //     } else {
+    //       return b.commentCount.localeCompare(a.commentCount);
+    //     }
+    //   })
+    //   .reverse();
+    // this.allComments = this.allComments.slice(0, 3);
   }
 
   getBlogById() {
@@ -108,27 +119,20 @@ export class BlogDetailsComponent implements OnInit {
         }
       });
   }
-  setProductPic() {
-    let date = new Date().getTime();
-    this.blogPictureUrl =
-      environment.baseUrl +
-      '/api/blog/image/' +
-      this.route.snapshot.params['blogId'] +
-      '?' +
-      date;
-    return this.blogPictureUrl;
+  setBlogDetailsPicture() {
+    return this.route.snapshot.params['blogId']
+      ? environment.baseUrl +
+          '/api/blog/image/' +
+          this.route.snapshot.params['blogId']
+      : '';
   }
 
   setTopArticalPic(id) {
-    this.blogPictureUrl = environment.baseUrl + '/api/blog/image/' + id;
-    return this.blogPictureUrl;
+    return id ? environment.baseUrl + '/api/blog/image/' + id : '';
   }
 
   setProfilePic(userId) {
-    let date = new Date().getTime();
-    this.blogPictureUrl = '';
-    let url = environment.baseUrl + '/api/user/image/' + userId + '?' + date;
-    return url;
+    return userId ? environment.baseUrl + '/api/user/image/' + userId : '';
   }
 
   getAllComment() {

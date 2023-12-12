@@ -365,9 +365,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
         this.validateUserDetailsAndSlotDetails();
       }
       if (res && res.statusCode == 400) {
-        this.toastrService.error(
-          'Slot capacity is over please select other slot.'
-        );
+        this.toastrService.error(res.message);
       }
     });
   }
