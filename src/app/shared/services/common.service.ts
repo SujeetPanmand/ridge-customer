@@ -89,7 +89,7 @@ export class CommonService {
             }
           },
           (error) => {
-            reject(error);
+            resolve(null);
             this.isLogginShow = true;
             this.islogginButtonShow.emit(this.isLogginShow);
             this.setGlobalCartCount();

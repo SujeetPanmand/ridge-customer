@@ -247,8 +247,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
         this.finalOrderProducts.forEach((x) => {
           this.orderSubTotal = this.orderSubTotal + x.price * x.quantity;
         });
-        this.orderTotal =
-          this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT;
+        this.orderTotal = !this.isSelfPickUp
+          ? this.orderSubTotal + this.TAX_AMOUNT + this.SHIPPING_AMOUNT
+          : this.orderSubTotal + this.TAX_AMOUNT;
       }
     });
   }
@@ -344,6 +345,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     if (!this.isStandardCut || this.isPreorder) {
       this.showPreorderProductOrCustomProducts();
     }
+
+    this.commonService.cartItemsEvent.emit(this.commonService.cartItems);
+
     this.getAvailableSlot();
   }
 
@@ -494,20 +498,21 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     let isEdit = this.router.url.includes('isEdit') ? true : false;
     if (!isEdit) {
       await this.commonService.getUserDetails().then((res) => {
-        this.userDetails = res;
-        console.log('___', this.userDetails);
-        this.userDetailsForm.patchValue({
-          firstName: this.userDetails.userDetails.firstName,
-          lastName: this.userDetails.userDetails.lastName,
-          emailAddress: this.userDetails.userDetails.email,
-          phoneNumber: this.userDetails.userDetails.phoneNumber,
-          address1: this.userDetails.userDetails.addressList[0]['address1'],
-          address2: this.userDetails.userDetails.addressList[0]['address2'],
-          city: this.userDetails.userDetails.addressList[0].city,
-          country: this.userDetails.userDetails.addressList[0].country,
-          zipCode: this.userDetails.userDetails.addressList[0].postalCode,
-          state: this.userDetails.userDetails.addressList[0].state,
-        });
+        if (res) {
+          this.userDetails = res;
+          this.userDetailsForm.patchValue({
+            firstName: this.userDetails.userDetails.firstName,
+            lastName: this.userDetails.userDetails.lastName,
+            emailAddress: this.userDetails.userDetails.email,
+            phoneNumber: this.userDetails.userDetails.phoneNumber,
+            address1: this.userDetails.userDetails.addressList[0]['address1'],
+            address2: this.userDetails.userDetails.addressList[0]['address2'],
+            city: this.userDetails.userDetails.addressList[0].city,
+            country: this.userDetails.userDetails.addressList[0].country,
+            zipCode: this.userDetails.userDetails.addressList[0].postalCode,
+            state: this.userDetails.userDetails.addressList[0].state,
+          });
+        }
       });
     } else {
       let userDetails = await JSON.parse(localStorage.getItem('orderAddress'));

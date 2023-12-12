@@ -24,7 +24,7 @@
               <!-- {{
                 orderAddress["company"] ? orderAddress["company"] + "," : ""
               }}&nbsp; -->
-               {{ orderAddress["address1"] }},&nbsp;
+              {{ orderAddress["address1"] }},&nbsp;
 
               {{
                 orderAddress["address2"] ? orderAddress["address2"] : ""
@@ -37,10 +37,9 @@
 
           <h6 class="fw-bold" *ngIf="orderAddress['company']">
             Company Name:
-            <span class="fw-light">{{ orderAddress['company'] }}</span>
+            <span class="fw-light">{{ orderAddress["company"] }}</span>
           </h6>
-          
-       
+
           <h3 class="pt-4 text-title">Payment Method</h3>
           <hr class="border" />
           <form [formGroup]="paymentForm">
@@ -270,7 +269,7 @@
                           aria-expanded="false"
                           aria-controls="productInfo"
                         >
-                          <h5>{{ product.name }}</h5>
+                          <h5>{{ product.productName }}</h5>
                         </button>
                       </h2>
                       <div
@@ -404,7 +403,7 @@
             class="btn button-orange w-100 mb-2"
             type="button"
           >
-            {{ 'Make Payment of $'+orderTotal }}
+            {{ "Make Payment of $" + orderTotal }}
           </button>
           <button
             (click)="goBack()"
