@@ -31,7 +31,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
   cartTypes = cartTypes;
   years = [];
   isLoggedIn = 0;
- 
+
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -39,7 +39,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     private toastrService: ToastrService,
     private router: Router,
     private modalService: NgbModal,
-    public commonService: CommonService,
+    public commonService: CommonService
   ) {
     this.getYearList();
     this.subscribeToCreditType();
@@ -70,7 +70,15 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
       ],
       expiryMonth: ['', Validators.required],
       expiryYear: ['', Validators.required],
-      cvv: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3), Validators.pattern('^[0-9]*$')]],
+      cvv: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(3),
+          Validators.pattern('^[0-9]*$'),
+        ],
+      ],
       cardHolderName: ['', Validators.required],
     });
   }
@@ -102,10 +110,9 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
 
   createOrder() {
     this.formSubmitAttempt = true;
-    if (this.paymentForm.invalid && this.isLoading) {
+    if (this.paymentForm.invalid) {
       return;
     }
-    this.isLoading = true;
     const apiRequest = {
       data: this.isSelfPickUp
         ? {
@@ -144,7 +151,6 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     //     }
     //   });
 
-      
     let data = {
       action_button_name: 'Yes',
       title_text: 'Confirmation',
@@ -160,26 +166,22 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
       if (res) {
         this.apiService.request('COMPLETE_ORDER_PAYMENT', apiRequest).subscribe(
           (res) => {
-            this.isLoading = false;
             if (res && res.statusCode == 200) {
-            
               this.router.navigateByUrl(
-                `account/order-details/${this.route.snapshot.params['orderId'].trim()}`
+                `account/order-details/${this.route.snapshot.params[
+                  'orderId'
+                ].trim()}`
               );
               this.toastrService.success(res.message);
             } else {
               this.toastrService.error(res.message);
             }
           },
-          (error) => {
-            this.isLoading = false;
-          }
+          (error) => {}
         );
       }
     });
   }
-
-
 
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>
     formGroup.get(field).invalid &&

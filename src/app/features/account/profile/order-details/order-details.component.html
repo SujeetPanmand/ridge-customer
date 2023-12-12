@@ -49,17 +49,16 @@
           </span>
         </div>
         <div
-          class="text-danger"
           *ngIf="
             selectedOrder?.cutType === 2 && selectedOrder?.paymentStatus !== 1
           "
         >
-          <label for=""
+          <label class="text-danger" for=""
             >If you haven not filled the Google sheet for custom cut details
             please fill it here &nbsp;</label
           >
           <a
-            class="text-orange fw-bold"
+            class="fw-bold"
             href="https://docs.google.com/forms/d/e/1FAIpQLSdOuwOSuawMOIri4gf9XD_IfK-jwB26HdyNlqBpRTafemwYQA/viewform?vc=0&c=0&w=1&flr=0"
             target="_blank"
           >
