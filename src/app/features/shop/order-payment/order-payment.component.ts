@@ -82,7 +82,20 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
       cardHolderName: ['', Validators.required],
     });
   }
-
+  formatCardNumber(event: any): void {
+    const inputElement = event.target;
+    let inputValue = inputElement.value.replace(/[-\s]/g, ''); // Remove existing spaces and dashes
+    let formattedValue = inputValue.replace(/(\d{4})/g, '$1-'); // Add dashes every 4 digits
+  
+    // Remove the last dash if it exists
+    const lastDashIndex = formattedValue.lastIndexOf('-');
+    if (lastDashIndex === formattedValue.length - 1) {
+      formattedValue = formattedValue.substring(0, lastDashIndex);
+    }
+  
+    // Update the input value
+    this.paymentForm.get('cardNumber').setValue(formattedValue);
+  }
   ngAfterViewInit(): void {}
 
   goBack() {}
@@ -116,7 +129,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     const apiRequest = {
       data: this.isSelfPickUp
         ? {
-            cardNumber: Number(this.paymentForm.controls['cardNumber'].value),
+            cardNumber: Number(this.paymentForm.controls['cardNumber'].value.replace(/-/g, "")),
             expiryMonth:
               this.paymentForm.controls['expiryMonth'].value.toString(),
             expiryYear:
@@ -127,7 +140,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
             orderId: this.orderId.trim(),
           }
         : {
-            cardNumber: Number(this.paymentForm.controls['cardNumber'].value),
+            cardNumber: Number(this.paymentForm.controls['cardNumber'].value.replace(/-/g, "")),
             expiryMonth:
               this.paymentForm.controls['expiryMonth'].value.toString(),
             expiryYear:
@@ -198,6 +211,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
 
   subscribeToCreditType() {
     this.checkCardType.pipe(debounceTime(1000)).subscribe((value) => {
+      value = value.replace(/-/g, "");
       if (value) {
         this.cartTypes.forEach((x) => {
           if (x.expressions[0].pattern.test(value)) {
