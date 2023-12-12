@@ -522,6 +522,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
         Difference_In_Days <
         this.finalOrderProducts[0].customCutAvailabilityDays
       ) {
+        this.allFilteredSlots = [];
+        this.singleSlot = '';
+        this.singleSlotId = '';
         this.toastrService.error(
           `Custom cut order will be available in minimum ${this.finalOrderProducts[0].customCutAvailabilityDays} days.`
         );
@@ -538,6 +541,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
           this.datePipe.transform(new Date(date), 'MM/dd/yyyy')
         )
       ) {
+        this.allFilteredSlots = [];
+        this.singleSlot = '';
+        this.singleSlotId = '';
         this.toastrService.error(
           `Required preorder may become available on or after ${this.datePipe.transform(
             new Date(this.finalOrderProducts[0].expectedAvailabilityDate),

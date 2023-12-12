@@ -28,8 +28,10 @@ export class BlogDetailsComponent implements OnInit {
     private commonService: CommonService,
     private apiService: ApiService,
     private route: ActivatedRoute,
-    private router: Router,
-  ) {}
+    private router: Router
+  ) {
+    this.subscribeToUrlChange();
+  }
 
   ngOnInit() {
     this.commonService.getUserDetails().then((x) => {
@@ -41,8 +43,21 @@ export class BlogDetailsComponent implements OnInit {
     this.getAllComment();
   }
 
+  subscribeToUrlChange() {
+    //navigate to same page won't call following changes;
+    // On subscribing activated route will update data when params or query params get changed
+    this.route.params.subscribe((val) => {
+      this.commonService.getUserDetails().then((x) => {
+        if (x) this.isLoggedIn = 1;
+      });
+      this.getAllBlogs();
+      this.getBlogById();
+      this.commonService.gotoTop();
+      this.getAllComment();
+    });
+  }
+
   navigateToBlogView(blog: AllBlogsDetailsList) {
-    debugger;
     this.router.navigate([`/blog/blog-details/${blog.id}`]);
   }
 
@@ -80,7 +95,6 @@ export class BlogDetailsComponent implements OnInit {
       })
       .reverse();
     this.allComments = this.allComments.slice(0, 3);
-    console.log(this.allComments);
   }
 
   getBlogById() {
