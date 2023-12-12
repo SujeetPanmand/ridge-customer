@@ -90,9 +90,6 @@
           <div *ngIf="!selectedOrder?.isSelfPickup">
             <div class="fw-bold">Shipping Address:</div>
             <p *ngIf="selectedOrder">
-              {{
-                selectedOrder["company"] ? selectedOrder["company"] + "," : ""
-              }}&nbsp;
               {{ selectedOrder ? selectedOrder["address1"] : "" }},&nbsp;
               {{ selectedOrder ? selectedOrder["address1"] : "" }} in
               {{ selectedOrder ? selectedOrder["city"] : "" }},
@@ -100,6 +97,10 @@
                 selectedOrder ? selectedOrder["country"] : ""
               }}
             </p>
+          </div>
+          <div *ngIf="selectedOrder?.company" class="mb-2">
+            <label>Company Name :  </label> 
+            <span class="text-capitalize"> {{ selectedOrder?.company}}</span>
           </div>
         </div>
       </div>
