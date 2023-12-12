@@ -80,7 +80,6 @@ export class BlogDetailsComponent implements OnInit {
         return {
           title: y.title,
           id: y.id,
-          commentCount: y.commentDetails,
         };
       });
 
