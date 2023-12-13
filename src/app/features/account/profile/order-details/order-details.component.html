@@ -122,7 +122,7 @@
                 <td>{{ item.quantity }}</td>
                 <td>${{ item.unitPrice * item.quantity }}</td>
 
-                <td
+                <!-- <td
                   *ngIf="
                     (selectedOrder?.cutType == 2 ||
                       selectedOrder?.orderType == 2) &&
@@ -130,7 +130,7 @@
                   "
                 >
                   ${{ subTotal + remainingAmount }}
-                </td>
+                </td> -->
               </tr>
               <tr
                 class="border-top"
