@@ -71,7 +71,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    placeholder="XXX XXX XXXX 9817"
+                    placeholder="XXXX-XXXX-XXXX-9817"
                     formControlName="cardNumber"
                     [class.is-invalid]="isFieldValid(paymentForm, 'cardNumber')"
                     (ngModelChange)="this.checkCardType.next($event)"
@@ -222,7 +222,7 @@
                 class="btn button-orange w-100 mt-4"
                 type="button"
               >
-             Pay Total Balance Due (${{
+                Pay Total Balance Due (${{
                   !orderPaymentDetails?.isSelfPickUp
                     ? orderPaymentDetails?.payment +
                       orderPaymentDetails?.shippingCharge +

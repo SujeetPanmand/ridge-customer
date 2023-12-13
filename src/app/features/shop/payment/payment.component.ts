@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import {
   AbstractControl,
   FormBuilder,
+  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
@@ -129,7 +130,12 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       ],
       expiryMonth: ['', Validators.required],
       expiryYear: ['', Validators.required],
-      cvv: ['', Validators.required],
+      cvv: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(3),
+        Validators.minLength(3),
+        Validators.pattern(/^[0-9]\d*$/),
+      ]),
       cardHolderName: ['', Validators.required],
     });
   }
