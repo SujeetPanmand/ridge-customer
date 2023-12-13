@@ -46,7 +46,7 @@
           </div>
           <span>San Gabriel River In Liberty Hill, Austin, Texas -73301</span>
         </div>
-        <div *ngIf="!orderDetails?.isSelfPickup" class="pb-1 pt-4">
+        <div *ngIf="!orderDetails?.isSelfPickup" class="pb-2 pt-4">
           <div class="small-title">Shipping Address</div>
           <hr class="border" />
           <div class="d-flex flex-column">
@@ -81,22 +81,23 @@
         </div> -->
 
         <div class="">
-          <div class="small-title">Order Details</div>
+          <div class="small-title mb-2">Order Details</div>
+          <div>
+            <span class="fw-semibold">OrderId: </span>
+            <span>{{ orderDetails?.orderId }}</span>
+          </div>
           <hr class="border" />
           <div class="table-responsive">
             <table class="table table-borderless border">
               <thead class="border-bottom">
                 <tr>
-                  <th>ORDER ID</th>
                   <th>ORDER ON</th>
                   <th>ORDERED ITEMS</th>
-
                   <th>PRICE</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let product of finalOrderProducts">
-                  <td>{{ orderDetails?.orderId }}</td>
                   <td>{{ orderOn }}</td>
                   <td>
                     {{ product.name
