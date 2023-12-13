@@ -80,8 +80,18 @@ export class BlogDetailsComponent implements OnInit {
         return {
           title: y.title,
           id: y.id,
+          commentCount: y.commentDetails.length,
         };
       });
+    this.allArticles
+      .sort((a, b) => {
+        if (a.commentCount !== b.commentCount) {
+          return a.commentCount - b.commentCount;
+        } else {
+          return b.commentCount.localeCompare(a.commentCount);
+        }
+      })
+      .reverse();
 
     this.allArticles = this.allArticles.slice(0, 3);
     // this.allBlogList.forEach((element) => {
