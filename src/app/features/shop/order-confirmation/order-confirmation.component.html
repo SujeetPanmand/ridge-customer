@@ -46,11 +46,11 @@
           </div>
           <span>San Gabriel River In Liberty Hill, Austin, Texas -73301</span>
         </div>
-        <div *ngIf="!orderDetails?.isSelfPickup" class="pb-5 pt-4">
+        <div *ngIf="!orderDetails?.isSelfPickup" class="pb-1 pt-4">
           <div class="small-title">Shipping Address</div>
           <hr class="border" />
           <div class="d-flex flex-column">
-            <h5 class="pt-2 text-capitalize">
+            <h5 class="pt-2 mb-2 text-capitalize">
               {{ orderDetails?.user?.firstName }}
               {{ orderDetails?.user?.lastName }}
             </h5>
@@ -66,7 +66,7 @@
           </div>
         </div>
 
-        <div *ngIf="orderDetails?.company" class="mb-2">
+        <div *ngIf="orderDetails?.company" class="mb-3">
           <label>Company Name : </label>
           <span class="text-capitalize"> {{ orderDetails?.company }}</span>
         </div>

@@ -359,9 +359,13 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   validateOncheckout() {
     const apiRequest = {
-      params: {
-        id: this.singleSlotId,
-        Date: new Date(this.selectedDate).toISOString(),
+      data: {
+        slotId: this.singleSlotId,
+        date: new Date(this.selectedDate).toISOString(),
+        orderValidationType: 1,
+        orderItemsModel: this.formatChekAvailabilityProducts(
+          this.finalOrderProducts
+        ),
       },
     };
     this.apiService.request('VALIDATE_SLOT', apiRequest).subscribe((res) => {
@@ -371,6 +375,15 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       if (res && res.statusCode == 400) {
         this.toastrService.error(res.message);
       }
+    });
+  }
+
+  formatChekAvailabilityProducts(data) {
+    return data.map((x) => {
+      return {
+        productId: x.productId,
+        quantity: x.quantity,
+      };
     });
   }
 

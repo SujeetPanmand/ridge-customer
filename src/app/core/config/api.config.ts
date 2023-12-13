@@ -185,8 +185,8 @@ const orderCreateEndPoints = [
   },
   {
     name: 'VALIDATE_SLOT',
-    method: 'GET',
-    url: environment.baseUrl + '/api/order/check-slot-isavailable/[id]/[Date]',
+    method: 'POST',
+    url: environment.baseUrl + '/api/order/validate-order',
   },
 ];
 const subscribeEndPoint = [

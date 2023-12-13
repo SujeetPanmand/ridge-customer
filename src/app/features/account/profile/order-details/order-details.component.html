@@ -54,7 +54,7 @@
           "
         >
           <label class="text-danger" for=""
-            >If you haven not filled the Google sheet for custom cut details
+            >If you have not filled the Google sheet for custom cut details
             please fill it here &nbsp;</label
           >
           <a
@@ -99,8 +99,8 @@
             </p>
           </div>
           <div *ngIf="selectedOrder?.company" class="mb-2">
-            <label>Company Name :  </label> 
-            <span class="text-capitalize"> {{ selectedOrder?.company}}</span>
+            <label>Company Name : </label>
+            <span class="text-capitalize"> {{ selectedOrder?.company }}</span>
           </div>
         </div>
       </div>
@@ -217,13 +217,13 @@
                     {{ commonService.getPaymentStatus(2)?.status }}
                   </span>
                   <span
-                  *ngIf="selectedOrder?.paymentStatus == 2"
-                  class="fs-6 ms-2 {{
-                    commonService.getPaymentStatus(2)?.color
-                  }}"
-                >
-                  {{ commonService.getPaymentStatus(2)?.status }}
-                </span>
+                    *ngIf="selectedOrder?.paymentStatus == 2"
+                    class="fs-6 ms-2 {{
+                      commonService.getPaymentStatus(2)?.color
+                    }}"
+                  >
+                    {{ commonService.getPaymentStatus(2)?.status }}
+                  </span>
                 </td>
               </tr>
             </tbody>
@@ -237,7 +237,13 @@
               <tr>
                 <td></td>
                 <td colspan="1" width="70%" class="text-end text-nowrap">
-                  <label>{{ (selectedOrder?.paymentStatus == 2) ? 'Balance Paid :' : 'Balance Due :' }} </label>
+                  <label
+                    >{{
+                      selectedOrder?.paymentStatus == 2
+                        ? "Balance Paid :"
+                        : "Balance Due :"
+                    }}
+                  </label>
                 </td>
                 <td>${{ selectedOrder?.secondPayment }}</td>
               </tr>
@@ -262,7 +268,11 @@
               <tr class="align-baseline border-top">
                 <td colspan="1"></td>
                 <td class="text-end text-nowrap">
-                  <label class="fs-5">{{ (selectedOrder?.paymentStatus == 2) ? 'Total Balance Paid :' : 'Total Balance Due :' }}</label>
+                  <label class="fs-5">{{
+                    selectedOrder?.paymentStatus == 2
+                      ? "Total Balance Paid :"
+                      : "Total Balance Due :"
+                  }}</label>
                 </td>
                 <td class="fs-5">
                   ${{
@@ -283,13 +293,13 @@
                     {{ commonService.getPaymentStatus(1)?.status }}
                   </span>
                   <span
-                  *ngIf="selectedOrder?.paymentStatus == 2"
-                  class="fs-6 ms-2 {{
-                    commonService.getPaymentStatus(2)?.color
-                  }}"
-                >
-                  {{ commonService.getPaymentStatus(2)?.status }}
-                </span>
+                    *ngIf="selectedOrder?.paymentStatus == 2"
+                    class="fs-6 ms-2 {{
+                      commonService.getPaymentStatus(2)?.color
+                    }}"
+                  >
+                    {{ commonService.getPaymentStatus(2)?.status }}
+                  </span>
                 </td>
               </tr>
             </tbody>
@@ -304,7 +314,11 @@
                 <td></td>
                 <td colspan="1" width="67%" class="text-end text-nowrap">
                   <label class="fs-5"
-                    >{{(selectedOrder?.paymentStatus == 2) ? 'Grand Total (Total Booking Amount + Total Balance Paid) :' : 'Grand Total (Total Booking Amount + Total Balance Due) :' }}
+                    >{{
+                      selectedOrder?.paymentStatus == 2
+                        ? "Grand Total (Total Booking Amount + Total Balance Paid) :"
+                        : "Grand Total (Total Booking Amount + Total Balance Due) :"
+                    }}
                   </label>
                 </td>
                 <td class="fs-5">${{ selectedOrder?.totalAmount }}</td>
