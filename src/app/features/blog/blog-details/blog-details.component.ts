@@ -81,19 +81,21 @@ export class BlogDetailsComponent implements OnInit {
           title: y.title,
           id: y.id,
           commentCount: y.commentDetails.length,
+          date: y.createdAt,
         };
       });
-    this.allArticles
-      .sort((a, b) => {
-        if (a.commentCount !== b.commentCount) {
-          return a.commentCount - b.commentCount;
-        } else {
-          return b.commentCount.localeCompare(a.commentCount);
-        }
-      })
-      .reverse();
+    this.allArticles.sort((a, b) => {
+      if (a.commentCount !== b.commentCount) {
+        return b.commentCount - a.commentCount;
+      } else {
+        return new Date(b.date).getDate() - new Date(a.date).getDate();
+      }
+    });
 
-    this.allArticles = this.allArticles.slice(0, 3);
+    this.allArticles =
+      this.allArticles.length > 3
+        ? this.allArticles.slice(0, 3)
+        : this.allArticles;
     // this.allBlogList.forEach((element) => {
     //   var obj = {
     //     title: element.title,
