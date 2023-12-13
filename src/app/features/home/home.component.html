@@ -1,50 +1,23 @@
 <section class="pt-5 mt-4 pt-xl-0 mt-xl-0">
   <div class="container-fluid p-0">
-    <div
-      *ngIf="promotionList.length"
-      id="carouselExampleCaptions"
-      class="carousel slide"
-      data-bs-ride="carousel"
-    >
+    <div *ngIf="promotionList.length" id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
-        <button
-          *ngFor="let promotion of promotionList; let i = index"
-          type="button"
-          data-bs-target="#carouselExampleCaptions"
-          [attr.data-bs-slide-to]="i"
-          [class.active]="i === 0"
-          [attr.aria-label]="'Slide ' + (i + 1)"
-        ></button>
+        <button *ngFor="let promotion of promotionList; let i = index" type="button"
+          data-bs-target="#carouselExampleCaptions" [attr.data-bs-slide-to]="i" [class.active]="i === 0"
+          [attr.aria-label]="'Slide ' + (i + 1)"></button>
       </div>
       <div class="carousel-inner">
-        <div
-          *ngFor="let promotion of promotionList; let i = index"
-          class="carousel-item"
-          [class.active]="i === 0"
-        >
-          <img
-            [id]="promotion.id"
-            [src]="promotion?.url"
-            class="d-block w-100 height"
-            alt="..."
-          />
+        <div *ngFor="let promotion of promotionList; let i = index" class="carousel-item" [class.active]="i === 0">
+          <img [id]="promotion.id" [src]="promotion?.url" class="d-block w-100 height" alt="..." />
         </div>
       </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="prev"
-      >
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="next"
-      >
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
@@ -64,12 +37,7 @@
                 quality in every bite. Our commitment to traditional farming
                 practices.
               </p>
-              <a
-                routerLink="/shop"
-                type="button"
-                class="btn rounded-0 button-orange shadow-none"
-                >Shop Now</a
-              >
+              <a routerLink="/shop" type="button" class="btn rounded-0 button-orange shadow-none">Shop Now</a>
             </div>
           </div>
         </div>
@@ -90,24 +58,14 @@
           </p>
         </div>
         <div class="row mt-3">
-          <ngx-slick-carousel
-            class="carousel"
-            #slickModal="slick-carousel"
-            [config]="slideConfig"
-            (init)="slickInit($event)"
-            (breakpoint)="breakpoint($event)"
-            (afterChange)="afterChange($event)"
-            (beforeChange)="beforeChange($event)"
-          >
+          <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig"
+            (init)="slickInit($event)" (breakpoint)="breakpoint($event)" (afterChange)="afterChange($event)"
+            (beforeChange)="beforeChange($event)">
             <div ngxSlickItem *ngFor="let product of productList" class="slide">
               <div class="px-2 my-slider">
                 <div class="card card-recipes rounded-4">
                   <div class="content-overlay"></div>
-                  <img
-                    [id]="product.id"
-                    style="height: 200px"
-                    [src]="product?.url"
-                  />
+                  <img [id]="product.id" style="height: 200px" [src]="product?.url" />
                   <div class="d-flex mb-0 p-2">
                     <h5 class="fw-bold hide-name">{{ product.name }}</h5>
                     <h5 class="ms-auto fw-bold text-orange">
@@ -120,12 +78,7 @@
           </ngx-slick-carousel>
         </div>
         <div class="text-center pt-md-5 pt-4">
-          <a
-            routerLink="/shop"
-            type="button"
-            class="btn rounded-0 button-orange"
-            >View All Products</a
-          >
+          <a routerLink="/shop" type="button" class="btn rounded-0 button-orange">View All Products</a>
         </div>
       </div>
     </div>
@@ -134,15 +87,15 @@
   <section class="py-md-5 py-3">
     <div class="container">
       <div class="row">
-        <div class="video mb-3" >
+        <div class="video mb-3">
           <video class="rounded" [muted]="'muted'" controls autoplay width="100%">
-            <source src="http://103.134.163.197:9049/assets/test.mp4" type="video/mp4"/>
+            <source src="http://103.134.163.197:9049/assets/test.mp4" type="video/mp4" />
           </video>
         </div>
         <div class="bgImag">
           <p class="fs-2 text-white detail col-9">
-            We are a Veteran Owned, Family Farm located on the North Fork of the San Gabriel River
-          in Liberty Hill, Texas. Our Native Grass-Fed Beef stands out for its unparalleled flavor and quality.
+            We are a veteran-owned family farm situated on the North Fork of the San Gabriel River in Liberty Hill,
+            Texas. Our native grass-fed beef is known for its exceptional flavor and quality.
           </p>
         </div>
         <!-- <img src="/assets/home/our-Family.png" class="img-fluid" alt=""> -->
@@ -155,52 +108,33 @@
       <div class="row">
         <div class="col-md-6">
           <h2 class="fw-bold sub-title">
-            Why Native Grass-fed<br />
-            Artisan Beef
+            Why Native Grass-fed Beef ?
           </h2>
           <p class="py-3">
-            Our Native Grass-Fed Artisan Beef stands out for its unparalleled
-            flavor and quality. The cattle are raised in their natural habitat,
-            grazing on the lush, native grasses that our region is known for.
-            This natural diet results in beef that's not only tender but also
-            rich in flavor. The taste is a testament to the authenticity of our
-            artisan approach.
+            The majority of our land has been donated to The Nature Conservancy, and with a grant from the Texas Parks
+            and Wildlife Department, we've developed sustainable rotationally grazed native grass fields. Our animals
+            thrive in this spacious and clean environment, enjoying ample access to fresh air and sunshine. We firmly
+            believe that by stewarding our land and caring for our animals, we can deliver the highest quality beef to
+            our customers.
           </p>
-          <a
-            routerLink="/about"
-            type="button"
-            class="btn rounded-0 button-orange"
-            >Know More About Us</a
-          >
+          <a routerLink="/about" type="button" class="btn rounded-0 button-orange">Know More About Us</a>
         </div>
         <div class="col-md-6 col mx-auto">
           <div class="row g-2">
             <div class="col-md-6">
               <div class=" ">
-                <img
-                  src="assets/home/a8yt8ici.png"
-                  class="img-fluid rounded-3 pt-5 ps-xl-5 d-flex mx-auto w-100"
-                />
+                <img src="assets/home/a8yt8ici.png" class="img-fluid rounded-3 pt-5 ps-xl-5 d-flex mx-auto w-100" />
               </div>
               <div class="mt-3">
-                <img
-                  src="assets/home/2mou6w3x.png"
-                  class="img-fluid rounded-3 d-flex mx-auto w-100"
-                />
+                <img src="assets/home/2mou6w3x.png" class="img-fluid rounded-3 d-flex mx-auto w-100" />
               </div>
             </div>
             <div class="col-md-6 gy-2">
               <div class=" ">
-                <img
-                  src="assets/home/qv3g3gmi.png"
-                  class="img-fluid rounded-3 d-flex mx-auto w-100"
-                />
+                <img src="assets/home/qv3g3gmi.png" class="img-fluid rounded-3 d-flex mx-auto w-100" />
               </div>
               <div class="mt-2">
-                <img
-                  src="assets/home/o9kwrr26.png"
-                  class="img-fluid rounded-3 d-flex mx-auto w-100 pe-xl-5"
-                />
+                <img src="assets/home/o9kwrr26.png" class="img-fluid rounded-3 d-flex mx-auto w-100 pe-xl-5" />
               </div>
             </div>
           </div>
@@ -215,45 +149,63 @@
     <div class="row justify-content-center">
       <div class="col-md-12 text-center">
         <h2 class="fw-bold sub-title">
-          The Ridge at Loafer's Glory a family farm in<br />
-          Liberty Hill Texas
+          <!-- The Ridge at Loafer's Glory a family farm in<br />
+          Liberty Hill Texas -->
+          Elevate Your Culinary Experience at The Ridge: A Legacy Family Farm in Liberty Hill, Texas
         </h2>
       </div>
       <p class="col-md-7 text-center pt-3">
-        At "The Ridge at Loafer's Glory," we're more than just a family farm;
+        <!-- At "The Ridge at Loafer's Glory," we're more than just a family farm;
         we're a legacy of passion, tradition, and commitment to excellence.
         Nestled in the heart of Liberty Hill, Texas, our farm is where natural
-        beauty, ethical farming, and mouthwatering flavors converge.
+        beauty, ethical farming, and mouthwatering flavors converge. -->
+        At 'The Ridge at Loafer's Glory,' we transcend being merely a family farm; we represent a legacy of passion,
+        tradition, and unwavering commitment to excellence. Situated in the heart of Liberty Hill, Texas, our farm is
+        the junction where natural beauty, ethical farming practices, and delectable flavors come together.
       </p>
     </div>
 
     <div class="row pt-md-4">
       <div class="col-md-4 text-center">
         <img src="assets/home/organic.png" class="img-fluid mb-3 h-60" />
-        <h4 class="fw-bold">Organic Certification</h4>
-        <p class="pt-2">
+        <!-- <h4 class="fw-bold">Organic Certification</h4> -->
+        <h4 class="fw-bold">USDA Certified Processing Facility </h4>
+        <!-- <p class="pt-2">
           Our Organic beef comes with certifications that provide consumers with
           transparency and assurance that the product meets specific organic
           standards
-        </p>
+        </p> -->
+        <p class="pt-2">Certified facility, ensuring excellence from farm to table A beef quality grade is a
+          comprehensive assessment
+          of factors that impact the palatability of meat, including tenderness, juiciness, and flavor. These factors
+          encompass carcass maturity, firmness, texture, color of lean, and the amount and distribution of marbling
+          within the lean. Beef carcass quality grading hinges on two primary factors: the degree of marbling and the
+          degree of maturity. USDA beef quality grades range from Prime and Choice to Select, Standard, Commercial,
+          Utility, Cutter, and Canner. </p>
       </div>
       <div class="col-md-4 text-center">
         <img src="assets/home/environment.png" class="img-fluid mb-3 h-60" />
         <h4 class="fw-bold">Environmental Sustainability</h4>
-        <p class="pt-2">
+        <!-- <p class="pt-2">
           Our Organic beef comes with certifications that provide consumers with
           transparency and assurance that the product meets specific organic
           standards
+        </p> -->
+        <p class="pt-2">We are dedicated to our cattle and uphold a profound respect for the land. At Loafers Glory, we
+          strive for every animal under our care to live its best life daily. We prioritize proper care, treatment, and
+          humane processing of our animals. Furthermore, we actively implement conservation practices to sustain or
+          enhance the environment for future generations. At Loafers Glory, we take pride in delivering better beef,
+          produced in a better way.
         </p>
       </div>
       <div class="col-md-4 text-center">
         <img src="assets/home/healthydiet.png" class="img-fluid mb-3 h-60" />
         <h4 class="fw-bold">Healthy Diet</h4>
         <p class="pt-2">
-          Organic beef is not only delicious but Organic beef is not only
-          delicious but also healthier for you and your family.It's free from
-          synthetic chemicals and antibiotics, making it a cleaner and
-          antibiotics, making it a cleaner and more nutritious option.
+          Grass-fed beef is often considered to be healthier than grain-fed beef for a few reasons. Grass-fed beef
+          typically has lower levels of unhealthy fats, such as omega-6 fatty acids, and higher levels of beneficial
+          nutrients, such as omega-3 fatty acids and antioxidants. Additionally, grass-fed beef is usually leaner and
+          contains higher levels of vitamins and minerals.
         </p>
       </div>
     </div>
@@ -275,11 +227,7 @@
           for quality, sustainability, and flavor. Choose The Ridge today!
         </p>
         <div class="pt-4">
-          <button
-            routerLink="/shop"
-            type="button"
-            class="btn rounded-0 button-orange shadow-none"
-          >
+          <button routerLink="/shop" type="button" class="btn rounded-0 button-orange shadow-none">
             Order Now
           </button>
         </div>
@@ -307,15 +255,9 @@
         <div class="ourCustomerSlider">
           <div class="customerSlide">
             <div class="py-3">
-              <img
-                src="assets/home/gleson.png "
-                class="img-fluid rounded-pill mx-auto"
-              />
+              <img src="assets/home/gleson.png " class="img-fluid rounded-pill mx-auto" />
               <h5 class="pt-2 fw-bold">Gleason Tristin</h5>
-              <i
-                class="fa fa-quote-right text-orange pt-2"
-                aria-hidden="true"
-              ></i>
+              <i class="fa fa-quote-right text-orange pt-2" aria-hidden="true"></i>
             </div>
             <p class="fw-semibold">
               "I'm blown away by the quality of The Ridge's beef. The steaks are
@@ -341,24 +283,14 @@
 
         <div class="col-md-10 mx-auto">
           <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="example@yourmail.com"
-              [(ngModel)]="emailSubscribe"
-              [class.is-invalid]="formSubmitAttempt && !emailSubscribe"
-              [disabled]=""
-            />
-            <span
-              class="input-group-text btn button-orange text-white px-1 px-md-4 d-flex align-items-baseline"
-              id="basic-addon2"
-              (click)="navigateToHome()"
-              >Subscribe
+            <input type="text" class="form-control" placeholder="example@yourmail.com" [(ngModel)]="emailSubscribe"
+              [class.is-invalid]="formSubmitAttempt && !emailSubscribe" [disabled]="" />
+            <span class="input-group-text btn button-orange text-white px-1 px-md-4 d-flex align-items-baseline"
+              id="basic-addon2" (click)="navigateToHome()">Subscribe
               <i class="bi bi-cursor px-1"></i>
             </span>
           </div>
-          <span class="text-danger" *ngIf="formSubmitAttempt && !emailSubscribe"
-            >Please enter a email.
+          <span class="text-danger" *ngIf="formSubmitAttempt && !emailSubscribe">Please enter a email.
           </span>
         </div>
       </div>

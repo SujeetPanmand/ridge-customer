@@ -9,7 +9,7 @@
   </div>
 </section>
 
-<section class="py-5">
+<!-- <section class="py-5">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6 text-center">
@@ -27,9 +27,9 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
-<section>
+<section class="pt-5">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12 text-center">
@@ -97,10 +97,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12">
-        <img
-          src="assets/about/craftmanship.png"
-          class="img-fluid rounded-3 w-100"
-        />
+        <img src="assets/about/craftmanship.png" class="img-fluid rounded-3 w-100" />
       </div>
     </div>
   </div>
@@ -111,7 +108,7 @@
     <div class="row">
       <div class="col-md-6">
         <h2 class="fw-bold sub-title">Our Family Farm</h2>
-        <P class="">
+        <!-- <P class="">
           We raise our cattle on the north fork of the San Gabriel River in
           Liberty Hill, Texas. The bulk of our land has been donated to The
           Nature Conservancy and with a grant from Texas Parks and Wildlife
@@ -132,40 +129,43 @@
           members and support staff who are passionate about what they do. We
           work hard every day to ensure that our animals are well-cared for and
           that our crops are healthy and abundant.
-        </P>
+        </P> -->
+        <p>We raise our cattle along the picturesque North Fork of the San Gabriel River in Liberty Hill, Texas. The
+          majority of our land has been generously donated to The Nature Conservancy, and with a grant from the Texas
+          Parks and Wildlife Department, we've established sustainable, rotationally grazed native grass fields. Our
+          animals thrive in this spacious and clean environment, enjoying ample access to fresh air and sunshine. By
+          prioritizing the well-being of our land and animals, we aim to provide our customers with the highest quality
+          beef. </p>
+        <p>
+          Exclusively raising registered Balancer cattle, we leverage 7 generations of lineage to craft our beef based
+          on various genetic indicators, including maternal instinct, milk production, calving ease, and growth rates.
+          Balancer cattle, a hybrid breed combining Gelbvieh and Angus, are known for their hybrid vigor, resulting in a
+          higher growth rate and superior meat quality, as detailed on Wikipedia. </p>
+        <p>We take pride in our 'mamas,' who seem to think they are just big family pets. The Ridge at Loafer's Glory
+          team comprises dedicated family members, veterans, and support staff who share a passion for what they do.
+          Working diligently every day, we ensure our animals are well-cared for, and our crops are healthy and
+          abundant. </p>
       </div>
-      <div class="col-md-6 col mx-auto">
+      <!-- <div class="col-md-6 col mx-auto">
         <div class="row g-2 text-center">
           <div class="col-md-6 Grass-Fed">
             <div class=" ">
-              <img
-                src="assets/about/sample1.png"
-                class="img-fluid ps-md-5 rounded-3 w-100"
-              />
+              <img src="assets/about/sample1.png" class="img-fluid ps-md-5 rounded-3 w-100" />
             </div>
             <div class="mt-2">
-              <img
-                src="assets/about/beef.png"
-                class="img-fluid rounded-3 w-100"
-              />
+              <img src="assets/about/beef.png" class="img-fluid rounded-3 w-100" />
             </div>
           </div>
           <div class="col-md-6 gy-2">
             <div class=" ">
-              <img
-                src="assets/about/ourFamily.png"
-                class="img-fluid rounded-3 w-100"
-              />
+              <img src="assets/about/ourFamily.png" class="img-fluid rounded-3 w-100" />
             </div>
             <div class="mt-2">
-              <img
-                src="assets/about/sample2.png"
-                class="img-fluid pe-md-5 rounded-3 w-100"
-              />
+              <img src="assets/about/sample2.png" class="img-fluid pe-md-5 rounded-3 w-100" />
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </section>
@@ -177,32 +177,20 @@
         <h2 class="text-center fw-bold sub-title pb-3">
           Want to get the latest Updates?
         </h2>
-         <form [formGroup]="subscribeForm" class="pt-3">
+        <form [formGroup]="subscribeForm" class="pt-3">
           <div class="col-md-10 mx-auto">
             <div class="input-group">
-              <input
-                type="email"
-                class="form-control"
-                formControlName="emailSubscribe" 
-                placeholder="example@yourmail.com"
-                aria-label="Recipient's username"
-                aria-describedby="basic-addon2"
-                [(ngModel)]="emailSubscribe"
-                [class.is-invalid]="isFieldValid(subscribeForm, 'emailSubscribe')"
-              />
-              <span
-                class="input-group-text btn button-orange text-white px-1 px-md-4 d-flex align-items-baseline"
-                id="basic-addon2"
-                (click)="navigateToHome()"
-                >Subscribe
+              <input type="email" class="form-control" formControlName="emailSubscribe"
+                placeholder="example@yourmail.com" aria-label="Recipient's username" aria-describedby="basic-addon2"
+                [(ngModel)]="emailSubscribe" [class.is-invalid]="isFieldValid(subscribeForm, 'emailSubscribe')" />
+              <span class="input-group-text btn button-orange text-white px-1 px-md-4 d-flex align-items-baseline"
+                id="basic-addon2" (click)="navigateToHome()">Subscribe
                 <i class="bi bi-cursor px-1"></i>
               </span>
             </div>
-            <span
-            class="text-danger"
-            *ngIf="hasError(subscribeForm, 'emailSubscribe', 'required')"
-            >Please enter a email.
-          </span>
+            <span class="text-danger" *ngIf="hasError(subscribeForm, 'emailSubscribe', 'required')">Please enter a
+              email.
+            </span>
           </div>
         </form>
       </div>
