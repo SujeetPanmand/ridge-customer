@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject, debounceTime } from 'rxjs';
 import { ZipCodeDetails } from 'src/app/shared/interfaces/zipcode/zipcode-details';
 import { ApiService } from 'src/app/shared/services/api.service';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-signup',
@@ -30,9 +31,11 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private toastrService: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private commonService: CommonService
   ) {
     this.onZipCodeChanged();
+    this.commonService.gotoTop();
   }
 
   ngOnInit() {
