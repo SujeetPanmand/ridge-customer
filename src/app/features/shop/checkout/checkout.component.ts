@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ZipCodeDetails } from 'src/app/shared/interfaces/zipcode/zipcode-details';
 import { Subject, debounceTime } from 'rxjs';
+import { OrderValidation } from 'src/app/shared/enum/enum';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -65,6 +66,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   balanceDue = 0;
   totalBalanceDue = 0;
   grandTotal = 0;
+  orderValidationEnum = OrderValidation;
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
@@ -358,16 +360,26 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   validateOncheckout() {
-    const apiRequest = {
-      data: {
-        slotId: this.singleSlotId,
-        date: new Date(this.selectedDate).toISOString(),
-        orderValidationType: 1,
-        orderItemsModel: this.formatChekAvailabilityProducts(
-          this.finalOrderProducts
-        ),
-      },
-    };
+    const apiRequest =
+      this.isStandardCut && !this.isPreorder
+        ? {
+            data: {
+              slotId: this.singleSlotId,
+              date: new Date(this.selectedDate).toISOString(),
+              orderValidationType: this.orderValidationEnum.All,
+              orderItemsModel: this.formatChekAvailabilityProducts(
+                this.finalOrderProducts
+              ),
+            },
+          }
+        : {
+            data: {
+              slotId: this.singleSlotId,
+              date: new Date(this.selectedDate).toISOString(),
+              orderValidationType: this.orderValidationEnum.Slot,
+              orderItemsModel: [],
+            },
+          };
     this.apiService.request('VALIDATE_SLOT', apiRequest).subscribe((res) => {
       if (res && res.statusCode == 200) {
         this.validateUserDetailsAndSlotDetails();
