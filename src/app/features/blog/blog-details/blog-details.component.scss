@@ -73,15 +73,33 @@
     text-overflow: ellipsis;
 }
 
+:host ::ng-deep .responsive-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  // margin: 0 auto;
+}
+
+.responsive-content {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 
 @media (max-width: 991px) {
   .h-500{
     height: auto;
   }
   .h-250 {
-    height: auto;
+    height: 150px;
   }
   .commentBox {
     height: 30vh;
+  }
+}
+
+@media (max-width: 576px) {
+  .h-250 {
+    height: 200px;
   }
 }
