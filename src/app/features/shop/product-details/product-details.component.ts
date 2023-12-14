@@ -68,13 +68,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     this.subscribeToCartItems();
     this.loginUserId = localStorage.getItem('userId');
   }
-  ngAfterViewInit(): void {}
-  subscribeToCartItems() {
-    this.commonService.cartItemsEvent.subscribe((items) => {
-      this.cartItems = items;
-      this.defaultSetting();
-    });
-  }
+
   ngOnInit() {
     this.commonService.getUserDetails().then((res) => {
       if (res) {
@@ -87,6 +81,14 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     this.generateReviewForm();
     this.commonService.gotoTop();
     this.generateCutForm();
+  }
+
+  ngAfterViewInit(): void {}
+  subscribeToCartItems() {
+    this.commonService.cartItemsEvent.subscribe((items) => {
+      this.cartItems = items;
+      this.defaultSetting();
+    });
   }
 
   addProductToCart() {
@@ -420,6 +422,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
           this.isEditReview = false;
           this.isShowWriteReviewbtn = false;
           this.allRating = [];
+
           this.getReviewInfo();
         }
       });
@@ -478,6 +481,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
 
     return review;
   }
+
   sortReviewArray() {
     if (this.sortkey == 'recent') {
       this.allProductReviews = this.allProductReviews.sort(
@@ -491,6 +495,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       );
     }
   }
+
   onEditReview(content, item: Rating) {
     this.isEditReview = true;
     this.selectedReview = item;
@@ -499,6 +504,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     this.modalService.open(content, { size: 'lg', centered: true });
     this.patchEditReviewForm();
   }
+
   patchEditReviewForm() {
     for (let i = 0; i < this.selectedReview.rating; i++) {
       this.starBox[i].value = true;
@@ -508,6 +514,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       review: this.selectedReview.review,
     });
   }
+
   onDeleteReview(item: Rating) {
     this.selectedReview = item;
     let dialogRef = this.modalService.open(ConfirmationPopUpComponent, {
@@ -529,22 +536,38 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
           .subscribe((res) => {
             if (res && res.statusCode == 200) {
               this.toastrService.success('Review deleted');
-              this.allRating = [];
-              this.getReviewInfo();
+              this.getReviewAndReset();
             }
           });
       }
     });
   }
+
+  getReviewAndReset() {
+    this.isEditReview = false;
+    this.allRating = [];
+    this.reviewForm.reset();
+    this.starBox = [
+      { value: false, index: 1 },
+      { value: false, index: 2 },
+      { value: false, index: 3 },
+      { value: false, index: 4 },
+      { value: false, index: 5 },
+    ];
+    this.getReviewInfo();
+  }
+
   getProfileImage(id) {
     let image = environment.baseUrl + '/api/user/image/' + id;
     return image ? image : 'assets/em_user.png';
   }
+
   setProductPic(id) {
     return id
       ? environment.baseUrl + '/api/product/image/' + id
       : 'assets/product/wholeBeef.png';
   }
+
   subscribeMethod() {
     console.log('before', this.isLoggedInButtonShow);
     this.commonService.islogginButtonShow.subscribe((res) => {
