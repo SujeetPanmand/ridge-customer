@@ -322,7 +322,9 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             isSelfPickup: this.isSelfPickUp,
 
             country: this.orderAddress['country'],
-            zipCode: this.orderAddress['zipCode'].toString(),
+            zipCode: this.orderAddress['zipCode']
+              ? this.orderAddress['zipCode'].toString()
+              : '',
             state: this.orderAddress['state'],
             city: this.orderAddress['city'],
             address1: this.orderAddress['address1'],
