@@ -74,6 +74,7 @@
                     class="form-control"
                     placeholder="XXXX-XXXX-XXXX-9817"
                     formControlName="cardNumber"
+                    maxlength="23"
                     [class.is-invalid]="isFieldValid(paymentForm, 'cardNumber')"
                     (ngModelChange)="this.checkCardType.next($event)"
                     (input)="formatCardNumber($event)"
@@ -113,6 +114,7 @@
                     [class.is-invalid]="
                       isFieldValid(paymentForm, 'expiryMonth')
                     "
+                    
                   >
                     <option value="">Select Month</option>
                     <option value="01">January</option>
@@ -137,6 +139,11 @@
                     class="text-danger"
                     *ngIf="hasError(paymentForm, 'expiryMonth', 'required')"
                     >Please select expiry month.
+                  </span>
+                  <span
+                    class="text-danger"
+                    *ngIf="onSelectMonth()"
+                    >Please select valid expiry month.
                   </span>
                 </div>
                 <div class="mb-3 col-md-4">

@@ -49,6 +49,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   balanceDue = 0;
   totalBalanceDue = 0;
   grandTotal = 0;
+  isNotValidMonth = false;
 
   constructor(
     public commonService: CommonService,
@@ -421,5 +422,28 @@ export class PaymentComponent implements OnInit, AfterViewInit {
         );
       }
     });
+  }
+
+  onSelectMonth(){
+    var selectedYear = this.paymentForm.controls['expiryYear'].value;
+    var selectedMonth = this.paymentForm.controls['expiryMonth'].value;
+    var currentDate = new Date();
+    var currentYear = currentDate.getFullYear();
+    var currentMonth = currentDate.getMonth();
+    currentMonth = currentMonth + 1;
+    if(selectedMonth != ''){
+    if(selectedYear == currentYear){
+      if(selectedMonth < currentMonth){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }else{
+      return false;
+    }}
+    else{
+      return false;
+    }
   }
 }
