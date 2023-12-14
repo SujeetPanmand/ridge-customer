@@ -222,13 +222,13 @@
                 class="btn button-orange w-100 mt-4"
                 type="button"
               >
-                Pay Total Balance Due (${{
+                Pay Total Balance Due ${{
                   !orderPaymentDetails?.isSelfPickUp
                     ? orderPaymentDetails?.payment +
                       orderPaymentDetails?.shippingCharge +
                       orderPaymentDetails?.tax
                     : orderPaymentDetails?.payment + orderPaymentDetails?.tax
-                }})
+                }}
                 <!-- <div
                   *ngIf="isLoading"
                   class="ml-2 spinner-border spinner-border-sm text-light"
