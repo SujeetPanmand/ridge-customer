@@ -24,17 +24,30 @@
               <th>Balance Amount</th>
               <th>Cut Type</th>
               <th>Order Type</th>
-              <th>STATUS</th>
+              <th>ORDER STATUS</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="p-2 cursor" *ngFor="let order of orderDetails" (click)="navigateToDetails(order.id)">
+            <tr
+              class="p-2 cursor"
+              *ngFor="let order of orderDetails"
+              (click)="navigateToDetails(order.id)"
+            >
               <td>{{ order.orderId }}</td>
               <td>{{ order.createdAt | date : "MM/dd/yyyy" }}</td>
               <td>${{ order.totalAmount }}</td>
-              <td> <span >${{ order.paymentStatus != 2 ? ((order.secondPayment + order.shippingCharge +  order.tax) | number : '.2-2') : '0.00' }}</span></td>
-            
+              <td>
+                <span
+                  >${{
+                    order.paymentStatus != 2
+                      ? (order.secondPayment + order.shippingCharge + order.tax
+                        | number : ".2-2")
+                      : "0.00"
+                  }}</span
+                >
+              </td>
+
               <td>{{ commonService.getCustomType(order.cutType) }}</td>
               <td>{{ commonService.getOrderType(order.orderType) }}</td>
               <td>
