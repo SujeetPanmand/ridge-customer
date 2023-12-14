@@ -47,7 +47,7 @@ h5 {
   opacity: 1;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 992px) {
   .sub-title {
     font: normal normal bold 25px/29px Georgia;
   }
@@ -64,11 +64,15 @@ h5 {
 label {
   font: normal normal 600 14px/14px Muli;
 }
+
 }
 @media (max-width: 576px) { 
   th {
     font-size: 14px;
   } 
+  p {
+    font-size: 14px;
+  }
 }
 
 .button-orange {

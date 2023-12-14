@@ -1,6 +1,6 @@
 <section #print class="mt-5 py-5 bg-light-gray">
   <div class="container">
-    <div class="row m-4">
+    <div class="row mx-2">
       <app-bread-crumb [links]="links" class="bread-crumb"></app-bread-crumb>
       <div class="d-flex flex-column flex-md-row py-2 mb-2">
         <span class="sub-title">Order Confirmation</span>
@@ -12,13 +12,12 @@
           Print
         </button>
       </div>
-      <div class="col-md-12 px-5 py-4 shadow-sm bg-white">
+      <div class="col-md-12 px-xl-4 py-4 shadow-sm bg-white">
         <div class="d-flex align-items-center">
           <img
             src="/assets/ridge-logo.png"
-            width="5%"
             alt="logo"
-            class="img-fluid logo d-none d-md-block"
+            class="img-fluid logo"
           />
           <h3 class="text-center fw-bold text-center w-100">Invoice</h3>
         </div>
@@ -80,8 +79,8 @@
           <div>Visa card ending 8112</div>
         </div> -->
 
-        <div class="">
-          <div class="small-title mb-2">Order Details</div>
+        <div class="pt-4">
+          <div class="small-title mb-2 pb-1 pb-xl-0">Order Details</div>
           <div>
             <span class="fw-semibold">OrderId: </span>
             <span>{{ orderDetails?.orderId }}</span>
