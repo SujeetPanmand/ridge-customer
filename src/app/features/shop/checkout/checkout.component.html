@@ -483,9 +483,8 @@
                   Note : Available slots days are highlighted here
                 </p>
                 <p *ngIf="!isStandardCut" class="text-danger small">
-                  Custom Cut Note: Custom cut order will be available in minimum
-                  {{ finalOrderProducts[0]?.customCutAvailabilityDays }}
-                  days.
+                  Custom Cut Note: Custom cut order will be available on and after
+                  {{ findCustomCutDeliveryDate(finalOrderProducts[0]?.customCutAvailabilityDays) | date: 'dd/MM/YYYY' }}.
                 </p>
                 <p
                   *ngIf="isStandardCut && isPreorder"

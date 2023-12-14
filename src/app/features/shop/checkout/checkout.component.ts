@@ -574,7 +574,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
         this.singleSlot = '';
         this.singleSlotId = '';
         this.toastrService.error(
-          `Custom cut order will be available in minimum ${this.finalOrderProducts[0].customCutAvailabilityDays} days.`
+         
+          `Custom cut order will be available on and after ${this.datePipe.transform(new Date( this.findCustomCutDeliveryDate(this.finalOrderProducts[0]?.customCutAvailabilityDays)),'MM/dd/yyyy')}.`
         );
         return;
       }
@@ -689,4 +690,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
+  findCustomCutDeliveryDate(days:number){
+        var dateNow = new Date();
+        dateNow.setDate( dateNow.getDate() + days );
+        console.log(dateNow);
+        return dateNow;
+      }
+        
 }
