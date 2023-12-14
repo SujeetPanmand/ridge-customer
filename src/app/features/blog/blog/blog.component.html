@@ -17,7 +17,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-10">
-        <div *ngIf="!isShowNoRecordText" >
+        <div *ngIf="!isShowNoRecordText">
           <div>
             <div class="fw-semibold mb-3">TAGS</div>
             <button
@@ -39,10 +39,14 @@
             </button>
           </div>
         </div>
-        <div *ngFor="let blog of allBlogList" class="py-3 cursor" (click)="navigateToBlogView(blog)">
+        <div
+          *ngFor="let blog of allBlogList"
+          class="py-3 cursor"
+          (click)="navigateToBlogView(blog)"
+        >
           <a class="text-decoration-none">
-            <h1  class="sub-title cursor">
-              {{ blog?.title }}
+            <h1 class="sub-title text-orange cursor">
+              {{ blog?.title }} ({{ blog.author }})
             </h1>
           </a>
           <div class="py-3">
@@ -51,15 +55,21 @@
               [src]="setProductPic(blog?.id)"
             />
           </div>
-          <div class="pt-1 elipse-blog" [innerHTML]="checkLength(blog.content)"></div>
+          <div
+            class="pt-1 elipse-blog"
+            [innerHTML]="checkLength(blog.content)"
+          ></div>
           <div class="pt-2">
-            <span class="text-orange comment" >
+            <span class="text-orange comment">
               {{ blog.commentDetails.length + " Comments" }}
             </span>
             <span class="px-1 date"> {{ blog.createdAt | date }}</span>
           </div>
         </div>
-        <div *ngIf="!allBlogList.length || isShowNoRecordText" class="ps-3 fw-bold mt-3">
+        <div
+          *ngIf="!allBlogList.length || isShowNoRecordText"
+          class="ps-3 fw-bold mt-3"
+        >
           No blogs found.
         </div>
       </div>
