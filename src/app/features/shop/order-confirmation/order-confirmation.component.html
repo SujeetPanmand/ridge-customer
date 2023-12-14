@@ -114,26 +114,26 @@
                 </tr>
 
                 <tr class="border-top" *ngIf="isStandardCut && !isPreorder">
-                  <td colspan="2"></td>
+                  <td colspan="1"></td>
                   <td class="border-top">Subtotal</td>
                   <td class="border-top">${{ orderSubTotal }}</td>
                 </tr>
 
                 <tr *ngIf="isStandardCut && !isPreorder">
-                  <td colspan="2"></td>
+                  <td colspan="1"></td>
                   <td>Shipping</td>
                   <td>
                     ${{ orderDetails?.isSelfPickup ? 0 : SHIPPING_AMOUNT }}
                   </td>
                 </tr>
                 <tr *ngIf="isStandardCut && !isPreorder">
-                  <td colspan="2"></td>
+                  <td colspan="1"></td>
                   <td class="pb-4">Tax</td>
                   <td class="pb-4">${{ TAX_AMOUNT }}</td>
                 </tr>
 
                 <tr *ngIf="isStandardCut && !isPreorder">
-                  <td colspan="2"></td>
+                  <td colspan="1"></td>
                   <td class="line-top fw-semibold">Total</td>
                   <td class="line-top fw-semibold">${{ orderTotal }}</td>
                 </tr>
