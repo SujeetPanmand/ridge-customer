@@ -158,4 +158,8 @@ export class HomeComponent implements OnInit {
       ? environment.baseUrl + '/api/promotion/image/' + id
       : 'assets/home/homepagebanner.png';
   }
+
+  navigateToProductDetails(product) {
+    this.router.navigate([`shop/product-details/${product.id}`]);
+  }
 }
