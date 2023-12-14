@@ -2,6 +2,10 @@
   .hide {
     display: none;
   }
+  .col-md-6 {
+    flex: 0 0 auto;
+    width: 50%;
+}
 }
 
 th {
@@ -10,4 +14,8 @@ th {
   color: #566a7f !important;
   text-transform: uppercase;
   opacity: 1;
+}
+
+.logo {
+  width: 50px;
 }
