@@ -430,7 +430,7 @@
         Cancel
       </button>
       <button (click)="submitReview()" type="button" class="btn button-orange">
-        {{ isEditReview ? "Edit Review" : "Submit Review" }}
+        {{ isEditReview ? "Update Review" : "Submit Review" }}
       </button>
     </div>
   </div>
@@ -455,7 +455,10 @@
           />
           <label class="form-check-label" for="standard">Standard Cut</label>
         </div>
-        <div class="form-check ml-0 form-check-inline" *ngIf="selectedProduct.isCustomCut == true">
+        <div
+          class="form-check ml-0 form-check-inline"
+          *ngIf="selectedProduct.isCustomCut == true"
+        >
           <input
             formControlName="searchCheckOption"
             name="searchCheckOption"

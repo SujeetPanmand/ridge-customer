@@ -293,12 +293,19 @@
               <table class="table align-middle table-borderless">
                 <tbody>
                   <tr *ngIf="!isStandardCut || isPreorder" class="pt-3 fw-bold">
-                    <td>
+                    <td *ngIf="isPreorder">
                       {{
                         "Booking Amount ( " +
-                          (!isStandardCut && !isPreorder
+                          (!isStandardCut
                             ? finalOrderProducts[0].customCutPercentage
                             : finalOrderProducts[0].preorderAmountPercentage) +
+                          "% of product price )"
+                      }}
+                    </td>
+                    <td *ngIf="!isStandardCut && !isPreorder">
+                      {{
+                        "Booking Amount ( " +
+                          finalOrderProducts[0].customCutPercentage +
                           "% of product price )"
                       }}
                     </td>
