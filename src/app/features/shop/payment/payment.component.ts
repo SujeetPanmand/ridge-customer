@@ -389,7 +389,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     let data = {
       action_button_name: 'Yes',
       title_text: 'Confirmation',
-      text: `Do you really want to make a payment.`,
+      text: `Do you really want to make a payment?`,
     };
     let modelRef = this.modalService.open(ConfirmationPopUpComponent, {
       size: 'md',

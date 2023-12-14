@@ -524,7 +524,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     let data = {
       action_button_name: 'Delete',
       title_text: 'Confirmation',
-      text: `Do you really want to remove your review`,
+      text: `Do you really want to remove your review?`,
     };
 
     dialogRef.componentInstance.data = data;
