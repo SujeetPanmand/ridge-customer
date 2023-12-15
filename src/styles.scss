@@ -7,7 +7,7 @@ body {
 
 // * width */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 10px;
   height: 10px;
 }
 /* Handle */
@@ -57,19 +57,18 @@ h5 {
   }
   h4 {
     font: normal normal bold 20px Georgia;
+  }
+  h5 {
+    font: normal normal bold 14px Georgia;
+  }
+  label {
+    font: normal normal 600 14px/14px Muli;
+  }
 }
-h5 {
-  font: normal normal bold 14px Georgia;
-}
-label {
-  font: normal normal 600 14px/14px Muli;
-}
-
-}
-@media (max-width: 576px) { 
+@media (max-width: 576px) {
   th {
     font-size: 14px;
-  } 
+  }
   p {
     font-size: 14px;
   }
@@ -199,7 +198,10 @@ label {
     padding-left: calc(var(--bs-gutter-x) * 0.5);
   }
 
-  .bg-footer, .sub-title,  .fixed-top, .hide {
+  .bg-footer,
+  .sub-title,
+  .fixed-top,
+  .hide {
     display: none;
   }
 
@@ -242,5 +244,5 @@ label {
 }
 
 .dataTables_filter {
-  margin-bottom: 16px!important;
+  margin-bottom: 16px !important;
 }
