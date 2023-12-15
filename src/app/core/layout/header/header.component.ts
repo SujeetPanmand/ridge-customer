@@ -76,7 +76,6 @@ export class HeaderComponent implements OnInit {
   subscribeToImage() {
     this.commonService.newProfileImageEmitter.subscribe((res) => {
       if (res) {
-        debugger;
         this.userProfilePic = '';
         this.userProfilePic = res;
         // this.setUserProfilePic();

@@ -123,7 +123,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
 
   createOrder() {
     this.formSubmitAttempt = true;
-    if (this.paymentForm.invalid) {
+    if (this.paymentForm.invalid || this.onSelectMonth) {
       return;
     }
     const apiRequest = {
