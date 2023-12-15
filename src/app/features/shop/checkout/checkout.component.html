@@ -66,6 +66,7 @@
                         >First Name <span class="text-orange">*</span></label
                       >
                       <input
+                        [ngClass]="{ readmode: isLoggedIn }"
                         formControlName="firstName"
                         type="text"
                         class="form-control"
@@ -75,6 +76,7 @@
                         [class.is-invalid]="
                           isFieldValid(userDetailsForm, 'firstName')
                         "
+                        [readOnly]="isLoggedIn"
                       />
                       <span
                         class="text-orange"
@@ -90,6 +92,7 @@
                         <span class="text-orange">*</span>
                       </label>
                       <input
+                        [ngClass]="{ readmode: isLoggedIn }"
                         formControlName="lastName"
                         type="text"
                         class="form-control"
@@ -99,6 +102,7 @@
                         [class.is-invalid]="
                           isFieldValid(userDetailsForm, 'lastName')
                         "
+                        [readOnly]="isLoggedIn"
                       />
                       <span
                         class="text-orange"
@@ -115,6 +119,7 @@
                       <span class="text-orange">*</span>
                     </label>
                     <input
+                      [ngClass]="{ readmode: isLoggedIn }"
                       formControlName="emailAddress"
                       type="email"
                       class="form-control"
@@ -124,6 +129,7 @@
                       [class.is-invalid]="
                         isFieldValid(userDetailsForm, 'emailAddress')
                       "
+                      [readOnly]="isLoggedIn"
                     />
                     <span
                       class="text-orange"
@@ -140,6 +146,7 @@
                       <span class="text-orange">*</span>
                     </label>
                     <input
+                      [ngClass]="{ readmode: isLoggedIn }"
                       formControlName="phoneNumber"
                       type="number"
                       class="form-control"
@@ -150,6 +157,7 @@
                       [class.is-invalid]="
                         isFieldValid(userDetailsForm, 'phoneNumber')
                       "
+                      [readOnly]="isLoggedIn"
                     />
                     <span
                       class="text-orange"
@@ -483,8 +491,13 @@
                   Note : Available slots days are highlighted here
                 </p>
                 <p *ngIf="!isStandardCut" class="text-danger small">
-                  Custom Cut Note: Custom cut order will be available on and after
-                  {{ findCustomCutDeliveryDate(finalOrderProducts[0]?.customCutAvailabilityDays) | date: 'dd/MM/YYYY' }}.
+                  Custom Cut Note: Custom cut order will be available on and
+                  after
+                  {{
+                    findCustomCutDeliveryDate(
+                      finalOrderProducts[0]?.customCutAvailabilityDays
+                    ) | date : "dd/MM/YYYY"
+                  }}.
                 </p>
                 <p
                   *ngIf="isStandardCut && isPreorder"
@@ -507,7 +520,8 @@
                   }"
                   class="px-md-3 px-2 py-2 rounded border mb-3"
                 >
-                  Sun</div>
+                  Sun
+                </div>
                 <div
                   [ngClass]="{
                     'button-orange-weekdays': isMondaySlot,
@@ -515,7 +529,8 @@
                   }"
                   class="px-md-3 px-2 py-2 rounded border mb-3"
                 >
-                  Mon</div>
+                  Mon
+                </div>
                 <div
                   [ngClass]="{
                     'button-orange-weekdays': isTuesdaySlot,
@@ -523,7 +538,8 @@
                   }"
                   class="px-md-3 px-2 py-2 rounded border mb-3"
                 >
-                  Tue</div>
+                  Tue
+                </div>
                 <div
                   [ngClass]="{
                     'button-orange-weekdays': isWednesdaySlot,
@@ -531,7 +547,8 @@
                   }"
                   class="px-md-3 px-2 py-2 rounded border mb-3"
                 >
-                  Wed</div>
+                  Wed
+                </div>
                 <div
                   [ngClass]="{
                     'button-orange-weekdays': isThursdaySlot,
@@ -539,7 +556,8 @@
                   }"
                   class="px-md-3 px-2 py-2 rounded border mb-3"
                 >
-                  Thu</div>
+                  Thu
+                </div>
                 <div
                   [ngClass]="{
                     'button-orange-weekdays': isFridaySlot,
@@ -547,7 +565,8 @@
                   }"
                   class="px-md-3 px-2 py-2 rounded border mb-3"
                 >
-                  Fri</div>
+                  Fri
+                </div>
                 <div
                   [ngClass]="{
                     'button-orange-weekdays': isSaturdaySlot,
