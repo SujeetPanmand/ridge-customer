@@ -304,7 +304,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   }
   createOrder() {
     this.formSubmitAttempt = true;
-    if (this.paymentForm.invalid) {
+    if (this.paymentForm.invalid || this.onSelectMonth) {
       return;
     }
     this.isLoading = true;
@@ -424,25 +424,24 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onSelectMonth(){
+  get onSelectMonth() {
     var selectedYear = this.paymentForm.controls['expiryYear'].value;
     var selectedMonth = this.paymentForm.controls['expiryMonth'].value;
     var currentDate = new Date();
     var currentYear = currentDate.getFullYear();
     var currentMonth = currentDate.getMonth();
     currentMonth = currentMonth + 1;
-    if(selectedMonth != ''){
-    if(selectedYear == currentYear){
-      if(selectedMonth < currentMonth){
-        return true;
-      }
-      else{
+    if (selectedMonth != '') {
+      if (selectedYear == currentYear) {
+        if (selectedMonth < currentMonth) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
         return false;
       }
-    }else{
-      return false;
-    }}
-    else{
+    } else {
       return false;
     }
   }

@@ -114,7 +114,6 @@
                     [class.is-invalid]="
                       isFieldValid(paymentForm, 'expiryMonth')
                     "
-                    
                   >
                     <option value="">Select Month</option>
                     <option value="01">January</option>
@@ -140,9 +139,7 @@
                     *ngIf="hasError(paymentForm, 'expiryMonth', 'required')"
                     >Please select expiry month.
                   </span>
-                  <span
-                    class="text-danger"
-                    *ngIf="onSelectMonth()"
+                  <span class="text-danger" *ngIf="onSelectMonth"
                     >Please select valid expiry month.
                   </span>
                 </div>
