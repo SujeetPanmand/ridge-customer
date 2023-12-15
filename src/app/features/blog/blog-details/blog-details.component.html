@@ -21,7 +21,9 @@
             class="fa fa-arrow-left fa-2x pe-3 text-orange cursor"
             routerLink="/blog"
           ></i>
-          <h1 class="sub-title text-orange pe-2">{{ blogDetails?.title }}</h1>
+          <h1 class="sub-title text-orange pe-2">
+            {{ blogDetails?.title }}({{ blogDetails?.author }})
+          </h1>
           <button
             type="button"
             class="btn border text-orange rounded-pill mx-1 mb-2"
@@ -46,7 +48,10 @@
         </div>
         <div class="pt-3">
           <div class="col-md-10">
-            <div class="responsive-content" [innerHTML]="blogDetails?.content"></div>
+            <div
+              class="responsive-content"
+              [innerHTML]="blogDetails?.content"
+            ></div>
 
             <div class="py-4 comment">Comments</div>
             <div
