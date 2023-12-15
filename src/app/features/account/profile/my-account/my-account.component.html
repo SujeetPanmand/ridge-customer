@@ -62,8 +62,9 @@
     <div class="col-md-2 d-flex justify-content-center mb-2">
       <div class="position-relative d-inline-block">
         <img
+          *ngIf="profilePictureUrl != ''"
           class="user-profile-pic"
-          [src]="commonService.profilePictureUrl"
+          [src]="profilePictureUrl"
           (click)="fileInput.click()"
           ngbTooltip="Click To Edit"
         />

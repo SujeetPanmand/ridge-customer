@@ -45,7 +45,8 @@
             >
               <div class="ms-3">
                 <img
-                  [src]="commonService.profilePictureUrl"
+                  *ngIf="userProfilePic != ''"
+                  [src]="userProfilePic"
                   class="img-fluid cursor border rounded-circle profileImg"
                 />
               </div>
@@ -166,7 +167,7 @@
                 >
                   <div class="ms-3">
                     <img
-                      [src]="commonService.profilePictureUrl"
+                      [src]="userProfilePic"
                       class="img-fluid cursor border rounded-circle profileImg"
                     />
                   </div>

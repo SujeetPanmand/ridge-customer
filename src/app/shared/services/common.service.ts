@@ -16,12 +16,12 @@ export class CommonService {
   cartProducts = 0;
   cartItems: AllCartItemDetail[] = [];
   isLogginShow = false;
-  profilePictureUrl = 'assets/em_user.png';
+  profilePictureUrl = '';
   userDetails: User;
   @Output() cartProductValue = new EventEmitter<number>();
   @Output() cartItemsEvent = new EventEmitter<AllCartItemDetail[]>();
   @Output() islogginButtonShow = new EventEmitter<boolean>();
-  @Output() newProfileImageEmitter = new EventEmitter<boolean>();
+  @Output() newProfileImageEmitter = new EventEmitter<string>();
   constructor(
     private apiService: ApiService,
     private toastrService: ToastrService
@@ -100,10 +100,11 @@ export class CommonService {
   }
 
   setProfilePic(userId) {
-    this.profilePictureUrl =
-      userId != null && userId != ''
-        ? environment.baseUrl + '/api/user/image/' + userId
-        : 'assets/em_user.png';
+    if (!this.profilePictureUrl.includes('base64'))
+      this.profilePictureUrl =
+        userId != null && userId != ''
+          ? environment.baseUrl + '/api/user/image/' + userId
+          : 'assets/em_user.png';
   }
 
   getOrderStatus(num) {

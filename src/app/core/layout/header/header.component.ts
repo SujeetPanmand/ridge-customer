@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/shared/interfaces/user/user-details';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { environment } from 'src/environments/environment';
 
@@ -13,20 +14,26 @@ export class HeaderComponent implements OnInit {
   cartValue = 0;
   isLogginShow = false;
   userId = '';
-  profilePictureUrl = 'assets/em_user.png';
+  userProfilePic = '';
+  userDetails: User;
   constructor(private router: Router, public commonService: CommonService) {
     this.subscribeTo();
+    this.subscribeToImage();
   }
 
   ngOnInit(): void {
-    this.userId = localStorage.getItem('userId')
-      ? localStorage.getItem('userId')
-      : '';
-
-    // this.setuserProfile();
-    // this.subscribeToImage();
+    this.getUserDetails();
   }
 
+  getUserDetails() {
+    this.commonService.getUserDetails().then((res) => {
+      if (res) {
+        this.userDetails = res;
+        this.userId = this.userDetails.userDetails.id;
+        this.setUserProfilePic();
+      }
+    });
+  }
   navigateToAbout() {
     this.router.navigate(['about']);
   }
@@ -68,21 +75,19 @@ export class HeaderComponent implements OnInit {
   }
   subscribeToImage() {
     this.commonService.newProfileImageEmitter.subscribe((res) => {
-      this.setuserProfile();
+      if (res) {
+        debugger;
+        this.userProfilePic = '';
+        this.userProfilePic = res;
+        // this.setUserProfilePic();
+      }
     });
   }
 
-  setuserProfile() {
-    let date = new Date().getTime();
-    this.profilePictureUrl =
-      this.userId != null && this.userId != ''
-        ? environment.baseUrl + '/api/user/image/' + this.userId + '?' + date
-        : 'assets/em_user.png';
-    this.commonService.profilePictureUrl = this.profilePictureUrl;
+  setUserProfilePic() {
+    //this.commonService.profilePictureUrl = '';
+    this.userProfilePic =
+      environment.baseUrl + '/api/user/image/' + this.userId;
+    // this.commonService.profilePictureUrl = url;
   }
-
-  // @HostListener('window:unload', ['$event'])
-  // unloadHandler(event) {
-  //   localStorage.removeItem('ridgeOfflineCartItems');
-  // }
 }

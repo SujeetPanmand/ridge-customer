@@ -23,7 +23,7 @@ export class MyAccountComponent implements OnInit {
   myAccountFormSubmitAttempt: boolean = false;
   userDetails: User;
   links: BreadCrumbLinks[] = myAccountlinks;
-  profilePictureUrl = 'assets/em_user.png';
+  profilePictureUrl = '';
   userId = '';
   constructor(
     private formBuilder: FormBuilder,
@@ -46,26 +46,23 @@ export class MyAccountComponent implements OnInit {
   }
 
   defaultSetting() {
-    this.userId = localStorage.getItem('userId')
-      ? localStorage.getItem('userId')
-      : '';
-
     this.getUserDetails();
-    this.setUserPicture();
   }
   getUserDetails() {
     this.commonService.getUserDetails().then((res) => {
       this.userDetails = res;
+      this.userId = this.userDetails.userDetails.id;
+      this.setUserPicture();
       console.log('___', this.userDetails);
       this.patchUserDetails();
     });
   }
   setUserPicture() {
-    this.profilePictureUrl =
-      this.userId != null && this.userId != ''
-        ? environment.baseUrl + '/api/user/image/' + this.userId
-        : 'assets/em_user.png';
-    this.commonService.profilePictureUrl = this.profilePictureUrl;
+    this.profilePictureUrl = '';
+
+    this.profilePictureUrl = this.commonService.profilePictureUrl
+      ? this.commonService.profilePictureUrl
+      : environment.baseUrl + '/api/user/image/' + this.userId;
   }
 
   updateMyAccountInfo() {
@@ -123,7 +120,7 @@ export class MyAccountComponent implements OnInit {
     } else {
       if (event.target.files && event.target.files[0]) {
         this.uploadProfilePicture(event.target.files[0]);
-        event.target.value = '';
+        // event.target.value = '';
         this.profilePictureUrl = '';
       }
     }
@@ -139,17 +136,19 @@ export class MyAccountComponent implements OnInit {
       .subscribe((res) => {
         if (res.statusCode === 200) {
           this.loadUrl(file);
-          this.commonService.newProfileImageEmitter.emit(true);
         }
       });
   };
 
   private loadUrl(file: any) {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
     reader.onload = async (event: any) => {
-      this.profilePictureUrl = event.target.result;
-      this.commonService.profilePictureUrl = event.target.result;
+      this.commonService.profilePictureUrl = this.profilePictureUrl = '';
+      this.profilePictureUrl = this.commonService.profilePictureUrl =
+        event.target.result;
+      this.commonService.newProfileImageEmitter.emit(event.target.result);
     };
+
+    reader.readAsDataURL(file);
   }
 }
