@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 import { AllCartItemDetail } from 'src/app/shared/interfaces/all-cart-item-details';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { ToastrService } from 'ngx-toastr';
+import { OrderValidation } from 'src/app/shared/enum/enum';
 
 @Component({
   selector: 'app-cart',
@@ -34,6 +35,7 @@ export class CartComponent implements OnInit {
   isLoading = false;
   isLoggedIn = 0;
   isAccordionOpen: boolean[] = [];
+  orderValidationEnum = OrderValidation;
   constructor(
     private router: Router,
     private modalService: NgbModal,
@@ -85,9 +87,38 @@ export class CartComponent implements OnInit {
   }
 
   makePayment() {
-    this.router.navigateByUrl(
-      'shop/checkout?isStandardCut=true&isPreorder=false'
-    );
+    this.validateProductStock();
+  }
+  validateProductStock() {
+    const apiRequest = {
+      data: {
+        slotId: null,
+        orderValidationType: this.orderValidationEnum.Product,
+        orderItemsModel: this.formatChekAvailabilityProducts(
+          this.addedProducts
+        ),
+      },
+    };
+
+    this.apiService.request('VALIDATE_SLOT', apiRequest).subscribe((res) => {
+      if (res && res.statusCode == 200) {
+        this.router.navigateByUrl(
+          'shop/checkout?isStandardCut=true&isPreorder=false'
+        );
+      }
+      if (res && res.statusCode == 400) {
+        this.toastrService.error('Product stock is over.');
+      }
+    });
+  }
+
+  formatChekAvailabilityProducts(data) {
+    return data.map((x) => {
+      return {
+        productId: x.productId,
+        quantity: x.quantity,
+      };
+    });
   }
   addMoreItem(item, str) {
     let index = this.addedProducts.findIndex((x) => x.id === item.id);
