@@ -233,4 +233,26 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
       this.years.push({ id: i, year: i });
     }
   }
+
+  get onSelectMonth() {
+    var selectedYear = this.paymentForm.controls['expiryYear'].value;
+    var selectedMonth = this.paymentForm.controls['expiryMonth'].value;
+    var currentDate = new Date();
+    var currentYear = currentDate.getFullYear();
+    var currentMonth = currentDate.getMonth();
+    currentMonth = currentMonth + 1;
+    if (selectedMonth != '') {
+      if (selectedYear == currentYear) {
+        if (selectedMonth < currentMonth) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 }
