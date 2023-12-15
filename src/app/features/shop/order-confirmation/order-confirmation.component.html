@@ -89,9 +89,9 @@
             <table class="table table-borderless border">
               <thead class="border-bottom">
                 <tr>
-                  <th>ORDERED ITEMS</th>
-                  <th>QUANTITY</th>
-                  <th>PRICE</th>
+                  <th scope="col">ORDERED ITEMS</th>
+                  <th scope="col">QUANTITY</th>
+                  <th scope="col">PRICE</th>
                 </tr>
               </thead>
               <tbody>
@@ -99,7 +99,7 @@
                   <td>
                     {{ product.name }}
                   </td>
-                  <td> {{ product.quantity }}</td>
+                  <td>{{ product.quantity }}</td>
                   <td *ngIf="isStandardCut && !isPreorder">
                     ${{ product.unitPrice * product.quantity }}
                   </td>
