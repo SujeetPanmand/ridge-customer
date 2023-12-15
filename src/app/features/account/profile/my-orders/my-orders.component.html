@@ -21,11 +21,11 @@
               <th>ORDER ID</th>
               <th>ORDER DATE</th>
               <th>PRICE</th>
-              <th>Balance Amount</th>
-              <th>Cut Type</th>
-              <th>Order Type</th>
+              <th>BALANCE AMOUNT</th>
+              <th>CUT TYPE</th>
+              <th>ORDER TYPE</th>
               <th>ORDER STATUS</th>
-              <th>Action</th>
+              <th>ACTION</th>
             </tr>
           </thead>
           <tbody>
@@ -36,7 +36,7 @@
             >
               <td>{{ order.orderId }}</td>
               <td>{{ order.createdAt | date : "MM/dd/yyyy" }}</td>
-              <td>${{ order.totalAmount }}</td>
+              <td>${{ order.totalAmount | number : ".2-2" }}</td>
               <td>
                 <span
                   >${{
