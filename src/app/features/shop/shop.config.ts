@@ -74,6 +74,10 @@ export const paymentLinks: BreadCrumbLinks[] = [
     link: '/shop',
   },
   {
+    name: 'Checkout',
+    link: '/shop/checkout',
+  },
+  {
     name: 'Payment',
     link: '/shop/payment',
   },

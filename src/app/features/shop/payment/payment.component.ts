@@ -75,7 +75,8 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       ? 'isStandardCut=true'
       : 'isStandardCut=false';
     let preSubstr = this.isPreorder ? 'isPreorder=true' : 'isPreorder=false';
-    this.links[2].link = `/shop/payment?${substr}&${preSubstr}`;
+    this.links[2].link = `/shop/checkout?${substr}&${preSubstr}&isEdit=true`;
+    this.links[3].link = `/shop/payment?${substr}&${preSubstr}`;
   }
 
   getYearList() {
@@ -90,7 +91,8 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       ? 'isStandardCut=true'
       : 'isStandardCut=false';
     let preSubstr = this.isPreorder ? 'isPreorder=true' : 'isPreorder=false';
-    this.links[2].link = `/shop/payment?${substr}&${preSubstr}`;
+    this.links[2].link = `/shop/checkout?${substr}&${preSubstr}&isEdit=true`;
+    this.links[3].link = `/shop/payment?${substr}&${preSubstr}`;
   }
 
   ngOnInit() {

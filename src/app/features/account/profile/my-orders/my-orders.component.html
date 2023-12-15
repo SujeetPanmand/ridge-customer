@@ -21,9 +21,9 @@
               <th>ORDER ID</th>
               <th>ORDER DATE</th>
               <th>PRICE</th>
-              <th>BALANCE AMOUNT</th>
-              <th>CUT TYPE</th>
+              <th>BALANCE DUE</th>
               <th>ORDER TYPE</th>
+              <th>CUT TYPE</th>
               <th>ORDER STATUS</th>
               <th>ACTION</th>
             </tr>
@@ -47,9 +47,8 @@
                   }}</span
                 >
               </td>
-
-              <td>{{ commonService.getCustomType(order.cutType) }}</td>
               <td>{{ commonService.getOrderType(order.orderType) }}</td>
+              <td>{{ commonService.getCustomType(order.cutType) }}</td>
               <td>
                 <span
                   class="badge p-2 rounded-pill"
