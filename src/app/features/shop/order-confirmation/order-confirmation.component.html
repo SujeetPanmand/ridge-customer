@@ -80,27 +80,26 @@
           <div>
             <span class="fw-semibold">Order ID: </span>
             <span>{{ orderDetails?.orderId }}</span>
+
+            <span class="fw-semibold ps-3">Order Date: </span>
+            <span>{{ orderOn }}</span>
           </div>
           <hr class="border" />
           <div class="table-responsive">
             <table class="table table-borderless border">
               <thead class="border-bottom">
                 <tr>
-                  <th>ORDERED ON</th>
                   <th>ORDERED ITEMS</th>
+                  <th>QUANTITY</th>
                   <th>PRICE</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let product of finalOrderProducts">
-                  <td>{{ orderOn }}</td>
                   <td>
-                    {{ product.name
-                    }}<span>
-                      *
-                      {{ product.quantity }}</span
-                    >
+                    {{ product.name }}
                   </td>
+                  <td> {{ product.quantity }}</td>
                   <td *ngIf="isStandardCut && !isPreorder">
                     ${{ product.unitPrice * product.quantity }}
                   </td>
