@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { ApiService } from 'src/app/shared/services/api.service';
@@ -7,11 +7,13 @@ import { ToastrService } from 'ngx-toastr';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { cartTypes, paymentLinks } from '../shop.config';
 import { environment } from 'src/environments/environment';
+import { loadStripe } from '@stripe/stripe-js';
 import {
   AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
+  NgForm,
   Validators,
 } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
@@ -50,7 +52,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   totalBalanceDue = 0;
   grandTotal = 0;
   isNotValidMonth = false;
-
+  stripe: any;
+  elements: any;
+  card: any;
+  @ViewChild('paymentForm') submitPaymentForm: NgForm;
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
@@ -64,6 +69,66 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     this.getYearList();
     this.subscribeToCreditType();
     this.getRouterParams();
+    this.loadStripe();
+  }
+
+  async loadStripe() {
+    this.stripe = await loadStripe(environment.STRIPE_PUBLISH_KEY);
+    //const loader = Stripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+    this.elements = this.stripe.elements();
+    const style = {
+      base: {
+        color: '#32325d',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+    };
+    // Create an instance of the card Element.
+    this.card = this.elements.create('card', { style: style });
+    // Add an instance of the card Element into the `card-element` <div>.
+    this.card.mount('#card-element');
+    this.card.addEventListener('change', (event) => {
+      var displayError = document.getElementById('card-errors');
+      if (event.error) {
+        displayError.textContent = event.error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+
+    // Create a token when the form is submitted.
+    var paymentForm = document.getElementById('paymentForm');
+    paymentForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      this.createToken();
+    });
+  }
+
+  createToken() {
+    this.stripe.createToken(this.card).then((result) => {
+      console.log('__________' + result);
+      if (result.error) {
+        // Inform the user if there was an error
+        var errorElement = document.getElementById('card-errors');
+        errorElement.textContent = result.error.message;
+      } else {
+        // Send the token to your server
+        this.stripeTokenHandler(result.token);
+      }
+    });
+  }
+
+  stripeTokenHandler(token) {
+    console.log(token);
+    alert(token);
   }
 
   getRouterParams() {
@@ -305,10 +370,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     });
   }
   createOrder() {
-    this.formSubmitAttempt = true;
-    if (this.paymentForm.invalid || this.onSelectMonth) {
-      return;
-    }
+    // this.formSubmitAttempt = true;
+    // if (this.paymentForm.invalid || this.onSelectMonth) {
+    //   return;
+    // }
     this.isLoading = true;
     const apiRequest = {
       data: this.isSelfPickUp
@@ -402,26 +467,29 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
     modelRef.result.then((res) => {
       if (res) {
-        this.apiService.request('CREATE_ORDER', apiRequest).subscribe(
-          (res) => {
-            this.isLoading = false;
-            if (res && res.statusCode == 200) {
-              this.removLocalItems();
-              this.commonService.onOrderConfirm();
-              this.router.navigateByUrl(
-                `shop/order-confirmation/${res.message}?isStandardCut=${
-                  this.isStandardCut ? 'true' : 'false'
-                }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
-              );
-              this.toastrService.success('Your order has been placed.');
-            } else {
-              this.toastrService.error(res.message);
-            }
-          },
-          (error) => {
-            this.isLoading = false;
-          }
-        );
+        this.submitPaymentForm.ngSubmit.emit();
+
+        // this.apiService.request('CREATE_ORDER', apiRequest).subscribe(
+        //   (res) => {
+
+        //     this.isLoading = false;
+        //     if (res && res.statusCode == 200) {
+        //       this.removLocalItems();
+        //       this.commonService.onOrderConfirm();
+        //       this.router.navigateByUrl(
+        //         `shop/order-confirmation/${res.message}?isStandardCut=${
+        //           this.isStandardCut ? 'true' : 'false'
+        //         }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
+        //       );
+        //       this.toastrService.success('Your order has been placed.');
+        //     } else {
+        //       this.toastrService.error(res.message);
+        //     }
+        //   },
+        //   (error) => {
+        //     this.isLoading = false;
+        //   }
+        // );
       }
     });
   }
