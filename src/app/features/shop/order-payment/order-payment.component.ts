@@ -111,6 +111,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     this.elements = this.stripe.elements();
     const style = {
       base: {
+        hidePostalCode: true,
         color: '#32325d',
         fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
         fontSmoothing: 'antialiased',

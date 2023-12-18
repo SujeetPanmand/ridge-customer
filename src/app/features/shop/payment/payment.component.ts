@@ -80,6 +80,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     this.elements = this.stripe.elements();
     const style = {
       base: {
+        hidePostalCode: true,
         color: '#32325d',
         fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
         fontSmoothing: 'antialiased',
@@ -122,7 +123,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   }
 
   stripeTokenHandler(token) {
-    console.log('_____token', token);
     this.createOrder(token);
   }
 
