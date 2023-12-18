@@ -82,9 +82,8 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       base: {
         hidePostalCode: true,
         color: '#32325d',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
         fontSmoothing: 'antialiased',
-        fontSize: '16px',
+        fontSize: '18px',
         '::placeholder': {
           color: '#aab7c4',
         },
@@ -95,7 +94,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       },
     };
     // Create an instance of the card Element.
-    this.card = this.elements.create('card', { style: style });
+    this.card = this.elements.create('card', { hidePostalCode: true, style: style });
     // Add an instance of the card Element into the `card-element` <div>.
     this.card.mount('#card-element');
     this.card.addEventListener('change', (event) => {
