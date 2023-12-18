@@ -282,7 +282,10 @@
       </div>
     </form>
 
-    <div class="border mt-2 mx-4">
+    <div
+      *ngIf="cutForm.controls['searchCheckOption'].value === 'standard'"
+      class="border mt-2 mx-4"
+    >
       <ul class="list-unstyled p-3" [innerHTML]="selectedProduct?.cutInfo">
         <!-- <li>180 lbs – Ground Beef 2</li>
         <li>
