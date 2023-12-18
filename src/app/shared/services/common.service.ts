@@ -110,7 +110,7 @@ export class CommonService {
   getOrderStatus(num) {
     switch (num) {
       case 0:
-        return { status: 'Pending', color: 'badge  badge-bg-red' };
+        return { status: 'Pending', color: 'badge  badge-bg-orange' };
       case 1:
         return { status: 'Delivered', color: 'badge badge-bg-gr' };
       case 2:

@@ -479,9 +479,12 @@
       </div>
     </form>
 
-    <div class="border mt-2 mx-4">
-      <ul class="list-unstyled p-3">
-        <li>180 lbs – Ground Beef 2</li>
+    <div
+      *ngIf="cutForm.controls['searchCheckOption'].value === 'standard'"
+      class="border mt-2 mx-4"
+    >
+      <ul [innerHTML]="selectedProduct?.cutInfo" class="list-unstyled p-3">
+        <!-- <li>180 lbs – Ground Beef 2</li>
         <li>
           120 lbs – Assorted Roasts (Chuck, Brisket (2), Short Ribs, Rump, Arm,
           Round)
@@ -490,7 +493,7 @@
           72 lbs - Premium Steaks (Filet, Bone-In Ribeye, Boneless Ribeye, NY
           Strip)
         </li>
-        <li>8 lbs - Family Steaks (Sirloin, Bavette, Flat Iron, Tri Tip)</li>
+        <li>8 lbs - Family Steaks (Sirloin, Bavette, Flat Iron, Tri Tip)</li> -->
       </ul>
     </div>
   </div>
