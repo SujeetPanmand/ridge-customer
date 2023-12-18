@@ -10,6 +10,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { ConfirmationPopUpComponent } from 'src/app/shared/component/confirmation-pop-up/confirmation-pop-up.component';
 import { OrderDetails } from 'src/app/shared/interfaces/order-confirmation';
+import { environment } from 'src/environments/environment';
+import { loadStripe } from '@stripe/stripe-js';
 
 @Component({
   selector: 'app-order-payment',
@@ -17,8 +19,8 @@ import { OrderDetails } from 'src/app/shared/interfaces/order-confirmation';
   styleUrls: ['./order-payment.component.scss'],
 })
 export class OrderPaymentComponent implements OnInit, AfterViewInit {
-  isSelfPickUp = false;
-  orderAddress = [];
+  //isSelfPickUp = false;
+  //orderAddress = [];
   paymentForm: FormGroup;
   formSubmitAttempt = false;
   links: BreadCrumbLinks[] = partialPaymentLinks;
@@ -31,6 +33,9 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
   cartTypes = cartTypes;
   years = [];
   isLoggedIn = 0;
+  stripe: any;
+  elements: any;
+  card: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,6 +51,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     this.orderId = this.route.snapshot.params['orderId'];
     this.links[1].link = `/account/order-details/${this.orderId}`;
     this.links[2].link = `/shop/order-payment/${this.orderId}`;
+    this.loadStripe();
   }
 
   ngOnInit(): void {
@@ -53,7 +59,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     this.commonService.getUserDetails().then((x) => {
       if (x) this.isLoggedIn = 1;
     });
-    this.defaultSetting();
+    //this.defaultSetting();
     this.generatePaymentForm();
     this.getOrderPaymentDetailsById();
   }
@@ -98,16 +104,95 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {}
 
+  async loadStripe() {
+    this.stripe = await loadStripe(environment.STRIPE_PUBLISH_KEY);
+    //const loader = Stripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+
+    this.elements = this.stripe.elements();
+    const style = {
+      base: {
+        color: '#32325d',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+    };
+    // Create an instance of the card Element.
+    this.card = this.elements.create('card', { style: style });
+    // Add an instance of the card Element into the `card-element` <div>.
+    this.card.mount('#card-element');
+    this.card.addEventListener('change', (event) => {
+      var displayError = document.getElementById('card-errors');
+      if (event.error) {
+        displayError.textContent = event.error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+  }
+
+  createToken() {
+    this.stripe.createToken(this.card).then((result) => {
+      console.log('__________' + result);
+      if (result.error) {
+        // Inform the user if there was an error
+        var errorElement = document.getElementById('card-errors');
+        errorElement.textContent = result.error.message;
+      } else {
+        // Send the token to your server
+        this.stripeTokenHandler(result.token);
+      }
+    });
+  }
+
+  stripeTokenHandler(token) {
+    console.log('_____token', token);
+    this.createOrder(token);
+  }
+
+  createOrder(token) {
+    const apiRequest = {
+      data: {
+        stId: token.id,
+        totalAmount: this.orderPaymentDetails.payment,
+        orderId: this.orderId.trim(),
+      },
+    };
+
+    this.apiService.request('COMPLETE_ORDER_PAYMENT', apiRequest).subscribe(
+      (res) => {
+        if (res && res.statusCode == 200) {
+          this.router.navigateByUrl(
+            `account/order-details/${this.route.snapshot.params[
+              'orderId'
+            ].trim()}`
+          );
+          this.toastrService.success(res.message);
+        } else {
+          this.toastrService.error(res.message);
+        }
+      },
+      (error) => {}
+    );
+  }
+
   goBack() {}
 
-  defaultSetting() {
-    this.isSelfPickUp =
-      JSON.parse(localStorage.getItem('selfPickUp')) == '0' ? false : true;
+  // defaultSetting() {
+  //   this.isSelfPickUp =
+  //     JSON.parse(localStorage.getItem('selfPickUp')) == '0' ? false : true;
 
-    this.orderAddress = JSON.parse(localStorage.getItem('orderAddress'))
-      ? JSON.parse(localStorage.getItem('orderAddress'))
-      : [];
-  }
+  //   this.orderAddress = JSON.parse(localStorage.getItem('orderAddress'))
+  //     ? JSON.parse(localStorage.getItem('orderAddress'))
+  //     : [];
+  // }
 
   getOrderPaymentDetailsById() {
     this.apiService
@@ -121,53 +206,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
       });
   }
 
-  createOrder() {
-    this.formSubmitAttempt = true;
-    if (this.paymentForm.invalid || this.onSelectMonth) {
-      return;
-    }
-    const apiRequest = {
-      data: this.isSelfPickUp
-        ? {
-            cardNumber: Number(
-              this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
-            ),
-            expiryMonth:
-              this.paymentForm.controls['expiryMonth'].value.toString(),
-            expiryYear:
-              this.paymentForm.controls['expiryYear'].value.toString(),
-            cvv: Number(this.paymentForm.controls['cvv'].value),
-            cardHolderName: this.paymentForm.controls['cardHolderName'].value,
-            totalAmount: this.orderPaymentDetails.payment,
-            orderId: this.orderId.trim(),
-          }
-        : {
-            cardNumber: Number(
-              this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
-            ),
-            expiryMonth:
-              this.paymentForm.controls['expiryMonth'].value.toString(),
-            expiryYear:
-              this.paymentForm.controls['expiryYear'].value.toString(),
-            cvv: Number(this.paymentForm.controls['cvv'].value),
-            cardHolderName: this.paymentForm.controls['cardHolderName'].value,
-            totalAmount: '1000',
-            orderId: this.orderId,
-          },
-    };
-
-    // this.apiService
-    //   .request('COMPLETE_ORDER_PAYMENT', apiRequest)
-    //   .subscribe((res) => {
-    //     this.isLoading = false;
-    //     if (res && res.statusCode == 200) {
-    //       this.toastrService.success(
-    //         'Your remaining payment done succesfully. '
-    //       );
-    //       this.router.navigate(['account/profile/my-orders']);
-    //     }
-    //   });
-
+  confirmOrder() {
     let data = {
       action_button_name: 'Yes',
       title_text: 'Confirmation',
@@ -181,21 +220,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
 
     modelRef.result.then((res) => {
       if (res) {
-        this.apiService.request('COMPLETE_ORDER_PAYMENT', apiRequest).subscribe(
-          (res) => {
-            if (res && res.statusCode == 200) {
-              this.router.navigateByUrl(
-                `account/order-details/${this.route.snapshot.params[
-                  'orderId'
-                ].trim()}`
-              );
-              this.toastrService.success(res.message);
-            } else {
-              this.toastrService.error(res.message);
-            }
-          },
-          (error) => {}
-        );
+        this.createToken();
       }
     });
   }

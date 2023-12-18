@@ -50,20 +50,40 @@
           </table>
           <h4 class="text-title">Payment Method</h4>
           <hr class="border" />
-          <form [formGroup]="paymentForm">
-            <div class="d-flex">
-              <div class="form-check">
-                <!-- <input
-                  class="form-check-input"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault1"
-                /> -->
-                <i class="bi bi-credit-card"></i>
-                <span class="px-1"> Credit Card </span>
+          <!-- <form [formGroup]="paymentForm"> -->
+          <form action="/charge" method="post" id="paymentForm">
+            <div class="form-row mb-3">
+              <label for="card-element mb-2"> Credit or debit card </label>
+              <div id="card-element">
+                <!-- a Stripe Element will be inserted here. -->
               </div>
+              <!-- Used to display form errors -->
+              <div id="card-errors" role="alert"></div>
             </div>
-            <div class="bg-light-gray mt-4 p-4">
+
+            <div>
+              <button
+                (click)="confirmOrder()"
+                class="btn button-orange w-100 mt-4"
+                type="button"
+              >
+                Pay Total Balance Due ${{
+                  !orderPaymentDetails?.isSelfPickUp
+                    ? orderPaymentDetails?.payment +
+                      orderPaymentDetails?.shippingCharge +
+                      orderPaymentDetails?.tax
+                    : orderPaymentDetails?.payment + orderPaymentDetails?.tax
+                }}
+              </button>
+            </div>
+          </form>
+          <!-- <div class="d-flex">
+              <div class="form-check">
+                <i class="bi bi-credit-card"></i>
+                <span class="px-1">Payment Method</span>
+              </div>
+            </div> -->
+          <!-- <div class="bg-light-gray mt-4 p-4">
               <div class="mb-3">
                 <label for="cardNumber" class="form-label"> Card Number</label>
 
@@ -131,10 +151,6 @@
                     <option value="10">October</option>
                     <option value="11">November</option>
                     <option value="12">December</option>
-
-                    <!-- <option *ngFor="let unit of months" [value]="unit.id">
-                      {{ unit.month }}
-                    </option> -->
                   </select>
 
                   <span
@@ -233,22 +249,10 @@
                       orderPaymentDetails?.tax
                     : orderPaymentDetails?.payment + orderPaymentDetails?.tax
                 }}
-                <!-- <div
-                  *ngIf="isLoading"
-                  class="ml-2 spinner-border spinner-border-sm text-light"
-                  role="status"
-                >
-                  <span class="sr-only">Loading...</span>
-                </div>
-                <i
-                  style="color: white"
-                  *ngIf="!isLoading"
-                  class="fas fa-paper-plane ml-2"
-                  aria-hidden="true"
-                ></i> -->
+
               </button>
-            </div>
-          </form>
+            </div> -->
+          <!-- </form> -->
         </div>
       </div>
     </div>
