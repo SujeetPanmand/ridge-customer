@@ -55,6 +55,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   stripe: any;
   elements: any;
   card: any;
+
   @ViewChild('paymentForm') submitPaymentForm: NgForm;
   constructor(
     public commonService: CommonService,
@@ -75,6 +76,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   async loadStripe() {
     this.stripe = await loadStripe(environment.STRIPE_PUBLISH_KEY);
     //const loader = Stripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+
     this.elements = this.stripe.elements();
     const style = {
       base: {
@@ -103,13 +105,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
         displayError.textContent = '';
       }
     });
-
-    // Create a token when the form is submitted.
-    var paymentForm = document.getElementById('paymentForm');
-    paymentForm.addEventListener('submit', (event) => {
-      event.preventDefault();
-      this.createToken();
-    });
   }
 
   createToken() {
@@ -127,8 +122,112 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   }
 
   stripeTokenHandler(token) {
-    console.log(token);
-    alert(token);
+    console.log('_____token', token);
+    this.createOrder(token);
+  }
+
+  createOrder(token) {
+    const apiRequest = {
+      data: this.isSelfPickUp
+        ? {
+            cardNumber: Number(
+              this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
+            ),
+            expiryMonth:
+              this.paymentForm.controls['expiryMonth'].value.toString(),
+            expiryYear:
+              this.paymentForm.controls['expiryYear'].value.toString(),
+            cvv: Number(this.paymentForm.controls['cvv'].value),
+            cardHolderName: this.paymentForm.controls['cardHolderName'].value,
+            isSelfPickup: this.isSelfPickUp,
+
+            country: this.orderAddress['country'],
+            zipCode: this.orderAddress['zipCode']
+              ? this.orderAddress['zipCode'].toString()
+              : '',
+            state: this.orderAddress['state'],
+            city: this.orderAddress['city'],
+            address1: this.orderAddress['address1'],
+
+            firstName: this.orderAddress['firstName'],
+            lastName: this.orderAddress['lastName'],
+
+            emailAddress: this.orderAddress['emailAddress'],
+            phoneNumber: this.orderAddress['phoneNumber'].toString(),
+            company: this.orderAddress['company'],
+            address2: this.orderAddress['address2'],
+            subTotalAmount: this.orderSubTotal,
+            tax: this.TAX_AMOUNT,
+            totalAmount: this.orderTotal,
+            orderType: this.isPreorder ? 2 : 1,
+            cutType: this.isStandardCut ? 1 : 2,
+
+            pickupSlotId: this.slotId,
+            expectedDeliveryDate: new Date(this.orderDate).toISOString(),
+            sameAsBillingAddress: true,
+            isSaveAddress: true,
+            shippingCharges: 0,
+            orderItemsModel: this.formatRecord(this.finalOrderProducts),
+            stId: token.id,
+          }
+        : {
+            cardNumber: Number(
+              this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
+            ),
+            expiryMonth:
+              this.paymentForm.controls['expiryMonth'].value.toString(),
+            expiryYear:
+              this.paymentForm.controls['expiryYear'].value.toString(),
+            cvv: Number(this.paymentForm.controls['cvv'].value),
+            cardHolderName: this.paymentForm.controls['cardHolderName'].value,
+            isSelfPickup: this.isSelfPickUp,
+            country: this.orderAddress['country'],
+            zipCode: this.orderAddress['zipCode'].toString(),
+            state: this.orderAddress['state'],
+            city: this.orderAddress['city'],
+            address1: this.orderAddress['address1'],
+            firstName: this.orderAddress['firstName'],
+            lastName: this.orderAddress['lastName'],
+            emailAddress: this.orderAddress['emailAddress'],
+            phoneNumber: this.orderAddress['phoneNumber'].toString(),
+            company: this.orderAddress['company'],
+            address2: this.orderAddress['address2'],
+            subTotalAmount: this.orderSubTotal,
+            tax: this.TAX_AMOUNT,
+            totalAmount: this.orderTotal,
+            orderType: this.isPreorder ? 2 : 1,
+            cutType: this.isStandardCut ? 1 : 2,
+            slotId: this.slotId,
+
+            expectedDeliveryDate: new Date(this.orderDate).toISOString(),
+            sameAsBillingAddress: true,
+            isSaveAddress: true,
+            shippingCharges: this.SHIPPING_AMOUNT,
+            orderItemsModel: this.formatRecord(this.finalOrderProducts),
+            stId: token.id,
+          },
+    };
+
+    this.apiService.request('CREATE_ORDER', apiRequest).subscribe(
+      (res) => {
+        this.isLoading = false;
+        if (res && res.statusCode == 200) {
+          this.removLocalItems();
+          this.commonService.onOrderConfirm();
+          this.router.navigateByUrl(
+            `shop/order-confirmation/${res.message}?isStandardCut=${
+              this.isStandardCut ? 'true' : 'false'
+            }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
+          );
+          this.toastrService.success('Your order has been placed.');
+        } else {
+          this.toastrService.error(res.message);
+        }
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
   }
 
   getRouterParams() {
@@ -369,90 +468,12 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  createOrder() {
+
+  confirmOrder() {
     // this.formSubmitAttempt = true;
     // if (this.paymentForm.invalid || this.onSelectMonth) {
     //   return;
     // }
-    this.isLoading = true;
-    const apiRequest = {
-      data: this.isSelfPickUp
-        ? {
-            cardNumber: Number(
-              this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
-            ),
-            expiryMonth:
-              this.paymentForm.controls['expiryMonth'].value.toString(),
-            expiryYear:
-              this.paymentForm.controls['expiryYear'].value.toString(),
-            cvv: Number(this.paymentForm.controls['cvv'].value),
-            cardHolderName: this.paymentForm.controls['cardHolderName'].value,
-            isSelfPickup: this.isSelfPickUp,
-
-            country: this.orderAddress['country'],
-            zipCode: this.orderAddress['zipCode']
-              ? this.orderAddress['zipCode'].toString()
-              : '',
-            state: this.orderAddress['state'],
-            city: this.orderAddress['city'],
-            address1: this.orderAddress['address1'],
-
-            firstName: this.orderAddress['firstName'],
-            lastName: this.orderAddress['lastName'],
-
-            emailAddress: this.orderAddress['emailAddress'],
-            phoneNumber: this.orderAddress['phoneNumber'].toString(),
-            company: this.orderAddress['company'],
-            address2: this.orderAddress['address2'],
-            subTotalAmount: this.orderSubTotal,
-            tax: this.TAX_AMOUNT,
-            totalAmount: this.orderTotal,
-            orderType: this.isPreorder ? 2 : 1,
-            cutType: this.isStandardCut ? 1 : 2,
-
-            pickupSlotId: this.slotId,
-            expectedDeliveryDate: new Date(this.orderDate).toISOString(),
-            sameAsBillingAddress: true,
-            isSaveAddress: true,
-            shippingCharges: 0,
-            orderItemsModel: this.formatRecord(this.finalOrderProducts),
-          }
-        : {
-            cardNumber: Number(
-              this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
-            ),
-            expiryMonth:
-              this.paymentForm.controls['expiryMonth'].value.toString(),
-            expiryYear:
-              this.paymentForm.controls['expiryYear'].value.toString(),
-            cvv: Number(this.paymentForm.controls['cvv'].value),
-            cardHolderName: this.paymentForm.controls['cardHolderName'].value,
-            isSelfPickup: this.isSelfPickUp,
-            country: this.orderAddress['country'],
-            zipCode: this.orderAddress['zipCode'].toString(),
-            state: this.orderAddress['state'],
-            city: this.orderAddress['city'],
-            address1: this.orderAddress['address1'],
-            firstName: this.orderAddress['firstName'],
-            lastName: this.orderAddress['lastName'],
-            emailAddress: this.orderAddress['emailAddress'],
-            phoneNumber: this.orderAddress['phoneNumber'].toString(),
-            company: this.orderAddress['company'],
-            address2: this.orderAddress['address2'],
-            subTotalAmount: this.orderSubTotal,
-            tax: this.TAX_AMOUNT,
-            totalAmount: this.orderTotal,
-            orderType: this.isPreorder ? 2 : 1,
-            cutType: this.isStandardCut ? 1 : 2,
-            slotId: this.slotId,
-
-            expectedDeliveryDate: new Date(this.orderDate).toISOString(),
-            sameAsBillingAddress: true,
-            isSaveAddress: true,
-            shippingCharges: this.SHIPPING_AMOUNT,
-            orderItemsModel: this.formatRecord(this.finalOrderProducts),
-          },
-    };
 
     let data = {
       action_button_name: 'Yes',
@@ -467,29 +488,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
     modelRef.result.then((res) => {
       if (res) {
-        this.submitPaymentForm.ngSubmit.emit();
-
-        // this.apiService.request('CREATE_ORDER', apiRequest).subscribe(
-        //   (res) => {
-
-        //     this.isLoading = false;
-        //     if (res && res.statusCode == 200) {
-        //       this.removLocalItems();
-        //       this.commonService.onOrderConfirm();
-        //       this.router.navigateByUrl(
-        //         `shop/order-confirmation/${res.message}?isStandardCut=${
-        //           this.isStandardCut ? 'true' : 'false'
-        //         }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
-        //       );
-        //       this.toastrService.success('Your order has been placed.');
-        //     } else {
-        //       this.toastrService.error(res.message);
-        //     }
-        //   },
-        //   (error) => {
-        //     this.isLoading = false;
-        //   }
-        // );
+        this.createToken();
       }
     });
   }

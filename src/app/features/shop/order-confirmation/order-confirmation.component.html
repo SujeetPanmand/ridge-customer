@@ -215,8 +215,8 @@
                   <td class="fw-semibold text-end">
                     ${{
                       orderDetails?.isSelfPickup
-                        ? orderDetails.secondPayment + TAX_AMOUNT
-                        : orderDetails.secondPayment +
+                        ? orderDetails?.secondPayment + TAX_AMOUNT
+                        : orderDetails?.secondPayment +
                           SHIPPING_AMOUNT +
                           TAX_AMOUNT
                     }}

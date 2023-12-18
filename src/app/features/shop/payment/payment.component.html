@@ -39,9 +39,11 @@
             Company Name:
             <span class="fw-light">{{ orderAddress["company"] }}</span>
           </h6>
-          <form id="paymentForm">
-            <div class="form-row">
-              <label for="card-element"> Credit or debit card </label>
+          <h3 class="pt-4 text-title">Payment Method</h3>
+          <hr class="border" />
+          <form action="/charge" method="post" id="paymentForm">
+            <div class="form-row mb-3">
+              <label for="card-element mb-2"> Credit or debit card </label>
               <div id="card-element">
                 <!-- a Stripe Element will be inserted here. -->
               </div>
@@ -49,9 +51,45 @@
               <div id="card-errors" role="alert"></div>
             </div>
             <!-- <input type="submit" class="submit" value="Submit Payment" /> -->
+            <div>
+              <button
+                *ngIf="!isStandardCut || isPreorder"
+                (click)="confirmOrder()"
+                class="btn button-orange w-100 mb-2"
+                type="button"
+              >
+                {{ "Pay Booking Amount of $" + orderSubTotal }}
+                <!-- <div
+                *ngIf="isLoading"
+                class="ml-2 spinner-border spinner-border-sm text-light"
+                role="status"
+              >
+                <span class="sr-only">Loading...</span>
+              </div>
+              <i
+                style="color: white"
+                *ngIf="!isLoading"
+                class="fas fa-paper-plane ml-2"
+                aria-hidden="true"
+              ></i> -->
+              </button>
+              <button
+                *ngIf="isStandardCut && !isPreorder"
+                (click)="confirmOrder()"
+                class="btn button-orange w-100 mb-2"
+                type="button"
+              >
+                {{ "Make Payment of $" + orderTotal }}
+              </button>
+              <button
+                (click)="goBack()"
+                class="btn btn-secondary w-100"
+                type="button"
+              >
+                Back
+              </button>
+            </div>
           </form>
-          <h3 class="pt-4 text-title">Payment Method</h3>
-          <hr class="border" />
         </div>
 
         <div class="col-md-6 px-3">
@@ -204,42 +242,6 @@
               {{ orderDate | date : "MM/dd/yyyy" }} and {{ orderSlot }}
             </div>
           </div>
-          <button
-            *ngIf="!isStandardCut || isPreorder"
-            (click)="createOrder()"
-            class="btn button-orange w-100 mb-2"
-            type="button"
-          >
-            {{ "Pay Booking Amount of $" + orderSubTotal }}
-            <!-- <div
-              *ngIf="isLoading"
-              class="ml-2 spinner-border spinner-border-sm text-light"
-              role="status"
-            >
-              <span class="sr-only">Loading...</span>
-            </div>
-            <i
-              style="color: white"
-              *ngIf="!isLoading"
-              class="fas fa-paper-plane ml-2"
-              aria-hidden="true"
-            ></i> -->
-          </button>
-          <button
-            *ngIf="isStandardCut && !isPreorder"
-            (click)="createOrder()"
-            class="btn button-orange w-100 mb-2"
-            type="button"
-          >
-            {{ "Make Payment of $" + orderTotal }}
-          </button>
-          <button
-            (click)="goBack()"
-            class="btn btn-secondary w-100"
-            type="button"
-          >
-            Back
-          </button>
         </div>
       </div>
     </div>
