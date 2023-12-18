@@ -130,15 +130,15 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     const apiRequest = {
       data: this.isSelfPickUp
         ? {
-            cardNumber: Number(
-              this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
-            ),
-            expiryMonth:
-              this.paymentForm.controls['expiryMonth'].value.toString(),
-            expiryYear:
-              this.paymentForm.controls['expiryYear'].value.toString(),
-            cvv: Number(this.paymentForm.controls['cvv'].value),
-            cardHolderName: this.paymentForm.controls['cardHolderName'].value,
+            // cardNumber: Number(
+            //   this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
+            // ),
+            // expiryMonth:
+            //   this.paymentForm.controls['expiryMonth'].value.toString(),
+            // expiryYear:
+            //   this.paymentForm.controls['expiryYear'].value.toString(),
+            // cvv: Number(this.paymentForm.controls['cvv'].value),
+            // cardHolderName: this.paymentForm.controls['cardHolderName'].value,
             isSelfPickup: this.isSelfPickUp,
 
             country: this.orderAddress['country'],
@@ -171,15 +171,15 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             stId: token.id,
           }
         : {
-            cardNumber: Number(
-              this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
-            ),
-            expiryMonth:
-              this.paymentForm.controls['expiryMonth'].value.toString(),
-            expiryYear:
-              this.paymentForm.controls['expiryYear'].value.toString(),
-            cvv: Number(this.paymentForm.controls['cvv'].value),
-            cardHolderName: this.paymentForm.controls['cardHolderName'].value,
+            // cardNumber: Number(
+            //   this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
+            // ),
+            // expiryMonth:
+            //   this.paymentForm.controls['expiryMonth'].value.toString(),
+            // expiryYear:
+            //   this.paymentForm.controls['expiryYear'].value.toString(),
+            // cvv: Number(this.paymentForm.controls['cvv'].value),
+            // cardHolderName: this.paymentForm.controls['cardHolderName'].value,
             isSelfPickup: this.isSelfPickUp,
             country: this.orderAddress['country'],
             zipCode: this.orderAddress['zipCode'].toString(),
