@@ -94,7 +94,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       },
     };
     // Create an instance of the card Element.
-    this.card = this.elements.create('card', { hidePostalCode: true, style: style });
+    this.card = this.elements.create('card', {
+      hidePostalCode: true,
+      style: style,
+    });
     // Add an instance of the card Element into the `card-element` <div>.
     this.card.mount('#card-element');
     this.card.addEventListener('change', (event) => {
@@ -115,8 +118,23 @@ export class PaymentComponent implements OnInit, AfterViewInit {
         var errorElement = document.getElementById('card-errors');
         errorElement.textContent = result.error.message;
       } else {
+        let data = {
+          action_button_name: 'Yes',
+          title_text: 'Confirmation',
+          text: `Do you really want to make a payment?`,
+        };
+        let modelRef = this.modalService.open(ConfirmationPopUpComponent, {
+          size: 'md',
+          centered: true,
+        });
+        modelRef.componentInstance.data = data;
+
+        modelRef.result.then((res) => {
+          if (res) {
+            this.stripeTokenHandler(result.token);
+          }
+        });
         // Send the token to your server
-        this.stripeTokenHandler(result.token);
       }
     });
   }
@@ -464,30 +482,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             this.cardImage = x.image;
           }
         });
-      }
-    });
-  }
-
-  confirmOrder() {
-    // this.formSubmitAttempt = true;
-    // if (this.paymentForm.invalid || this.onSelectMonth) {
-    //   return;
-    // }
-
-    let data = {
-      action_button_name: 'Yes',
-      title_text: 'Confirmation',
-      text: `Do you really want to make a payment?`,
-    };
-    let modelRef = this.modalService.open(ConfirmationPopUpComponent, {
-      size: 'md',
-      centered: true,
-    });
-    modelRef.componentInstance.data = data;
-
-    modelRef.result.then((res) => {
-      if (res) {
-        this.createToken();
       }
     });
   }

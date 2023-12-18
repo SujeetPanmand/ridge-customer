@@ -113,9 +113,8 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
       base: {
         hidePostalCode: true,
         color: '#32325d',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
         fontSmoothing: 'antialiased',
-        fontSize: '16px',
+        fontSize: '18px',
         '::placeholder': {
           color: '#aab7c4',
         },
@@ -126,7 +125,10 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
       },
     };
     // Create an instance of the card Element.
-    this.card = this.elements.create('card', { style: style });
+    this.card = this.elements.create('card', {
+      hidePostalCode: true,
+      style: style,
+    });
     // Add an instance of the card Element into the `card-element` <div>.
     this.card.mount('#card-element');
     this.card.addEventListener('change', (event) => {
@@ -147,8 +149,23 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
         var errorElement = document.getElementById('card-errors');
         errorElement.textContent = result.error.message;
       } else {
+        let data = {
+          action_button_name: 'Yes',
+          title_text: 'Confirmation',
+          text: `Do you really want to make a payment?`,
+        };
+        let modelRef = this.modalService.open(ConfirmationPopUpComponent, {
+          size: 'md',
+          centered: true,
+        });
+        modelRef.componentInstance.data = data;
+
+        modelRef.result.then((res) => {
+          if (res) {
+            this.stripeTokenHandler(result.token);
+          }
+        });
         // Send the token to your server
-        this.stripeTokenHandler(result.token);
       }
     });
   }
@@ -205,25 +222,6 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
           this.orderPaymentDetails = res.orderPaymentDetails;
         }
       });
-  }
-
-  confirmOrder() {
-    let data = {
-      action_button_name: 'Yes',
-      title_text: 'Confirmation',
-      text: `Do you really want to make a payment?`,
-    };
-    let modelRef = this.modalService.open(ConfirmationPopUpComponent, {
-      size: 'md',
-      centered: true,
-    });
-    modelRef.componentInstance.data = data;
-
-    modelRef.result.then((res) => {
-      if (res) {
-        this.createToken();
-      }
-    });
   }
 
   isFieldValid = (formGroup: FormGroup, field: string): boolean =>

@@ -47,7 +47,7 @@
               <div id="card-element" class="border p-4">
                 <!-- a Stripe Element will be inserted here. -->
               </div>
-         
+
               <!-- Used to display form errors -->
               <div id="card-errors" class="text-danger pt-2" role="alert"></div>
             </div>
@@ -55,7 +55,7 @@
             <div>
               <button
                 *ngIf="!isStandardCut || isPreorder"
-                (click)="confirmOrder()"
+                (click)="createToken()"
                 class="btn button-orange w-100 mb-2"
                 type="button"
               >
@@ -63,7 +63,7 @@
               </button>
               <button
                 *ngIf="isStandardCut && !isPreorder"
-                (click)="confirmOrder()"
+                (click)="createToken()"
                 class="btn button-orange w-100 mb-2"
                 type="button"
               >
