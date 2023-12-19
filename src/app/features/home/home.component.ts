@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
         input.setAttribute('disabled', 'true');
       }
     });
-    this.commonService.gotoTop();
+    this.scrollToVideo();
     this.getAllProducts();
     this.getAllPromotions();
   }
@@ -161,5 +161,13 @@ export class HomeComponent implements OnInit {
 
   navigateToProductDetails(product) {
     this.router.navigate([`shop/product-details/${product.id}`]);
+  }
+
+  scrollToVideo() {
+    window.scroll({
+      top: 1100,
+      left: 0,
+      behavior: 'smooth',
+    });
   }
 }

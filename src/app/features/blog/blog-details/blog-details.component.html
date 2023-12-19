@@ -39,7 +39,12 @@
     </div>
 
     <div class="row">
-      <div class="col-md-9">
+      <div
+        [ngClass]="{
+          'col-md-9': allArticles.length,
+          'col-md-12': !allArticles.length
+        }"
+      >
         <div class="pt-2">
           <span class="text-orange fw-bold"
             >{{ comments.length }} Comments</span
@@ -47,7 +52,12 @@
           <span class="px-1 fw-bold"> {{ blogDetails?.createdAt | date }}</span>
         </div>
         <div class="pt-3">
-          <div class="col-md-10">
+          <div
+            [ngClass]="{
+              'col-md-10': allArticles.length,
+              'col-md-12': !allArticles.length
+            }"
+          >
             <div
               class="responsive-content"
               [innerHTML]="blogDetails?.content"
@@ -121,7 +131,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 py-4 py-md-0">
+      <div *ngIf="allArticles.length" class="col-md-3 py-4 py-md-0">
         <div class="fw-semibold">TOP ARTICLES</div>
         <div
           *ngFor="let articals of allArticles"
