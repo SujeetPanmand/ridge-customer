@@ -55,6 +55,11 @@ export class HeaderComponent implements OnInit {
     this.commonService.islogginButtonShow.subscribe((val) => {
       this.isLogginShow = val;
     });
+    this.commonService.updatedUserDetailsEvent.subscribe((val) => {
+      this.userDetails = val;
+      this.userId = this.userDetails.userDetails.id;
+      this.setUserProfilePic();
+    });
   }
 
   closeMobileMenu() {

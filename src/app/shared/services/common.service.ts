@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ApiService } from './api.service';
 import { ToastrService } from 'ngx-toastr';
-import { User } from '../interfaces/user/user-details';
+import { User, UserDetails } from '../interfaces/user/user-details';
 import { environment } from 'src/environments/environment';
 import { AllCartItemDetail } from '../interfaces/all-cart-item-details';
 
@@ -22,6 +22,7 @@ export class CommonService {
   @Output() cartItemsEvent = new EventEmitter<AllCartItemDetail[]>();
   @Output() islogginButtonShow = new EventEmitter<boolean>();
   @Output() newProfileImageEmitter = new EventEmitter<string>();
+  @Output() updatedUserDetailsEvent = new EventEmitter<User>();
   constructor(
     private apiService: ApiService,
     private toastrService: ToastrService
@@ -72,6 +73,7 @@ export class CommonService {
         this.islogginButtonShow.emit(this.isLogginShow);
         this.setProfilePic(this.userDetails.userDetails.id);
         this.setGlobalCartCount();
+        this.updatedUserDetailsEvent.emit(this.userDetails);
         resolve(this.userDetails);
       } else {
         this.apiService.request('GET_USER_DETAILS', { params: {} }).subscribe(
@@ -82,6 +84,7 @@ export class CommonService {
               this.userDetails = res;
               this.setProfilePic(res.userDetails.id);
               resolve(res);
+              this.updatedUserDetailsEvent.emit(this.userDetails);
               this.setGlobalCartCount();
               localStorage.setItem('userFullName', res.userDetails.fullName);
             } else {
