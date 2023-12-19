@@ -173,7 +173,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       })
       .subscribe((res) => {
         if (res) {
-          this.selectedProduct = res.productDetails;
+          this.selectedProduct = { ...res.productDetails, count: 0 };
           if (this.cartItems.length > 0) {
             this.defaultSetting();
           } else if (this.commonService.cartItems) {

@@ -165,6 +165,7 @@ export class ShopComponent implements OnInit {
       this.productList.forEach((item) => {
         if (item.id == x.productId) {
           item.count = x.quantity;
+          item.outOfStock = x.outOfStock;
         }
       });
     });
@@ -202,7 +203,9 @@ export class ShopComponent implements OnInit {
 
   addMoreToCart(flag, selectedProduct) {
     selectedProduct.count = flag
-      ? selectedProduct.count + 1
+      ? selectedProduct.availebleStock == selectedProduct.count
+        ? selectedProduct.count
+        : selectedProduct.count + 1
       : selectedProduct.count - 1;
     if (selectedProduct.count > 0) {
       this.updateItemCartQuantity(selectedProduct.count, selectedProduct);
@@ -225,6 +228,7 @@ export class ShopComponent implements OnInit {
           this.commonService.setGlobalCartCount();
         } else {
           this.toastrService.error(res.message);
+          this.commonService.setGlobalCartCount();
         }
       });
     } else {
