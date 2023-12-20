@@ -28,8 +28,10 @@ export class ContactComponent implements OnInit {
     this.generateContactForm();
     this.commonService.gotoTop();
     this.commonService.getUserDetails().then((x) => {
-      this.userEmail = x.userDetails.email;
-      this.contactForm.get('userEmail').disable();
+      if (x) {
+        this.userEmail = x.userDetails.email;
+        this.contactForm.get('userEmail').disable();
+      }
     });
   }
   generateContactForm() {

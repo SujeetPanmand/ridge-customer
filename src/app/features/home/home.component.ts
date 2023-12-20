@@ -49,7 +49,13 @@ export class HomeComponent implements OnInit {
 
   navigateToHome() {
     this.formSubmitAttempt = true;
-    if (!this.emailSubscribe) {
+    var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    let flag = emailRegex.test(this.emailSubscribe);
+    console.log(flag);
+    if (!this.emailSubscribe || !flag) {
+      if (!flag) {
+        this.showErrorMessage('Your email is incorrect.');
+      }
       return;
     }
     const apiRequest = {
@@ -169,5 +175,8 @@ export class HomeComponent implements OnInit {
       left: 0,
       behavior: 'smooth',
     });
+  }
+  showErrorMessage(msg) {
+    this.toastrService.error(msg);
   }
 }

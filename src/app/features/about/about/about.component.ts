@@ -26,8 +26,10 @@ export class AboutComponent implements OnInit {
     this.commonService.gotoTop();
     this.generateSubscribeForm();
     this.commonService.getUserDetails().then((x) => {
-      this.emailSubscribe = x.userDetails.email;
-      this.subscribeForm.get('emailSubscribe').disable();
+      if (x) {
+        this.emailSubscribe = x.userDetails.email;
+        this.subscribeForm.get('emailSubscribe').disable();
+      }
     });
   }
   generateSubscribeForm() {
@@ -39,6 +41,13 @@ export class AboutComponent implements OnInit {
   navigateToHome() {
     this.formSubmitAttempt = true;
     if (this.subscribeForm.invalid) {
+      if (
+        this.emailSubscribe &&
+        this.subscribeForm.controls['emailSubscribe'].errors['email']
+      ) {
+        this.showErrorMessage('Your email is incorrect.');
+      }
+      console.log('invalid email');
       return;
     }
     const apiRequest = {
@@ -68,4 +77,8 @@ export class AboutComponent implements OnInit {
     formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
+
+  showErrorMessage(msg) {
+    this.toastrService.error(msg);
+  }
 }
