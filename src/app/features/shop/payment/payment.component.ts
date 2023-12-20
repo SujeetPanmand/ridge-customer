@@ -55,7 +55,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   stripe: any;
   elements: any;
   card: any;
-
+  isConfirmationLoading = false;
   @ViewChild('paymentForm') submitPaymentForm: NgForm;
   constructor(
     public commonService: CommonService,
@@ -118,6 +118,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
         var errorElement = document.getElementById('card-errors');
         errorElement.textContent = result.error.message;
       } else {
+        if (this.isConfirmationLoading) {
+          return;
+        }
+        this.isConfirmationLoading = true;
         let data = {
           action_button_name: 'Yes',
           title_text: 'Confirmation',
@@ -126,12 +130,15 @@ export class PaymentComponent implements OnInit, AfterViewInit {
         let modelRef = this.modalService.open(ConfirmationPopUpComponent, {
           size: 'md',
           centered: true,
+          backdrop: false,
         });
         modelRef.componentInstance.data = data;
 
         modelRef.result.then((res) => {
           if (res) {
             this.stripeTokenHandler(result.token);
+          } else {
+            this.isConfirmationLoading = false;
           }
         });
         // Send the token to your server
