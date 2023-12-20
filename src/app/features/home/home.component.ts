@@ -66,10 +66,8 @@ export class HomeComponent implements OnInit {
     this.apiService.request('EMAIL_SUBSCRIBE', apiRequest).subscribe((res) => {
       this.formSubmitAttempt = false;
       if (res && res.statusCode == 200) {
-        this.emailSubscribe = '';
         this.toastrService.success('Subscribe Successfully!');
       } else {
-        this.emailSubscribe = '';
         this.toastrService.error(res.message);
       }
     });

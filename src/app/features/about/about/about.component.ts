@@ -34,7 +34,13 @@ export class AboutComponent implements OnInit {
   }
   generateSubscribeForm() {
     this.subscribeForm = this.formBuilder.group({
-      emailSubscribe: ['', [Validators.required, Validators.email]],
+      emailSubscribe: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+        ],
+      ],
     });
   }
 
@@ -43,7 +49,7 @@ export class AboutComponent implements OnInit {
     if (this.subscribeForm.invalid) {
       if (
         this.emailSubscribe &&
-        this.subscribeForm.controls['emailSubscribe'].errors['email']
+        this.subscribeForm.controls['emailSubscribe'].errors['pattern']
       ) {
         this.showErrorMessage('Your email is incorrect.');
       }
@@ -58,10 +64,8 @@ export class AboutComponent implements OnInit {
     this.apiService.request('EMAIL_SUBSCRIBE', apiRequest).subscribe((res) => {
       this.formSubmitAttempt = false;
       if (res && res.statusCode == 200) {
-        // this.setUserBasics(res.userDetails);
         this.toastrService.success('Subscribe Successfully!');
       } else {
-        this.emailSubscribe = '';
         this.toastrService.error(res.message);
       }
     });
