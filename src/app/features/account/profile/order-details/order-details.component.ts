@@ -50,12 +50,24 @@ export class OrderDetailsComponent {
   }
   formatTime(timeSlot: any): string {
     if (!timeSlot) {
-      return "--"; 
+      return '--';
     }
-    const startTimeHour = timeSlot.startTimeHour < 10 ? "0" + timeSlot.startTimeHour : timeSlot.startTimeHour;
-    const startTimeMinut = timeSlot.startTimeMinut < 10 ? "0" + timeSlot.startTimeMinut : timeSlot.startTimeMinut;
-    const endTimeHour = timeSlot.endTimeHour < 10 ? "0" + timeSlot.endTimeHour : timeSlot.endTimeHour;
-    const endTimeMinut = timeSlot.endTimeMinut < 10 ? "0" + timeSlot.endTimeMinut : timeSlot.endTimeMinut;
+    const startTimeHour =
+      timeSlot.startTimeHour < 10
+        ? '0' + timeSlot.startTimeHour
+        : timeSlot.startTimeHour;
+    const startTimeMinut =
+      timeSlot.startTimeMinut < 10
+        ? '0' + timeSlot.startTimeMinut
+        : timeSlot.startTimeMinut;
+    const endTimeHour =
+      timeSlot.endTimeHour < 10
+        ? '0' + timeSlot.endTimeHour
+        : timeSlot.endTimeHour;
+    const endTimeMinut =
+      timeSlot.endTimeMinut < 10
+        ? '0' + timeSlot.endTimeMinut
+        : timeSlot.endTimeMinut;
 
     return `${startTimeHour}:${startTimeMinut} ${timeSlot.startTimeUnit} To ${endTimeHour}:${endTimeMinut} ${timeSlot.endTimeUnit}`;
   }
@@ -89,7 +101,7 @@ export class OrderDetailsComponent {
     let data = {
       action_button_name: 'Yes',
       title_text: 'Confirmation',
-      text: `Do you really want to mark as delivered order ${this.selectedOrder.id}?`,
+      text: `Are you sure want to mark the order ${this.selectedOrder.id} as delivered?`,
     };
     let modelRef = this.modalService.open(ConfirmationPopUpComponent, {
       size: 'md',
@@ -160,9 +172,7 @@ export class OrderDetailsComponent {
 
   navigateToSecondPayment() {
     let url = `shop/order-payment/${this.selectedOrder?.id.trim()}`;
-    this.router.navigate([
-      url,
-    ]);
+    this.router.navigate([url]);
   }
   getTotalAndSubTotal(order) {
     this.subTotal = order.subTotalAmount;
