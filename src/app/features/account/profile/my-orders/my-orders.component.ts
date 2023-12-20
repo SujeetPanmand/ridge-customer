@@ -40,18 +40,11 @@ export class MyOrdersComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dtOptions = {
-      paging: true,
-      fixedColumns: true,
-      order: [[1,'desc']],
-      autoWidth: true,
-
-      select: false,
-      responsive: true,
-      pagingType: 'full_numbers',
+      order: [[1, 'desc']],
       pageLength: 10,
-      scrollX:false,
-      scrollbars:false,
-      scrollY:false,
+      scrollX: false,
+      responsive: true,
+      scrollY: false,
     };
     this.myOrderDetails();
     this.saveCancelReasonForm();

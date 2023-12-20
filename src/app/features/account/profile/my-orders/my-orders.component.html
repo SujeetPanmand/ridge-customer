@@ -25,18 +25,22 @@
               <th>ORDER TYPE</th>
               <th>CUT TYPE</th>
               <th>ORDER STATUS</th>
-              <th>ACTION</th>
+              <!-- <th>ACTION</th> -->
             </tr>
           </thead>
           <tbody>
-            <tr
-              class="p-2 cursor"
-              *ngFor="let order of orderDetails"
-              (click)="navigateToDetails(order.id)"
-            >
-              <td>{{ order.orderId }}</td>
-              <td>{{ order.createdAt | date : "MM/dd/yyyy" }}</td>
-              <td>${{ order.totalAmount | number : ".2-2" }}</td>
+            <tr class="p-2 cursor" *ngFor="let order of orderDetails">
+              <td>
+                <span (click)="navigateToDetails(order.id)">{{
+                  order.orderId
+                }}</span>
+              </td>
+              <td (click)="navigateToDetails(order.id)">
+                {{ order.createdAt | date : "MM/dd/yyyy" }}
+              </td>
+              <td (click)="navigateToDetails(order.id)">
+                ${{ order.totalAmount | number : ".2-2" }}
+              </td>
               <td>
                 <span
                   >${{
@@ -47,8 +51,12 @@
                   }}</span
                 >
               </td>
-              <td>{{ commonService.getOrderType(order.orderType) }}</td>
-              <td>{{ commonService.getCustomType(order.cutType) }}</td>
+              <td (click)="navigateToDetails(order.id)">
+                {{ commonService.getOrderType(order.orderType) }}
+              </td>
+              <td (click)="navigateToDetails(order.id)">
+                {{ commonService.getCustomType(order.cutType) }}
+              </td>
               <td>
                 <span
                   class="badge p-2 rounded-pill"
@@ -62,9 +70,9 @@
                   }}</span>
                 </span>
               </td>
-              <td>
+              <!-- <td>
                 <i class="fa fa-eye" (click)="navigateToDetails(order.id)"></i>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>

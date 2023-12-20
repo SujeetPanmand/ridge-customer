@@ -129,7 +129,7 @@ export class HomeComponent implements OnInit {
         if (res) {
           // console.log(res);
           this.productList = res.allProductDetails
-            .filter((x) => x.isActive)
+            .filter((x) => x.isActive && !x.outOfStock)
             .map((e) => {
               return { ...e, url: this.setProductPic(e.id) };
             });
