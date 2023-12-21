@@ -250,6 +250,8 @@ export class ShopComponent implements OnInit {
       this.commonService.removeLocalCartItem(productId);
     }
   }
+
+  //----------------------without login-----------------------------
   @HostListener('window:beforeunload', ['$event'])
   beforeunloadHandler(event) {
     this.localItemCopy = JSON.parse(
@@ -258,6 +260,7 @@ export class ShopComponent implements OnInit {
     console.log('beforeUnload localStorageItem', this.localItemCopy);
     localStorage.setItem('localItemCopy', JSON.stringify(this.localItemCopy));
   }
+
   @HostListener('window:unload', ['$event'])
   unloadHandler(event) {
     localStorage.removeItem('ridgeOfflineCartItems');
@@ -271,7 +274,9 @@ export class ShopComponent implements OnInit {
       JSON.stringify(this.localItemCopy)
     );
     this.commonService.setCartItems(this.localItemCopy);
-    this.commonService.addProducts(this.localItemCopy.length);
-    console.log('load localStorageItem', this.localItemCopy);
+    if (!this.isLoggedIn) {
+      this.commonService.addProducts(this.localItemCopy.length);
+    }
   }
+  //----------------------without login end-----------------------------
 }
