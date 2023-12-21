@@ -112,6 +112,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     const style = {
       base: {
         hidePostalCode: true,
+        disableLink: true,
         color: '#32325d',
         fontSmoothing: 'antialiased',
         fontSize: '18px',
@@ -127,6 +128,7 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     // Create an instance of the card Element.
     this.card = this.elements.create('card', {
       hidePostalCode: true,
+      disableLink: true,
       style: style,
     });
     // Add an instance of the card Element into the `card-element` <div>.
