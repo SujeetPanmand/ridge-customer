@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
         input.setAttribute('disabled', 'true');
       }
     });
-    this.scrollToVideo();
+    this.commonService.gotoTop();
     this.getAllProducts();
     this.getAllPromotions();
   }
@@ -167,13 +167,13 @@ export class HomeComponent implements OnInit {
     this.router.navigate([`shop/product-details/${product.id}`]);
   }
 
-  scrollToVideo() {
-    window.scroll({
-      top: 1100,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }
+  // scrollToVideo() {
+  //   window.scroll({
+  //     top: 1100,
+  //     left: 0,
+  //     behavior: 'smooth',
+  //   });
+  // }
   showErrorMessage(msg) {
     this.toastrService.error(msg);
   }
