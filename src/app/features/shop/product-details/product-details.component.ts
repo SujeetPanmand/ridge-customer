@@ -192,7 +192,10 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     );
     if (currentSelectedProduct) {
       currentSelectedProduct.quantity = flag
-        ? currentSelectedProduct.quantity + 1
+        ? currentSelectedProduct.availebleStock ==
+          currentSelectedProduct.quantity
+          ? currentSelectedProduct.quantity
+          : currentSelectedProduct.quantity + 1
         : currentSelectedProduct.quantity - 1;
       if (currentSelectedProduct.quantity > 0) {
         this.updateItemCartQuantity(
