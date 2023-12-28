@@ -5,6 +5,11 @@ body {
   font-family: "Muli";
 }
 
+.form-check-input:checked {
+  background-color: #ef4c00;
+  border-color: #ef4c00;
+}
+
 // * width */
 ::-webkit-scrollbar {
   width: 10px;

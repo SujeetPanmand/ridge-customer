@@ -14,6 +14,7 @@ import { CommonService } from 'src/app/shared/services/common.service';
 })
 export class SignupComponent implements OnInit {
   signUpForm: FormGroup;
+  newAccountForm:FormGroup;
   formSubmitAttempt: boolean = false;
   userName: string = '';
   password: string = '';
@@ -21,6 +22,8 @@ export class SignupComponent implements OnInit {
   lastName: string = '';
   address: string = '';
   zipCode: string = '';
+  companyId: string = '';
+  companyName: string = '';
   state: string = '';
   phoneNumber: string = '';
   city: string = '';
@@ -40,10 +43,32 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.generateSignUpForm();
+    this.generateNewAccountForm();
+  }
+
+  generateNewAccountForm() {
+    this.newAccountForm = this.formBuilder.group({
+      accountCheckOption: ['personal'],
+    });
+  }
+
+  onChangeAccountType() {
+    if(this.newAccountForm.controls['accountCheckOption'].value=='personal') {
+      this.signUpForm.get('companyId').clearValidators();
+      this.signUpForm.get('companyId').updateValueAndValidity();
+      this.signUpForm.get('companyName').clearValidators();
+      this.signUpForm.get('companyName').updateValueAndValidity();
+    }
+    if(this.newAccountForm.controls['accountCheckOption'].value=='business') {
+      this.signUpForm.get('companyId').addValidators(Validators.required);
+      this.signUpForm.get('companyId').updateValueAndValidity();
+      this.signUpForm.get('companyName').addValidators(Validators.required);
+      this.signUpForm.get('companyName').updateValueAndValidity();
+    }
+    
   }
 
   onKeyPress(event) {
-    console.log(event.keyCode);
     if (
       this.zipCode &&
       this.zipCode.toString().length >= 5 &&
@@ -99,6 +124,8 @@ export class SignupComponent implements OnInit {
       state: ['', Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
+      companyName:['', Validators.required],
+      companyId:['', Validators.required]
     });
   }
 
@@ -125,6 +152,8 @@ export class SignupComponent implements OnInit {
         state: this.state,
         city: this.city,
         country: this.country,
+        // companyName:this.companyName,
+        // companyId:this.companyId
       },
     };
 
