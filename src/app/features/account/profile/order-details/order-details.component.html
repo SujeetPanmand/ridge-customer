@@ -86,7 +86,7 @@
             <div class="fw-bold">Shipping Address:</div>
             <p *ngIf="selectedOrder">
               {{ selectedOrder ? selectedOrder["address1"] : "" }},&nbsp;
-              {{ selectedOrder ? selectedOrder["address2"] : "" }} in
+              {{ selectedOrder ? selectedOrder["address2"] + "," : "" }}
               {{ selectedOrder ? selectedOrder["city"] : "" }},
               {{ selectedOrder ? selectedOrder["state"] : "" }},{{
                 selectedOrder ? selectedOrder["country"] : ""

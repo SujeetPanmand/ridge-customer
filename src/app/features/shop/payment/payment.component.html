@@ -27,8 +27,8 @@
               {{ orderAddress["address1"] }},&nbsp;
 
               {{
-                orderAddress["address2"] ? orderAddress["address2"] : ""
-              }}&nbsp; in {{ orderAddress["city"] }},
+                orderAddress["address2"] ? orderAddress["address2"] + "," : ""
+              }}&nbsp; {{ orderAddress["city"] }},
               {{ orderAddress["state"] }},&nbsp;{{
                 orderAddress["country"]
               }},&nbsp;{{ orderAddress["zipCode"] }}
@@ -43,7 +43,9 @@
           <hr class="border" />
           <form action="/charge" method="post" id="paymentForm">
             <div class="form-row mb-3">
-              <label for="card-element" class="mb-2"> Credit or debit card </label>
+              <label for="card-element" class="mb-2">
+                Credit or debit card
+              </label>
               <div id="card-element" class="border p-4">
                 <!-- a Stripe Element will be inserted here. -->
               </div>
