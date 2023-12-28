@@ -18,11 +18,7 @@
     </div>
     <div class="p-4 bg-white">
       <div class="d-flex align-items-center">
-        <img
-          src="/assets/ridge-logo.png"
-          alt=""
-          class="img-fluid logo"
-        />
+        <img src="/assets/ridge-logo.png" alt="" class="img-fluid logo" />
         <h3 class="text-center fw-bold text-center w-100">Invoice</h3>
       </div>
       <hr class="border mt-0 mb-4" />
@@ -90,7 +86,7 @@
             <div class="fw-bold">Shipping Address:</div>
             <p *ngIf="selectedOrder">
               {{ selectedOrder ? selectedOrder["address1"] : "" }},&nbsp;
-              {{ selectedOrder ? selectedOrder["address2"] : "" }} in
+              {{ selectedOrder ? selectedOrder["address2"] + "," : "" }}
               {{ selectedOrder ? selectedOrder["city"] : "" }},
               {{ selectedOrder ? selectedOrder["state"] : "" }},{{
                 selectedOrder ? selectedOrder["country"] : ""
@@ -425,7 +421,7 @@
       <div class="mb-1"><b>Note</b> : For refund contact to admin.</div>
       <div class="mb-1 row">
         <div class="col-md-1"></div>
-        <div class="col-md-11">&nbsp;Email : support@ridgeatloafersglory.com</div>
+        <div class="col-md-11">&nbsp;Email : sales@ridgeatloafersglory.com</div>
       </div>
       <div class="mb-1 row">
         <div class="col-md-1"></div>

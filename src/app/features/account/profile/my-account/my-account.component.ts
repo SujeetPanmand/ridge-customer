@@ -142,13 +142,12 @@ export class MyAccountComponent implements OnInit {
 
   private loadUrl(file: any) {
     const reader = new FileReader();
+    reader.readAsDataURL(file);
     reader.onload = async (event: any) => {
       this.commonService.profilePictureUrl = this.profilePictureUrl = '';
       this.profilePictureUrl = this.commonService.profilePictureUrl =
         event.target.result;
       this.commonService.newProfileImageEmitter.emit(event.target.result);
     };
-
-    reader.readAsDataURL(file);
   }
 }

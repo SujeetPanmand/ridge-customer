@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { ApiService } from 'src/app/shared/services/api.service';
@@ -7,11 +7,13 @@ import { ToastrService } from 'ngx-toastr';
 import { BreadCrumbLinks } from 'src/app/shared/interfaces/breadcrumb';
 import { cartTypes, paymentLinks } from '../shop.config';
 import { environment } from 'src/environments/environment';
+import { loadStripe } from '@stripe/stripe-js';
 import {
   AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
+  NgForm,
   Validators,
 } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
@@ -50,7 +52,11 @@ export class PaymentComponent implements OnInit, AfterViewInit {
   totalBalanceDue = 0;
   grandTotal = 0;
   isNotValidMonth = false;
-
+  stripe: any;
+  elements: any;
+  card: any;
+  isConfirmationLoading = false;
+  @ViewChild('paymentForm') submitPaymentForm: NgForm;
   constructor(
     public commonService: CommonService,
     private route: ActivatedRoute,
@@ -64,6 +70,190 @@ export class PaymentComponent implements OnInit, AfterViewInit {
     this.getYearList();
     this.subscribeToCreditType();
     this.getRouterParams();
+    this.loadStripe();
+  }
+
+  async loadStripe() {
+    this.stripe = await loadStripe(environment.STRIPE_PUBLISH_KEY);
+    //const loader = Stripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+
+    this.elements = this.stripe.elements();
+    const style = {
+      base: {
+        hidePostalCode: true,
+        disableLink: true,
+        color: '#32325d',
+        fontSmoothing: 'antialiased',
+        fontSize: '18px',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+    };
+    // Create an instance of the card Element.
+    this.card = this.elements.create('card', {
+      hidePostalCode: true,
+      disableLink: true,
+      style: style,
+    });
+    // Add an instance of the card Element into the `card-element` <div>.
+    this.card.mount('#card-element');
+    this.card.addEventListener('change', (event) => {
+      var displayError = document.getElementById('card-errors');
+      if (event.error) {
+        displayError.textContent = event.error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+  }
+
+  createToken() {
+    this.stripe.createToken(this.card).then((result) => {
+      console.log('__________' + result);
+      if (result.error) {
+        // Inform the user if there was an error
+        var errorElement = document.getElementById('card-errors');
+        errorElement.textContent = result.error.message;
+      } else {
+        if (this.isConfirmationLoading) {
+          return;
+        }
+        this.isConfirmationLoading = true;
+        let data = {
+          action_button_name: 'Yes',
+          title_text: 'Confirmation',
+          text: `Are you sure want to make a payment?`,
+        };
+        let modelRef = this.modalService.open(ConfirmationPopUpComponent, {
+          size: 'md',
+          centered: true,
+          backdrop: false,
+        });
+        modelRef.componentInstance.data = data;
+
+        modelRef.result.then((res) => {
+          if (res) {
+            this.stripeTokenHandler(result.token);
+          } else {
+            this.isConfirmationLoading = false;
+          }
+        });
+        // Send the token to your server
+      }
+    });
+  }
+
+  stripeTokenHandler(token) {
+    this.createOrder(token);
+  }
+
+  createOrder(token) {
+    const apiRequest = {
+      data: this.isSelfPickUp
+        ? {
+            // cardNumber: Number(
+            //   this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
+            // ),
+            // expiryMonth:
+            //   this.paymentForm.controls['expiryMonth'].value.toString(),
+            // expiryYear:
+            //   this.paymentForm.controls['expiryYear'].value.toString(),
+            // cvv: Number(this.paymentForm.controls['cvv'].value),
+            // cardHolderName: this.paymentForm.controls['cardHolderName'].value,
+            isSelfPickup: this.isSelfPickUp,
+
+            country: this.orderAddress['country'],
+            zipCode: this.orderAddress['zipCode']
+              ? this.orderAddress['zipCode'].toString()
+              : '',
+            state: this.orderAddress['state'],
+            city: this.orderAddress['city'],
+            address1: this.orderAddress['address1'],
+
+            firstName: this.orderAddress['firstName'],
+            lastName: this.orderAddress['lastName'],
+
+            emailAddress: this.orderAddress['emailAddress'],
+            phoneNumber: this.orderAddress['phoneNumber'].toString(),
+            company: this.orderAddress['company'],
+            address2: this.orderAddress['address2'],
+            subTotalAmount: this.orderSubTotal,
+            tax: this.TAX_AMOUNT,
+            totalAmount: this.orderTotal,
+            orderType: this.isPreorder ? 2 : 1,
+            cutType: this.isStandardCut ? 1 : 2,
+
+            pickupSlotId: this.slotId,
+            expectedDeliveryDate: new Date(this.orderDate).toISOString(),
+            sameAsBillingAddress: true,
+            isSaveAddress: true,
+            shippingCharges: 0,
+            orderItemsModel: this.formatRecord(this.finalOrderProducts),
+            stId: token.id,
+          }
+        : {
+            // cardNumber: Number(
+            //   this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
+            // ),
+            // expiryMonth:
+            //   this.paymentForm.controls['expiryMonth'].value.toString(),
+            // expiryYear:
+            //   this.paymentForm.controls['expiryYear'].value.toString(),
+            // cvv: Number(this.paymentForm.controls['cvv'].value),
+            // cardHolderName: this.paymentForm.controls['cardHolderName'].value,
+            isSelfPickup: this.isSelfPickUp,
+            country: this.orderAddress['country'],
+            zipCode: this.orderAddress['zipCode'].toString(),
+            state: this.orderAddress['state'],
+            city: this.orderAddress['city'],
+            address1: this.orderAddress['address1'],
+            firstName: this.orderAddress['firstName'],
+            lastName: this.orderAddress['lastName'],
+            emailAddress: this.orderAddress['emailAddress'],
+            phoneNumber: this.orderAddress['phoneNumber'].toString(),
+            company: this.orderAddress['company'],
+            address2: this.orderAddress['address2'],
+            subTotalAmount: this.orderSubTotal,
+            tax: this.TAX_AMOUNT,
+            totalAmount: this.orderTotal,
+            orderType: this.isPreorder ? 2 : 1,
+            cutType: this.isStandardCut ? 1 : 2,
+            slotId: this.slotId,
+
+            expectedDeliveryDate: new Date(this.orderDate).toISOString(),
+            sameAsBillingAddress: true,
+            isSaveAddress: true,
+            shippingCharges: this.SHIPPING_AMOUNT,
+            orderItemsModel: this.formatRecord(this.finalOrderProducts),
+            stId: token.id,
+          },
+    };
+
+    this.apiService.request('CREATE_ORDER', apiRequest).subscribe(
+      (res) => {
+        this.isLoading = false;
+        if (res && res.statusCode == 200) {
+          this.removLocalItems();
+          this.commonService.onOrderConfirm();
+          this.router.navigateByUrl(
+            `shop/order-confirmation/${res.message}?isStandardCut=${
+              this.isStandardCut ? 'true' : 'false'
+            }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
+          );
+          this.toastrService.success('Your order has been placed.');
+        } else {
+          this.toastrService.error(res.message);
+        }
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
   }
 
   getRouterParams() {
@@ -301,127 +491,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
             this.cardImage = x.image;
           }
         });
-      }
-    });
-  }
-  createOrder() {
-    this.formSubmitAttempt = true;
-    if (this.paymentForm.invalid || this.onSelectMonth) {
-      return;
-    }
-    this.isLoading = true;
-    const apiRequest = {
-      data: this.isSelfPickUp
-        ? {
-            cardNumber: Number(
-              this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
-            ),
-            expiryMonth:
-              this.paymentForm.controls['expiryMonth'].value.toString(),
-            expiryYear:
-              this.paymentForm.controls['expiryYear'].value.toString(),
-            cvv: Number(this.paymentForm.controls['cvv'].value),
-            cardHolderName: this.paymentForm.controls['cardHolderName'].value,
-            isSelfPickup: this.isSelfPickUp,
-
-            country: this.orderAddress['country'],
-            zipCode: this.orderAddress['zipCode']
-              ? this.orderAddress['zipCode'].toString()
-              : '',
-            state: this.orderAddress['state'],
-            city: this.orderAddress['city'],
-            address1: this.orderAddress['address1'],
-
-            firstName: this.orderAddress['firstName'],
-            lastName: this.orderAddress['lastName'],
-
-            emailAddress: this.orderAddress['emailAddress'],
-            phoneNumber: this.orderAddress['phoneNumber'].toString(),
-            company: this.orderAddress['company'],
-            address2: this.orderAddress['address2'],
-            subTotalAmount: this.orderSubTotal,
-            tax: this.TAX_AMOUNT,
-            totalAmount: this.orderTotal,
-            orderType: this.isPreorder ? 2 : 1,
-            cutType: this.isStandardCut ? 1 : 2,
-
-            pickupSlotId: this.slotId,
-            expectedDeliveryDate: new Date(this.orderDate).toISOString(),
-            sameAsBillingAddress: true,
-            isSaveAddress: true,
-            shippingCharges: 0,
-            orderItemsModel: this.formatRecord(this.finalOrderProducts),
-          }
-        : {
-            cardNumber: Number(
-              this.paymentForm.controls['cardNumber'].value.replace(/-/g, '')
-            ),
-            expiryMonth:
-              this.paymentForm.controls['expiryMonth'].value.toString(),
-            expiryYear:
-              this.paymentForm.controls['expiryYear'].value.toString(),
-            cvv: Number(this.paymentForm.controls['cvv'].value),
-            cardHolderName: this.paymentForm.controls['cardHolderName'].value,
-            isSelfPickup: this.isSelfPickUp,
-            country: this.orderAddress['country'],
-            zipCode: this.orderAddress['zipCode'].toString(),
-            state: this.orderAddress['state'],
-            city: this.orderAddress['city'],
-            address1: this.orderAddress['address1'],
-            firstName: this.orderAddress['firstName'],
-            lastName: this.orderAddress['lastName'],
-            emailAddress: this.orderAddress['emailAddress'],
-            phoneNumber: this.orderAddress['phoneNumber'].toString(),
-            company: this.orderAddress['company'],
-            address2: this.orderAddress['address2'],
-            subTotalAmount: this.orderSubTotal,
-            tax: this.TAX_AMOUNT,
-            totalAmount: this.orderTotal,
-            orderType: this.isPreorder ? 2 : 1,
-            cutType: this.isStandardCut ? 1 : 2,
-            slotId: this.slotId,
-
-            expectedDeliveryDate: new Date(this.orderDate).toISOString(),
-            sameAsBillingAddress: true,
-            isSaveAddress: true,
-            shippingCharges: this.SHIPPING_AMOUNT,
-            orderItemsModel: this.formatRecord(this.finalOrderProducts),
-          },
-    };
-
-    let data = {
-      action_button_name: 'Yes',
-      title_text: 'Confirmation',
-      text: `Do you really want to make a payment?`,
-    };
-    let modelRef = this.modalService.open(ConfirmationPopUpComponent, {
-      size: 'md',
-      centered: true,
-    });
-    modelRef.componentInstance.data = data;
-
-    modelRef.result.then((res) => {
-      if (res) {
-        this.apiService.request('CREATE_ORDER', apiRequest).subscribe(
-          (res) => {
-            this.isLoading = false;
-            if (res && res.statusCode == 200) {
-              this.removLocalItems();
-              this.commonService.onOrderConfirm();
-              this.router.navigateByUrl(
-                `shop/order-confirmation/${res.message}?isStandardCut=${
-                  this.isStandardCut ? 'true' : 'false'
-                }&isPreorder=${this.isPreorder ? 'true' : 'false'}`
-              );
-              this.toastrService.success('Your order has been placed.');
-            } else {
-              this.toastrService.error(res.message);
-            }
-          },
-          (error) => {
-            this.isLoading = false;
-          }
-        );
       }
     });
   }

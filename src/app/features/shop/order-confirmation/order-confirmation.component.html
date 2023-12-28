@@ -52,7 +52,7 @@
             <p *ngIf="orderDetails" class="mb-0">
               {{ orderDetails ? orderDetails["address1"] : "" }},&nbsp;
 
-              {{ orderDetails ? orderDetails["address2"] : "" }} in
+              {{ orderDetails ? orderDetails["address2"]+',' : "" }}
               {{ orderDetails ? orderDetails["city"] : "" }},
               {{ orderDetails ? orderDetails["state"] : "" }},{{
                 orderDetails ? orderDetails["country"] : ""
@@ -215,8 +215,8 @@
                   <td class="fw-semibold text-end">
                     ${{
                       orderDetails?.isSelfPickup
-                        ? orderDetails.secondPayment + TAX_AMOUNT
-                        : orderDetails.secondPayment +
+                        ? orderDetails?.secondPayment + TAX_AMOUNT
+                        : orderDetails?.secondPayment +
                           SHIPPING_AMOUNT +
                           TAX_AMOUNT
                     }}

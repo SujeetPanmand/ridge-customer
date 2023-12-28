@@ -173,7 +173,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       })
       .subscribe((res) => {
         if (res) {
-          this.selectedProduct = res.productDetails;
+          this.selectedProduct = { ...res.productDetails, count: 0 };
           if (this.cartItems.length > 0) {
             this.defaultSetting();
           } else if (this.commonService.cartItems) {
@@ -192,7 +192,10 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     );
     if (currentSelectedProduct) {
       currentSelectedProduct.quantity = flag
-        ? currentSelectedProduct.quantity + 1
+        ? currentSelectedProduct.availebleStock ==
+          currentSelectedProduct.quantity
+          ? currentSelectedProduct.quantity
+          : currentSelectedProduct.quantity + 1
         : currentSelectedProduct.quantity - 1;
       if (currentSelectedProduct.quantity > 0) {
         this.updateItemCartQuantity(
@@ -524,7 +527,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     let data = {
       action_button_name: 'Delete',
       title_text: 'Confirmation',
-      text: `Do you really want to remove your review?`,
+      text: `Are you sure want to remove your review?`,
     };
 
     dialogRef.componentInstance.data = data;

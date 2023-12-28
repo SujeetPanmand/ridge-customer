@@ -55,6 +55,11 @@ export class HeaderComponent implements OnInit {
     this.commonService.islogginButtonShow.subscribe((val) => {
       this.isLogginShow = val;
     });
+    this.commonService.updatedUserDetailsEvent.subscribe((val) => {
+      this.userDetails = val;
+      this.userId = this.userDetails.userDetails.id;
+      this.setUserProfilePic();
+    });
   }
 
   closeMobileMenu() {
@@ -77,16 +82,16 @@ export class HeaderComponent implements OnInit {
     this.commonService.newProfileImageEmitter.subscribe((res) => {
       if (res) {
         this.userProfilePic = '';
-        this.userProfilePic = res;
-        // this.setUserProfilePic();
+        this.setUserProfilePic();
       }
     });
   }
 
   setUserProfilePic() {
     //this.commonService.profilePictureUrl = '';
+    let date = new Date().getTime().valueOf();
     this.userProfilePic =
-      environment.baseUrl + '/api/user/image/' + this.userId;
+      environment.baseUrl + '/api/user/image/' + this.userId + '?' + date;
     // this.commonService.profilePictureUrl = url;
   }
 }

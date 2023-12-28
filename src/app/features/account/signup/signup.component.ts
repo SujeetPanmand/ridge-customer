@@ -86,7 +86,13 @@ export class SignupComponent implements OnInit {
       lastName: ['', Validators.required],
       firstName: ['', Validators.required],
       password: ['', Validators.required],
-      email: ['', Validators.required],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+        ],
+      ],
       address: ['', Validators.required],
       zipCode: ['', Validators.required],
       phoneNumber: ['', Validators.required],
@@ -99,6 +105,12 @@ export class SignupComponent implements OnInit {
   navigateToHome() {
     this.formSubmitAttempt = true;
     if (this.signUpForm.invalid) {
+      if (
+        this.userName &&
+        this.signUpForm.controls['email'].errors['pattern']
+      ) {
+        this.showErrorMessage('Your email is incorrect.');
+      }
       return;
     }
     const apiRequest = {
@@ -139,4 +151,8 @@ export class SignupComponent implements OnInit {
     formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
+
+  showErrorMessage(msg) {
+    this.toastrService.error(msg);
+  }
 }

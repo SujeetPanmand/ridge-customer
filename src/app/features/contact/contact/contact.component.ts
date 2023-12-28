@@ -28,13 +28,21 @@ export class ContactComponent implements OnInit {
     this.generateContactForm();
     this.commonService.gotoTop();
     this.commonService.getUserDetails().then((x) => {
-      this.userEmail = x.userDetails.email;
-      this.contactForm.get('userEmail').disable();
+      if (x) {
+        this.userEmail = x.userDetails.email;
+        this.contactForm.get('userEmail').disable();
+      }
     });
   }
   generateContactForm() {
     this.contactForm = this.formBuilder.group({
-      userEmail: ['', [Validators.required, Validators.email]],
+      userEmail: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+        ],
+      ],
       subject: ['', Validators.required],
       message: ['', Validators.required],
     });
@@ -43,6 +51,12 @@ export class ContactComponent implements OnInit {
   navigateToHome() {
     this.formSubmitAttempt = true;
     if (this.contactForm.invalid) {
+      if (
+        this.userEmail &&
+        this.contactForm.controls['userEmail'].errors['pattern']
+      ) {
+        this.showErrorMessage('Your email is incorrect.');
+      }
       return;
     }
     const apiRequest = {
@@ -74,4 +88,8 @@ export class ContactComponent implements OnInit {
     formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
+
+  showErrorMessage(msg) {
+    this.toastrService.error(msg);
+  }
 }

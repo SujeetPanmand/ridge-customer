@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/services/api.service';
 
 import { Router } from '@angular/router';
@@ -30,6 +30,7 @@ export class ShopComponent implements OnInit {
   productPicUrl = '';
   links: BreadCrumbLinks[] = shopLinks;
   isLoggedIn = 0;
+  localItemCopy = [];
   constructor(
     private apiService: ApiService,
     private router: Router,
@@ -165,6 +166,7 @@ export class ShopComponent implements OnInit {
       this.productList.forEach((item) => {
         if (item.id == x.productId) {
           item.count = x.quantity;
+          item.outOfStock = x.outOfStock;
         }
       });
     });
@@ -202,7 +204,9 @@ export class ShopComponent implements OnInit {
 
   addMoreToCart(flag, selectedProduct) {
     selectedProduct.count = flag
-      ? selectedProduct.count + 1
+      ? selectedProduct.availebleStock == selectedProduct.count
+        ? selectedProduct.count
+        : selectedProduct.count + 1
       : selectedProduct.count - 1;
     if (selectedProduct.count > 0) {
       this.updateItemCartQuantity(selectedProduct.count, selectedProduct);
@@ -225,6 +229,7 @@ export class ShopComponent implements OnInit {
           this.commonService.setGlobalCartCount();
         } else {
           this.toastrService.error(res.message);
+          this.commonService.setGlobalCartCount();
         }
       });
     } else {
@@ -245,4 +250,33 @@ export class ShopComponent implements OnInit {
       this.commonService.removeLocalCartItem(productId);
     }
   }
+
+  //----------------------without login-----------------------------
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler(event) {
+    this.localItemCopy = JSON.parse(
+      localStorage.getItem('ridgeOfflineCartItems')
+    );
+    console.log('beforeUnload localStorageItem', this.localItemCopy);
+    localStorage.setItem('localItemCopy', JSON.stringify(this.localItemCopy));
+  }
+
+  @HostListener('window:unload', ['$event'])
+  unloadHandler(event) {
+    localStorage.removeItem('ridgeOfflineCartItems');
+  }
+
+  @HostListener('window:load', ['$event'])
+  loadHandler(event) {
+    this.localItemCopy = JSON.parse(localStorage.getItem('localItemCopy'));
+    localStorage.setItem(
+      'ridgeOfflineCartItems',
+      JSON.stringify(this.localItemCopy)
+    );
+    this.commonService.setCartItems(this.localItemCopy);
+    if (!this.isLoggedIn) {
+      this.commonService.addProducts(this.localItemCopy.length);
+    }
+  }
+  //----------------------without login end-----------------------------
 }

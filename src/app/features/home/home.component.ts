@@ -49,7 +49,13 @@ export class HomeComponent implements OnInit {
 
   navigateToHome() {
     this.formSubmitAttempt = true;
-    if (!this.emailSubscribe) {
+    var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    let flag = emailRegex.test(this.emailSubscribe);
+    console.log(flag);
+    if (!this.emailSubscribe || !flag) {
+      if (!flag) {
+        this.showErrorMessage('Your email is incorrect.');
+      }
       return;
     }
     const apiRequest = {
@@ -60,10 +66,8 @@ export class HomeComponent implements OnInit {
     this.apiService.request('EMAIL_SUBSCRIBE', apiRequest).subscribe((res) => {
       this.formSubmitAttempt = false;
       if (res && res.statusCode == 200) {
-        this.emailSubscribe = '';
         this.toastrService.success('Subscribe Successfully!');
       } else {
-        this.emailSubscribe = '';
         this.toastrService.error(res.message);
       }
     });
@@ -125,7 +129,7 @@ export class HomeComponent implements OnInit {
         if (res) {
           // console.log(res);
           this.productList = res.allProductDetails
-            .filter((x) => x.isActive)
+            .filter((x) => x.isActive && !x.outOfStock)
             .map((e) => {
               return { ...e, url: this.setProductPic(e.id) };
             });
@@ -161,5 +165,16 @@ export class HomeComponent implements OnInit {
 
   navigateToProductDetails(product) {
     this.router.navigate([`shop/product-details/${product.id}`]);
+  }
+
+  // scrollToVideo() {
+  //   window.scroll({
+  //     top: 1100,
+  //     left: 0,
+  //     behavior: 'smooth',
+  //   });
+  // }
+  showErrorMessage(msg) {
+    this.toastrService.error(msg);
   }
 }

@@ -20,21 +20,25 @@
         <div class="p-xl-5">
           <h1 class="sub-title">Say Hello.</h1>
           <p class="pt-3 fw-light">
-            Feel free to reach out to us via email or phone during our business hours or call to set up an appointment
-            to visit our ranch during our open hours. We look forward to hearing from you and sharing our passion for
-            artisan beef and sustainable practices.
+            Feel free to reach out to us via email or phone during our business
+            hours or call to set up an appointment to visit our ranch during our
+            open hours. We look forward to hearing from you and sharing our
+            passion for artisan beef and sustainable practices.
           </p>
           <div class="pt-4">
             <span><i class="bi bi-geo-alt-fill text-orange pe-2"></i></span>
-            <span>301 Blessing Ranch Road, Liberty Hill, Texas 78642, United States</span>
+            <span
+              >301 Blessing Ranch Road, Liberty Hill, Texas 78642, United
+              States</span
+            >
           </div>
           <div class="pt-3">
             <span><i class="bi bi-envelope-fill text-orange pe-2"></i></span>
-            support@ridgeatloafersglory.com/ 
+            sales@ridgeatloafersglory.com
           </div>
           <div class="pt-3">
             <span><i class="bi bi-telephone-fill text-orange pe-2"></i></span>
-             512-910-7159 
+             512-910-7159
           </div>
         </div>
       </div>
@@ -43,26 +47,61 @@
           <h1 class="sub-title">Ask Your Queries</h1>
           <form [formGroup]="contactForm" class="pt-3">
             <div class="mb-3">
-              <input formControlName="userEmail" type="email" class="form-control bg-form" id="contactForm" name="email"
-                placeholder="Your Email" [(ngModel)]="userEmail"
-                [class.is-invalid]="isFieldValid(contactForm, 'userEmail')" />
-              <span class="text-danger" *ngIf="hasError(contactForm, 'userEmail', 'required')">Please enter a email.
+              <input
+                formControlName="userEmail"
+                type="email"
+                class="form-control bg-form"
+                id="contactForm"
+                name="email"
+                placeholder="Your Email"
+                [(ngModel)]="userEmail"
+                [class.is-invalid]="isFieldValid(contactForm, 'userEmail')"
+              />
+              <span
+                class="text-danger"
+                *ngIf="hasError(contactForm, 'userEmail', 'required')"
+                >Please enter a email.
               </span>
             </div>
             <div class="mb-3">
-              <input formControlName="subject" type="text" class="form-control bg-form" id="subject" name="text"
-                placeholder="Subject" [(ngModel)]="subject" [class.is-invalid]="isFieldValid(contactForm, 'subject')" />
-              <span class="text-danger" *ngIf="hasError(contactForm, 'subject', 'required')">Please enter a subject.
+              <input
+                formControlName="subject"
+                type="text"
+                class="form-control bg-form"
+                id="subject"
+                name="text"
+                placeholder="Subject"
+                [(ngModel)]="subject"
+                [class.is-invalid]="isFieldValid(contactForm, 'subject')"
+              />
+              <span
+                class="text-danger"
+                *ngIf="hasError(contactForm, 'subject', 'required')"
+                >Please enter a subject.
               </span>
             </div>
             <div class="mb-3">
-              <textarea formControlName="message" class="form-control bg-form" id="message" name="text" rows="3"
-                placeholder="Message" [(ngModel)]="message"
-                [class.is-invalid]="isFieldValid(contactForm, 'message')"></textarea>
-              <span class="text-danger" *ngIf="hasError(contactForm, 'message', 'required')">Please enter a message.
+              <textarea
+                formControlName="message"
+                class="form-control bg-form"
+                id="message"
+                name="text"
+                rows="3"
+                placeholder="Message"
+                [(ngModel)]="message"
+                [class.is-invalid]="isFieldValid(contactForm, 'message')"
+              ></textarea>
+              <span
+                class="text-danger"
+                *ngIf="hasError(contactForm, 'message', 'required')"
+                >Please enter a message.
               </span>
             </div>
-            <button type="submit" class="btn rounded-0 text-light button-orange mt-3 py-2" (click)="navigateToHome()">
+            <button
+              type="submit"
+              class="btn rounded-0 text-light button-orange mt-3 py-2"
+              (click)="navigateToHome()"
+            >
               Send Message
             </button>
           </form>

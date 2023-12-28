@@ -26,19 +26,34 @@ export class AboutComponent implements OnInit {
     this.commonService.gotoTop();
     this.generateSubscribeForm();
     this.commonService.getUserDetails().then((x) => {
-      this.emailSubscribe = x.userDetails.email;
-      this.subscribeForm.get('emailSubscribe').disable();
+      if (x) {
+        this.emailSubscribe = x.userDetails.email;
+        this.subscribeForm.get('emailSubscribe').disable();
+      }
     });
   }
   generateSubscribeForm() {
     this.subscribeForm = this.formBuilder.group({
-      emailSubscribe: ['', [Validators.required, Validators.email]],
+      emailSubscribe: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+        ],
+      ],
     });
   }
 
   navigateToHome() {
     this.formSubmitAttempt = true;
     if (this.subscribeForm.invalid) {
+      if (
+        this.emailSubscribe &&
+        this.subscribeForm.controls['emailSubscribe'].errors['pattern']
+      ) {
+        this.showErrorMessage('Your email is incorrect.');
+      }
+      console.log('invalid email');
       return;
     }
     const apiRequest = {
@@ -49,10 +64,8 @@ export class AboutComponent implements OnInit {
     this.apiService.request('EMAIL_SUBSCRIBE', apiRequest).subscribe((res) => {
       this.formSubmitAttempt = false;
       if (res && res.statusCode == 200) {
-        // this.setUserBasics(res.userDetails);
         this.toastrService.success('Subscribe Successfully!');
       } else {
-        this.emailSubscribe = '';
         this.toastrService.error(res.message);
       }
     });
@@ -68,4 +81,8 @@ export class AboutComponent implements OnInit {
     formGroup.get(field).errors && formGroup.get(field).touched
       ? formGroup.get(field).errors[errorName]
       : false;
+
+  showErrorMessage(msg) {
+    this.toastrService.error(msg);
+  }
 }
