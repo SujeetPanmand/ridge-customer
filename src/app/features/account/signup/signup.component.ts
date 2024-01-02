@@ -23,8 +23,12 @@ export class SignupComponent implements OnInit {
   address: string = '';
   zipCode: string = '';
   companyId: string = '';
-  companyName: string = '';
+  organizationName: string = '';
   state: string = '';
+  industryType: string = '';
+  businessType: string = '';
+  businessRegistration : string = '';
+  confirmPassword: string = '';
   phoneNumber: string = '';
   city: string = '';
   country: string = '';
@@ -48,22 +52,22 @@ export class SignupComponent implements OnInit {
 
   generateNewAccountForm() {
     this.newAccountForm = this.formBuilder.group({
-      accountCheckOption: ['personal'],
+      accountTypeOption: ['personal'],
     });
   }
 
   onChangeAccountType() {
-    if(this.newAccountForm.controls['accountCheckOption'].value=='personal') {
+    if(this.newAccountForm.controls['accountTypeOption'].value=='personal') {
       this.signUpForm.get('companyId').clearValidators();
       this.signUpForm.get('companyId').updateValueAndValidity();
-      this.signUpForm.get('companyName').clearValidators();
-      this.signUpForm.get('companyName').updateValueAndValidity();
+      this.signUpForm.get('organizationName').clearValidators();
+      this.signUpForm.get('organizationName').updateValueAndValidity();
     }
-    if(this.newAccountForm.controls['accountCheckOption'].value=='business') {
+    if(this.newAccountForm.controls['accountTypeOption'].value=='business') {
       this.signUpForm.get('companyId').addValidators(Validators.required);
       this.signUpForm.get('companyId').updateValueAndValidity();
-      this.signUpForm.get('companyName').addValidators(Validators.required);
-      this.signUpForm.get('companyName').updateValueAndValidity();
+      this.signUpForm.get('organizationName').addValidators(Validators.required);
+      this.signUpForm.get('organizationName').updateValueAndValidity();
     }
     
   }
@@ -111,6 +115,7 @@ export class SignupComponent implements OnInit {
       lastName: ['', Validators.required],
       firstName: ['', Validators.required],
       password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
       email: [
         '',
         [
@@ -124,8 +129,11 @@ export class SignupComponent implements OnInit {
       state: ['', Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
-      companyName:['', Validators.required],
-      companyId:['', Validators.required]
+      organizationName:['', Validators.required],
+      companyId:['', Validators.required],
+      industryType:['', Validators.required],
+      businessType:['', Validators.required],
+      businessRegistration:['', Validators.required]
     });
   }
 
@@ -152,7 +160,7 @@ export class SignupComponent implements OnInit {
         state: this.state,
         city: this.city,
         country: this.country,
-        // companyName:this.companyName,
+        // organizationName:this.organizationName,
         // companyId:this.companyId
       },
     };

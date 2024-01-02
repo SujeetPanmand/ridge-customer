@@ -14,10 +14,10 @@
                 <div class="form-check form-check-inline">
                   <input
                     (change)="onChangeAccountType()"
-                    formControlName="accountCheckOption"
+                    formControlName="accountTypeOption"
                     class="form-check-input"
                     type="radio"
-                    name="accountCheckOption"
+                    name="accountTypeOption"
                     id="personal"
                     value="personal"
                     checked
@@ -29,10 +29,10 @@
                 <div class="form-check form-check-inline">
                   <input
                     (change)="onChangeAccountType()"
-                    formControlName="accountCheckOption"
+                    formControlName="accountTypeOption"
                     class="form-check-input"
                     type="radio"
-                    name="accountCheckOption"
+                    name="accountTypeOption"
                     id="business"
                     value="business"
                   />
@@ -44,35 +44,85 @@
               <form [formGroup]="signUpForm" class="p-3">
                 <ng-container
                   *ngIf="
-                    newAccountForm.controls['accountCheckOption'].value ===
+                    newAccountForm.controls['accountTypeOption'].value ===
                     'business'
                   "
                 >
                   <div class="mb-3">
-                    <label for="companyName" class="form-label"
-                      >Company Name
+                    <label for="organizationName" class="form-label"
+                      >Organization Name
                       <span class="text-orange">*</span>
                     </label>
                     <input
                       type="text"
-                      formControlName="companyName"
+                      formControlName="organizationName"
                       class="form-control"
-                      id="companyName"
-                      name="companyName"
-                      [(ngModel)]="companyName"
+                      id="organizationName"
+                      name="organizationName"
+                      [(ngModel)]="organizationName"
                       [class.is-invalid]="
-                        isFieldValid(signUpForm, 'companyName')
+                        isFieldValid(signUpForm, 'organizationName')
                       "
                     />
                     <span
                       class="text-orange"
-                      *ngIf="hasError(signUpForm, 'companyName', 'required')"
-                      >Please enter a company name.
+                      *ngIf="hasError(signUpForm, 'organizationName', 'required')"
+                      >Please enter a organization name.
                     </span>
                   </div>
+
+                  <div class="mb-3 row">
+                    <div class="col-md-6">
+                      <label for="industryType" class="form-label"
+                      >Industry Type
+                      <span class="text-orange">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="industryType"
+                      class="form-control"
+                      id="industryType"
+                      name="industryType"
+                      [(ngModel)]="industryType"
+                      [class.is-invalid]="
+                        isFieldValid(signUpForm, 'industryType')
+                      "
+                    />
+                    <span
+                      class="text-orange"
+                      *ngIf="hasError(signUpForm, 'industryType', 'required')"
+                      >Please enter a industry type.
+                    </span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label for="businessType" class="form-label"
+                      >Business Type
+                      <span class="text-orange">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="businessType"
+                      class="form-control"
+                      id="businessType"
+                      name="businessType"
+                      [(ngModel)]="businessType"
+                      [class.is-invalid]="
+                        isFieldValid(signUpForm, 'businessType')
+                      "
+                    />
+                    <span
+                      class="text-orange"
+                      *ngIf="hasError(signUpForm, 'businessType', 'required')"
+                      >Please enter a industry type.
+                    </span>
+                    </div>
+                    
+                  </div>
+
                   <div class="mb-3">
                     <label for="companyId" class="form-label"
-                      >Company ID
+                      >Tax ID or EIN(Employer Identification Number)
                       <span class="text-orange">*</span>
                     </label>
                     <input
@@ -90,7 +140,32 @@
                       >Please enter a company Id.
                     </span>
                   </div>
+                  <div class="mb-3">
+                    <label for="businessRegistration" class="form-label"
+                      >Business Registration Number
+                      <span class="text-orange">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="businessRegistration"
+                      class="form-control"
+                      id="businessRegistration"
+                      name="businessRegistration"
+                      [(ngModel)]="businessRegistration"
+                      [class.is-invalid]="isFieldValid(signUpForm, 'businessRegistration')"
+                    />
+                    <span
+                      class="text-orange"
+                      *ngIf="hasError(signUpForm, 'businessRegistration', 'required')"
+                      >Please enter a company Id.
+                    </span>
+                  </div>
                 </ng-container>
+                <ng-container
+                *ngIf="
+                  newAccountForm.controls['accountTypeOption'].value ===
+                  'personal'
+                ">
                 <div class="mb-3">
                   <label for="firstName" class="form-label"
                     >First Name
@@ -131,6 +206,7 @@
                     >Please enter a last name.
                   </span>
                 </div>
+              </ng-container>
                 <div class="mb-3">
                   <label for="email" class="form-label"
                     >Email
@@ -169,6 +245,26 @@
                     class="text-orange"
                     *ngIf="hasError(signUpForm, 'password', 'required')"
                     >Please enter a password.
+                  </span>
+                </div>
+                <div class="mb-3">
+                  <label for="confirmPassword" class="form-label"
+                    >Confirm Password
+                    <span class="text-orange">*</span>
+                  </label>
+                  <input
+                    type="password"
+                    formControlName="confirmPassword"
+                    class="form-control"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    [(ngModel)]="confirmPassword"
+                    [class.is-invalid]="isFieldValid(signUpForm, 'confirmPassword')"
+                  />
+                  <span
+                    class="text-orange"
+                    *ngIf="hasError(signUpForm, 'confirmPassword', 'required')"
+                    >Please enter a confirmPassword.
                   </span>
                 </div>
                 <div class="mb-3">
