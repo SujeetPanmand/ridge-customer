@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ValidAuthenticationComponent } from 'src/app/shared/component/valid-authentication/valid-authentication.component';
 import {
   AllBlogsDetailsList,
   BlogsDetails,
@@ -24,16 +26,63 @@ export class BlogDetailsComponent implements OnInit {
   allArticles: any = [];
   isLoading = false;
   isLoggedIn = 0;
+  token = '';
+  action = '';
   constructor(
     private commonService: CommonService,
     private apiService: ApiService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
     this.subscribeToUrlChange();
+    this.token = this.route.snapshot.queryParams['t'];
+    this.action = this.route.snapshot.queryParams['a'];
   }
 
   ngOnInit() {
+    this.authenticateUser();
+  }
+  authenticateUser() {
+    if (this.token && this.action) {
+      const apiRequest = {
+        data: { token: this.token, action: Number(this.action) },
+      };
+      this.apiService.request('INVALID_AUTH', apiRequest).subscribe((res) => {
+        if (res && res.statusCode == 200) {
+          this.actionOnload();
+        } else {
+          this.openAuthenticatePopUp();
+        }
+      });
+      console.log('gggg');
+    } else if (!this.token && !this.action) {
+      this.actionOnload();
+    } else {
+      this.openAuthenticatePopUp();
+    }
+  }
+
+  openAuthenticatePopUp() {
+    let data = {
+      action_button_name: 'Ok',
+      title_text: 'Warning',
+      text: `Invalid access.`,
+    };
+    let modelRef = this.modalService.open(ValidAuthenticationComponent, {
+      size: 'md',
+      centered: true,
+      backdrop: false,
+    });
+    modelRef.componentInstance.data = data;
+
+    modelRef.result.then((res) => {
+      if (res) {
+        this.router.navigate(['login']);
+      }
+    });
+  }
+  actionOnload() {
     this.commonService.getUserDetails().then((x) => {
       if (x) this.isLoggedIn = 1;
     });
