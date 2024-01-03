@@ -1,6 +1,11 @@
 import { environment } from 'src/environments/environment';
 const authEndPoint = [
   {
+    name: 'INVALID_AUTH',
+    method: 'POST',
+    url: environment.baseUrl + '/api/auth/validate-token',
+  },
+  {
     name: 'USER_LOGIN',
     method: 'POST',
     url: environment.baseUrl + '/api/auth/sign-in',
@@ -24,11 +29,6 @@ const authEndPoint = [
     name: 'GET_USER_DETAILS',
     method: 'GET',
     url: environment.baseUrl + '/api/user/me',
-  },
-  {
-    name: 'AUTHENTICATE_USER',
-    method: 'POST',
-    url: environment.baseUrl + 'api/auth/validate-token',
   },
 ];
 

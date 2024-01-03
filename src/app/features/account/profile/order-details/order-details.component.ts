@@ -47,39 +47,41 @@ export class OrderDetailsComponent {
   }
   authenticateUser() {
     if (this.token && this.action) {
-      this.apiService
-        .request('AUTHENTICATE_USER', {
-          data: { token: this.token, action: Number(this.action) },
-        })
-        .subscribe((res) => {
-          if (res && res.statusCode == 200) {
-            this.actionOnload();
-          } else {
-            let data = {
-              action_button_name: 'Ok',
-              title_text: 'Warning',
-              text: `Invalid access.`,
-            };
-            let modelRef = this.modalService.open(
-              ValidAuthenticationComponent,
-              {
-                size: 'md',
-                centered: true,
-                backdrop: false,
-              }
-            );
-            modelRef.componentInstance.data = data;
-
-            modelRef.result.then((res) => {
-              if (res) {
-                this.router.navigate(['login']);
-              }
-            });
-          }
-        });
-    } else {
+      const apiRequest = {
+        data: { token: this.token, action: Number(this.action) },
+      };
+      this.apiService.request('INVALID_AUTH', apiRequest).subscribe((res) => {
+        if (res && res.statusCode == 200) {
+          this.actionOnload();
+        } else {
+          this.openAuthenticatePopUp();
+        }
+      });
+      console.log('gggg');
+    } else if (!this.token && !this.action) {
       this.actionOnload();
+    } else {
+      this.openAuthenticatePopUp();
     }
+  }
+  openAuthenticatePopUp() {
+    let data = {
+      action_button_name: 'Ok',
+      title_text: 'Warning',
+      text: `Invalid access.`,
+    };
+    let modelRef = this.modalService.open(ValidAuthenticationComponent, {
+      size: 'md',
+      centered: true,
+      backdrop: false,
+    });
+    modelRef.componentInstance.data = data;
+
+    modelRef.result.then((res) => {
+      if (res) {
+        this.router.navigate(['login']);
+      }
+    });
   }
   actionOnload() {
     this.commonService.getUserDetails().then((x) => {
