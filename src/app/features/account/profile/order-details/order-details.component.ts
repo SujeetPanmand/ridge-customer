@@ -48,7 +48,7 @@ export class OrderDetailsComponent {
   authenticateUser() {
     if (this.token && this.action) {
       this.apiService
-        .request('authenticate_user', {
+        .request('AUTHENTICATE_USER', {
           data: { token: this.token, action: Number(this.action) },
         })
         .subscribe((res) => {

@@ -25,6 +25,11 @@ const authEndPoint = [
     method: 'GET',
     url: environment.baseUrl + '/api/user/me',
   },
+  {
+    name: 'AUTHENTICATE_USER',
+    method: 'POST',
+    url: environment.baseUrl + 'api/auth/validate-token',
+  },
 ];
 
 const shopEndPoints = [
