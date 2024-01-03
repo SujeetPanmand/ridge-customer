@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationPopUpComponent } from 'src/app/shared/component/confirmation-pop-up/confirmation-pop-up.component';
+import { ValidAuthenticationComponent } from 'src/app/shared/component/valid-authentication/valid-authentication.component';
 import { MyOrders } from 'src/app/shared/interfaces/my-orders';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { CommonService } from 'src/app/shared/services/common.service';
@@ -27,6 +28,8 @@ export class OrderDetailsComponent {
   subTotal = 0;
   orderTotal = 0;
   remainingAmount = 0;
+  token = '';
+  action = '';
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
@@ -35,8 +38,50 @@ export class OrderDetailsComponent {
     public commonService: CommonService,
     private formBuilder: FormBuilder,
     private router: Router // private datePipe: DatePipe
-  ) {}
+  ) {
+    this.token = this.route.snapshot.queryParams['t'];
+    this.action = this.route.snapshot.queryParams['a'];
+  }
   ngOnInit() {
+    this.authenticateUser();
+  }
+  authenticateUser() {
+    if (this.token && this.action) {
+      this.apiService
+        .request('authenticate_user', {
+          data: { token: this.token, action: Number(this.action) },
+        })
+        .subscribe((res) => {
+          if (res && res.statusCode == 200) {
+            this.actionOnload();
+          } else {
+            let data = {
+              action_button_name: 'Ok',
+              title_text: 'Warning',
+              text: `Invalid access.`,
+            };
+            let modelRef = this.modalService.open(
+              ValidAuthenticationComponent,
+              {
+                size: 'md',
+                centered: true,
+                backdrop: false,
+              }
+            );
+            modelRef.componentInstance.data = data;
+
+            modelRef.result.then((res) => {
+              if (res) {
+                this.router.navigate(['login']);
+              }
+            });
+          }
+        });
+    } else {
+      this.actionOnload();
+    }
+  }
+  actionOnload() {
     this.commonService.getUserDetails().then((x) => {
       if (x) this.isLoggedIn = 1;
     });
@@ -78,10 +123,6 @@ export class OrderDetailsComponent {
         if (res && res.statusCode == 200) {
           this.selectedOrder = res.orderDetails;
           this.getTotalAndSubTotal(this.selectedOrder);
-          // this.expectedDeliveryDate = this.datePipe.transform(
-          //   new Date(this.selectedOrder.expectedDeliveryDate),
-          //   'YYYY-MM-dd'
-          // );
         }
       });
   }

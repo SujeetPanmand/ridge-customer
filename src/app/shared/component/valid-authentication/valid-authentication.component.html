@@ -1,0 +1,16 @@
+<div class="modal-body">
+  <div class="text-center">
+    <i class="fa fa-warning fa-2x mb-3"></i>
+    <h6>{{ data?.title_text }}</h6>
+    <p>{{ data?.text }}</p>
+  </div>
+</div>
+<div class="modal-footer justify-content-center pt-0 border-0">
+  <button
+    type="button"
+    class="btn button-orange text-white border-0"
+    (click)="passBack(true)"
+  >
+    {{ data?.action_button_name }}
+  </button>
+</div>

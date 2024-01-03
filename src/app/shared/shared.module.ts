@@ -7,12 +7,14 @@ import { BreadCrumbComponent } from './component/bread-crumb/bread-crumb.compone
 import { ConfirmationPopUpComponent } from './component/confirmation-pop-up/confirmation-pop-up.component';
 import { DataTablesModule } from 'angular-datatables';
 import { LoaderComponent } from './component/loader/loader.component';
+import { ValidAuthenticationComponent } from './component/valid-authentication/valid-authentication.component';
 
 @NgModule({
   declarations: [
     BreadCrumbComponent,
     ConfirmationPopUpComponent,
     LoaderComponent,
+    ValidAuthenticationComponent,
   ],
   imports: [
     FormsModule,
