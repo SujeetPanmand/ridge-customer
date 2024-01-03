@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/shared/interfaces/user/user-details';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { environment } from 'src/environments/environment';
@@ -16,13 +16,19 @@ export class HeaderComponent implements OnInit {
   userId = '';
   userProfilePic = '';
   userDetails: User;
-  constructor(private router: Router, public commonService: CommonService) {
+  isNavFeatureShow = false;
+  constructor(
+    private router: Router,
+    public commonService: CommonService,
+    private activeRoute: ActivatedRoute
+  ) {
     this.subscribeTo();
     this.subscribeToImage();
   }
 
   ngOnInit(): void {
     this.getUserDetails();
+    this.getDataToHideFeature();
   }
 
   getUserDetails() {
@@ -93,5 +99,14 @@ export class HeaderComponent implements OnInit {
     this.userProfilePic =
       environment.baseUrl + '/api/user/image/' + this.userId + '?' + date;
     // this.commonService.profilePictureUrl = url;
+  }
+
+  getDataToHideFeature() {
+    this.isNavFeatureShow =
+      this.activeRoute.snapshot.queryParams &&
+      this.activeRoute.snapshot.queryParams['t'] &&
+      this.activeRoute.snapshot.queryParams['a']
+        ? false
+        : true;
   }
 }
