@@ -108,5 +108,12 @@ export class HeaderComponent implements OnInit {
       this.activeRoute.snapshot.queryParams['a']
         ? false
         : true;
+
+    this.isLogginShow =
+      this.activeRoute.snapshot.queryParams &&
+      this.activeRoute.snapshot.queryParams['t'] &&
+      this.activeRoute.snapshot.queryParams['a']
+        ? true
+        : false;
   }
 }
