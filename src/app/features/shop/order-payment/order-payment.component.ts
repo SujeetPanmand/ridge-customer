@@ -12,6 +12,7 @@ import { ConfirmationPopUpComponent } from 'src/app/shared/component/confirmatio
 import { OrderDetails } from 'src/app/shared/interfaces/order-confirmation';
 import { environment } from 'src/environments/environment';
 import { loadStripe } from '@stripe/stripe-js';
+import { ValidAuthenticationComponent } from 'src/app/shared/component/valid-authentication/valid-authentication.component';
 
 @Component({
   selector: 'app-order-payment',
@@ -36,6 +37,8 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
   stripe: any;
   elements: any;
   card: any;
+  token = '';
+  action = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -51,17 +54,59 @@ export class OrderPaymentComponent implements OnInit, AfterViewInit {
     this.orderId = this.route.snapshot.params['orderId'];
     this.links[1].link = `/account/order-details/${this.orderId}`;
     this.links[2].link = `/shop/order-payment/${this.orderId}`;
+    this.token = this.route.snapshot.queryParams['t'];
+    this.action = this.route.snapshot.queryParams['a'];
     this.loadStripe();
   }
 
   ngOnInit(): void {
-    // throw new Error('Method not implemented.');
+    this.authenticateUser();
+  }
+  authenticateUser() {
+    if (this.token && this.action) {
+      const apiRequest = {
+        data: { token: this.token, action: Number(this.action) },
+      };
+      this.apiService.request('INVALID_AUTH', apiRequest).subscribe((res) => {
+        if (res && res.statusCode == 200) {
+          this.actionOnload();
+        } else {
+          this.openAuthenticatePopUp();
+        }
+      });
+    } else if (!this.token && !this.action) {
+      this.actionOnload();
+    } else {
+      this.openAuthenticatePopUp();
+    }
+  }
+
+  actionOnload() {
     this.commonService.getUserDetails().then((x) => {
       if (x) this.isLoggedIn = 1;
     });
-    //this.defaultSetting();
     this.generatePaymentForm();
     this.getOrderPaymentDetailsById();
+  }
+
+  openAuthenticatePopUp() {
+    let data = {
+      action_button_name: 'Ok',
+      title_text: 'Warning',
+      text: `Invalid access.`,
+    };
+    let modelRef = this.modalService.open(ValidAuthenticationComponent, {
+      size: 'md',
+      centered: true,
+      backdrop: false,
+    });
+    modelRef.componentInstance.data = data;
+
+    modelRef.result.then((res) => {
+      if (res) {
+        this.router.navigate(['login']);
+      }
+    });
   }
 
   generatePaymentForm() {
