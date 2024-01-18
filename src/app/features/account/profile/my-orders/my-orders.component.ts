@@ -45,6 +45,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit {
       scrollX: false,
       responsive: true,
       scrollY: false,
+      columnDefs: [{ type: 'date', targets: [1] }],
     };
     this.myOrderDetails();
     this.saveCancelReasonForm();
