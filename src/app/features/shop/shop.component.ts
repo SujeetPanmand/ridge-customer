@@ -44,7 +44,7 @@ export class ShopComponent implements OnInit {
   subscribeToCartItems() {
     this.commonService.cartItemsEvent.subscribe((items) => {
       this.cartItems = items;
-      if (this.cartItems != null) {
+      if (this.cartItems != null && this.cartItems.length) {
         this.updateProductListCount(this.cartItems);
       }
     });
@@ -106,7 +106,8 @@ export class ShopComponent implements OnInit {
   addProductToCart() {
     if (this.cutForm.controls['searchCheckOption'].value === 'standard') {
       if (!this.selectedProduct.outOfStock) {
-        if (this.cartItems.length == 0) {
+        if (this.cartItems == null || this.cartItems.length == 0) {
+          this.cartItems = [];
           this.cartItems.push(this.selectedProduct);
         } else {
           const index = this.cartItems.findIndex(
@@ -165,8 +166,13 @@ export class ShopComponent implements OnInit {
       // this.productList[index].count = x.quantity;
       this.productList.forEach((item) => {
         if (item.id == x.productId) {
-          item.count = x.quantity;
-          item.outOfStock = x.outOfStock;
+          if (item.outOfStock || item.availebleStock <= 0) {
+            this.commonService.addLocalCartItem(0, item, item.id);
+            item.count = 0;
+          } else {
+            item.count = x.quantity;
+            item.outOfStock = x.outOfStock;
+          }
         }
       });
     });
@@ -275,7 +281,9 @@ export class ShopComponent implements OnInit {
     );
     this.commonService.setCartItems(this.localItemCopy);
     if (!this.isLoggedIn) {
-      this.commonService.addProducts(this.localItemCopy.length);
+      this.commonService.addProducts(
+        this.localItemCopy == null ? 0 : this.localItemCopy.length
+      );
     }
   }
   //----------------------without login end-----------------------------
