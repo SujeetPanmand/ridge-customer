@@ -153,16 +153,16 @@ export class HomeComponent implements OnInit {
             .map((e) => {
               return { ...e, url: this.setPromotionPics(e.id) };
             });
-          let defaultPromotion = {
-            endDate: '',
-            id: 'DEFAULT123',
-            isActive: true,
-            offer: 'Republic day sell',
-            startDate: '',
-            message: 'Default Promotion',
-            url: `${environment.baseUrl}/api/promotion/image/e487ba21-7a89-4e2a-85fb-08dc1d6be929`,
-          };
-          this.promotionList.push(defaultPromotion);
+          // let defaultPromotion = {
+          //   endDate: '',
+          //   id: 'DEFAULT123',
+          //   isActive: true,
+          //   offer: 'Republic day sell',
+          //   startDate: '',
+          //   message: 'Default Promotion',
+          //   url: `${environment.baseUrl}/api/promotion/image/e487ba21-7a89-4e2a-85fb-08dc1d6be929`,
+          // };
+          // this.promotionList.push(defaultPromotion);
         }
       });
   }
